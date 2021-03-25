@@ -3,8 +3,8 @@ spec:
   services:
   - name: web
     git:
-      branch: master
-      repo_clone_url: https://github.com/tnylea/wave.git
+      branch: main
+      repo_clone_url: https://github.com/thedevdojo/wave.git
     run_command: php artisan migrate --force ; heroku-php-apache2 public/
     envs:
     - key: APP_NAME
@@ -65,8 +65,8 @@ spec:
   - name: migrate
     kind: POST_DEPLOY
     git:
-      repo_clone_url: https://github.com/tnylea/wave.git
-      branch: master
+      repo_clone_url: https://github.com/thedevdojo/wave.git
+      branch: main
     run_command: php artisan migrate --seed
     envs:
     - key: APP_NAME
