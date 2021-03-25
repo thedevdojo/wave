@@ -1,0 +1,103 @@
+databases:
+- engine: PG
+  name: wave-db
+  num_nodes: 1
+  size: db-s-dev-database
+  version: "12"
+name: wave
+region: ams
+services:
+- environment_slug: php
+  run_command: heroku-php-apache2 public/
+  envs:
+  - key: APP_NAME
+    scope: RUN_TIME
+    value:  Wave
+  - key: APP_ENV
+    scope: RUN_TIME
+    value: dev
+  - key: APP_KEY
+    scope: RUN_TIME
+    value: base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8=
+  - key: APP_DEBUG
+    scope: RUN_TIME
+    value: "1"
+  - key: APP_URL
+    scope: RUN_TIME
+    value: ${APP_URL}
+  - key: DATABASE_URL
+    scope: RUN_TIME
+    value: ${wave-db.DATABASE_URL}
+  - key: DB_CONNECTION
+    scope: RUN_TIME
+    value: pgsql
+  - key: DB_HOST
+    scope: RUN_TIME
+    value: ${wave-db.HOSTNAME}
+  - key: DB_PORT
+    scope: RUN_TIME
+    value: ${wave-db.PORT}
+  - key: DB_DATABASE
+    scope: RUN_TIME
+    value: ${wave-db.DATABASE}
+  - key: DB_USERNAME
+    scope: RUN_TIME
+    value: ${wave-db.USERNAME}
+  - key: DB_PASSWORD
+    scope: RUN_TIME
+    value: ${wave-db.PASSWORD}
+  github:
+    branch: master
+    deploy_on_push: true
+    repo: tnylea/wave
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xs
+  name: landing-laravel
+  routes:
+  - path: /
+jobs:
+- name: migrate
+  kind: POST_DEPLOY
+  github:
+    repo: tnylea/wave
+    branch: master
+    deploy_on_push: true
+  run_command: php artisan migrate --seed
+  envs:
+  - key: APP_NAME
+    scope: RUN_TIME
+    value:  Wave
+  - key: APP_ENV
+    scope: RUN_TIME
+    value: dev
+  - key: APP_KEY
+    scope: RUN_TIME
+    value: base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8=
+  - key: APP_DEBUG
+    scope: RUN_TIME
+    value: "1"
+  - key: APP_URL
+    scope: RUN_TIME
+    value: ${APP_URL}
+  - key: DATABASE_URL
+    scope: RUN_TIME
+    value: ${wave-db.DATABASE_URL}
+  - key: DB_CONNECTION
+    scope: RUN_TIME
+    value: pgsql
+  - key: DB_HOST
+    scope: RUN_TIME
+    value: ${wave-db.HOSTNAME}
+  - key: DB_PORT
+    scope: RUN_TIME
+    value: ${wave-db.PORT}
+  - key: DB_DATABASE
+    scope: RUN_TIME
+    value: ${wave-db.DATABASE}
+  - key: DB_USERNAME
+    scope: RUN_TIME
+    value: ${wave-db.USERNAME}
+  - key: DB_PASSWORD
+    scope: RUN_TIME
+    value: ${wave-db.PASSWORD}
