@@ -101,6 +101,6 @@ spec:
       scope: RUN_TIME
       value: ${wave-db.PASSWORD}
       type: SECRET
-  - name: storage_link
-      kind: POST_DEPLOY
-      run_command: php artisan storage:link
+  - name: migrate
+    kind: POST_DEPLOY
+    run_command: php artisan storage:link
