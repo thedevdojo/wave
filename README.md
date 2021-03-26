@@ -5,7 +5,7 @@
 [Wave](https://devdojo.com/wave) is an open source Software as a Service Starter Kit. It can be used to build your next great idea 💰. Wave is built with [Laravel](https://laravel.com), [Voyager](https://voyager.devdojo.com), [TailwindCSS](https://tailwindcss.com), and a few other awesome technologies.
 
 # 🏎️ Take it for a test drive
-Checkout the [demo here](https://wave.devdojo.com), or you can deploy your own instance of Wave by clicking the Deploy to DigitalOcean button below.
+View a live [demo here](https://wave.devdojo.com), or deploy your own instance to DigitalOcean, by clicking the button below.
 
 [![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main)
 
