@@ -2,7 +2,8 @@
 
 # 💡 Introduction to Wave
 
-[Wave](https://devdojo.com/wave) is an open source Software as a Service Starter Kit. It can be used to build your next great idea 💰. Wave is built with some awesome technologies including [Laravel](https://laravel.com) and [TailwindCSS](https://tailwindcss.com). Wave also uses [Voyager](https://voyager.devdojo.com) for an admin interface, this way you can administer your application including users, posts, pages, billing plans, settings, and more.
+[Wave](https://devdojo.com/wave) is an open source Software as a Service Starter Kit. It can be used to build your next great idea 💰. Wave is built with [Laravel](https://laravel.com), [Voyager](https://voyager.devdojo.com), [TailwindCSS](https://tailwindcss.com), and a few other awesome technologies.
+
 
 Thanks for your interest in Wave.
 
