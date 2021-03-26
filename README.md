@@ -1,4 +1,4 @@
-<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/wavelogo.svg" width="240"></a></p>
+<p align="left"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/wavelogo.svg" width="240"></a></p>
 <p></p>
 
 
