@@ -19,8 +19,13 @@
 
                 @php
 
-                    \Illuminate\Support\Facades\Artisan::call('db:seed');
-                    \Illuminate\Support\Facades\Artisan::call('storage:link');
+                    \Illuminate\Support\Facades\Artisan::call('db:seed', [
+                    '--force' => true
+                    ]);
+
+                    \Illuminate\Support\Facades\Artisan::call('storage:link', [
+                    '--force' => true
+                    ]);
 
                  @endphp
 
