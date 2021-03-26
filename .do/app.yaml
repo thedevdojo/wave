@@ -47,7 +47,7 @@ services:
     scope: RUN_TIME
     value: ${wave-db.PASSWORD}
   github:
-    branch: master
+    branch: main
     deploy_on_push: true
     repo: tnylea/wave
   http_port: 8080
@@ -61,7 +61,7 @@ jobs:
   kind: POST_DEPLOY
   github:
     repo: tnylea/wave
-    branch: master
+    branch: main
     deploy_on_push: true
   run_command: php artisan migrate --seed
   envs:
@@ -104,3 +104,40 @@ jobs:
 - name: storage_link
   kind: POST_DEPLOY
   run_command: php artisan storage:link
+  envs:
+  - key: APP_NAME
+    scope: RUN_TIME
+    value:  Wave
+  - key: APP_ENV
+    scope: RUN_TIME
+    value: dev
+  - key: APP_KEY
+    scope: RUN_TIME
+    value: base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8=
+  - key: APP_DEBUG
+    scope: RUN_TIME
+    value: "1"
+  - key: APP_URL
+    scope: RUN_TIME
+    value: ${APP_URL}
+  - key: DATABASE_URL
+    scope: RUN_TIME
+    value: ${wave-db.DATABASE_URL}
+  - key: DB_CONNECTION
+    scope: RUN_TIME
+    value: pgsql
+  - key: DB_HOST
+    scope: RUN_TIME
+    value: ${wave-db.HOSTNAME}
+  - key: DB_PORT
+    scope: RUN_TIME
+    value: ${wave-db.PORT}
+  - key: DB_DATABASE
+    scope: RUN_TIME
+    value: ${wave-db.DATABASE}
+  - key: DB_USERNAME
+    scope: RUN_TIME
+    value: ${wave-db.USERNAME}
+  - key: DB_PASSWORD
+    scope: RUN_TIME
+    value: ${wave-db.PASSWORD}
