@@ -34,6 +34,7 @@ class WaveServiceProvider extends ServiceProvider
 
     	$this->app->router->aliasMiddleware('token_api', \Wave\Http\Middleware\TokenMiddleware::class);
 	    $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\WaveMiddleware::class);
+        $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\InstallMiddleware::class);
 
 	    $this->app->router->middlewareGroup('wave', $waveMiddleware);
 

@@ -17,6 +17,8 @@ Route::get('blog', '\Wave\Http\Controllers\BlogController@index')->name('wave.bl
 Route::get('blog/{category}', '\Wave\Http\Controllers\BlogController@category')->name('wave.blog.category');
 Route::get('blog/{category}/{post}', '\Wave\Http\Controllers\BlogController@post')->name('wave.blog.post');
 
+Route::view('install', 'wave::install')->name('wave.install');
+
 /***** Pages *****/
 Route::get('p/{page}', '\Wave\Http\Controllers\PageController@page');
 
