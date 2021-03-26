@@ -1,5 +1,5 @@
-<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/wave-logo.svg" width="400"></a></p>
-
+<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/wave-logo.svg" width="240"></a></p>
+<p></p>
 
 
 ## 💡 Introduction to Wave
