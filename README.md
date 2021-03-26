@@ -3,13 +3,26 @@
 
 ## Introduction
 
-[Wave](https://devdojo.com/wave) is an open source Software as a Service Starter Kit. It can be used to build your next great idea 💰. Wave is built with [Laravel](https://laravel.com), [Voyager](https://voyager.devdojo.com), [TailwindCSS](https://tailwindcss.com), and a few other awesome technologies.
+[Wave](https://devdojo.com/wave) is a Software as a Service Starter Kit that can help you build your next great idea 💰. Wave is built with [Laravel](https://laravel.com), [Voyager](https://voyager.devdojo.com), [TailwindCSS](https://tailwindcss.com), and a few other awesome technologies. Here are some of the awesome features ✨:
+
+ - [Authentication](https://wave.devdojo.com/)
+ - User Profiles
+ - User Impersonation
+ - Subscriptions
+ - Subscription Plans
+ - User Roles
+ - Notifications
+ - Announcements
+ - Fully Functional Blog
+ - Out of the Box API
+ - Voyager Admin
+ - Customizable Themes
 
 
 ## Demo
 View a live [demo here](https://wave.devdojo.com), or deploy your own instance to DigitalOcean, by clicking the button below.
 
-[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main)
+<a href="https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main" target="_blank"><img src="https://www.deploytodo.com/do-btn-blue.svg" width="240" alt="Deploy to DO"></a>
 
 
 ## Installation
