@@ -101,3 +101,6 @@ jobs:
   - key: DB_PASSWORD
     scope: RUN_TIME
     value: ${wave-db.PASSWORD}
+- name: storage_link
+  kind: POST_DEPLOY
+  run_command: php artisan storage:link
