@@ -1,4 +1,4 @@
-<img src="https://cdn.devdojo.com/images/march2021/wave-hero-banner.png">
+<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/wave-logo.svg" width="400"></a></p>
 
 # 💡 Introduction to Wave
 
