@@ -103,4 +103,7 @@ spec:
       type: SECRET
   - name: migrate
     kind: POST_DEPLOY
+    git:
+      repo_clone_url: https://github.com/thedevdojo/wave.git
+      branch: main
     run_command: php artisan storage:link
