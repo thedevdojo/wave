@@ -101,7 +101,7 @@ spec:
       scope: RUN_TIME
       value: ${wave-db.PASSWORD}
       type: SECRET
-  - name: migrate
+  - name: storage_link
     kind: POST_DEPLOY
     git:
       repo_clone_url: https://github.com/thedevdojo/wave.git
