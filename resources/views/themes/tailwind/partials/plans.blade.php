@@ -4,32 +4,28 @@
         @php $features = explode(',', $plan->features); @endphp
 
         <div class="w-full max-w-md px-0 mx-auto mb-6 lg:w-1/3 lg:px-3 lg:mb-0">
-            <div class="relative flex flex-col h-full mb-10 bg-white border-2 border-gray-200 rounded-lg shadow-sm sm:mb-0">
-                <div class="px-10 pt-10">
-                    <span class="px-4 py-1 text-base font-medium text-indigo-700 bg-indigo-100 rounded-full text-uppercase">
-                        {{ $plan->name }}
-                    </span>
+            <div class="relative flex flex-col h-full mb-10 bg-white border border-gray-200 rounded-lg shadow-xl border-b-none sm:mb-0">
+                <div class="px-10 pt-7">
+                    <div class="absolute right-0 inline-block mr-6 transform">
+                        <h2 class="relative z-20 w-full h-full px-2 py-1 text-xs font-bold leading-tight tracking-wide text-center uppercase bg-white border-2 @if($plan->default){{ 'border-wave-400 text-wave-500' }}@else{{ 'border-gray-900 text-gray-800' }}@endif rounded">{{ $plan->name }}</h2>
+
+                    </div>
                 </div>
 
                 <div class="px-10 mt-5">
-                    <span class="text-5xl font-bold">${{ $plan->price }}</span>
-                    <span class="text-xl font-bold text-gray-500">/mo</span>
+                    <span class="font-mono text-5xl font-bold">${{ $plan->price }}</span>
+                    <span class="text-lg font-bold text-gray-500">per month</span>
                 </div>
 
-                <div class="px-10 pb-10 mt-3">
+                <div class="px-10 mt-6 pb-9">
                     <p class="text-lg leading-7 text-gray-500">{{ $plan->description }}</p>
                 </div>
 
-                <div class="relative p-10 mt-auto text-gray-700 bg-gray-100 rounded-b-lg">
-                    @if($plan->default)
-                        <div class="absolute top-0 left-0 flex items-center inline-block px-3 py-1.5 -ml-0.5 -mt-9 text-xs text-white uppercase bg-gradient-to-r from-blue-500 bg-indigo-500 rounded-r">
-                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                            Popular
-                        </div>
-                    @endif
-                    <ul class="flex flex-col">
+                <div class="relative px-10 pt-0 pb-12 mt-auto text-gray-700 rounded-b-lg">
+
+                    <ul class="flex flex-col space-y-2.5">
                         @foreach($features as $feature)
-                            <li class="mt-1">
+                            <li class="relative">
                                 <span class="flex items-center">
                                     <svg class="w-4 h-4 mr-3 text-green-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                         <path d="M0 11l2-2 5 5L18 3l2 2L7 18z"></path>
@@ -43,8 +39,11 @@
                         @endforeach
                     </ul>
 
-                    <div class="mt-8">
-                        <div data-plan="{{ $plan->plan_id }}" class="inline-flex items-center justify-center w-full px-4 py-3 text-base font-semibold text-white transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md cursor-pointer checkout hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25">
+
+                </div>
+
+                <div class="relative">
+                        <div data-plan="{{ $plan->plan_id }}" class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition duration-150 ease-in-out @if($plan->default){{ ' bg-gradient-to-r from-wave-600 to-indigo-500 hover:from-wave-500 hover:to-indigo-400' }}@else{{ 'bg-gray-800 hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:shadow-outline-gray' }}@endif border border-transparent cursor-pointer rounded-b-md checkout focus:outline-none disabled:opacity-25">
                             @subscribed($plan->slug)
                                 Your subscribed to this plan
                             @notsubscribed
@@ -56,7 +55,7 @@
                             @endsubscribed
                         </div>
                     </div>
-                </div>
+
             </div>
         </div>
 

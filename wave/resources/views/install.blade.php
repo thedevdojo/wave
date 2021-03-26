@@ -23,9 +23,7 @@
                     '--force' => true
                     ]);
 
-                    \Illuminate\Support\Facades\Artisan::call('storage:link', [
-                    '--force' => true
-                    ]);
+                    \Illuminate\Support\Facades\Artisan::call('storage:link');
 
                  @endphp
 

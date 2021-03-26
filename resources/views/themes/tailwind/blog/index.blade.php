@@ -41,23 +41,27 @@
                     	<img class="object-cover w-full h-48" src="{{ $post->image() }}" alt="">
 					</a>
                 </div>
-                <div class="flex flex-col justify-between flex-1 p-6 bg-white">
+                <div class="relative flex flex-col justify-between flex-1 p-6 bg-white">
                     <div class="flex-1">
-                        <p class="text-sm font-medium leading-5 text-indigo-600">
-                            <a href="{{ route('wave.blog.category', $post->category->slug) }}" class="hover:underline" rel="category">
-								{{ $post->category->name }}
-                            </a>
-                        </p>
                         <a href="{{ $post->link() }}" class="block">
                             <h3 class="mt-2 text-xl font-semibold leading-7 text-gray-900">
                                 {{ $post->title }}
                             </h3>
+                        </a>
+                        <a href="{{ $post->link() }}" class="block">
                             <p class="mt-3 text-base leading-6 text-gray-500">
 								{{ substr(strip_tags($post->body), 0, 200) }}@if(strlen(strip_tags($post->body)) > 200){{ '...' }}@endif
                             </p>
                         </a>
                     </div>
-                    <div class="flex items-center mt-6">
+                    <p class="relative self-start inline-block px-2 py-1 mt-4 text-xs font-medium leading-5 text-gray-400 uppercase bg-gray-100 rounded">
+                            <a href="{{ route('wave.blog.category', $post->category->slug) }}" class="text-gray-700 hover:underline" rel="category">
+								{{ $post->category->name }}
+                            </a>
+                        </p>
+                </div>
+
+                <div class="flex items-center p-6 bg-gray-50">
                         <div class="flex-shrink-0">
                             <a href="#">
                                 <img class="w-10 h-10 rounded-full" src="{{ $post->user->avatar() }}" alt="">
@@ -65,16 +69,13 @@
                         </div>
                         <div class="ml-3">
                             <p class="text-sm font-medium leading-5 text-gray-900">
-                                <a href="#" class="hover:underline">{{ $post->user->name }}</a>
+                                Written by <a href="#" class="hover:underline">{{ $post->user->name }}</a>
                             </p>
                             <div class="flex text-sm leading-5 text-gray-500">
-								<time datetime="{{ Carbon\Carbon::parse($post->created_at)->toIso8601String() }}">{{ Carbon\Carbon::parse($post->created_at)->toFormattedDateString() }}</time>
-                                <span class="mx-1">&middot;</span>
-                                <span>6 min read</span>
+								on <time datetime="{{ Carbon\Carbon::parse($post->created_at)->toIso8601String() }}" class="ml-1">{{ Carbon\Carbon::parse($post->created_at)->toFormattedDateString() }}</time>
                             </div>
                         </div>
                     </div>
-                </div>
 
             </article>
 			@endforeach

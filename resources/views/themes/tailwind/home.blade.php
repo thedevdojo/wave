@@ -25,7 +25,6 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="flex w-full mb-16 lg:w-1/2 lg:mb-0">
@@ -191,7 +190,7 @@
     <!-- BEGINNING OF PRICING SECTION -->
     <div id="pricing" class="relative">
 
-        <div class="relative z-20 px-8 pb-20 mx-auto max-w-7xl xl:px-5">
+        <div class="relative z-20 px-8 pb-8 mx-auto max-w-7xl xl:px-5">
             <div class="w-full text-left sm:text-center">
                 <h2 class="pt-12 text-4xl font-extrabold text-gray-900 lg:text-5xl">Example Pricing</h2>
                 <p class="w-full my-1 text-base text-left text-gray-900 opacity-75 sm:my-2 sm:text-center sm:text-xl">It's easy to customize the pricing of your Software as a Service</p>
@@ -199,7 +198,7 @@
 
             @include('theme::partials.plans')
 
-            <p class="w-full my-8 text-left text-gray-500 sm:my-16 sm:text-center">All plans are fully configurable in the Admin Area.</p>
+            <p class="w-full my-8 text-left text-gray-500 sm:my-10 sm:text-center">All plans are fully configurable in the Admin Area.</p>
         </div>
     </div>
     <!-- END OF PRICING SECTION -->
