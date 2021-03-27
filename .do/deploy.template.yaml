@@ -25,10 +25,10 @@ spec:
     # LOG
     - key: LOG_CHANNEL
       scope: RUN_TIME
-      value: stack
+      value: "stack"
     - key: LOG_LEVEL
       scope: RUN_TIME
-      value: debug
+      value: "debug"
     # DATABASE
     - key: DB_CONNECTION
       scope: RUN_TIME
@@ -53,19 +53,19 @@ spec:
     # BROADCAST CACHE QUEUE
     - key: BROADCAST_DRIVER
       scope: RUN_TIME
-      value: log
+      value: "log"
     - key: CACHE_DRIVER
       scope: RUN_TIME
-      value: file
+      value: "file"
     - key: QUEUE_CONNECTION
       scope: RUN_TIME
-      value: sync
+      value: "sync"
     - key: SESSION_DRIVER
       scope: RUN_TIME
-      value: file
+      value: "file"
     - key: SESSION_LIFETIME
       scope: RUN_TIME
-      value: 120
+      value: "120"
     # MEMCACHE
     - key: MEMCACHED_HOST
       scope: RUN_TIME
@@ -76,35 +76,35 @@ spec:
       value: "127.0.0.1"
     - key: REDIS_PASSWORD
       scope: RUN_TIME
-      value: null
+      value: "null"
     - key: REDIS_PORT
       scope: RUN_TIME
-      value: 6379
+      value: "6379"
     # MAIL
     - key: MAIL_MAILER
       scope: RUN_TIME
-      value: smtp
+      value: "smtp"
     - key: MAIL_HOST
       scope: RUN_TIME
-      value: mailhog
+      value: "mailhog"
     - key: MAIL_PORT
       scope: RUN_TIME
-      value: 1025
+      value: "1025"
     - key: MAIL_USERNAME
       scope: RUN_TIME
-      value: null
+      value: "null"
     - key: MAIL_PASSWORD
       scope: RUN_TIME
-      value: null
+      value: "null"
     - key: key
       scope: RUN_TIME
-      value: null
+      value: "null"
     - key: MAIL_ENCRYPTION
       scope: RUN_TIME
-      value: null
+      value: "null"
     - key: MAIL_FROM_ADDRESS
       scope: RUN_TIME
-      value: null
+      value: "null"
     - key: MAIL_FROM_NAME
       scope: RUN_TIME
       value: "${APP_NAME}"
@@ -156,10 +156,10 @@ spec:
       value: ${APP_URL}
     - key: LOG_CHANNEL
       scope: RUN_TIME
-      value: stack
+      value: "stack"
     - key: LOG_LEVEL
       scope: RUN_TIME
-      value: debug
+      value: "debug"
     - key: DB_CONNECTION
       scope: RUN_TIME
       value: "pgsql"
