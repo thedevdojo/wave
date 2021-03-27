@@ -9,7 +9,7 @@
         </div>
 
         <div class="w-auto">
-            <a href="/" class="text-white underline">
+            <a href="https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main" target="_blank" class="text-white underline">
                 <img src="https://www.deploytodo.com/do-btn-white.svg" class="w-auto h-8">
             </a>
         </div>

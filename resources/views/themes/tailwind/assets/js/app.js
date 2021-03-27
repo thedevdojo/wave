@@ -125,3 +125,15 @@ window.checkoutCancel = function(data){
 /***** End Payment Success Functionality */
 
 /********** End Billing Checkout Functionality ***********/
+
+
+/********** Switch Plans Button Click ***********/
+
+window.switchPlans = function(plan_id, plan_name){
+    document.getElementById('switchPlansModal').__x.$data.open = true;
+    document.getElementById('switchPlansModal').__x.$data.plan_name = plan_name;
+    document.getElementById('switchPlansModal').__x.$data.plan_id = plan_id;
+}
+
+
+/********** Switch Plans Button Click ***********/

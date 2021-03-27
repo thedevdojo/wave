@@ -56,16 +56,11 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('notification/read/{id}', '\Wave\Http\Controllers\NotificationController@delete')->name('wave.notification.read');
 
     /********** Checkout/Billing Routes ***********/
-    Route::post('cancel', '\Wave\Http\Controllers\SubscriptionController@cancel')->name('cancel');
+    Route::post('cancel', '\Wave\Http\Controllers\SubscriptionController@cancel')->name('wave.cancel');
     Route::view('checkout/welcome', 'theme::welcome');
 
     Route::post('subscribe', '\Wave\Http\Controllers\SubscriptionController@subscribe')->name('wave.subscribe');
 	Route::view('trial_over', 'theme::trial_over')->name('wave.trial_over');
 	Route::view('cancelled', 'theme::cancelled')->name('wave.cancelled');
-
-    Route::get('subscription/cancel', '\Wave\Http\Controllers\SubscriptionController@cancel')->name('wave.cancel');
-	Route::get('subscription/reactivate', '\Wave\Http\Controllers\SubscriptionController@reactivate')->name('wave.reactivate');
-	Route::post('plans/update', '\Wave\Http\Controllers\SubscriptionController@update_plans')->name('wave.update_plan');
-	Route::post('update_credit_card', '\Wave\Http\Controllers\SubscriptionController@update_credit_card')->name('wave.update_credit_card');
-
+    Route::post('switch-plans', '\Wave\Http\Controllers\SubscriptionController@switchPlans')->name('wave.switch-plans');
 });

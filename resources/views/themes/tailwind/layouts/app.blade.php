@@ -78,7 +78,7 @@
 
     @include('theme::partials.toast')
     @if(session('message'))
-        <script>popToast("{{ session('message_type') }}", "{{ session('message') }}");</script>
+        <script>setTimeout(function(){ popToast("{{ session('message_type') }}", "{{ session('message') }}"); }, 10);</script>
     @endif
     @waveCheckout
 
