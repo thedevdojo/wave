@@ -10,15 +10,26 @@ spec:
     - key: APP_NAME
       scope: RUN_TIME
       value:  Wave
+    - key: APP_ENV
+      scope: RUN_TIME
+      value: production
     - key: APP_KEY
       scope: RUN_TIME
       value: "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8="
-    - key: APP_URL
-      scope: RUN_TIME
-      value: ${APP_URL}
     - key: APP_DEBUG
       scope: RUN_TIME
       value: "false"
+    - key: APP_URL
+      scope: RUN_TIME
+      value: ${APP_URL}
+    # LOG
+    - key: LOG_CHANNEL
+      scope: RUN_TIME
+      value: stack
+    - key: LOG_LEVEL
+      scope: RUN_TIME
+      value: debug
+    # DATABASE
     - key: DB_CONNECTION
       scope: RUN_TIME
       value: "pgsql"
@@ -39,6 +50,65 @@ spec:
       scope: RUN_TIME
       value: ${wave-db.PASSWORD}
       type: SECRET
+    # BROADCAST CACHE QUEUE
+    - key: BROADCAST_DRIVER
+      scope: RUN_TIME
+      value: log
+    - key: CACHE_DRIVER
+      scope: RUN_TIME
+      value: file
+    - key: QUEUE_CONNECTION
+      scope: RUN_TIME
+      value: sync
+    - key: SESSION_DRIVER
+      scope: RUN_TIME
+      value: file
+    - key: SESSION_LIFETIME
+      scope: RUN_TIME
+      value: 120
+    # MEMCACHE
+    - key: MEMCACHED_HOST
+      scope: RUN_TIME
+      value: "127.0.0.1"
+    # REDIS
+    - key: REDIS_HOST
+      scope: RUN_TIME
+      value: "127.0.0.1"
+    - key: REDIS_PASSWORD
+      scope: RUN_TIME
+      value: null
+    - key: REDIS_PORT
+      scope: RUN_TIME
+      value: 6379
+    # MAIL
+    - key: MAIL_MAILER
+      scope: RUN_TIME
+      value: smtp
+    - key: MAIL_HOST
+      scope: RUN_TIME
+      value: mailhog
+    - key: MAIL_PORT
+      scope: RUN_TIME
+      value: 1025
+    - key: MAIL_USERNAME
+      scope: RUN_TIME
+      value: null
+    - key: MAIL_PASSWORD
+      scope: RUN_TIME
+      value: null
+    - key: key
+      scope: RUN_TIME
+      value: null
+    - key: MAIL_ENCRYPTION
+      scope: RUN_TIME
+      value: null
+    - key: MAIL_FROM_ADDRESS
+      scope: RUN_TIME
+      value: null
+    - key: MAIL_FROM_NAME
+      scope: RUN_TIME
+      value: "${APP_NAME}"
+    # Begin of DO VARS
     - key: DO_SPACES
       scope: RUN_TIME
       value: "false"
@@ -72,15 +142,24 @@ spec:
     - key: APP_NAME
       scope: RUN_TIME
       value:  Wave
+    - key: APP_ENV
+      scope: RUN_TIME
+      value: production
     - key: APP_KEY
       scope: RUN_TIME
       value: "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8="
-    - key: APP_URL
-      scope: RUN_TIME
-      value: ${APP_URL}
     - key: APP_DEBUG
       scope: RUN_TIME
       value: "false"
+    - key: APP_URL
+      scope: RUN_TIME
+      value: ${APP_URL}
+    - key: LOG_CHANNEL
+      scope: RUN_TIME
+      value: stack
+    - key: LOG_LEVEL
+      scope: RUN_TIME
+      value: debug
     - key: DB_CONNECTION
       scope: RUN_TIME
       value: "pgsql"
