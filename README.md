@@ -1,22 +1,22 @@
-<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/wave.svg" width="240"></a></p>
+<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/wave-logo-github.svg" width="240"></a></p>
 
 
 ## Introduction
 
 [Wave](https://devdojo.com/wave) is a Software as a Service Starter Kit that can help you build your next great idea 💰. Wave is built with [Laravel](https://laravel.com), [Voyager](https://voyager.devdojo.com), [TailwindCSS](https://tailwindcss.com), and a few other awesome technologies. Here are some of the awesome features ✨:
 
- - [Authentication](https://wave.devdojo.com/)
- - User Profiles
- - User Impersonation
- - Subscriptions
- - Subscription Plans
- - User Roles
- - Notifications
- - Announcements
- - Fully Functional Blog
- - Out of the Box API
- - Voyager Admin
- - Customizable Themes
+ - [Authentication](https://wave.devdojo.com/docs/features/authentication)
+ - [User Profiles](https://wave.devdojo.com/docs/features/user-profiles)
+ - [User Impersonation](https://wave.devdojo.com/docs/features/user-impersonation)
+ - [Subscriptions](https://wave.devdojo.com/docs/features/billing)
+ - [Subscription Plans](https://wave.devdojo.com/docs/features/subscription-plans)
+ - [User Roles](https://wave.devdojo.com/docs/features/user-roles)
+ - [Notifications](https://wave.devdojo.com/docs/features/notifications)
+ - [Announcements](https://wave.devdojo.com/docs/features/announcements)
+ - [Fully Functional Blog](https://wave.devdojo.com/docs/features/blog)
+ - [Out of the Box API](https://wave.devdojo.com/docs/features/api)
+ - [Voyager Admin](https://wave.devdojo.com/docs/features/admin)
+ - [Customizable Themes](https://wave.devdojo.com/docs/features/themes)
 
 
 ## Demo
