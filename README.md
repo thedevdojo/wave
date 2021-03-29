@@ -36,6 +36,6 @@ We've also got a full video series on how you can setup, build, and configure Wa
 [Click here to watch the Wave Video Series](https://devdojo.com/course/wave).
 
 
-## Documentation 📘
+## Documentation
 
 Checkout the [official documentation here](https://wave.devdojo.com/docs).

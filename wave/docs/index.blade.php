@@ -11,10 +11,11 @@
     <link rel="stylesheet" href="/wave/docs/assets/css/app.css">
     <style>.algolia-autocomplete{width:100%}</style>
 
-    <!-- Before the closing </head> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2.6.3/dist/cdn/docsearch.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/night-owl.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+
+    <!-- at the end of the HEAD -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
 
 
 </head>
@@ -27,7 +28,7 @@
     <div class="flex h-screen antialiased bg-white docs">
 
         {{-- sidebar --}}
-        <div class="fixed top-0 left-0 hidden w-64 h-screen py-4 pr-3 overflow-y-auto bg-white border-r border-gray-200 select-none categories lg:flex lg:flex-col">
+        <div class="fixed top-0 left-0 hidden w-64 h-screen py-4 pr-3 overflow-visible bg-white border-r border-gray-200 select-none categories lg:flex lg:flex-col">
             <h1 class="px-5 text-sm font-bold text-black">Wave<span class="ml-1 text-xs font-medium text-blue-500 uppercase">docs</span></h1>
 
             <div class="relative flex items-center w-full pl-4 mt-5 mb-5 text-gray-400">
@@ -95,23 +96,17 @@
     </div>
 
     <script src="/wave/docs/assets/js/app.js"></script>
-    <!-- Before the closing </body> -->
-    <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2.6.3/dist/cdn/docsearch.min.js"></script>
-    <script>
-    docsearch({
-        // Your apiKey and indexName will be given to you once
-        // we create your config
-        apiKey: 'f0f57285cd570a2c59a70087c0d3ed69',
-        indexName: 'media',
-        appId: 'XH97EKBGNS',
-        //appId: '<APP_ID>', // Should be only included if you are running DocSearch on your own.
-        // Replace inputSelector with a CSS selector
-        // matching your search input
+    <!-- at the end of the BODY -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+        <script type="text/javascript"> docsearch({
+        apiKey: '57b9a8aca979f9716f86aa3d2b75a415',
+        indexName: 'devdojo',
         inputSelector: '.search',
-        // Set debug to true to inspect the dropdown
-        debug: false,
-    });
-    </script>
+        debug: false // Set debug to true if you want to inspect the dropdown
+        });
+        </script>
+
+
     <script>hljs.initHighlightingOnLoad();</script>
 
     <script>
