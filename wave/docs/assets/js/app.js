@@ -99,6 +99,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(alpinejs__WEBPACK_IMPORTED_MODULE_0__);
 
 
+window.inIframe = function () {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (inIframe()) {
+    hideIframeElements();
+  }
+});
+
+window.hideIframeElements = function () {
+  document.getElementById('backToSiteBtn').classList.add('hidden');
+};
+
 /***/ }),
 
 /***/ "./assets/app.scss":

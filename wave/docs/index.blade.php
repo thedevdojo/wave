@@ -16,12 +16,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/night-owl.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
 
+
 </head>
 
 <body>
 
     <!-- Full page fadeout -->
-    <div class="fixed inset-0 z-50 w-screen h-screen transition duration-200 ease-in bg-white" x-data="{}" x-init="() => { $el.classList.add('opacity-0'); setTimeout(function(){ $el.remove() }, 200); }"></div>
+    <div class="fixed inset-0 z-50 w-screen h-screen transition duration-200 ease-in bg-white" x-data="{ backToSite: true }" x-init="() => { $el.classList.add('opacity-0'); setTimeout(function(){ $el.remove() }, 200); }"></div>
 
     <div class="flex h-screen antialiased bg-white docs">
 
@@ -58,9 +59,17 @@
                 </div>
             @endforeach
 
-            <div class="flex items-center justify-between pl-5 mt-auto">
 
-                <a href="{{ url('/') }}" class="flex items-center text-xs font-bold text-blue-500 no-underline hover:text-black">
+            <div class="flex flex-col items-start justify-between mt-auto">
+
+                <a href="https://devdojo.com/course/wave" target="_blank" class="flex items-center justify-between w-full py-2 pl-5 pr-3 transition duration-150 ease-in-out rounded-r-lg cursor-pointer hover:bg-wave-100 bg-wave-50 group hover:text-gray-800">
+                    <span class="flex items-center">🍿
+                        <span class="ml-2 text-sm font-medium text-wave-500">Video Tutorials</span>
+                    </span>
+                    <svg class="w-4 h-4 ml-1 align-end text-wave-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg>
+                </a>
+
+                <a id="backToSiteBtn" href="{{ url('/') }}" class="flex items-center pl-5 mt-4 text-xs font-bold text-blue-500 no-underline hover:text-black">
                     <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Back to My Site
                 </a>
