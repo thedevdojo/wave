@@ -1,27 +1,41 @@
 # Installation
 
-- [Requirements](/docs/{{version}}/installation#requirements)
-- [Download](/docs/{{version}}/installation#download)
-- [Unzip Files](/docs/{{version}}/installation#unzip)
-- [Install](/docs/{{version}}/installation#install)
-- [Login](/docs/{{version}}/installation#login)
+- [Installing on Digital Ocean](#install-do)
+- [Installing on Your Machine](#install-local)
+- [Logging into Your Application](/docs/{{version}}/installation#login)
 
 ---
 
+<a name="install-do"></a>
+## Installation on Digital Ocean
+
+![](https://cdn.devdojo.com/images/march2021/wave-on-do.png)
+
+If you use Digital Ocean, you're in luck. You can easily start surfing the Wave(s) on DigitalOcean with our <a href="https://www.digitalocean.com/products/app-platform/" target="_blank">DO App Platform</a> integration. Not using DigitalOcean? <a href="https://m.do.co/c/dc19b9819d06" target="_blank">Get $100 in free DigitalOcean credit here</a>. 💵
+
+Here are 4 simple steps to get started with your new SAAS on Digital Ocean.
+
+1. [🍴 Fork The Repo](#fork-repo)
+2. [🚀 Deploy to Digital Ocean](#deploy-to-do)
+3. [🔐 Change Your Repo Privacy](#repo-privacy)
+4. [🤓 Start Building](#start-building)
+
+---
+
+<a name="fork-repo"></a>
+### 🍴 Fork The Repo
+
+You may also setup your own copy of Wave by installing it to <a href="https://m.do.co/c/dc19b9819d06" target="_blank">Digital Ocean</a> by clicking the button below.
+
+<a href="https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main" target="_blank"><img src="https://www.deploytodo.com/do-btn-blue.svg" width="240" alt="Deploy to DO"></a>
+
+<a name="install-local"></a>
+## Installation on Your Local Machine
+
 <a name="requirements"></a>
-## Requirements
+### Requirements
 
-Wave has been crafted with the latest version of Laravel (6) and Voyager (1), which have a few server requirements before installing. Here are the following Server Requirements:
-
-- PHP >= 7.2.0
-- BCMath PHP Extension
-- Ctype PHP Extension
-- JSON PHP Extension
-- Mbstring PHP Extension
-- OpenSSL PHP Extension
-- PDO PHP Extension
-- Tokenizer PHP Extension
-- XML PHP Extension
+Wave is built on Laravel 8 and will require the minimum server requeirements [explained here](https://laravel.com/docs/deployment#server-requirements).
 
 <a name="download"></a>
 ## Downloading Wave

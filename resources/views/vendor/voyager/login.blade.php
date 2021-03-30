@@ -10,11 +10,7 @@
     <link rel="stylesheet" href="{{ voyager_asset('css/app.css') }}">
     <style>
         #left-login{
-            height: 100vh;
-            background: url('{{ Voyager::image( Voyager::setting("admin.bg_image"), voyager_asset("images/bg.jpg") ) }}');
-            background-size: cover;
-            min-height: 100%;
-            background-position:right center;
+            background:none;
         }
     </style>
     @if (config('voyager.multilingual.rtl'))
@@ -27,7 +23,11 @@
             background-color: {{ Voyager::setting("admin.bg_color", "#FFFFFF" ) }};
         }
         body.login .login-sidebar {
-            border-top:5px solid {{ config('voyager.primary_color','#22A7F0') }};
+            border-top:0px;
+            background: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
         @media (max-width: 767px) {
             body.login .login-sidebar {
@@ -40,6 +40,9 @@
         }
         .login-button, .bar:before, .bar:after{
             background:{{ config('voyager.primary_color','#22A7F0') }};
+        }
+        body.login .login-container p{
+            color:#fff;
         }
     </style>
 
@@ -91,7 +94,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-block login-button">
-                        <span class="signingin hidden"><span class="voyager-refresh"></span> {{ __('voyager::login.loggingin') }}...</span>
+                        <span class="hidden signingin"><span class="voyager-refresh"></span> {{ __('voyager::login.loggingin') }}...</span>
                         <span class="signin">{{ __('voyager::generic.login') }}</span>
                     </button>
 

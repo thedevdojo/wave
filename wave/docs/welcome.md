@@ -36,7 +36,7 @@ Let's set sail and build this together ⛵
 
 <a name="features"></a>
 
-## Features
+## ⚒️ Features
 Wave has some bad-ass features that I think you'll really dig. Here is a list of those features as well as a quick link to each section.
 
 - [**Authentication**](/docs/features/authentication) - Fully loaded authentication, email verification, and password reset.
@@ -66,17 +66,15 @@ Wave has some bad-ass features that I think you'll really dig. Here is a list of
 ---
 
 <a name="demo"></a>
-## Demo
+## 🏄‍♂️ Demo
 
-> Want to see a live demo?
-
-Be sure to check out the <a href="https://wave.devdojo.com" target="_blank">Wave Demo</a>.
+Would you like to see a demo of Wave? <a href="https://wave.devdojo.com" target="_blank">Click here</a> to check out the official <a href="https://wave.devdojo.com" target="_blank">Wave Demo</a>.
 
 If you would like to get additional help and show your support for the ongoing development of this project, be sure to signup for a <a href="https://devdojo.com/pro" target="_blank">DevDojo Pro Account</a>
 
 ---
 
 <a name="installation"></a>
-## Installation
+## ⚙️ Installation
 
-Building your SAAS Application is going to be Fun! Next, you may want to learn how to [install Wave](/docs/installation).
+Ready to get started? Let's move on to the next section where you will learn how to [install Wave](/docs/installation).
