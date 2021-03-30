@@ -1,22 +1,43 @@
 Wave is a SAAS framework built using [Laravel](https://laravel.com) and [Voyager](https://voyager.devdojo.com)
 
----
+<br>
 
 - [Welcome](#welcome)
+- [Support](#support)
 - [Features](#features)
 - [Demo](#demo)
+- [Installation](#installation)
+
+<br>
 
 <a name="welcome"></a>
-## Welcome
+## 👋 Welcome
 
 
-Welcome to the Wave documentation. These docs have been created to help you craft the next greatest Software as a Service!
+Welcome to the Wave documentation. These docs will help you navigate the open seas of SAAS creation. They will help you learn how to install, configure, and use Wave. This will be your guide on your journey to creating your own money-making Software as a Service.
 
-The Wave SAAS Starter kit will help you build a Software as a Service in record time. Wave is packed with so many awesome features. Below is a quick breakdown of these features.
+---
+
+<a name="support"></a>
+## 🚀 Support and Pro Access
+
+Wave is an Open Source project, which means that you can use it for free; however, we still need a way to keep this project going strong. Here's how you can help make this happen.
+
+<a href="https://devdojo.com/pro" target="_blank">Signup for a DevDojo Pro account</a>, to get the following:
+
+- Gain access to the <a href="https://devdojo.com/wave#pro" target="_blank">Wave Private Repo</a> to discuss issues and improvements.
+- Gain access to <a href="https://devdojo.com/wave/pro" target="_blank">Tails</a> and build an awesome landing page for your SAAS
+- Do your part in making this project even more awesome peace ✌️
+- And <a href="https://devdojo.com/pro" target="_blank">many more perks</a>!
+
+Let's set sail and build this together ⛵
+
+---
 
 <a name="features"></a>
 
 ## Features
+Wave has some bad-ass features that I think you'll really dig. Here is a list of those features as well as a quick link to each section.
 
 - [**Authentication**](/docs/features/authentication) - Fully loaded authentication, email verification, and password reset.
 
@@ -42,6 +63,8 @@ The Wave SAAS Starter kit will help you build a Software as a Service in record 
 
 - [**Themes**](/docs/features/themes) - Fully configurable themes.
 
+---
+
 <a name="demo"></a>
 ## Demo
 
@@ -52,5 +75,8 @@ Be sure to check out the <a href="https://wave.devdojo.com" target="_blank">Wave
 If you would like to get additional help and show your support for the ongoing development of this project, be sure to signup for a <a href="https://devdojo.com/pro" target="_blank">DevDojo Pro Account</a>
 
 ---
+
+<a name="installation"></a>
+## Installation
 
 Building your SAAS Application is going to be Fun! Next, you may want to learn how to [install Wave](/docs/installation).
