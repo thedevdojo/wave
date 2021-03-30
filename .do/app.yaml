@@ -49,7 +49,7 @@ services:
   github:
     branch: main
     deploy_on_push: true
-    repo: tnylea/wave
+    repo: thedevdojo/wave
   http_port: 8080
   instance_count: 1
   instance_size_slug: basic-xs
@@ -60,7 +60,7 @@ jobs:
 - name: migrate
   kind: POST_DEPLOY
   github:
-    repo: tnylea/wave
+    repo: thedevdojo/wave
     branch: main
     deploy_on_push: true
   run_command: php artisan migrate --seed
