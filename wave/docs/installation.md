@@ -23,11 +23,77 @@ Here are 4 simple steps to get started with your new SAAS on Digital Ocean.
 ---
 
 <a name="fork-repo"></a>
-### 🍴 Fork The Repo
+### 1. 🍴 Fork The Repo
 
+First, you'll need to fork the repo: <a href="https://github.com/thedevdojo/wave" target="_blank">https://github.com/thedevdojo/wave</a>.
+
+Next, you may want to visit the **settings** tab of your new repo to change the name of your new project. In the example below we have changed our repo name to `fluffy_bunnies` 🐇. Give it a name that's related to the name of your SAAS.
+
+![install-repo-name.png](https://cdn.devdojo.com/images/march2021/install-repo-name.png)
+
+Next, we need to change a few configuration files inside the `/.do` directory. You can edit these directly on github. Inside this folder you will see `app.yaml`, and `deploy.template.yaml`. Find and replace `thedevdojo/wave` with your repo name.
+
+![install-name-change.png](https://cdn.devdojo.com/images/march2021/install-name-change.png)
+
+Do a search for all instances of `thedevdojo/wave` and replace it with the name of your repo. Make sure you do this in both files and then we can move on to deploying your new SAAS on DigitalOcean.
+
+### 2. 🚀 Deploy to Digital Ocean
+
+Ok, now you're ready to deploy your application to DigitalOcean.
+
+Enter in your repo name below and then click the Deploy to DigitalOcean button.
+
+<div class="relative" x-data="{ repo: 'thedevdojo/wave' }">
+<div class="flex inline-block max-w-sm mt-1 border border-gray-300 rounded-md shadow-sm">
+    <span class="inline-flex items-center px-3 text-gray-500 border-r border-gray-300 rounded-l-md bg-gray-50 sm:text-sm">https://github.com/</span>
+    <input type="text" value="" name="repo_name" x-model="repo" placeholder="thedevdojo/wave" class="flex-1 block w-full min-w-0 px-3 py-2 border-gray-300 rounded-none rounded-r-m focus:appearance-none focus:border-none sm:text-sm">
+
+</div>
+
+ <a :href="'https://cloud.digitalocean.com/apps/new?repo=https://github.com/' + repo + '/tree/main'" target="_blank" class="cursor-pointer"><img src="https://www.deploytodo.com/do-btn-blue.svg" width="240" height="auto" class="my-0 cursor-pointer" alt="Deploy to DO"></a>
+
+Optionally, you may manually visit this URL: `https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main` and replacing `thedevdojo/wave` with your repo name.
+
+### Follow the Steps in App Platform
+
+Now, you can follow each of the setup steps in the DigitalOcean App Platform. Scroll to the bottom of each step and click the Next Button.
+
+![install-do-1.png](https://cdn.devdojo.com/images/march2021/install-do-1.png)
+
+![install-do-2.png](https://cdn.devdojo.com/images/march2021/install-do-2.png)
+
+On the last step, you can choose the basic or the pro size. You can always change this later. Scroll down to the bottom and click 'Launch App'.
+
+![install-do-3.png](https://cdn.devdojo.com/images/march2021/install-do-3.png)
+
+Now, it may take a few minutes for your server to boot up with the Wave Script, and after it has completed you'll see a message similar to the following.
+
+![do-step-final.png](https://cdn.devdojo.com/images/march2021/do-step-final.png)
+
+You'll also notice that there is a link where you can visit to see your application live. Go ahead and click that URL and you'll see the following welcome Wave screen.
+
+![welcome-wave.png](https://cdn.devdojo.com/images/march2021/welcome-wave.png)
+
+Click on the continue button, and if everything went well, you'll see the following confirmation page.
+
+![welcome-wave-1.png](https://cdn.devdojo.com/images/march2021/welcome-wave-1.png)
+
+Finally, click on the Continue button and you'll see your new SAAS application in front of your eyes 🤯
+
+![wave-app.png](https://cdn.devdojo.com/images/march2021/wave-app.png)
+
+Just like that you have a new SAAS application up on a live server and your masterpeice is awaiting its creation.
+
+
+
+Click on the fork repo button to fork it into one of your own repos.
 You may also setup your own copy of Wave by installing it to <a href="https://m.do.co/c/dc19b9819d06" target="_blank">Digital Ocean</a> by clicking the button below.
 
-<a href="https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main" target="_blank"><img src="https://www.deploytodo.com/do-btn-blue.svg" width="240" alt="Deploy to DO"></a>
+<div class="relative" x-data="{ hello: 'msg' }">
+    <span x-text="hello"></span>
+</div>
+
+
 
 <a name="install-local"></a>
 ## Installation on Your Local Machine
