@@ -1,157 +1,30 @@
 # Installation
 
-- [Installing on Digital Ocean](#install-do)
-- [Installing on Your Machine](#install-local)
-- [Logging into Your Application](/docs/{{version}}/installation#login)
+- [Install Wave](#install-wave)
+- [Create a New Repo](#create-repo)
+- [Deploy to DigitalOcean](#deploy-to-digitalocean)
+- [Logging into Your Application](#login)
 
 ---
 
-<a name="install-do"></a>
-## Installation on Digital Ocean
+<a name="install-wave"></a>
+## Install Wave
 
-![](https://cdn.devdojo.com/images/march2021/wave-on-do.png)
+Before installing wave you will need to make sure you have the minimum <a href="https://laravel.com/docs/deployment#server-requirements" target="_blank">server requirements</a> and then you'll want to clone the repo to your machine.
 
-If you use Digital Ocean, you're in luck. You can easily start surfing the Wave(s) on DigitalOcean with our <a href="https://www.digitalocean.com/products/app-platform/" target="_blank">DO App Platform</a> integration. Not using DigitalOcean? <a href="https://m.do.co/c/dc19b9819d06" target="_blank">Get $100 in free DigitalOcean credit here</a>. 💵
+### Clone the Repo
 
-Here are 4 simple steps to get started with your new SAAS on Digital Ocean.
+You can clone the repo onto your local machine with the following command:
 
-1. [🍴 Fork The Repo](#fork-repo)
-2. [🚀 Deploy to Digital Ocean](#deploy-to-do)
-3. [🔐 Change Your Repo Privacy](#repo-privacy)
-4. [🤓 Start Building](#start-building)
+```
+git clone https://github.com/thedevdojo/wave.git project_name
+```
+
+Change `project_name` with the name of your project. Optionally, you may want to create a [new Github Repo for your project](#create-repo).
 
 ---
 
-<a name="fork-repo"></a>
-### 1. 🍴 Fork The Repo
-
-First, you'll need to fork the repo: <a href="https://github.com/thedevdojo/wave" target="_blank">https://github.com/thedevdojo/wave</a>.
-
-Next, you may want to visit the **settings** tab of your new repo to change the name of your new project. In the example below we have changed our repo name to `fluffy_bunnies` 🐇. Give it a name that's related to the name of your SAAS.
-
-![install-repo-name.png](https://cdn.devdojo.com/images/march2021/install-repo-name.png)
-
-Next, we need to change a few configuration files inside the `/.do` directory. You can edit these directly on github. Inside this folder you will see `app.yaml`, and `deploy.template.yaml`. Find and replace `thedevdojo/wave` with your repo name.
-
-![install-name-change.png](https://cdn.devdojo.com/images/march2021/install-name-change.png)
-
-Do a search for all instances of `thedevdojo/wave` and replace it with the name of your repo. Make sure you do this in both files and then we can move on to deploying your new SAAS on DigitalOcean.
-
-### 2. 🚀 Deploy to Digital Ocean
-
-Ok, now you're ready to deploy your application to DigitalOcean.
-
-Enter in your repo name below and then click the Deploy to DigitalOcean button.
-
-<div class="relative" x-data="{ repo: 'thedevdojo/wave' }">
-<div class="flex inline-block max-w-sm mt-1 border border-gray-300 rounded-md shadow-sm">
-    <span class="inline-flex items-center px-3 text-gray-500 border-r border-gray-300 rounded-l-md bg-gray-50 sm:text-sm">https://github.com/</span>
-    <input type="text" value="" name="repo_name" x-model="repo" placeholder="thedevdojo/wave" class="flex-1 block w-full min-w-0 px-3 py-2 border-gray-300 rounded-none rounded-r-m focus:appearance-none focus:border-none sm:text-sm">
-
-</div>
-
- <a :href="'https://cloud.digitalocean.com/apps/new?repo=https://github.com/' + repo + '/tree/main'" target="_blank" class="cursor-pointer"><img src="https://www.deploytodo.com/do-btn-blue.svg" width="240" height="auto" class="my-0 cursor-pointer" alt="Deploy to DO"></a>
-
-Optionally, you may manually visit this URL: `https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main` and replacing `thedevdojo/wave` with your repo name.
-
-### Follow the Steps in App Platform
-
-Now, you can follow each of the setup steps in the DigitalOcean App Platform. Scroll to the bottom of each step and click the Next Button.
-
-![install-do-1.png](https://cdn.devdojo.com/images/march2021/install-do-1.png)
-
-![install-do-2.png](https://cdn.devdojo.com/images/march2021/install-do-2.png)
-
-On the last step, you can choose the basic or the pro size. You can always change this later. Scroll down to the bottom and click 'Launch App'.
-
-![install-do-3.png](https://cdn.devdojo.com/images/march2021/install-do-3.png)
-
-Now, it may take a few minutes for your server to boot up with the Wave Script, and after it has completed you'll see a message similar to the following.
-
-![do-step-final.png](https://cdn.devdojo.com/images/march2021/do-step-final.png)
-
-You'll also notice that there is a link where you can visit to see your application live. Go ahead and click that URL and you'll see the following welcome Wave screen.
-
-![welcome-wave.png](https://cdn.devdojo.com/images/march2021/welcome-wave.png)
-
-Click on the continue button, and if everything went well, you'll see the following confirmation page.
-
-![welcome-wave-1.png](https://cdn.devdojo.com/images/march2021/welcome-wave-1.png)
-
-Finally, click on the Continue button and you'll see your new SAAS application in front of your eyes 🤯
-
-![wave-app.png](https://cdn.devdojo.com/images/march2021/wave-app.png)
-
-Just like that you have a new SAAS application up on a live server and your masterpeice is awaiting its creation.
-
-
-
-Click on the fork repo button to fork it into one of your own repos.
-You may also setup your own copy of Wave by installing it to <a href="https://m.do.co/c/dc19b9819d06" target="_blank">Digital Ocean</a> by clicking the button below.
-
-<div class="relative" x-data="{ hello: 'msg' }">
-    <span x-text="hello"></span>
-</div>
-
-
-
-<a name="install-local"></a>
-## Installation on Your Local Machine
-
-<a name="requirements"></a>
-### Requirements
-
-Wave is built on Laravel 8 and will require the minimum server requeirements [explained here](https://laravel.com/docs/deployment#server-requirements).
-
-<a name="download"></a>
-## Downloading Wave
-
-Before you can install Wave, you will need to download the latest version from the product download page: [https://devdojo.com/scripts/php/wave](https://devdojo.com/scripts/php/wave)
-
-> {warning} In order to download a copy of Wave with a year of updates and support you must be a **Premium Subscriber** on the DevDojo.
-
-If you have any issues with downloading please be sure to post it in the [forums](https://devdojo.com/forums/category/wave).
-
-<a name="unzip"></a>
-## Unzipping the Files
-After downloading the latest version of Wave you will need to extract the zip file and rename the folder to your choosing. You will then need to place this folder in your sites folder or the web folder for your server.
-
-Inside the unzipped folder you should see the following file contents:
-
-- **app**
-- **bootstrap**
-- **config**
-- **database**
-- **hooks**
-- **public**
-- **resources**
-- **routes**
-- **storage**
-- **tests**
-- **wave**
-- .env.example
-- artisan
-- composer.json
-- composer.lock
-- phpunit.xml
-- README.md
-- server.php
-
-> {info} The list items in bold represent folders and the remaining list items represent files.
-
-Next, we are ready to begin the installation.
-
-<a name="install"></a>
-## Installing Wave
-
-We can install Wave in 4 easy steps:
-
-1. Create a Database
-2. Copy the `.env.example` file
-3. Composer Install
-4. Migrate Database
-
-We'll cover how to do each step below:
+Ok, now we can easily install Wave with these **4 simple steps**:
 
 ### 1. Create a New Database
 
@@ -199,16 +72,120 @@ php artisan db:seed
 
 🎉 And that's it! You will now be able to visit your URL and see your Wave application up and running.
 
----
 
-> {warning} For security measures you may want to regenerate your application key, be sure to run the following command below to secure your site before going live.
+> For security measures you may want to regenerate your application key, be sure to run the following command below to secure your site before going live.
 
 ```php
 php artisan key:generate
 ```
 
+---
+
+<a name="create-repo"></a>
+
+## Create a New Repo
+
+In most cases it's a good idea to create a separate repo for your new project. This will also make it easier to [deploy our application to DigitalOcean](#deploy-to-do).
+
+If you are logged into your Github account, you can go to <a href="https://github.com/new" target="_blank">https://github.com/new</a> to create a new repository. Give it a name associated with your SAAS and click **Create Repository** (Keep this repo as public for now if you wish to deploy to DigitalOcean)
+
+![create-repo.png](https://cdn.devdojo.com/images/march2021/create-repo.png)
+
+After you click on create repo, you will need to open up the command line and `cd` into your `project_name` folder and run the following commands, replacing `tnylea/project_name` with the name of your repo:
+
+```
+rm -rf .git/
+git init
+git add --all
+git commit -m "first commit for my SAAS"
+git branch -M main
+git remote add origin https://github.com/tnylea/project_name.git
+git push -u origin main
+```
+
+If you refresh your Github Repository you should see that it now contains the files for your new SAAS application.
+
+![repo-new.png](https://cdn.devdojo.com/images/march2021/repo-new.png)
+
+---
+
+
+<a name="deploy-to-digitalocean"></a>
+## Deploy to Digital Ocean
+
+![](https://cdn.devdojo.com/images/march2021/wave-on-do.png)
+
+If you use Digital Ocean, you're in luck. You can easily start surfing the Wave(s) on DigitalOcean with our <a href="https://www.digitalocean.com/products/app-platform/" target="_blank">DO App Platform</a> integration. Not using DigitalOcean? <a href="https://m.do.co/c/dc19b9819d06" target="_blank">Get $100 in free DigitalOcean credit here</a>. 💵
+
+Here are 3 simple steps to get started with your new SAAS on Digital Ocean.
+
+1. [✏️ Update Repo Name](#update-repo-name)
+2. [🚀 Deploy to DO](#deploy-to-do)
+3. [🤓 Start Building Your SAAS](#start-building)
+
+---
+
+<a name="update-repo-name"></a>
+### 1. ✏️ Update Repo Name
+
+First, we need to change a few configuration files inside the `/.do` directory. You can edit these directly on github. Inside this folder you will see `app.yaml`, and `deploy.template.yaml`. Find and replace `thedevdojo/wave` with your repo name.
+
+![github-update-name.png](https://cdn.devdojo.com/images/march2021/github-update-name.png)
+
+Additionally, you'll need to edit the `Readme.md` and replace `thedevdojo/wave` with your repo name.
+
+Do a search for all instances of `thedevdojo/wave` and replace it with the name of your repo in these 3 files and then we're ready to deploy your SAAS to DigitalOcean.
+
+<a name="deploy-to-do"></a>
+### 2. 🚀 Deploy to Digital Ocean
+
+Ok, now you're ready to deploy your application to DigitalOcean. It's as simple as clicking the **Deploy to Do Button** inside your project repo Readme file.
+
+Optionally, you can manually visit this URL, replacing `thedevdojo/wave` with your repo name.
+
+`https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main`
+
+#### Follow the Steps in App Platform
+
+Now, you can follow each of the setup steps in the DigitalOcean App Platform. Scroll to the bottom of each step and click the Next Button.
+
+![do-step-1.png](https://cdn.devdojo.com/images/march2021/do-step-1.png)
+![do-step-2.png](https://cdn.devdojo.com/images/march2021/do-step-2.png)
+
+On the last step, you can choose the basic or the pro size. You can always change this later. Scroll down to the bottom and click 'Launch App'.
+
+![do-step-3.png](https://cdn.devdojo.com/images/march2021/do-step-3.png)
+
+Now, it may take a few minutes for your server to boot up with the Wave Script. You should see a loading screen similar to the following screenshot.
+
+![do-step-4.png](https://cdn.devdojo.com/images/march2021/do-step-4.png)
+
+and after it has completed you'll see a message similar to the following.
+
+![do-final-step.png](https://cdn.devdojo.com/images/march2021/do-final-step.png)
+
+You'll also notice that there is a link where you can visit to see your application live. Go ahead and click that URL and you'll see the following welcome Wave screen.
+
+![wave-setup-1.png](https://cdn.devdojo.com/images/march2021/wave-setup-1.png)
+
+Click on the continue button, and if everything went well, you'll see the following confirmation page.
+
+![wave-setup-complete.png](https://cdn.devdojo.com/images/march2021/wave-setup-complete.png)
+
+Finally, click on the Continue button and you'll see your new SAAS application in front of your eyes 🤯
+
+![wave-application.png](https://cdn.devdojo.com/images/march2021/wave-application.png)
+
+Boom! 💥 You now have a new SAAS application live on a server and your masterpeice is awaiting its creation.
+
+<a name="start-building"></a>
+### 3. 🤓 Start Building Your SAAS
+
+Now, you're ready to start building your next great idea. If you want to learn more about setting up Wave and support the ongoing development of Wave you may want to consider becoming a <a href="https://devdojo.com/pro">DevDojo Pro</a> user. Together we can make this project even more awesome 😎
+
+
 <a name="login"></a>
-## Login
+## Logging into your Application
 
 After installing Wave you can login with the following default credentials:
 
