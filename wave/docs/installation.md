@@ -179,7 +179,15 @@ Finally, click on the Continue button and you'll see your new SAAS application i
 Boom! 💥 You now have a new SAAS application live on a server and your masterpeice is awaiting its creation.
 
 <a name="start-building"></a>
-### 3. 🤓 Start Building Your SAAS
+### 3. 🤓 Setting Your Repo Private
+
+Odds are that you probably want to keep your repo private. You can easily do that by visiting the settings tab of your repo and changing the privacy.
+
+Screenshot here:
+
+https://cloud.digitalocean.com/apps/github/install
+
+---
 
 Now, you're ready to start building your next great idea. If you want to learn more about setting up Wave and support the ongoing development of Wave you may want to consider becoming a <a href="https://devdojo.com/pro">DevDojo Pro</a> user. Together we can make this project even more awesome 😎
 
