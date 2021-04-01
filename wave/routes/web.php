@@ -64,3 +64,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::view('cancelled', 'theme::cancelled')->name('wave.cancelled');
     Route::post('switch-plans', '\Wave\Http\Controllers\SubscriptionController@switchPlans')->name('wave.switch-plans');
 });
+
+Route::group(['middleware' => 'admin.user'], function(){
+    Route::view('admin/do', 'wave::do');
+});
