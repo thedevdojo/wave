@@ -2,19 +2,19 @@
 
 Wave has many configs to help you customize and build your SAAS app!
 
-Wave is also built on top of Voyager, so all the Voyager configs are available to you as well. To learn more about those you can check out the [voyager docs here](https://docs.laravelvoyager.com/getting-started/configurations).
+Wave is also built on top of Voyager, so all the Voyager configs are available to you as well. To learn more about those you can check out the <a href="https://voyager-docs.devdojo.com/getting-started/configurations" target="_blank">voyager docs here</a>.
 
 ---
 
-- [Settings](/docs/{{version}}/configurations#settings)
-- [Configs](/docs/{{version}}/configurations#configs)
+- [Settings](#settings)
+- [Configs](#configs)
 
 <a name="settings"></a>
 ## Wave Settings Configuration
 
 There are many settings available in your Wave admin section. Visit `/admin/settings` and you will be at your application settings. Which has the following settings you can modify.
 
-> {info} In order to login to the admin section of your application you can use the following credentials `admin@admin.com` and password as `password`
+> In order to login to the admin section of your application you can use the following credentials `admin@admin.com` and password as `password`
 
 ### Site Settings
 
@@ -58,25 +58,33 @@ There are a few logical configurations you can make within the wave configuratio
 
 return [
 
-    'profile_fields' => [
-        'about'
-    ],
+	'profile_fields' => [
+		'about'
+	],
 
-    'api' => [
-        'auth_token_expires'    => 60,
-        'key_token_expires'     => 1,
-    ],
+	'api' => [
+		'auth_token_expires' 	=> 60,
+		'key_token_expires'		=> 1,
+	],
 
-    'auth' => [
-        'min_password_length' => 5
-    ],
+	'auth' => [
+		'min_password_length' => 5,
+	],
 
-    'user_model' => App\User::class,
-    'show_docs' => env('WAVE_DOCS', true),
+	'user_model' => App\User::class,
+	'show_docs' => env('WAVE_DOCS', true),
+    'demo' => env('WAVE_DEMO', false),
+    'dev_bar' => env('WAVE_BAR', false),
+
+    'paddle' => [
+        'vendor' => env('PADDLE_VENDOR_ID', ''),
+        'auth_code' => env('PADDLE_VENDOR_AUTH_CODE', ''),
+        'env' => env('PADDLE_ENV', 'sandbox')
+    ]
 
 ];
 ```
-<br>
+
 - **profile_fields** - Whenever you want to dynamically create a new user profile field such as `about`, `social_links`, or any other field you will need to include the field name in this config. You will learn all about *Custom Profile Fields* in the [User Profiles Section](/docs/{{version}}/features/user-profiles)
 
 - **api => auth_token_expires** - This is the amount of time you want your JSON web token to expire. After this token has expired the app will then request a refresh token. You will most likely never need to change this value, but it's there if you need it.

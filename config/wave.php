@@ -18,10 +18,7 @@ return [
 	'user_model' => App\User::class,
 	'show_docs' => env('WAVE_DOCS', true),
     'demo' => env('WAVE_DEMO', false),
-
     'dev_bar' => env('WAVE_BAR', false),
-
-	'billing' => 'stripe',
 
     'paddle' => [
         'vendor' => env('PADDLE_VENDOR_ID', ''),

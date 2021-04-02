@@ -19,4 +19,22 @@ html, body {
     .prose pre{
         background:#1e1b47;
     }
+    .prose p code{
+        font-size: 15px;
+        color: #3c4257;
+        font-weight: 500;
+        padding: 1px 2px;
+        background: #f8fafc;
+        border: 1px solid #e3e8ee;
+        border-radius: 4px;
+        &::before, &::after{
+            content:"";
+        }
+    }
+
+    .prose blockquote p{
+        &::before, &::after{
+            content: "";
+        }
+    }
 }

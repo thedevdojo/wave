@@ -54,17 +54,6 @@ class SettingsTableSeeder extends Seeder
             ),
             3 =>
             array (
-                'id' => 5,
-                'key' => 'admin.bg_image',
-                'display_name' => 'Admin Background Image',
-                'value' => 'settings/March2020/u7EDIzZ1aBFm63xgATzW.jpg',
-                'details' => '',
-                'type' => 'image',
-                'order' => 5,
-                'group' => 'Admin',
-            ),
-            4 =>
-            array (
                 'id' => 6,
                 'key' => 'admin.title',
                 'display_name' => 'Admin Title',
@@ -74,7 +63,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 1,
                 'group' => 'Admin',
             ),
-            5 =>
+            4 =>
             array (
                 'id' => 7,
                 'key' => 'admin.description',
@@ -85,7 +74,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 2,
                 'group' => 'Admin',
             ),
-            6 =>
+            5 =>
             array (
                 'id' => 8,
                 'key' => 'admin.loader',
@@ -96,18 +85,18 @@ class SettingsTableSeeder extends Seeder
                 'order' => 3,
                 'group' => 'Admin',
             ),
-            7 =>
+            6 =>
             array (
                 'id' => 9,
                 'key' => 'admin.icon_image',
                 'display_name' => 'Admin Icon Image',
-                'value' => '',
+                'value' => 'settings/April2021/QRE8zirmrnAAoKT706hp.png',
                 'details' => '',
                 'type' => 'image',
                 'order' => 4,
                 'group' => 'Admin',
             ),
-            8 =>
+            7 =>
             array (
                 'id' => 10,
                 'key' => 'admin.google_analytics_client_id',
@@ -118,7 +107,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 1,
                 'group' => 'Admin',
             ),
-            9 =>
+            8 =>
             array (
                 'id' => 11,
                 'key' => 'site.favicon',
@@ -129,7 +118,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 6,
                 'group' => 'Site',
             ),
-            10 =>
+            9 =>
             array (
                 'id' => 12,
                 'key' => 'auth.dashboard_redirect',
@@ -140,7 +129,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 7,
                 'group' => 'Auth',
             ),
-            11 =>
+            10 =>
             array (
                 'id' => 13,
                 'key' => 'auth.email_or_username',
@@ -157,7 +146,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 8,
                 'group' => 'Auth',
             ),
-            12 =>
+            11 =>
             array (
                 'id' => 14,
                 'key' => 'auth.username_in_registration',
@@ -174,7 +163,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 9,
                 'group' => 'Auth',
             ),
-            13 =>
+            12 =>
             array (
                 'id' => 15,
                 'key' => 'auth.verify_email',
@@ -185,7 +174,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 10,
                 'group' => 'Auth',
             ),
-            14 =>
+            13 =>
             array (
                 'id' => 16,
                 'key' => 'billing.card_upfront',
@@ -200,7 +189,7 @@ class SettingsTableSeeder extends Seeder
                 'order' => 11,
                 'group' => 'Billing',
             ),
-            15 =>
+            14 =>
             array (
                 'id' => 17,
                 'key' => 'billing.trial_days',
