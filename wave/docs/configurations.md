@@ -32,7 +32,6 @@ These are settings to customize your admin
 - **Admin Description** - The description of your application admin
 - **Admin Loader** - The loading image for your admin
 - **Admin Icon Image** - The admin or application icon image
-- **Admin Background Image** - Add your own admin login background image
 
 ### Authentication Settings
 
