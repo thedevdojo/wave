@@ -67,4 +67,5 @@ Route::group(['middleware' => 'auth'], function(){
 
 Route::group(['middleware' => 'admin.user'], function(){
     Route::view('admin/do', 'wave::do');
+    //Route::get('admin/do', ['\App\Http\Livewire\Wave\DeployToDo::class', '__invoke'])->name('wave.deploy');
 });
