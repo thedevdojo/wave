@@ -114,20 +114,5 @@
 
     <script>hljs.initHighlightingOnLoad();</script>
 
-    <script>
-
-        // window.onbeforeunload = function() {
-        //     var myDiv = document.createElement("div");
-        //     myDiv.className = 'fixed inset-0 z-50 w-screen h-screen transition duration-200 ease-out bg-white opacity-0';
-        //     document.body.appendChild(myDiv);
-        //     console.log('woah');
-
-        //     setTimeout(function(){
-        //         myDiv.classList.remove('opacity-0');
-        //     }, 10);
-        // };
-
-    </script>
-
 </body>
 </html>
