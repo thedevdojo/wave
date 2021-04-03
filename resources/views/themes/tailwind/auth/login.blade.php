@@ -22,11 +22,11 @@
                     <div>
 
                         @if(setting('auth.email_or_username') && setting('auth.email_or_username') == 'username')
-                            <label for="username" class="block text-sm font-medium leading-5 text-gray-700">Email address</label>
+                            <label for="username" class="block text-sm font-medium leading-5 text-gray-700">Username</label>
                             <div class="mt-1 rounded-md shadow-sm">
                                 <input id="username" type="username" name="username" required class="w-full form-input" autofocus>
                             </div>
-                            
+
                             @if ($errors->has('username'))
                                 <div class="mt-1 text-red-500">
                                     {{ $errors->first('username') }}
@@ -45,7 +45,7 @@
                             @endif
                         @endif
 
-                        
+
                     </div>
 
                     <div class="mt-6">
@@ -64,12 +64,12 @@
 
                     <div class="flex items-center justify-between mt-6">
                         <div class="flex items-center">
-                            <input id="remember" name="remember" type="checkbox" class="w-4 h-4 transition duration-150 ease-in-out text-wave-600 form-checkbox" {{ old('remember') ? ' checked' : '' }}>
+                            <input id="remember" name="remember" type="checkbox" class="text-indigo-600 border-0 border-gray-300 rounded shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 rounded-xl" {{ old('remember') ? ' checked' : '' }}>
                             <label for="remember" class="block ml-2 text-sm leading-5 text-gray-900">
                                 Remember me
                             </label>
                         </div>
-                        
+
                         <div class="text-sm leading-5">
                             <a href="{{ route('password.request') }}" class="font-medium transition duration-150 ease-in-out text-wave-600 hover:text-wave-500 focus:outline-none focus:underline">
                                 Forgot your password?
