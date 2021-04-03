@@ -1,143 +1,169 @@
-databases:
-- engine: PG
-  name: wave-db
-  num_nodes: 1
-  size: db-s-dev-database
-  version: "12"
 name: wave
-region: ams
 services:
-- environment_slug: php
-  run_command: heroku-php-apache2 public/
+- name: web
+  git:
+    branch: main
+    repo_clone_url: https://github.com/thedevdojo/wave.git
+  run_command: php artisan migrate --force ; heroku-php-apache2 public/
   envs:
   - key: APP_NAME
     scope: RUN_TIME
     value:  Wave
   - key: APP_ENV
     scope: RUN_TIME
-    value: dev
+    value: production
   - key: APP_KEY
     scope: RUN_TIME
-    value: base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8=
+    value: "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8="
   - key: APP_DEBUG
     scope: RUN_TIME
-    value: "1"
+    value: "false"
   - key: APP_URL
     scope: RUN_TIME
     value: ${APP_URL}
-  - key: DATABASE_URL
+  # LOG
+  - key: LOG_CHANNEL
     scope: RUN_TIME
-    value: ${wave-db.DATABASE_URL}
+    value: "stack"
+  - key: LOG_LEVEL
+    scope: RUN_TIME
+    value: "debug"
+  # DATABASE
   - key: DB_CONNECTION
-    scope: RUN_TIME
-    value: pgsql
+    value: "pgsql"
   - key: DB_HOST
-    scope: RUN_TIME
     value: ${wave-db.HOSTNAME}
   - key: DB_PORT
-    scope: RUN_TIME
     value: ${wave-db.PORT}
   - key: DB_DATABASE
-    scope: RUN_TIME
     value: ${wave-db.DATABASE}
   - key: DB_USERNAME
-    scope: RUN_TIME
     value: ${wave-db.USERNAME}
+    type: SECRET
   - key: DB_PASSWORD
-    scope: RUN_TIME
     value: ${wave-db.PASSWORD}
-  github:
-    branch: main
-    deploy_on_push: true
-    repo: thedevdojo/wave
-  http_port: 8080
-  instance_count: 1
-  instance_size_slug: basic-xs
-  name: landing-laravel
-  routes:
-  - path: /
+    type: SECRET
+  # BROADCAST CACHE QUEUE
+  - key: BROADCAST_DRIVER
+    scope: RUN_TIME
+    value: "log"
+  - key: CACHE_DRIVER
+    scope: RUN_TIME
+    value: "file"
+  - key: QUEUE_CONNECTION
+    scope: RUN_TIME
+    value: "sync"
+  - key: SESSION_DRIVER
+    scope: RUN_TIME
+    value: "file"
+  - key: SESSION_LIFETIME
+    scope: RUN_TIME
+    value: "120"
+  # MEMCACHE
+  - key: MEMCACHED_HOST
+    scope: RUN_TIME
+    value: "127.0.0.1"
+  # REDIS
+  - key: REDIS_HOST
+    scope: RUN_TIME
+    value: "127.0.0.1"
+  - key: REDIS_PASSWORD
+    scope: RUN_TIME
+    value: "null"
+  - key: REDIS_PORT
+    scope: RUN_TIME
+    value: "6379"
+  # MAIL
+  - key: MAIL_MAILER
+    scope: RUN_TIME
+    value: "smtp"
+  - key: MAIL_HOST
+    scope: RUN_TIME
+    value: "mailhog"
+  - key: MAIL_PORT
+    scope: RUN_TIME
+    value: "1025"
+  - key: MAIL_USERNAME
+    scope: RUN_TIME
+    value: "null"
+  - key: MAIL_PASSWORD
+    scope: RUN_TIME
+    value: "null"
+  - key: key
+    scope: RUN_TIME
+    value: "null"
+  - key: MAIL_ENCRYPTION
+    scope: RUN_TIME
+    value: "null"
+  - key: MAIL_FROM_ADDRESS
+    scope: RUN_TIME
+    value: "null"
+  - key: MAIL_FROM_NAME
+    scope: RUN_TIME
+    value: "${APP_NAME}"
+  # Begin of DO VARS
+  - key: DO_SPACES
+    scope: RUN_TIME
+    value: "false"
+  - key: DO_SPACES_KEY
+    scope: RUN_TIME
+    value: "YOUR_DO_SPACES_KEY"
+    type: SECRET
+  - key: DO_SPACES_SECRET
+    scope: RUN_TIME
+    value: "YOUR_DO_SPACES_SECRET"
+    type: SECRET
+  - key: DO_SPACES_ENDPOINT
+    scope: RUN_TIME
+    value: "YOUR_DO_SPACES_ENDPOINT"
+  - key: DO_SPACES_REGION
+    scope: RUN_TIME
+    value: "YOUR_DO_SPACES_REGION"
+  - key: DO_SPACES_BUCKET
+    scope: RUN_TIME
+    value: "YOUR_DO_SPACES_BUCKET"
+databases:
+- name: wave-db
 jobs:
 - name: migrate
   kind: POST_DEPLOY
-  github:
-    repo: thedevdojo/wave
+  git:
+    repo_clone_url: https://github.com/thedevdojo/wave.git
     branch: main
-    deploy_on_push: true
-  run_command: php artisan migrate --seed
+  run_command: php artisan migrate --seed ; php artisan storage:link
   envs:
   - key: APP_NAME
     scope: RUN_TIME
     value:  Wave
   - key: APP_ENV
     scope: RUN_TIME
-    value: dev
+    value: production
   - key: APP_KEY
     scope: RUN_TIME
-    value: base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8=
+    value: "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8="
   - key: APP_DEBUG
     scope: RUN_TIME
-    value: "1"
+    value: "false"
   - key: APP_URL
     scope: RUN_TIME
     value: ${APP_URL}
-  - key: DATABASE_URL
+  - key: LOG_CHANNEL
     scope: RUN_TIME
-    value: ${wave-db.DATABASE_URL}
+    value: "stack"
+  - key: LOG_LEVEL
+    scope: RUN_TIME
+    value: "debug"
   - key: DB_CONNECTION
-    scope: RUN_TIME
-    value: pgsql
+    value: "pgsql"
   - key: DB_HOST
-    scope: RUN_TIME
     value: ${wave-db.HOSTNAME}
   - key: DB_PORT
-    scope: RUN_TIME
     value: ${wave-db.PORT}
   - key: DB_DATABASE
-    scope: RUN_TIME
     value: ${wave-db.DATABASE}
   - key: DB_USERNAME
-    scope: RUN_TIME
     value: ${wave-db.USERNAME}
+    type: SECRET
   - key: DB_PASSWORD
-    scope: RUN_TIME
     value: ${wave-db.PASSWORD}
-- name: storage_link
-  kind: POST_DEPLOY
-  run_command: php artisan storage:link
-  envs:
-  - key: APP_NAME
-    scope: RUN_TIME
-    value:  Wave
-  - key: APP_ENV
-    scope: RUN_TIME
-    value: dev
-  - key: APP_KEY
-    scope: RUN_TIME
-    value: base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8=
-  - key: APP_DEBUG
-    scope: RUN_TIME
-    value: "1"
-  - key: APP_URL
-    scope: RUN_TIME
-    value: ${APP_URL}
-  - key: DATABASE_URL
-    scope: RUN_TIME
-    value: ${wave-db.DATABASE_URL}
-  - key: DB_CONNECTION
-    scope: RUN_TIME
-    value: pgsql
-  - key: DB_HOST
-    scope: RUN_TIME
-    value: ${wave-db.HOSTNAME}
-  - key: DB_PORT
-    scope: RUN_TIME
-    value: ${wave-db.PORT}
-  - key: DB_DATABASE
-    scope: RUN_TIME
-    value: ${wave-db.DATABASE}
-  - key: DB_USERNAME
-    scope: RUN_TIME
-    value: ${wave-db.USERNAME}
-  - key: DB_PASSWORD
-    scope: RUN_TIME
-    value: ${wave-db.PASSWORD}
+    type: SECRET
