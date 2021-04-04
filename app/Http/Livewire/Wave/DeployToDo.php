@@ -9,48 +9,89 @@ class DeployToDo extends Component
 {
     public $api_key;
     public $repo;
+    public $deploy;
+    public $app_id;
+    public $deployments;
+    public $app;
+
+    public function mount(){
+        // get the deploy.json file and convert to object
+        $this->deploy = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', file_get_contents(base_path('deploy.json')) ), true);
+        if(isset( $this->deploy['wave'] ) && isset( $this->deploy['wave']['app_id'] )){
+            $this->app_id = $this->deploy['wave']['app_id'];
+            $this->api_key = $this->deploy['wave']['api_key'];
+            $this->deployments = $this->getDeployments();
+            $this->app = $this->getAppInfo();
+        }
+    }
+
+    public function getDeployments(){
+        $response = Http::withToken($this->api_key)->get('https://api.digitalocean.com/v2/apps/' . $this->app_id . '/deployments');
+
+        return json_decode($response->body(), true);
+    }
+
+    public function getAppInfo(){
+        $response = Http::withToken($this->api_key)->get('https://api.digitalocean.com/v2/apps/' . $this->app_id);
+
+        return json_decode($response->body(), true);
+    }
+
+    private function writeToDeployFile($id, $key, $deployFileArray){
+        $deployFileArray['wave']['app_id'] = $id;
+        $deployFileArray['wave']['api_key'] = $key;
+
+
+        file_put_contents(base_path('deploy.json'), stripslashes(json_encode($deployFileArray, JSON_PRETTY_PRINT)));
+        $this->deploy = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', file_get_contents(base_path('deploy.json')) ), true);
+    }
 
     public function deploy(){
 
-        $deployJSONStr = file_get_contents(base_path('deploy.json'));
-        $deployJSON = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $deployJSONStr), true);
+        if(!isset($this->app_id)){
+            // repo must contain a '/', do a check for that
+            $repoSplit = explode('/', $this->repo);
+            $repoName = (isset($repoSplit[0]) && isset($repoSplit[1])) ? $repoSplit[0] . '-' . $repoSplit[1] : false;
+            if(!$repoName){
+                $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Please make sure you enter a valiid repo (ex: user/repo)']);
+                return;
+            }
 
-        // repo must contain a '/', do a check for that
-        $repoSplit = explode('/', $this->repo);
-        $repoName = (isset($repoSplit[0]) && isset($repoSplit[1])) ? $repoSplit[0] . '-' . $repoSplit[1] : false;
-        if(!$repoName){
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Please make sure you enter a valiid repo (ex: user/repo)']);
-            return;
-        }
+            if(empty($this->api_key)){
+                $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'C\'mon, you can\'t leave the API key field empty.']);
+                return;
+            }
 
-        if(empty($this->api_key)){
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'C\'mon, you can\'t leave the API key field empty.']);
-            return;
-        }
+            if(is_null($this->deploy)){
+                $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Sorry it looks like your deploy.json does not contain valid JSON']);
+                return;
+            }
 
-        if(is_null($deployJSON)){
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Sorry it looks like your deploy.json does not contain valid JSON']);
-            return;
-        }
+            // replace values with repoName and Repo url
+            $finalJSONPayload = json_encode($this->deploy);
+            $finalJSONPayload = str_replace('${wave.name}', $repoName, $finalJSONPayload);
+            //dd($this->repo);
+            $finalJSONPayload = str_replace('${wave.repo}', $this->repo, $finalJSONPayload);
 
-        // replace values with repoName and Repo url
-        $finalJSONPayload = json_encode($deployJSON);
-        $finalJSONPayload = str_replace('${wave.name}', $repoName, $finalJSONPayload);
-        $finalJSONPayload = str_replace('${wave.repo}', $this->repo, $finalJSONPayload);
+            $response = Http::withToken($this->api_key)->withBody( $finalJSONPayload, 'application/json')
+                ->post('https://api.digitalocean.com/v2/apps');
 
-        $response = Http::withToken($this->api_key)->withBody( $finalJSONPayload, 'application/json')
-            ->post('https://api.digitalocean.com/v2/apps');
+            // if the response is not successful, display the message back from DigitalOcean
+            if(!$response->successful()){
+                $responseBody = json_decode($response->body(), true);
+                $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => $responseBody['message']]);
+                return;
 
-        // if the response is not successful, display the message back from DigitalOcean
-        if(!$response->successful()){
+            }
+
+            // get app ID and set it in the JSON
             $responseBody = json_decode($response->body(), true);
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => $responseBody['message']]);
-            return;
 
+            $this->writeToDeployFile($responseBody['app']['id'], $this->api_key, $this->deploy);
+
+            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully deployed your application!']);
+            //dd('hit');
         }
-
-        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully deployed your application!']);
-        //dd('hit');
     }
 
     public function render()

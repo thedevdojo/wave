@@ -43,7 +43,7 @@ These are settings to customize your admin
 ### Billing
 
 - **Require Credit Card Up Front** - You can choose whether or not you want users to enter a credit card while signing up
-- **Trial Days when No Credit Card Up Front** - Specify the amount of trial days when a user is not required to enter a Credit Card
+- **Trial Days when No Credit Card Up Front** - Specify the amount of total trial days. Specify `-1` if you don't want to have any trial days.
 
 ---
 
@@ -102,6 +102,14 @@ return [
     class User extends \Wave\User
     ```
 
+- **show_docs** - When developing your application you may want to keep the documentation accessible in your app. Set this to false if you do not want the docs to be accessible.
+
+- **demo** - This is primarily used for demo purposes of the Wave project, in your project you will probably want to set this to false (unless you want to test out some of the demo functionality).
+
+- **dev_bar** - If you enable the **dev_bar**, you will have a developer bar at the bottom of your screen that will allow you to easily jump to the documentation or the admin.
+
+- **paddle** - This is the configuration settings you will need to integrate billing into your application. You can learn more about these configurations from the [billing documentation](/docs/billing/themes).
+
     ---
 
-    > {primary} Wave Themes will give you unlimited configurations for your SAAS. We'll cover more of this later, or you can jump to the [Themes section by clicking here](/docs/{{version}}/features/themes).
+    > Wave themes will give you unlimited configurations for your SAAS. We'll cover more of this later, or you can jump to the [Themes section by clicking here](/docs/features/themes).

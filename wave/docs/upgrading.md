@@ -2,8 +2,10 @@
 
 Upgrading Wave is very simple. Follow the steps below to upgrade.
 
-- [Upgrade Steps](/docs/{{version}}/upgrading#steps)
-- [Theme Upgrade](/docs/{{version}}/upgrading#theme-upgrade)
+- [Upgrade Steps](#steps)
+- [Theme Upgrade](#theme-upgrade)
+
+---
 
 <a name="steps"></a>
 ### Upgrade Steps
@@ -29,9 +31,4 @@ And you should be updated to the latest version :)
 
 Upgrading the core of Wave is very simple; however, upgrading your current theme may be a bit more complicated based on the modifications you have made.
 
-Typically you will not need to upgrade your theme, it will have all base features and you can build on top of those. If there is a new feature that gets released which has corresponding views, then you may have a few files that you need to manually move into your project. 
-
-
-
-
-
+Typically you will not need to upgrade your theme, it will have all base features and you can build on top of those. If there is a new feature that gets released which has corresponding views, then you may have a few files that you need to manually move into your project.

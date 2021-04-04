@@ -87,7 +87,7 @@ php artisan key:generate
 
 In most cases it's a good idea to create a separate repo for your new project. This will also make it easier to [deploy our application to DigitalOcean](#deploy-to-do).
 
-If you are logged into your Github account, you can go to <a href="https://github.com/new" target="_blank">https://github.com/new</a> to create a new repository. Give it a name associated with your SAAS and click **Create Repository** (Keep this repo as public for now if you wish to deploy to DigitalOcean)
+If you are logged into your Github account, you can go to <a href="https://github.com/new" target="_blank">https://github.com/new</a> to create a new repository. Give it a name associated with your SAAS and click **Create Repository**
 
 ![create-repo.png](https://cdn.devdojo.com/images/march2021/create-repo.png)
 
@@ -119,27 +119,31 @@ If you use Digital Ocean, you're in luck. You can easily start surfing the Wave(
 
 Here are 3 simple steps to get started with your new SAAS on Digital Ocean.
 
-1. [✏️ Update Repo Name](#update-repo-name)
-2. [🚀 Deploy to DO](#deploy-to-do)
+1. [🔑 Get Your DO API Key](#api-key)
+2. [🚀 Deploy Your App](#deploy-app)
 3. [🤓 Start Building Your SAAS](#start-building)
 
 ---
 
-<a name="update-repo-name"></a>
-### 1. ✏️ Update Repo Name
+<a name="api-key"></a>
+### 1. 🔑 Get Your DO API Key
 
-First, we need to change a few configuration files inside the `/.do` directory. You can edit these directly on github. Inside this folder you will see `app.yaml`, and `deploy.template.yaml`. Find and replace `thedevdojo/wave` with your repo name.
+In order to deploy to DigitalOcean you'll need to get your API Key from the following URL: [https://cloud.digitalocean.com/account/api/tokens](https://cloud.digitalocean.com/account/api/tokens)
 
-![github-update-name.png](https://cdn.devdojo.com/images/march2021/github-update-name.png)
+![do-api-key-page.png](https://cdn.devdojo.com/images/april2021/do-api-key-page.png)
 
-Additionally, you'll need to edit the `Readme.md` and replace `thedevdojo/wave` with your repo name.
+Click on the **Generate New Token**, button and save your new token for the next step.
 
-Do a search for all instances of `thedevdojo/wave` and replace it with the name of your repo in these 3 files and then we're ready to deploy your SAAS to DigitalOcean.
+<a name="deploy-app"></a>
+### 2. 🚀 Deploy Your App
 
-<a name="deploy-to-do"></a>
-### 2. 🚀 Deploy to Digital Ocean
+Ok, now you're ready to deploy your application to DigitalOcean. Login to your application admin and click on the **Deploy Now** button in the first card:
 
-Ok, now you're ready to deploy your application to DigitalOcean. It's as simple as clicking the **Deploy to Do Button** inside your project repo Readme file.
+![admin-screen-1.png](https://cdn.devdojo.com/images/april2021/admin-screen-1.png)
+
+Next, you'll see another page where you need to enter in your **repo**, **give DO access to your Repo**, and then enter in your **api key**.
+
+![admin-screen-2.png](https://cdn.devdojo.com/images/april2021/admin-screen-2.png)
 
 Optionally, you can manually visit this URL, replacing `thedevdojo/wave` with your repo name.
 
