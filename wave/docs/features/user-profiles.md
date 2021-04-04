@@ -14,7 +14,7 @@ When building your SAAS application you may want your users to provide more info
 
 Every user in your application will have a public profile page. The user will be able to visit `/@username` and view their profile. By default the profile page is public, which means anyone can visit that user profile.
 
-![](/wave/img/docs/1.0/user-profile.png)
+![admin-view](https://cdn.devdojo.com/images/april2021/admin-view.png)
 
 In some applications you may not have a need for a profile page. In that case, you can include the following route to your applications `routes/web.php`
 
@@ -25,7 +25,7 @@ Route::redirect('@{username}', '/');
 This will disable user profiles and redirect any user profile page back to the homepage.
 
 > {warning} When disabling user profiles, the route must be placed after the `Wave::routes();` line.
- 
+
 ---
 
 <a name="profile-settings"></a>
@@ -35,7 +35,7 @@ When a user registers for an account they will be able to edit their profile inf
 
 On the user profile page the user can update their avatar, name, and email address. You will also see one more field, called `about`, this is an example of a custom profile field. Let's learn more about custom profile fields below.
 
-![](/wave/img/docs/1.0/user-profile-settings.png)
+![wave-profile.png](https://cdn.devdojo.com/images/april2021/wave-profile-2.png)
 
 ---
 

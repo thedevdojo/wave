@@ -27,7 +27,7 @@ Wave is an Open Source project, which means that you can use it for free; howeve
 
 - Gain access to the <a href="https://devdojo.com/wave#pro" target="_blank">Wave Private Repo</a> to discuss issues and improvements.
 - Gain access to <a href="https://devdojo.com/wave/pro" target="_blank">Tails</a> and build an awesome landing page for your SAAS
-- Do your part in making this project even more awesome peace ✌️
+- Do your part in making this project even more awesome ✌️
 - And <a href="https://devdojo.com/pro" target="_blank">many more perks</a>!
 
 Let's set sail and build this together ⛵

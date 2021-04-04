@@ -217,10 +217,6 @@
 
 @yield('javascript')
 
-@impersonating
-    @include('theme::partials.impersonation-bar')
-@endImpersonating
-
 @if(setting('site.google_analytics_tracking_id', ''))
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ setting('site.google_analytics_tracking_id') }}"></script>
