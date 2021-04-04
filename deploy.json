@@ -4,9 +4,10 @@
         "services": [
             {
                 "name": "web",
-                "git": {
-                    "repo_clone_url": "https://github.com/${wave.repo}.git",
-                    "branch": "main"
+                "github": {
+                    "repo": "${wave.repo}",
+                    "branch": "main",
+                    "deploy_on_push": true
                 },
                 "run_command": "php artisan migrate --force ; heroku-php-apache2 public/",
                 "envs": [
@@ -199,9 +200,10 @@
         "jobs": [
             {
                 "name": "migrate",
-                "git": {
-                    "repo_clone_url": "https://github.com/${wave.repo}.git",
-                    "branch": "main"
+                "github": {
+                    "repo": "${wave.repo}",
+                    "branch": "main",
+                    "deploy_on_push": true
                 },
                 "run_command": "php artisan migrate --seed ; php artisan storage:link",
                 "envs": [
