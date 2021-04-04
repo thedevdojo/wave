@@ -132,7 +132,7 @@ $menu_items = [
             ],
             (object)[
                 'title' => 'Support',
-                'url' => 'https://devdojo.com/questions',
+                'url' => 'https://devdojo.com/wave#pro',
                 'attributes' => 'target="_blank"'
             ],
             (object)[
@@ -143,6 +143,11 @@ $menu_items = [
             (object)[
                 'title' => 'Voyager',
                 'url' => 'https://voyager.devdojo.com',
+                'attributes' => 'target="_blank"'
+            ],
+            (object)[
+                'title' => 'DigitalOcean',
+                'url' => 'https://digitalocean.com',
                 'attributes' => 'target="_blank"'
             ]
         ]

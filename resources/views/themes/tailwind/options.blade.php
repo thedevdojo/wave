@@ -77,7 +77,7 @@
 
 	<div class="tab-content">
 
-		<div id="branding" class="tab-pane fade in  active">
+		<div id="branding" class="tab-pane fade in active">
 
 			{!! theme_field('image', 'logo', 'Site Logo') !!}
 
@@ -114,10 +114,3 @@
 
 
 </div>
-
-
-
-
-
-
-

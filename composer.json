@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "devdojo/app": "0.11.0",
-        "devdojo/themes": "0.0.4",
+        "devdojo/themes": "0.0.5",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^7.0.1",
