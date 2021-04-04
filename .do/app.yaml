@@ -1,9 +1,10 @@
 name: wave
 services:
 - name: web
-  git:
+  github:
+    repo: thedevdojo/wave
     branch: main
-    repo_clone_url: https://github.com/thedevdojo/wave.git
+    deploy_on_push: true
   run_command: php artisan migrate --force ; heroku-php-apache2 public/
   envs:
   - key: APP_NAME
@@ -123,13 +124,18 @@ services:
     scope: RUN_TIME
     value: "YOUR_DO_SPACES_BUCKET"
 databases:
-- name: wave-db
+- engine: PG
+  name: wave-db
+  num_nodes: 1
+  size: db-s-dev-database
+  version: "12"
 jobs:
 - name: migrate
   kind: POST_DEPLOY
-  git:
-    repo_clone_url: https://github.com/thedevdojo/wave.git
+  github:
+    repo: thedevdojo/wave
     branch: main
+    deploy_on_push: true
   run_command: php artisan migrate --seed ; php artisan storage:link
   envs:
   - key: APP_NAME
