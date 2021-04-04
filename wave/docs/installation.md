@@ -145,55 +145,16 @@ Next, you'll see another page where you need to enter in your **repo**, **give D
 
 ![admin-screen-2.png](https://cdn.devdojo.com/images/april2021/admin-screen-2.png)
 
-Optionally, you can manually visit this URL, replacing `thedevdojo/wave` with your repo name.
-
-`https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main`
-
-#### Follow the Steps in App Platform
-
-Now, you can follow each of the setup steps in the DigitalOcean App Platform. Scroll to the bottom of each step and click the Next Button.
-
-![do-step-1.png](https://cdn.devdojo.com/images/march2021/do-step-1.png)
-![do-step-2.png](https://cdn.devdojo.com/images/march2021/do-step-2.png)
-
-On the last step, you can choose the basic or the pro size. You can always change this later. Scroll down to the bottom and click 'Launch App'.
-
-![do-step-3.png](https://cdn.devdojo.com/images/march2021/do-step-3.png)
-
-Now, it may take a few minutes for your server to boot up with the Wave Script. You should see a loading screen similar to the following screenshot.
-
-![do-step-4.png](https://cdn.devdojo.com/images/march2021/do-step-4.png)
-
-and after it has completed you'll see a message similar to the following.
-
-![do-final-step.png](https://cdn.devdojo.com/images/march2021/do-final-step.png)
-
-You'll also notice that there is a link where you can visit to see your application live. Go ahead and click that URL and you'll see the following welcome Wave screen.
-
-![wave-setup-1.png](https://cdn.devdojo.com/images/march2021/wave-setup-1.png)
-
-Click on the continue button, and if everything went well, you'll see the following confirmation page.
-
-![wave-setup-complete.png](https://cdn.devdojo.com/images/march2021/wave-setup-complete.png)
-
-Finally, click on the Continue button and you'll see your new SAAS application in front of your eyes 🤯
-
-![wave-application.png](https://cdn.devdojo.com/images/march2021/wave-application.png)
-
-Boom! 💥 You now have a new SAAS application live on a server and your masterpeice is awaiting its creation.
+After you enter those fields and press deploy, you will see a success message. Now you can navigate to your digital ocean app platform dashboard and you'll see your new application.
 
 <a name="start-building"></a>
-### 3. 🤓 Setting Your Repo Private
+### 3. 🤓  Start Building Your SAAS
 
-Odds are that you probably want to keep your repo private. You can easily do that by visiting the settings tab of your repo and changing the privacy.
-
-Screenshot here:
-
-https://cloud.digitalocean.com/apps/github/install
+That's it! You are now ready to start building your SAAS and deploy it to DigitalOcean.
 
 ---
 
-Now, you're ready to start building your next great idea. If you want to learn more about setting up Wave and support the ongoing development of Wave you may want to consider becoming a <a href="https://devdojo.com/pro">DevDojo Pro</a> user. Together we can make this project even more awesome 😎
+If you want to learn more about setting up Wave and support the ongoing development of Wave you may want to consider becoming a <a href="https://devdojo.com/pro">DevDojo Pro</a> user. Together we can make this project even more awesome 😎
 
 
 <a name="login"></a>

@@ -179,7 +179,7 @@ class SettingsTableSeeder extends Seeder
                 'id' => 16,
                 'key' => 'billing.card_upfront',
                 'display_name' => 'Require Credit Card Up Front',
-                'value' => '0',
+                'value' => '1',
                 'details' => '{
 "on" : "Yes",
 "off" : "No",

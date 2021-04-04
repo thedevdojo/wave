@@ -17,6 +17,10 @@ class DeployToDo extends Component
     public function mount(){
         // get the deploy.json file and convert to object
         $this->deploy = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', file_get_contents(base_path('deploy.json')) ), true);
+        $this->checkForAppDeployment();
+    }
+
+    private function checkForAppDeployment(){
         if(isset( $this->deploy['wave'] ) && isset( $this->deploy['wave']['app_id'] )){
             $this->app_id = $this->deploy['wave']['app_id'];
             $this->api_key = $this->deploy['wave']['api_key'];
@@ -69,7 +73,7 @@ class DeployToDo extends Component
 
             // replace values with repoName and Repo url
             $finalJSONPayload = json_encode($this->deploy);
-            $finalJSONPayload = str_replace('${wave.name}', $repoName, $finalJSONPayload);
+            $finalJSONPayload = str_replace('${wave.name}', str_replace('_', '-', $repoName), $finalJSONPayload);
             //dd($this->repo);
             $finalJSONPayload = str_replace('${wave.repo}', $this->repo, $finalJSONPayload);
 
@@ -88,6 +92,8 @@ class DeployToDo extends Component
             $responseBody = json_decode($response->body(), true);
 
             $this->writeToDeployFile($responseBody['app']['id'], $this->api_key, $this->deploy);
+
+            $this->checkForAppDeployment();
 
             $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully deployed your application!']);
             //dd('hit');
