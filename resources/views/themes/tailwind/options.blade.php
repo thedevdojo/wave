@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Voyager Themes - Sample Theme
+ * Tailwind Theme
  * Created by Tony Lea and the DevDojo
  *
  * Use the theme_field() function to display fields in
@@ -98,10 +98,10 @@
 
 		<div id="themeinfo" class="tab-pane">
 
-			<h3>UIkit</h3>
-			<p>This theme was build using UIkit version 3. You can learn more about UIKit from the links below.</p>
-			<a href="https://getuikit.com" target="_blank" class="btn btn-small btn-primary">UIkit Homepage</a>
-			<a href="https://getuikit.com/docs/introduction" target="_blank" class="btn btn-small btn-primary">UIkit Documentation</a>
+			<h3>TailwindCSS</h3>
+			<p>This theme was built using TailwindCSS. You can learn more about Tailwind by visiting the links below.</p>
+			<a href="https://tailwindcss.com" target="_blank" class="btn btn-small btn-primary">TailwindCSS Homepage</a>
+			<a href="https://tailwindcss.com/docs" target="_blank" class="btn btn-small btn-primary">Tailwind Documentation</a>
 			<hr>
 			<h3>Theme Options</h3>
 			<p>You can edit this file located at: <code>{{ resource_path('views/' . theme_folder()) . '/options.blade.php' }}</code>
