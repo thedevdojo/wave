@@ -33,7 +33,7 @@
     <div class="relative z-20 flex h-screen antialiased bg-white docs">
 
         {{-- sidebar --}}
-        <div class="fixed top-0 left-0 hidden w-64 h-screen py-4 pr-3 overflow-visible bg-white border-r border-gray-200 select-none categories lg:flex lg:flex-col">
+        <div class="fixed top-0 left-0 hidden w-64 h-screen py-4 pr-3 overflow-visible overflow-scroll bg-white border-r border-gray-200 select-none categories lg:flex lg:flex-col">
             <h1 class="px-5 text-sm font-bold text-black">Wave<span class="ml-1 text-xs font-medium text-blue-500 uppercase">docs</span></h1>
 
             <div class="relative flex items-center w-full pl-4 mt-5 mb-5 text-gray-400">
