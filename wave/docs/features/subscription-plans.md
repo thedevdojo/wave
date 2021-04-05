@@ -1,12 +1,12 @@
 # Subscription Plans
-Billing users for a subscription plan is pretty straight forward. Every Plan hasOne Role, so when a user subscribes to a plan they will inherit the permissions associated with that user role.
+Billing users for a subscription plan is pretty straight forward. Every Plan **hasOne** Role, so when a user subscribes to a plan they will inherit the permissions associated with that user role.
 
-The Plan you create in Wave will reference a plan you create in Stripe or BrainTree.
+The Plan you create in Wave will be associated with a plan you create on Paddle.
 
-- [Current Plans](/docs/1.0/features/subscription-plans#current-plans)
-- [Deleting Plans](/docs/1.0/features/subscription-plans#delete-plans)
-- [Creating Plans](/docs/1.0/features/subscription-plans#create-plans)
-- [Creating Plans in Stripe](/docs/1.0/features/subscription-plans#create-plans-stripe)
+- [Current Plans](#current-plans)
+- [Deleting Plans](#delete-plans)
+- [Creating Plans](#create-plans)
+- [Creating Plans in Paddle](#create-plans-paddle)
 
 ---
 
@@ -15,35 +15,35 @@ The Plan you create in Wave will reference a plan you create in Stripe or BrainT
 
 When you install Wave you will see there are 3 default plans:
 
-1. Basic 
-2. Premium 
-3. Standard 
+1. Basic
+2. Premium
+3. Pro
 
 You can delete these plans and create your own if you would like or you can edit the current plans.
 
 <a name="delete-plans"></a>
 ### Deleting Plans
 
-In order to show you how to create a new plan, we will delete the existing **Standard** plan. To delete plans you can visit `/admin/plans` and click Delete:
+In order to show you how to create a new plan, we will delete the existing **Basic** plan. To delete plans you can visit `/admin/plans` and click Delete:
 
-![](/wave/img/docs/1.0/wave-plans-delete.png)
+![plans-1.png](https://cdn.devdojo.com/images/april2021/plans-1.png)
 
 Since our plan is associated with a role, we will also delete the associated role at `/admin/roles`
 
-![](/wave/img/docs/1.0/wave-roles-delete.png)
+![plans-roles.png](https://cdn.devdojo.com/images/april2021/plans-roles.png)
 
 We will cover more about User Roles in the next section.
 
 <a name="create-plans"></a>
 ### Creating Plans
 
-Now, let’s create a new plan called *starter*. But before I create a new plan I will first create a new role that I want to assign to this plan. My new role will be called *starter* as well, but you can give the role any name you would like. To create a new role click on the `Add New` button.
+Now, let’s create a new plan called *basic*. But before I create a new plan I will first create a new role that I want to assign to this plan. My new role will be called *starter* as well, but you can give the role any name you would like. To create a new role click on the `Add New` button.
 
-![](/wave/img/docs/1.0/wave-role-add-new.png)
+![plans-roles-add.png](https://cdn.devdojo.com/images/april2021/plans-roles-add.png)
 
-Then we can create our new role called **starter**
+Then we can create our new role called **basic**
 
-![](/wave/img/docs/1.0/wave-role-create.png)
+![plans-add-new-role.png](https://cdn.devdojo.com/images/april2021/plans-add-new-role.png)
 
 Notice on this page you can specify permissions for this role. We will talk more about this in the next section. For now, you can choose to check a few of them, or leave them all unchecked. Below is a screenshot of what I have checked in this example:
 
@@ -51,28 +51,31 @@ Notice on this page you can specify permissions for this role. We will talk more
 
 Now that the role is created we can create a new plan and associate it with a role:
 
-![](/wave/img/docs/1.0/wave-plan-new.png)
+![wave-add-plan.png](https://cdn.devdojo.com/images/april2021/wave-add-plan.png)
 
-> {primary} Notice the **Plan ID** when creating your plan. This Plan ID is an ID we need to create in Stripe or BrainTree. We'll do this in the next step.
+> Notice the **Plan ID** when creating your plan. This Plan ID is an ID we need to create in Paddle. We'll do this in the next step.
 
 Fill out the rest of the info on the plan and click `Save` to create your new plan.
 
-<a name="create-plans-stripe"></a>
-### Creating Plans in Stripe
+<a name="create-plans-paddle"></a>
+### Creating Plans in Paddle
 
-To create a new plan in Stripe, login to your dashboard and click **Products**->**Create Product**
+To create a new plan in Paddle, login to your dashboard and click **Catalog**->**Subscription Plans**. Click on the **+ New Plan** button at the top right to create a new plan.
 
-![](/wave/img/docs/1.0/plans-stripe-dashboard.png)
+![paddle-plans-01.png](https://cdn.devdojo.com/images/april2021/paddle-plans-01.png)
 
-Next, you'll give the plan a name and click Create Product
+You'll see a pop-up that will ask for the plan name, icon, and price. Fill out the info for your plan.
 
-![](/wave/img/docs/1.0/plans-stripe-create.png)
+![paddle-plans-02.png](https://cdn.devdojo.com/images/april2021/paddle-plans-02.png)
 
-Next, you'll be taken to the Product Pricing page. This is where you can specify the **ID** that we reference in our plan for our site.
+Scroll down to the bottom and click the **Save Plan** button.
+![paddle-plans-03.png](https://cdn.devdojo.com/images/april2021/paddle-plans-03.png)
 
-![](/wave/img/docs/1.0/plans-stripe-new.png)
+After creating your new plan, you'll see the **Plan ID** you need to associate with the Wave Plan you create from the previous step.
 
-After you fill out the necessary info, click on Add Pricing Plan to finish creating your plan. And now your users can signup for your **starter** plan.
+![paddle-plans-04.png](https://cdn.devdojo.com/images/april2021/paddle-plans-04.png)
+
+After adding all your plans, we're ready to [test out the billing process](/docs/features/billing#test-billing).
 
 ---
 

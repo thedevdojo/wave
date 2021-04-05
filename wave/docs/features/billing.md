@@ -2,52 +2,59 @@
 
 Wave comes packaged with integrated billing. This means that you can charge your customers to access your application or features in your application.
 
-Wave uses [Stripe](https://stripe.com) and [Cashier](https://github.com/laravel/cashier).
+Wave integrates seamlessly with the [Paddle](https://paddle.com) Payment Platform.
 
-- [Billing with Stripe](/docs/{{version}}/features/billing#stripe)
+- [Create a Paddle Account](#paddle-account)
+- [Add Paddle API Credentials](#paddle-credentials)
+- [Test Billing Process](#test-billing)
 
-<a name="stripe"></a>
-## Stripe
+<a name="paddle-account"></a>
+## Create a Paddle Account
 
-Setting up your app to work with Stripe is super simple. This is going to be the easiest way to configure your application to accept payments.
+In order to integrate your application with Paddle you will need to signup for an account at [https://paddle.com/signup](https://paddle.com/signup). It may take a few days to get access to your Paddle account before you're ready to go live. In the meantime, you can signup for a Sandbox account at [https://sandbox-vendors.paddle.com/signup](https://sandbox-vendors.paddle.com/signup), and start testing out your payment functionality right away.
 
-In this section we will show you how to setup a Stripe account and add your Stripe credentials to Wave. We will cover how to setup Products and Subscriptions in the next section.
+After you have created your Paddle Account you'll be able to login and see your dashboard, which should look similar to the following:
 
-### Create a Free Stripe Account
+![paddle-dashboard.png](https://cdn.devdojo.com/images/april2021/paddle-dashboard.png)
 
-It's easy to setup a free Stripe account. Visit [https://stripe.com/register](https://stripe.com/register) and create an account.
+Next, let's add your Paddle API credentials.
 
-After creating an account you'll be on your Stripe Dashboard. Then, to get your API keys you can click on the *Developers->API Keys*.
+<a name="paddle-credentials"></a>
+### Add Paddle API Credentials
 
-![](/wave/img/docs/1.0/stripe-dashboard.png)
+Inside of your Paddle Dashboard you'll see a button under the **Developer Tools** menu, called **Authentication**, click on that button to get your API Authentication Credentials.
 
-### Adding Stripe API keys
+![paddle-authentication.png](https://cdn.devdojo.com/images/april2021/paddle-authentication.png)
 
-> {warning} You can test out payments with your Test API keys, but you will need to activate your account before you can view your Live API keys. To toggle between *test* or *live* data, you'll need to toggle *Viewing Test Data* (see previous screenshot).
+On this page you'll find your **Vendor ID** and your **API Auth Code**. These are the credentials that you will need to add to your `.env` file for `PADDLE_VENDOR_ID` and `PADDLE_VENDOR_AUTH_CODE`:
 
-Now, that you have your Stripe API keys we will need to add them to your application `.env` file. The `.env` file is where we store all our application environment variables including our Stripe API Keys. Find and update your stripe keys in the following variables.
-
-```php
-STRIPE_MODE=test
-STRIPE_TEST_KEY=pk_test_
-STRIPE_TEST_SECRET=sk_test_
-STRIPE_LIVE_KEY=pk_live_
-STRIPE_LIVE_SECRET=sk_live_
+```
+PADDLE_VENDOR_ID=9999
+PADDLE_VENDOR_AUTH_CODE=YOUR_REALLY_LONG_API_KEY_HERE
+PADDLE_ENV=sandbox
 ```
 
-Notice, when you are ready to go **live** with accepting real payments you will need to change `STRIPE_MODE` to `live`.
+After adding these credentials, your application has been successfully configured with Paddle.
 
-And That's it! You're ready to start accepting payments.
+#### Ready to go Live?
 
-### Stripe Test Credit Cards
+When you are ready to go live and take live payments you'll want to change the `PADDLE_ENV` from `sandbox` to `live`, and you'll be ready to accept live payments 💵
 
-There are many Stripe credit card numbers that you can use for testing, which can be [found here](https://stripe.com/docs/testing). Here is an example card that you can use for testing purposes:
+<a name="test-billing"></a>
+### Test Billing Process
 
-| Input | Value |
-| : | : |
-| CARD | 4242 4242 4242 4242 |
-| EXP  | Any date in the future |
-| CVC  | Any 3 digit code |
-| ZIP  |  Any 5 digit zip code |
+Before you can test out the full billing process, you will need to add a few [Subscription Plans](/docs/features/subscription-plans).
 
-That's it for Stripe, next you may want to learn about subscriptions. Happy Billing ;)
+**Notice**: If you are using a Sandbox account, you will need to test your app from a `http://localhost` URL. The best way to do this is to utilize the laravel **Artisan Serve** command, or you can use [Laravel Sail](https://www.youtube.com/watch?v=WGhiY5xamms) docker image to serve up your app from a localhost URL.
+
+After adding subscription plans and configuring your application with your Paddle API keys, you will now be able to test out the billing process using the following credentials:
+
+```
+Credit Card: 4242 4242 4242 4242
+Expiration: Any Future Date
+CVC: Any 3 digit code
+```
+
+---
+
+After adding your Paddle API credentials, you'll need to configure your app with a few [Subscription Plans](/docs/features/subscription-plans) in order to test out the whole process. Let's move on to the [next step](/docs/features/subscription-plans) where you will learn how to do this.

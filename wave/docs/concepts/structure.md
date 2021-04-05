@@ -26,9 +26,6 @@ This folder will container many of the global configurations in our application.
 - **database** -
 This folder contains database files such as migrations and seeds.
 
-- **hooks** -
-This file contains a list of hooks to be included in the Voyager Admin.
-
 - **public** -
 This public folder contains many of the applications public assets such as images, stylesheets, and scripts.
 
@@ -50,9 +47,6 @@ This folder contains the composer (third-party) dependencies we use in our appli
 - **wave** -
 This folder contains all the logic for the wave application. We'll be talking more about the contents of this folder in the next step.
 
-- *.env.camp* -
-This file is used in an internal tool in order to test the functionality of the the wave project (you can feel free to remove this file if you would like)
-
 - *.env.example* -
 This is an example environment file. Duplicate this file and rename it to `.env` in order to make it your application environment file.
 
@@ -64,6 +58,12 @@ This is the file that tells our application what third-party composer packages w
 
 - *composer.lock* -
 This is the file that contains the exact version number of the composer packages included in our application.
+
+- *deploy.json* -
+This file contains information to deploy your app to the DigitalOcean app marketplace.
+
+- *docker-compose.yml* -
+This is a docker compose file that will allow you to run your app using <a href="https://laravel.com/docs/sail" target="_blank">Laravel Sail</a>.
 
 - *phpunit.xml* -
 This file is used to store information in order to run tests and test the functionality of our application.
@@ -84,6 +84,9 @@ This folder contains the migration files needed for our Wave application.
 
 - **docs** -
 This folder contains the documentation files. The files from which you are reading right now.
+
+- **resources** -
+This folder contains a few shared views used by Wave.
 
 - **routes** -
 This folder contains the routes defined for our wave application. You will see the web routes located at `wave/routes/web.php` and the API routes located at `/wave/routes/api.php`, go ahead and feel free to take a look at the defined routes.

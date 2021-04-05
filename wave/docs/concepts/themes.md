@@ -49,7 +49,7 @@ Route::view('/', 'theme::home');
 
 Every theme can include options such as logo, color scheme, etc... You can choose to program any amount of options into your theme.
 
-In order to create an *options* page for your theme you need to create a new file inside your theme folder called `options.blade.php`. As an example take a look at the UIKit theme options located at `resources/views/themes/uikit/options.blade.php`, you will see a snippet similar to:
+In order to create an *options* page for your theme you need to create a new file inside your theme folder called `options.blade.php`. As an example take a look at the Tailwind theme options located at `resources/views/themes/tailwind/options.blade.php`, you will see a snippet similar to:
 
 ```php
 <div id="branding" class="tab-pane fade in active">
@@ -61,14 +61,14 @@ In order to create an *options* page for your theme you need to create a new fil
 </div>
 ```
 
-This will allow us to create some dynamic theme fields. This is powered by Voyager Themes. You can easily create input fields for your theme options.
+This will allow us to create some dynamic theme fields. This is powered by the [DevDojo Themes Package](https://github.com/thedevdojo/themes). You can easily create input fields for your theme options.
 
-For more information about the different type of fields be sure to visit the Voyager Themes Hook located at [https://github.com/thedevdojo/themes](https://github.com/thedevdojo/themes)
+For more information about the different type of fields be sure to visit the themes package located at [https://github.com/thedevdojo/themes](https://github.com/thedevdojo/themes)
 
 <a name="theme-assets"></a>
 ## Theme Assets
 
-The current themes inside of wave all use Webpack to mix their assets. In order to run the assets for each theme you will need to CD into the theme folder and run:
+The current themes use Webpack to mix their assets. In order to run the assets for each theme you will need to go into the theme folder and run:
 
 ```javascript
 npm run watch
