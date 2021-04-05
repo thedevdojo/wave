@@ -24,7 +24,7 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
                 'id' => 17,
                 'theme_id' => 1,
                 'key' => 'logo',
-                'value' => 'themes/February2018/UUgOwPG08CnLLBOtgNWR.png',
+                'value' => '',
                 'created_at' => '2017-11-22 16:54:46',
                 'updated_at' => '2018-02-11 05:02:40'
             ),
