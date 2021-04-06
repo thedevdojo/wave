@@ -4,12 +4,11 @@ Each user in your app will have a primary role and every role has permissions to
 
 This functionality is also documented in Voyager; although, it’s important to re-cap the functionality since it ties directly with a Subscription Plan.
 
-> {primary} If you are unfamiliar with Voyager, I would recommend checking out the documentation at https://laravelvoyager.com/docs
+> If you are unfamiliar with Voyager, I would recommend checking out the documentation at https://voyager-docs.devdojo.com/
 
-- [User Roles](#user-roles)
-    - [🍞 The BREAD System](#%f0%9f%8d%9e-the-bread-system)
-    - [Adding Roles & Permissions](#adding-roles--permissions)
-    - [Checking Permissions](#checking-permissions)
+- [🍞 The BREAD System](#bread)
+- [Adding Roles & Permissions](#roles-permissions)
+- [Checking Permissions](#checking-permissions)
 
 ---
 
@@ -20,7 +19,7 @@ Wave uses the BREAD (browse, read, edit, add, and delete) system as opposed to t
 
 By using the BREAD system we can specify what type of permissions the User Role has in relation to any content on your site. The user role can have permissions to either Browse, Read, Edit, Add, or Delete any data on your website.
 
-> {info} Here's a quick example: If we were to create a new role called **editor** and then assign the **editor** permissions to **Browse**, **Read**, and **Add** Posts, they will only have permission to those particular actions. Meaning that user can only Browse posts, Read posts, and Add posts. The user will not have permissions to **Edit** or **Delete** posts. Pretty straight forward, right?
+> Here's a quick example: If we were to create a new role called **editor** and then assign the **editor** permissions to **Browse**, **Read**, and **Add** Posts, they will only have permission to those particular actions. Meaning that user can only Browse posts, Read posts, and Add posts. The user will not have permissions to **Edit** or **Delete** posts. Pretty straight forward, right?
 
 Since each Subscription Plan is associated with a Role. We can say that each plan has a specific set of permissions to Browse, Read, Edit, Add, or Delete content within your application.
 
@@ -29,11 +28,11 @@ Since each Subscription Plan is associated with a Role. We can say that each pla
 
 In your application you can view or add Roles in your application by visiting `/admin/roles`. To add a new role you can click on the `Add New` button:
 
-![](/wave/img/docs/1.0/user-roles-1.png)
+![add-role](https://cdn.devdojo.com/images/april2021/add-role.png)
 
 You can give the role a name and then specify the BREAD permissions for all the content on your site.
 
-![](/wave/img/docs/1.0/user-roles-2.png)
+![add-role-bread](https://cdn.devdojo.com/images/april2021/add-role-bread.png)
 
 <a name="checking-permissions"></a>
 ### Checking Permissions
@@ -59,18 +58,23 @@ $canAddPost = Voyager::can('add_posts');
 $canDeletePost = Voyager::can('delete_posts');
 ```
 
-Lastly, you can use the blade syntax inside of your views to check whether a user can edit a particular post, like `@if` so:
+Lastly, you can use the blade syntax inside of your views to check whether a user can edit a particular post, like so:
 
-```html
+```
+@can('edit', $post)
+
+    I can edit this post!
+
+@endcan
 ```
 
 ---
 
 You may also pass the Model to check for permissions:
 
-```html
-\@can('browse', new TCG\Voyager\Models\Post)
-    
+```
+@can('browse', new TCG\Voyager\Models\Post)
+
     I can browse posts!
 
 @endcan
@@ -78,7 +82,7 @@ You may also pass the Model to check for permissions:
 
 Be sure to note that the permission will be tied to the Model specified in the Voyager Bread section.
 
-![](/wave/img/docs/1.0/user-roles-3.png)
+![edit-post-bread](https://cdn.devdojo.com/images/april2021/edit-post-bread.png)
 
 You can then choose to change the location of your model. For instance, you may want to create a new model inside of your app folder, and swap out the namespace with `App\Post`.
 

@@ -2,7 +2,7 @@
 
 Wave has been built using the Voyager Admin, which is an all-in-one admin interface for any Laravel application. This means that you can leverage all the powers of Wave with the power of Voyager as well.
 
-> {primary} If you have not had a chance to check out the documentation be sure to head over to https://docs.laravelvoyager.com to learn more.
+> {primary} If you have not had a chance to check out the documentation be sure to head over to https://voyager-docs.devdojo.com to learn more.
 
 - [The Admin Interface](#admin-interface)
 - [Admin Dashboard Sections](#admin-dashboard-sections)
@@ -12,7 +12,7 @@ Wave has been built using the Voyager Admin, which is an all-in-one admin interf
 <a name="admin-interface"></a>
 ### Admin Interface
 
-You may have noticed the UI for the Wave admin may look a little different than the default Voyager theme. 
+You may have noticed the UI for the Wave admin may look a little different than the default Voyager theme.
 
 ![](/wave/img/docs/1.0/admin-1.png)
 

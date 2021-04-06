@@ -30,4 +30,4 @@
     - [Video Tutorials](https://devdojo.com/series/wave)
     - [Support](https://devdojo.com/forums/category/wave)
     - [Laravel](https://laravel.com)
-    - [Voyager](https://laravelvoyager.com)
+    - [Voyager](https://voyager.devdojo.com)
