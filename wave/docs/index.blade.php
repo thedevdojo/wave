@@ -33,12 +33,12 @@
     <div class="relative z-20 flex h-screen antialiased bg-white docs">
 
         {{-- sidebar --}}
-        <div class="fixed top-0 left-0 hidden w-64 h-screen py-4 pr-3 overflow-visible overflow-scroll bg-white border-r border-gray-200 select-none categories lg:flex lg:flex-col">
+        <div id="sidebar" class="fixed top-0 left-0 hidden w-64 h-screen py-4 pr-3 overflow-scroll bg-white border-r border-gray-200 select-none categories lg:flex lg:flex-col">
             <h1 class="px-5 text-sm font-bold text-black">Wave<span class="ml-1 text-xs font-medium text-blue-500 uppercase">docs</span></h1>
-
-            <div class="relative flex items-center w-full pl-4 mt-5 mb-5 text-gray-400">
+            <div id="bg-fade" class="fixed inset-0 z-40 invisible w-full h-full transition duration-150 ease-out bg-gray-900 opacity-0"></div>
+            <div class="relative z-50 flex items-center w-full pl-4 mt-5 mb-5 text-gray-400">
                 <svg class="absolute z-20 w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <input type="text" class="block search w-full z-10 py-1.5 pt-2 w-full pl-8 pr-4 leading-normal rounded-md text-xs focus:border-transparent focus:outline-none focus:ring-4 border border-gray-100 focus:ring-blue-500 focus:ring-opacity-40 bg-gray-50 text-gray-400" placeholder="Search the docs">
+                <input type="text" onfocus="window.searchFocused(true)" onblur="window.searchFocused(false)" class="block search w-full z-10 py-1.5 pt-2 w-full pl-8 pr-4 leading-normal rounded-md text-xs focus:border-transparent focus:outline-none focus:ring-4 border border-gray-100 focus:ring-blue-500 focus:ring-opacity-40 bg-gray-50 text-gray-400" placeholder="Search the docs">
             </div>
 
             @foreach($menu_items as $item)
