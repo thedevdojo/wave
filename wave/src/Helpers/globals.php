@@ -1,13 +1,78 @@
 <?php
 
+if (!class_exists(WaveKeyValueConvertible::class)) {
+    class WaveKeyValueConvertible
+    {
+        public function toObject() {
+            $array = (array)$this;
+
+            return (object)$array;
+        }
+    }
+}
+
+if (!class_exists(WaveKeyValueHelper::class)) {
+    class WaveKeyValueHelper extends WaveKeyValueConvertible
+    {
+        public $required = false;
+        public $field;
+        public $type;
+        public $details;
+        public $display_name;
+        public $options = [];
+
+        public static function create($type, $field, $details, $display_name, $required = 0, $options = []) {
+            $result = new WaveKeyValueHelper();
+            $result->type = $type;
+            $result->field = $field;
+            $result->details = $details;
+            $result->display_name = $display_name;
+            $result->required = $required;
+            $result->options = $options;
+
+            return $result;
+        }
+
+        public function getTranslatedAttribute($attribute) {
+            return $this->display_name;
+        }
+    }
+}
+
+if (!class_exists(WaveKeyValueTypeHelper::class)) {
+    class WaveKeyValueTypeHelper extends WaveKeyValueConvertible
+    {
+        protected $id = 0;
+        protected $key = null;
+
+        public function setKey($key, $content) {
+            $this->key = $key;
+            $this->{$key} = $content;
+        }
+
+        public static function create($key, $content) {
+
+            $result = new WaveKeyValueTypeHelper();
+            $result->setKey($key, $content);
+
+            return $result;
+        }
+
+        public function getKey() { return $this->key; }
+    }
+}
+
+
 if (!function_exists('wave_key_value')){
 
 	function wave_key_value($type, $key, $content = '', $details = '', $placeholder = '', $required = 0){
 
-		$row = (object)['required' => $required, 'field' => $key, 'type' => $type, 'details' => $details, 'display_name' => $placeholder];
-		$dataTypeContent = (object)[$key => $content];
+
+        $row = WaveKeyValueHelper::create($type, $key, $details, $placeholder, $required);
+        $dataTypeContent = WaveKeyValueTypeHelper::create($key, $content);
 		$type = '<input type="hidden" value="' . $type . '" name="' . $key . '_type__wave_keyvalue">';
-		return app('voyager')->formField($row, '', $dataTypeContent) . $type;
+
+        return app('voyager')->formField($row, '', $dataTypeContent->toObject()) . $details . $type;
 
 	}
 

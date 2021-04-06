@@ -66,7 +66,7 @@
             @endforeach
 
 
-            <div class="flex flex-col items-start justify-between mt-auto">
+            <div class="relative flex flex-col items-start justify-between mt-auto">
 
                 <a href="https://devdojo.com/course/wave" target="_blank" class="flex items-center justify-between w-full py-2 pl-5 pr-3 transition duration-150 ease-in-out rounded-r-lg cursor-pointer hover:bg-wave-100 bg-wave-50 group hover:text-gray-800">
                     <span class="flex items-center">🍿
