@@ -2,7 +2,7 @@
 
 Wave comes packaged with integrated billing. This means that you can charge your customers to access your application or features in your application.
 
-Wave integrates seamlessly with the [Paddle](https://paddle.com) Payment Platform.
+Wave integrates seamlessly with the <a href="https://paddle.com" target="_blank">Paddle</a> Payment Platform.
 
 - [Create a Paddle Account](#paddle-account)
 - [Add Paddle API Credentials](#paddle-credentials)
@@ -11,7 +11,7 @@ Wave integrates seamlessly with the [Paddle](https://paddle.com) Payment Platfor
 <a name="paddle-account"></a>
 ## Create a Paddle Account
 
-In order to integrate your application with Paddle you will need to signup for an account at [https://paddle.com/signup](https://paddle.com/signup). It may take a few days to get access to your Paddle account before you're ready to go live. In the meantime, you can signup for a Sandbox account at [https://sandbox-vendors.paddle.com/signup](https://sandbox-vendors.paddle.com/signup), and start testing out your payment functionality right away.
+In order to integrate your application with Paddle you will need to signup for an account at <a href="https://paddle.com/signup" target="_blank">paddle.com/signup</a>. It may take a few days to get access to your Paddle account before you're ready to go live. In the meantime, you can signup for a Sandbox account at <a href="https://sandbox-vendors.paddle.com/signup" target="_blank">sandbox-vendors.paddle.com/signup</a>, and start testing out your payment functionality right away.
 
 After you have created your Paddle Account you'll be able to login and see your dashboard, which should look similar to the following:
 

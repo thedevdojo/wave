@@ -41,9 +41,6 @@ for (var i = 0; i < markAsRead.length; i++) {
                 notificationCount.innerHTML = parseInt(notificationCount.innerHTML) - 1;
             }
             if(removedNotifications >= unreadNotifications){
-                if(document.getElementById('notifications-none')){
-                    document.getElementById('notifications-none').className = "";
-                }
                 if(document.getElementById('notification-count')){
                     document.getElementById('notification-count').className = "fadeOut";
                 }

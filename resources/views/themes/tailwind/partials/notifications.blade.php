@@ -47,13 +47,13 @@
 
                 @foreach ($unreadNotifications as $index => $notification)
                     @php $notification_data = (object)$notification->data; @endphp
-                    <div id="notification-li-{{ $index + 1 }}" class="flex flex-col">
+                    <div id="notification-li-{{ $index + 1 }}" class="flex flex-col pb-5 border-b border-gray-200 @if(!isset($show_all_notifications)){{ 'hover:bg-gray-50' }}@endif">
 
-                        <a href="{{ @$notification_data->link }}" class="flex items-start p-5 pb-2 @if(!isset($show_all_notifications)){{ 'hover:bg-gray-50' }}@else{{ 'border-b border-gray-200' }}@endif">
+                        <a href="{{ @$notification_data->link }}" class="flex items-start p-5 pb-2">
                             <div class="flex-shrink-0 pt-1">
                                 <img class="w-10 h-10 rounded-full" src="{{ @$notification_data->icon }}" alt="">
                             </div>
-                            <div class="flex-1 w-0 ml-3">
+                            <div class="flex flex-col items-start flex-1 w-0 ml-3">
                                 <p class="text-sm leading-5 text-gray-600">
                                     <strong>{{ @$notification_data->user['username'] }} @if(isset($notification_data->type) && @$notification_data->type == 'message'){{ 'left a message' }}@else{{ 'said' }}@endif</strong>
                                     {{ @$notification_data->body }} in <span class="notification-highlight">{{ @$notification_data->title }}</span>

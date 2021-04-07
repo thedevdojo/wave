@@ -145,10 +145,6 @@ for (var i = 0; i < markAsRead.length; i++) {
       }
 
       if (removedNotifications >= unreadNotifications) {
-        if (document.getElementById('notifications-none')) {
-          document.getElementById('notifications-none').className = "";
-        }
-
         if (document.getElementById('notification-count')) {
           document.getElementById('notification-count').className = "fadeOut";
         }
