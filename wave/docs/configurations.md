@@ -84,7 +84,7 @@ return [
 ];
 ```
 
-- **profile_fields** - Whenever you want to dynamically create a new user profile field such as `about`, `social_links`, or any other field you will need to include the field name in this config. You will learn all about *Custom Profile Fields* in the [User Profiles Section](/docs/{{version}}/features/user-profiles)
+- **profile_fields** - Whenever you want to dynamically create a new user profile field such as `about`, `social_links`, or any other field you will need to include the field name in this config. You will learn all about *Custom Profile Fields* in the [User Profiles Section](/docs/features/user-profiles)
 
 - **api => auth_token_expires** - This is the amount of time you want your JSON web token to expire. After this token has expired the app will then request a refresh token. You will most likely never need to change this value, but it's there if you need it.
 

@@ -1,6 +1,6 @@
 # Blog
 
-In order to grow your SAAS you will need a blog to write about relevant content to your SAAS application. This will help your business grow and get free organic traffic.
+In order to grow your SAAS you will need a blog to write about relevant content. This will help your business grow and get free organic traffic.
 
 In this section you will learn about the blogging platform that comes along with Wave.
 

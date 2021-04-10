@@ -4,10 +4,10 @@ When building your SAAS application you may want your users to provide more info
 
 ---
 
-- [User Profile Page](/docs/{{version}}/features/user-profiles#profile-page)
-- [User Profile Settings](/docs/{{version}}/features/user-profiles#profile-settings)
-- [Custom Profile Fields](/docs/{{version}}/features/user-profiles#custom-profile-fields)
-- [Profile Field Types](/docs/{{version}}/features/user-profiles#profile-field-types)
+- [User Profile Page](#profile-page)
+- [User Profile Settings](#profile-settings)
+- [Custom Profile Fields](#custom-profile-fields)
+- [Profile Field Types](#profile-field-types)
 
 <a name="profile-page"></a>
 ### User Profile Page

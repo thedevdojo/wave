@@ -28,35 +28,35 @@ There are 2 ways to get an Access Token:
 
 To create an API key you can visit your API settings page at: `/settings/api`, then to create a new API key, enter a name in the textbox and click on the `Create New Key` button.
 
-![](/wave/img/docs/1.0/api-1.png)
+![api screenshot 1](https://cdn.devdojo.com/images/april2021/api-1.png)
 
-After creating your new API key you will see it in the list of *Current API Keys*. You'll be able to see the Name, Date Created, and the Last Used. There are also 3 actions do with this new API Key. To view the current API Key. Click on the info button:
+After creating your new API key you will see it in the list of *Current API Keys*. You'll be able to see the Name, Date Created, and the Last Used. There are also 3 actions you can do with this new API Key. To view the current API Key. Click on the `View` button:
 
-![](/wave/img/docs/1.0/api-2.png)
+![api screenshot 2](https://cdn.devdojo.com/images/april2021/api-2.png)
 
-And you will see the current API key where you can copy and paste it to be used
+And you will see the current API key where you can copy and paste it to be used.
 
-![](/wave/img/docs/1.0/api-3.png)
+![api screenshot 3](https://cdn.devdojo.com/images/april2021/api-3.png)
 
-Next, you can click on the edit button:
+Next, you can click on the `Edit` button:
 
-![](/wave/img/docs/1.0/api-4.png)
+![api screenshot 4](https://cdn.devdojo.com/images/april2021/api-4.png)
 
 Where you will be able to edit the current API key name.
 
-![](/wave/img/docs/1.0/api-5.png)
+![api screenshot 5](https://cdn.devdojo.com/images/april2021/api-5.png)
 
 Lastly, if you click on the delete button:
 
-![](/wave/img/docs/1.0/api-6.png)
+![api screenshot 6](https://cdn.devdojo.com/images/april2021/api-6.png)
 
 You will be able to delete the current API key.
 
-![](/wave/img/docs/1.0/api-7.png)
+![api screenshot 7](https://cdn.devdojo.com/images/april2021/api-7.png)
 
 Next, let's move on to learning how you can use this API key to request an **Access Token** from the API. After we recieve the **Access Token** we can then use that to retrieve data from our application.
 
-To request an **Access Token** we will can do a POST request to:
+To request an **Access Token** we can submit a POST request to:
 
 ```php
 /api/token?key=API_KEY_HERE
@@ -119,21 +119,21 @@ In the PUT and POST methods above you can pass JSON data to Edit or Add content.
 <a name="testing-api"></a>
 ### Testing Your API
 
-You can test out your application by using a third-party tool called [Insomnia](https://insomnia.rest/), this is a free app that you can download and you can view all the endpoints on the left and the API data on the right.
+You can test out your application by using a third-party tool called <a href="https://insomnia.rest/" target="_blank">Insomnia</a>, this is a free app that you can download and you can view all the endpoints on the left and the API data on the right.
 
-![](/wave/img/docs/1.0/insomnia-1.png)
+![api screenshot 8](https://cdn.devdojo.com/images/april2021/api-8.png)
 
 In order to download the End Points for the Wave application you can find this file located here: [https://github.com/thedevdojo/laravel-wave-api-endpoints](https://github.com/thedevdojo/laravel-wave-api-endpoints), this page also shows instructions on how to import the current endpoints.
 
 After you have imported the API endpoints, you may also wish to change the BASE_URL variable in the application. We use `https://wave.test` for testing, but your local URL may be different. To do this, you'll need to click on **Development->Manage Environments**
 
-![](/wave/img/docs/1.0/insomnia-2.png)
+![api screenshot 9](https://cdn.devdojo.com/images/april2021/api-9.png)
 
 Then, you'll need to change the `base_url` value to your application URL.
 
-![](/wave/img/docs/1.0/insomnia-3.png)
+![api screenshot 10](https://cdn.devdojo.com/images/april2021/api-10.png)
 
-And, now you're ready to test out API.
+And, now you're ready to test out your API.
 
 <a name="registering-via-api"></a>
 ### Registering via the API

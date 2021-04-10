@@ -4,7 +4,7 @@ With user impersonations you can easily impersonate any user on your site. This 
 
 Impersonating a user will allow you to login to your application acting as a specific user.
 
-- [Impersonate a User](/docs/{{version}}/features/user-impersonation#impersonate)
+- [Impersonate a User](#impersonate)
 
 <a name="impersonate"></a>
 ## Impersonate a User
