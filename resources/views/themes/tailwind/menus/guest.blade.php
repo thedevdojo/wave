@@ -20,17 +20,17 @@
                 <div class="flex items-stretch justify-center overflow-hidden bg-white shadow-xs xl:rounded-xl">
 
                     <div class="flex flex-col">
-                        <div class="flex">
+                        <div class="flex h-full">
                             <div class="relative flex flex-col items-start justify-start hidden w-full h-full max-w-xs bg-center bg-cover lg:block" style="background-image:url('https://cdn.devdojo.com/images/october2020/wave-menu-bg.jpeg')">
                                 <div class="relative flex flex-col items-start justify-center w-full h-full px-16 py-8">
 
-                                    <img src="https://cdn.devdojo.com/images/September2018/wave-logo-light.png" class="z-20 w-auto h-10">
+                                    <img src="https://cdn.devdojo.com/images/april2021/wave-light-logo.png" class="z-20 w-auto h-10">
                                     <h3 class="z-30 mt-1 mt-3 text-lg font-thin text-wave-200">The Software as a Service Starter Kit.</h3>
 
                                     <span class="relative z-20 inline-flex mt-5 rounded-md shadow-sm">
                                         <a href="https://devdojo.com/wave" class="relative inline-flex items-center px-4 py-2 text-sm font-medium leading-5 transition duration-150 ease-in-out bg-white border border-transparent rounded-md text-wave-500 hover:bg-gray-100 focus:outline-none focus:border-gray-300 focus:shadow-outline-gray active:bg-gray-100">
-                                            Purchase Wave Now
-                                            <span class="absolute top-0 right-0 px-3 py-1 -mt-4 -mr-8 text-xs text-white rounded-full bg-wave-400">$15 USD</span>
+                                            Get Wave Today
+                                            <span class="absolute top-0 right-0 px-3 py-1 -mt-4 -mr-8 text-xs text-white rounded-full bg-wave-400">Version 2</span>
                                         </a>
                                     </span>
                                 </div>

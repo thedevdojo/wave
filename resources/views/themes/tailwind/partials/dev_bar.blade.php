@@ -27,7 +27,7 @@
 
 
 
-    <div class="absolute inset-0 z-30" :class="{ 'bottom-0': !open }">
+    <div class="absolute inset-0 z-30 hidden sm:block" :class="{ 'bottom-0': !open }">
 
         <div class="inset-0 z-40 transition duration-200 ease-out" :class="{ 'absolute h-14': open, 'relative h-10 -mt-10': !open }">
             <div class="w-full h-full border-t border-blue-500 bg-gradient-to-r from-wave-500 via-blue-500 to-purple-600" :class="{ 'overflow-hidden': open }">
