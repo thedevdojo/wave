@@ -44,7 +44,7 @@ class ApiController extends \TCG\Voyager\Http\Controllers\Controller
 	    	$model = app($dataType->model_name);
 	        $query = $model::select('*');
 
-	        $relationships = $this->getRelationships($dataType);
+	        $relationships = $dataType->getRelationships([], $dataType);
 
 	        // If a column has a relationship associated with it, we do not want to show that field
 	        $this->removeRelationshipField($dataType, 'browse');
@@ -81,7 +81,7 @@ class ApiController extends \TCG\Voyager\Http\Controllers\Controller
 
         $dataType = Datatype::where('slug', '=', $slug)->first();
 
-        $relationships = $this->getRelationships($dataType);
+        $relationships = $dataType->getRelationships([], $dataType);
 
         if (strlen($dataType->model_name) != 0) {
             $model = app($dataType->model_name);
@@ -235,7 +235,7 @@ class ApiController extends \TCG\Voyager\Http\Controllers\Controller
 
         foreach ($rows as $row) {
 
-            $options = json_decode($row->details);
+            $options = $row->details;
 
             $content = $this->getContentBasedOnType($request, $slug, $row, $options);
 

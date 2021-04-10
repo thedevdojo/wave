@@ -42,7 +42,7 @@ for (var i = 0; i < markAsRead.length; i++) {
             }
             if(removedNotifications >= unreadNotifications){
                 if(document.getElementById('notification-count')){
-                    document.getElementById('notification-count').className = "fadeOut";
+                    document.getElementById('notification-count').classList.add('opacity-0');
                 }
             }
         };

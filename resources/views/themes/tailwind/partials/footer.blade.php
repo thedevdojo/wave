@@ -213,7 +213,7 @@
 @endif
 
 <!-- Scripts -->
-<script src="{{ asset('themes/tailwind/js/app.js') }}"></script>
+<script src="{{ asset('themes/' . $theme->folder . '/js/app.js') }}"></script>
 
 @yield('javascript')
 

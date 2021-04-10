@@ -12,7 +12,7 @@ Every theme is located inside of the `resources/views/themes` folder. You will s
 
 If you are logged in as an admin user and you visit visit the <a href="/admin/themes" target="_blank">`/admin/themes`</a> section of your application you’ll see the current themes available in your app.
 
-![](../..//wave/img/docs/1.0/admin-themes-1.png)
+![themes](https://cdn.devdojo.com/images/april2021/themes.png)
 
 To activate a Theme you can simply click the Activate button for the current theme you would like to activate, and that will be the current active theme.
 

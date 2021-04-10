@@ -14,7 +14,7 @@ Wave has been built using the Voyager Admin, which is an all-in-one admin interf
 
 You may have noticed the UI for the Wave admin may look a little different than the default Voyager theme.
 
-![](/wave/img/docs/1.0/admin-1.png)
+![admin](https://cdn.devdojo.com/images/april2021/admin.png)
 
 This is because the Wave admin UI has been slightly modified with a custom css file located at `/public/wave/css/admin.css`
 
