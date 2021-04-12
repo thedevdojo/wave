@@ -1,5 +1,6 @@
 <p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/github-wave-logo.svg" width="240"></a></p>
 
+<p align="center"><a href="https://www.producthunt.com/posts/wave-2-0" target="_blank"><img src="https://cdn.devdojo.com/images/april2021/wave-product-hunt.png" height="150" width="auto"></a></p>
 
 ## Introduction
 
