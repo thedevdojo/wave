@@ -6,6 +6,7 @@
 /vendor
 /.idea
 /.vagrant
+/wave-pro
 Homestead.json
 Homestead.yaml
 npm-debug.log
