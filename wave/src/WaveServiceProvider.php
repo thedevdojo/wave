@@ -11,6 +11,7 @@ use Wave\TokenGuard;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Blade;
+use Livewire\Livewire;
 
 class WaveServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,8 @@ class WaveServiceProvider extends ServiceProvider
 
 	    $this->loadHelpers();
 
+        $this->loadLivewireComponents();
+
 	    $waveMiddleware = [
 	    	\Illuminate\Auth\Middleware\Authenticate::class,
     		\Wave\Http\Middleware\TrialEnded::class,
@@ -37,6 +40,7 @@ class WaveServiceProvider extends ServiceProvider
         $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\InstallMiddleware::class);
 
 	    $this->app->router->middlewareGroup('wave', $waveMiddleware);
+
 
 	}
 
@@ -117,12 +121,11 @@ class WaveServiceProvider extends ServiceProvider
             return "<?php } ?>";
         });
 
-        // isHome Directives
+        // home Directives
 
         Blade::directive('home', function () {
             $isHomePage = false;
 
-            //dd(request()->is('/'));
             // check if we are on the homepage
             if ( request()->is('/') ) {
                 $isHomePage = true;
@@ -131,15 +134,28 @@ class WaveServiceProvider extends ServiceProvider
             return "<?php if ($isHomePage) { ?>";
         });
 
+        Blade::directive('nothome', function(){
+            return "<?php } else { ?>";
+        });
+
 
         Blade::directive('endhome', function () {
             return "<?php } ?>";
         });
 
+
         Blade::directive('waveCheckout', function(){
             return '{!! view("wave::checkout")->render() !!}';
         });
 
+    }
+
+    private function loadLivewireComponents(){
+        Livewire::component('wave.settings.security', \Wave\Http\Livewire\Settings\Security::class);
+        Livewire::component('wave.settings.api', \Wave\Http\Livewire\Settings\Api::class);
+        Livewire::component('wave.settings.plans', \Wave\Http\Livewire\Settings\Plans::class);
+        Livewire::component('wave.settings.subscription', \Wave\Http\Livewire\Settings\Subscription::class);
+        Livewire::component('wave.settings.invoices', \Wave\Http\Livewire\Settings\Invoices::class);
     }
 
 }

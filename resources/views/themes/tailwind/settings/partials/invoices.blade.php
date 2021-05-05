@@ -8,7 +8,7 @@
 
 
 
-        @if($invoices->success == true)
+        @if(isset($invoices->success) && $invoices->success == true)
 
             <table class="min-w-full overflow-hidden divide-y divide-gray-200 rounded-lg">
                 <thead>
@@ -45,7 +45,7 @@
             </table>
 
         @else
-            <p>Sorry, there seems to be an issue retrieving your invoices. Please contact us if you think this is a mistake.</p>
+            <p>Sorry, there seems to be an issue retrieving your invoices or you may not have any invoices yet.</p>
         @endif
 
 	@notsubscriber

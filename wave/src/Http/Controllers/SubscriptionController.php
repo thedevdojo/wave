@@ -164,14 +164,20 @@ class SubscriptionController extends Controller
 
     public function invoices(User $user){
 
-        $response = Http::post($this->paddle_vendors_url . '/2.0/subscription/payments', [
-            'vendor_id' => $this->vendor_id,
-            'vendor_auth_code' => $this->vendor_auth_code,
-            'subscription_id' => $user->subscription->subscription_id,
-            'is_paid' => 1
-        ]);
+        $invoices = [];
 
-        return json_decode($response->body());
+        if(isset($user->subscription->subscription_id)){
+            $response = Http::post($this->paddle_vendors_url . '/2.0/subscription/payments', [
+                'vendor_id' => $this->vendor_id,
+                'vendor_auth_code' => $this->vendor_auth_code,
+                'subscription_id' => $user->subscription->subscription_id,
+                'is_paid' => 1
+            ]);
+
+            $invoices = json_decode($response->body());
+        }
+
+        return $invoices;
 
     }
 

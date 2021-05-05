@@ -1,4 +1,3 @@
-
 <div class="flex flex-wrap mx-auto mt-12 max-w-7xl">
     @foreach(Wave\Plan::all() as $plan)
         @php $features = explode(',', $plan->features); @endphp
