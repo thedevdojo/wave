@@ -27,29 +27,30 @@
                     </div>
                 </div>
 
-                <div class="flex w-full mb-16 lg:w-1/2 lg:mb-0">
-
-                    <div class="relative invisible transition-none duration-1000 delay-100 transform translate-x-12 opacity-0" data-replace='{ "transition-none": "transition-all", "invisible": "visible", "translate-x-12": "translate-y-0", "opacity-0": "opacity-100" }'>
-                        <img src="{{ Voyager::image(theme('home_promo_image')) }}" class="w-full max-w-3xl sm:w-auto">
-                    </div>
-
-                </div>
             </div>
         </div>
 
-
-
     </div>
 
-    <div class="relative z-40 -mt-64">
+    <div class="relative flex items-center z-10 -mt-32 sm:mt-auto xl:-mt-40">
+        <div
+            class="absolute w-auto right-0.5 invisible transition-none transform translate-x-12 -translate-y-3/7 opacity-0 float-right -z-1"
+            data-replace='{ "transition-none": "transition-all duration-1000 delay-100", "invisible": "visible", "translate-x-12": "sm:-translate-x-6", "opacity-0": "opacity-100" }'>
 
-        <svg viewBox="0 0 120 28" class="-mt-64">
+            <img src="{{ Voyager::image(theme('home_promo_image')) }}"
+                class="w-4/5 m-auto max-w-xl sm:w-auto lg:max-w-xl xl:max-w-3xl 2xl:max-w-4xl ship">
+
+        </div>
+
+        <svg viewBox="0 0 120 28" class="-mt-1/2" fill-rule="evenodd">
             <defs>
-                <path id="wave" d="M 0,10 C 30,10 30,15 60,15 90,15 90,10 120,10 150,10 150,15 180,15 210,15 210,10 240,10 v 28 h -240 z" />
+                {{-- Editted the svg path using https://yqnn.github.io/svg-path-editor/ --}}
+                <path id="wave"
+                    d="M 0 13 C 30 13 30 15 60 15 C 90 15 90 13 120 13 C 150 13 150 15 180 15 C 210 15 210 13 240 13 v 28 h -240 z" />
             </defs>
-            <use id="wave3" class="wave" xlink:href="#wave" x="0" y="-2"></use>
+            <use id="wave3" class="wave" xlink:href="#wave" x="0" y="-0.5"></use>
             <use id="wave2" class="wave" xlink:href="#wave" x="0" y="0"></use>
-            <use id="wave1" class="wave" xlink:href="#wave" x="0" y="1" />
+            <use id="wave1" class="wave" xlink:href="#wave" x="0" y="0.25" />
         </svg>
     </div>
 
