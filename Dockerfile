@@ -1,4 +1,4 @@
-FROM haakco/stage3-ubuntu-20.04-php7.4-lv-docker
+FROM haakco/stage3-ubuntu-20.04-php7.4-lv
 
 USER www-data
 

@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
-export PROXY="${PROXY:-""}"
-export IMAGE_NAME="${IMAGE_NAME}"
+export IMAGE_NAME='haakco/stage3-ubuntu-20.04-php7.4-lv-wave'
 export DOCKER_FILE="${DOCKER_FILE:-"Dockerfile"}"
 
-echo "Proxy Set to: ${PROXY}"
 echo "Tagged as : ${IMAGE_NAME}"
 echo ""
 echo ""
 
-CMD='docker build --rm --build-arg PROXY='"${PROXY}"' --file '"${DOCKER_FILE}"' -t '"${IMAGE_NAME}"' .'
+CMD='docker build --rm --file '"${DOCKER_FILE}"' -t '"${IMAGE_NAME}"' .'
 
 echo "Build commmand: ${CMD}"
 echo ""
