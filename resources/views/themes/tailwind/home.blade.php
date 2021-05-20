@@ -4,9 +4,9 @@
 
 
     <div class="relative flex items-center w-full">
-        <div class="relative z-20 px-8 mx-auto xl:px-5 max-w-7xl">
+        <div class="relative z-20 px-8 sm:px-16 mx-auto xl:px-5 w-full max-w-7xl">
 
-            <div class="flex flex-col items-center h-full pt-16 pb-56 lg:flex-row">
+            <div class="flex flex-col items-center h-full pt-16 sm:pt-28 pb-56 lg:flex-row">
 
                 <div class="flex flex-col items-start w-full mb-16 md:items-center lg:pr-12 lg:items-start lg:w-1/2 lg:mb-0">
 
@@ -32,13 +32,13 @@
 
     </div>
 
-    <div class="relative flex items-center z-10 -mt-32 sm:mt-auto xl:-mt-40">
+    <div class="relative flex items-center z-10 -mt-28 sm:-mt-6 xl:-mt-24">
         <div
             class="absolute w-auto right-0.5 invisible transition-none transform translate-x-12 -translate-y-3/7 opacity-0 float-right -z-1"
-            data-replace='{ "transition-none": "transition-all duration-1000 delay-100", "invisible": "visible", "translate-x-12": "sm:-translate-x-6", "opacity-0": "opacity-100" }'>
+            data-replace='{ "transition-none": "transition-all duration-1000 delay-100", "invisible": "visible", "translate-x-12": "sm:-translate-x-8 xl:-translate-x-10", "opacity-0": "opacity-100" }'>
 
             <img src="{{ Voyager::image(theme('home_promo_image')) }}"
-                class="w-4/5 m-auto max-w-xl sm:w-auto lg:max-w-xl xl:max-w-3xl 2xl:max-w-4xl ship">
+                class="w-4/5 m-auto max-w-xl sm:w-auto lg:max-w-2xl xl:max-w-3xl 2xl:max-w-5xl ship">
 
         </div>
 
