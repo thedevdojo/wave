@@ -83,7 +83,7 @@
                                     @php $roles = TCG\Voyager\Models\Role::all(); @endphp
                                     <select name="role_id" id="role_id" class="select2" placeholder="">
                                         @foreach($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            <option value="{{ $role->id }}" @if($role->id == $dataTypeContent->role_id) selected @endif>{{ $role->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div class="panel panel panel-bordered panel-warning">
+                    <div class="panel panel-bordered panel-warning">
                         <div class="panel-body">
                             <div class="form-group">
                                 @if(isset($dataTypeContent->avatar))
