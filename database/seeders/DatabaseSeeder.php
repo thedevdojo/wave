@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Wave\Facades\Wave;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,5 +37,6 @@ class DatabaseSeeder extends Seeder
         $this->call(VoyagerThemesTableSeeder::class);
         $this->call(VoyagerThemeOptionsTableSeeder::class);
         $this->call(WaveKeyValuesTableSeeder::class);
+        fixPostgresSequence();
     }
 }
