@@ -21,7 +21,6 @@ class MenuItemsTableSeeder extends Seeder
         \DB::table('menu_items')->insert(array (
             0 =>
             array (
-                'id' => 1,
                 'menu_id' => 1,
                 'title' => 'Dashboard',
                 'url' => '',
@@ -37,7 +36,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             1 =>
             array (
-                'id' => 2,
                 'menu_id' => 1,
                 'title' => 'Media',
                 'url' => '',
@@ -53,7 +51,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             2 =>
             array (
-                'id' => 3,
                 'menu_id' => 1,
                 'title' => 'Posts',
                 'url' => '',
@@ -69,7 +66,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             3 =>
             array (
-                'id' => 4,
                 'menu_id' => 1,
                 'title' => 'Users',
                 'url' => '',
@@ -85,7 +81,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             4 =>
             array (
-                'id' => 5,
                 'menu_id' => 1,
                 'title' => 'Categories',
                 'url' => '',
@@ -101,7 +96,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             5 =>
             array (
-                'id' => 6,
                 'menu_id' => 1,
                 'title' => 'Pages',
                 'url' => '',
@@ -117,7 +111,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             6 =>
             array (
-                'id' => 7,
                 'menu_id' => 1,
                 'title' => 'Roles',
                 'url' => '',
@@ -133,7 +126,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             7 =>
             array (
-                'id' => 8,
                 'menu_id' => 1,
                 'title' => 'Tools',
                 'url' => '',
@@ -149,7 +141,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             8 =>
             array (
-                'id' => 9,
                 'menu_id' => 1,
                 'title' => 'Menu Builder',
                 'url' => '',
@@ -165,7 +156,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             9 =>
             array (
-                'id' => 10,
                 'menu_id' => 1,
                 'title' => 'Database',
                 'url' => '',
@@ -181,7 +171,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             10 =>
             array (
-                'id' => 11,
                 'menu_id' => 1,
                 'title' => 'Compass',
                 'url' => '/admin/compass',
@@ -197,7 +186,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             11 =>
             array (
-                'id' => 12,
                 'menu_id' => 1,
                 'title' => 'Hooks',
                 'url' => '/admin/hooks',
@@ -213,7 +201,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             12 =>
             array (
-                'id' => 13,
                 'menu_id' => 1,
                 'title' => 'Settings',
                 'url' => '',
@@ -229,7 +216,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             13 =>
             array (
-                'id' => 14,
                 'menu_id' => 1,
                 'title' => 'Themes',
                 'url' => '/admin/themes',
@@ -245,7 +231,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             14 =>
             array (
-                'id' => 15,
                 'menu_id' => 2,
                 'title' => 'Dashboard',
                 'url' => '',
@@ -261,7 +246,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             15 =>
             array (
-                'id' => 16,
                 'menu_id' => 2,
                 'title' => 'Resources',
                 'url' => '#_',
@@ -277,7 +261,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             16 =>
             array (
-                'id' => 19,
                 'menu_id' => 2,
                 'title' => 'Next Child',
                 'url' => '/next',
@@ -293,7 +276,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             17 =>
             array (
-                'id' => 20,
                 'menu_id' => 2,
                 'title' => 'Next Child 2',
                 'url' => '/next',
@@ -309,7 +291,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             18 =>
             array (
-                'id' => 21,
                 'menu_id' => 2,
                 'title' => 'Documentation',
                 'url' => '/docs',
@@ -325,7 +306,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             19 =>
             array (
-                'id' => 22,
                 'menu_id' => 2,
                 'title' => 'Videos',
                 'url' => 'https://devdojo.com/series/wave',
@@ -341,7 +321,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             20 =>
             array (
-                'id' => 23,
                 'menu_id' => 2,
                 'title' => 'Support',
                 'url' => 'https://devdojo.com/forums/category/wave',
@@ -357,7 +336,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             21 =>
             array (
-                'id' => 25,
                 'menu_id' => 2,
                 'title' => 'Blog',
                 'url' => '/blog',
@@ -373,7 +351,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             22 =>
             array (
-                'id' => 26,
                 'menu_id' => 3,
                 'title' => 'Home',
                 'url' => '/#',
@@ -389,7 +366,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             23 =>
             array (
-                'id' => 27,
                 'menu_id' => 3,
                 'title' => 'Features',
                 'url' => '/#features',
@@ -405,7 +381,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             24 =>
             array (
-                'id' => 28,
                 'menu_id' => 3,
                 'title' => 'Testimonials',
                 'url' => '/#testimonials',
@@ -421,7 +396,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             25 =>
             array (
-                'id' => 29,
                 'menu_id' => 3,
                 'title' => 'Pricing',
                 'url' => '/#pricing',
@@ -437,7 +411,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             26 =>
             array (
-                'id' => 30,
                 'menu_id' => 1,
                 'title' => 'Announcements',
                 'url' => '/admin/announcements',
@@ -453,7 +426,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             27 =>
             array (
-                'id' => 31,
                 'menu_id' => 1,
                 'title' => 'BREAD',
                 'url' => '',
@@ -469,7 +441,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             28 =>
             array (
-                'id' => 32,
                 'menu_id' => 1,
                 'title' => 'Plans',
                 'url' => '',
@@ -485,7 +456,6 @@ class MenuItemsTableSeeder extends Seeder
             ),
             29 =>
             array (
-                'id' => 33,
                 'menu_id' => 3,
                 'title' => 'Blog',
                 'url' => '',

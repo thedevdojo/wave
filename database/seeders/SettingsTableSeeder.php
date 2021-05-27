@@ -21,7 +21,6 @@ class SettingsTableSeeder extends Seeder
         \DB::table('settings')->insert(array (
             0 =>
             array (
-                'id' => 1,
                 'key' => 'site.title',
                 'display_name' => 'Site Title',
                 'value' => 'Wave',
@@ -32,7 +31,6 @@ class SettingsTableSeeder extends Seeder
             ),
             1 =>
             array (
-                'id' => 2,
                 'key' => 'site.description',
                 'display_name' => 'Site Description',
                 'value' => 'The Software as a Service Starter Kit built on Laravel & Voyager',
@@ -43,7 +41,6 @@ class SettingsTableSeeder extends Seeder
             ),
             2 =>
             array (
-                'id' => 4,
                 'key' => 'site.google_analytics_tracking_id',
                 'display_name' => 'Google Analytics Tracking ID',
                 'value' => NULL,
@@ -54,7 +51,6 @@ class SettingsTableSeeder extends Seeder
             ),
             3 =>
             array (
-                'id' => 6,
                 'key' => 'admin.title',
                 'display_name' => 'Admin Title',
                 'value' => 'Wave',
@@ -65,7 +61,6 @@ class SettingsTableSeeder extends Seeder
             ),
             4 =>
             array (
-                'id' => 7,
                 'key' => 'admin.description',
                 'display_name' => 'Admin Description',
                 'value' => 'Create some waves and build your next great idea',
@@ -76,7 +71,6 @@ class SettingsTableSeeder extends Seeder
             ),
             5 =>
             array (
-                'id' => 8,
                 'key' => 'admin.loader',
                 'display_name' => 'Admin Loader',
                 'value' => '',
@@ -87,7 +81,6 @@ class SettingsTableSeeder extends Seeder
             ),
             6 =>
             array (
-                'id' => 9,
                 'key' => 'admin.icon_image',
                 'display_name' => 'Admin Icon Image',
                 'value' => '',
@@ -98,7 +91,6 @@ class SettingsTableSeeder extends Seeder
             ),
             7 =>
             array (
-                'id' => 10,
                 'key' => 'admin.google_analytics_client_id',
             'display_name' => 'Google Analytics Client ID (used for admin dashboard)',
                 'value' => '',
@@ -109,7 +101,6 @@ class SettingsTableSeeder extends Seeder
             ),
             8 =>
             array (
-                'id' => 11,
                 'key' => 'site.favicon',
                 'display_name' => 'Favicon',
                 'value' => '',
@@ -120,7 +111,6 @@ class SettingsTableSeeder extends Seeder
             ),
             9 =>
             array (
-                'id' => 12,
                 'key' => 'auth.dashboard_redirect',
                 'display_name' => 'Homepage Redirect to Dashboard if Logged in',
                 'value' => '0',
@@ -131,7 +121,6 @@ class SettingsTableSeeder extends Seeder
             ),
             10 =>
             array (
-                'id' => 13,
                 'key' => 'auth.email_or_username',
                 'display_name' => 'Users Login with Email or Username',
                 'value' => 'email',
@@ -148,7 +137,6 @@ class SettingsTableSeeder extends Seeder
             ),
             11 =>
             array (
-                'id' => 14,
                 'key' => 'auth.username_in_registration',
                 'display_name' => 'Username when Registering',
                 'value' => 'yes',
@@ -165,7 +153,6 @@ class SettingsTableSeeder extends Seeder
             ),
             12 =>
             array (
-                'id' => 15,
                 'key' => 'auth.verify_email',
                 'display_name' => 'Verify Email during Sign Up',
                 'value' => '0',
@@ -176,7 +163,6 @@ class SettingsTableSeeder extends Seeder
             ),
             13 =>
             array (
-                'id' => 16,
                 'key' => 'billing.card_upfront',
                 'display_name' => 'Require Credit Card Up Front',
                 'value' => '1',
@@ -191,7 +177,6 @@ class SettingsTableSeeder extends Seeder
             ),
             14 =>
             array (
-                'id' => 17,
                 'key' => 'billing.trial_days',
                 'display_name' => 'Trial Days when No Credit Card Up Front',
                 'value' => '-1',

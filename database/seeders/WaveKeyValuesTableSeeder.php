@@ -21,7 +21,6 @@ class WaveKeyValuesTableSeeder extends Seeder
         \DB::table('wave_key_values')->insert(array (
             0 =>
             array (
-                'id' => 10,
                 'type' => 'text_area',
                 'keyvalue_id' => 1,
                 'keyvalue_type' => 'users',

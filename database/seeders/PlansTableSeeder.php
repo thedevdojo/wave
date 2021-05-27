@@ -21,7 +21,6 @@ class PlansTableSeeder extends Seeder
         \DB::table('plans')->insert(array (
             0 =>
             array (
-                'id' => 1,
                 'name' => 'Basic',
                 'slug' => 'basic',
                 'description' => 'Signup for the Basic User Plan to access all the basic features.',
@@ -36,7 +35,6 @@ class PlansTableSeeder extends Seeder
             ),
             1 =>
             array (
-                'id' => 2,
                 'name' => 'Premium',
                 'slug' => 'premium',
                 'description' => 'Signup for our premium plan to access all our Premium Features.',
@@ -51,7 +49,6 @@ class PlansTableSeeder extends Seeder
             ),
             2 =>
             array (
-                'id' => 3,
                 'name' => 'Pro',
                 'slug' => 'pro',
                 'description' => 'Gain access to our pro features with the pro plan.',

@@ -21,7 +21,6 @@ class PagesTableSeeder extends Seeder
         \DB::table('pages')->insert(array (
             0 => 
             array (
-                'id' => 1,
                 'author_id' => 1,
                 'title' => 'Hello World',
                 'excerpt' => 'Hang the jib grog grog blossom grapple dance the hempen jig gangway pressgang bilge rat to go on account lugger. Nelsons folly gabion line draught scallywag fire ship gaff fluke fathom case shot. Sea Legs bilge rat sloop matey gabion long clothes run a shot across the bow Gold Road cog league.',
@@ -37,7 +36,6 @@ class PagesTableSeeder extends Seeder
             ),
             1 => 
             array (
-                'id' => 2,
                 'author_id' => 1,
                 'title' => 'About',
                 'excerpt' => 'This is the about page.',

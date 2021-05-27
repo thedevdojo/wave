@@ -21,7 +21,6 @@ class RolesTableSeeder extends Seeder
         \DB::table('roles')->insert(array (
             0 =>
             array (
-                'id' => 1,
                 'name' => 'admin',
                 'display_name' => 'Admin User',
                 'created_at' => '2017-11-21 16:23:22',
@@ -29,7 +28,6 @@ class RolesTableSeeder extends Seeder
             ),
             1 =>
             array (
-                'id' => 2,
                 'name' => 'trial',
                 'display_name' => 'Free Trial',
                 'created_at' => '2017-11-21 16:23:22',
@@ -37,7 +35,6 @@ class RolesTableSeeder extends Seeder
             ),
             2 =>
             array (
-                'id' => 3,
                 'name' => 'basic',
                 'display_name' => 'Basic Plan',
                 'created_at' => '2018-07-03 05:03:21',
@@ -45,7 +42,6 @@ class RolesTableSeeder extends Seeder
             ),
             3 =>
             array (
-                'id' => 4,
                 'name' => 'pro',
                 'display_name' => 'Pro Plan',
                 'created_at' => '2018-07-03 16:27:16',
@@ -53,7 +49,6 @@ class RolesTableSeeder extends Seeder
             ),
             4 =>
             array (
-                'id' => 5,
                 'name' => 'premium',
                 'display_name' => 'Premium Plan',
                 'created_at' => '2018-07-03 16:28:42',
@@ -61,7 +56,6 @@ class RolesTableSeeder extends Seeder
             ),
             5 =>
             array (
-                'id' => 6,
                 'name' => 'cancelled',
                 'display_name' => 'Cancelled User',
                 'created_at' => '2018-07-03 16:28:42',

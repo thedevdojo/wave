@@ -21,7 +21,6 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
         \DB::table('theme_options')->insert(array (
             0 =>
             array (
-                'id' => 17,
                 'theme_id' => 1,
                 'key' => 'logo',
                 'value' => '',
@@ -30,7 +29,6 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
             ),
             1 =>
             array(
-                'id' => 18,
                 'theme_id' => 1,
                 'key' => 'home_headline',
                 'value' => 'Welcome to Wave',
@@ -39,7 +37,6 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
             ),
             2 =>
             array(
-                'id' => 19,
                 'theme_id' => 1,
                 'key' => 'home_subheadline',
                 'value' => 'Start crafting your next great idea.',
@@ -48,7 +45,6 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
             ),
             3 =>
             array(
-                'id' => 20,
                 'theme_id' => 1,
                 'key' => 'home_description',
                 'value' => 'Wave will help you rapidly build a Software as a Service. Out of the box Authentication, Subscriptions, Invoices, Announcements, User Profiles, API, and so much more!',
@@ -57,7 +53,6 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
             ),
             4 =>
             array(
-                'id' => 21,
                 'theme_id' => 1,
                 'key' => 'home_cta',
                 'value' => 'Signup',
@@ -66,7 +61,6 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
             ),
             5 =>
             array(
-                'id' => 22,
                 'theme_id' => 1,
                 'key' => 'home_cta_url',
                 'value' => '/register',
@@ -75,7 +69,6 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
             ),
             6 =>
             array(
-                'id' => 23,
                 'theme_id' => 1,
                 'key' => 'home_promo_image',
                 'value' => 'themes/February2018/mFajn4fwpGFXzI1UsNH6.png',
@@ -84,7 +77,6 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
             ),
             7 =>
             array(
-                'id' => 24,
                 'theme_id' => 1,
                 'key' => 'footer_logo',
                 'value' => 'themes/August2018/TksmVWMqp5JXUQj8C6Ct.png',

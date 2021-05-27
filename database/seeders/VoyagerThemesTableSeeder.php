@@ -21,7 +21,6 @@ class VoyagerThemesTableSeeder extends Seeder
         \DB::table('themes')->insert(array (
             0 =>
             array (
-                'id' => 1,
                 'name' => 'Tailwind Theme',
                 'folder' => 'tailwind',
                 'active' => 1,

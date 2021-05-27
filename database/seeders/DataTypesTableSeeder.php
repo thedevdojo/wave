@@ -21,7 +21,6 @@ class DataTypesTableSeeder extends Seeder
         \DB::table('data_types')->insert(array (
             0 => 
             array (
-                'id' => 1,
                 'name' => 'posts',
                 'slug' => 'posts',
                 'display_name_singular' => 'Post',
@@ -39,7 +38,6 @@ class DataTypesTableSeeder extends Seeder
             ),
             1 => 
             array (
-                'id' => 2,
                 'name' => 'pages',
                 'slug' => 'pages',
                 'display_name_singular' => 'Page',
@@ -57,7 +55,6 @@ class DataTypesTableSeeder extends Seeder
             ),
             2 => 
             array (
-                'id' => 3,
                 'name' => 'users',
                 'slug' => 'users',
                 'display_name_singular' => 'User',
@@ -75,7 +72,6 @@ class DataTypesTableSeeder extends Seeder
             ),
             3 => 
             array (
-                'id' => 4,
                 'name' => 'categories',
                 'slug' => 'categories',
                 'display_name_singular' => 'Category',
@@ -93,7 +89,6 @@ class DataTypesTableSeeder extends Seeder
             ),
             4 => 
             array (
-                'id' => 5,
                 'name' => 'menus',
                 'slug' => 'menus',
                 'display_name_singular' => 'Menu',
@@ -111,7 +106,6 @@ class DataTypesTableSeeder extends Seeder
             ),
             5 => 
             array (
-                'id' => 6,
                 'name' => 'roles',
                 'slug' => 'roles',
                 'display_name_singular' => 'Role',
@@ -129,7 +123,6 @@ class DataTypesTableSeeder extends Seeder
             ),
             6 => 
             array (
-                'id' => 7,
                 'name' => 'announcements',
                 'slug' => 'announcements',
                 'display_name_singular' => 'Announcement',
@@ -147,7 +140,6 @@ class DataTypesTableSeeder extends Seeder
             ),
             7 => 
             array (
-                'id' => 8,
                 'name' => 'plans',
                 'slug' => 'plans',
                 'display_name_singular' => 'Plan',

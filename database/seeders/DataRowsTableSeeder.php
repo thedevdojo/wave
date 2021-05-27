@@ -21,7 +21,6 @@ class DataRowsTableSeeder extends Seeder
         \DB::table('data_rows')->insert(array (
             0 => 
             array (
-                'id' => 1,
                 'data_type_id' => 1,
                 'field' => 'id',
                 'type' => 'number',
@@ -37,7 +36,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             1 => 
             array (
-                'id' => 2,
                 'data_type_id' => 1,
                 'field' => 'author_id',
                 'type' => 'text',
@@ -53,7 +51,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             2 => 
             array (
-                'id' => 3,
                 'data_type_id' => 1,
                 'field' => 'category_id',
                 'type' => 'text',
@@ -69,7 +66,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             3 => 
             array (
-                'id' => 4,
                 'data_type_id' => 1,
                 'field' => 'title',
                 'type' => 'text',
@@ -85,7 +81,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             4 => 
             array (
-                'id' => 5,
                 'data_type_id' => 1,
                 'field' => 'excerpt',
                 'type' => 'text_area',
@@ -101,7 +96,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             5 => 
             array (
-                'id' => 6,
                 'data_type_id' => 1,
                 'field' => 'body',
                 'type' => 'rich_text_box',
@@ -117,7 +111,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             6 => 
             array (
-                'id' => 7,
                 'data_type_id' => 1,
                 'field' => 'image',
                 'type' => 'image',
@@ -133,7 +126,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             7 => 
             array (
-                'id' => 8,
                 'data_type_id' => 1,
                 'field' => 'slug',
                 'type' => 'text',
@@ -149,7 +141,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             8 => 
             array (
-                'id' => 9,
                 'data_type_id' => 1,
                 'field' => 'meta_description',
                 'type' => 'text_area',
@@ -165,7 +156,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             9 => 
             array (
-                'id' => 10,
                 'data_type_id' => 1,
                 'field' => 'meta_keywords',
                 'type' => 'text_area',
@@ -181,7 +171,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             10 => 
             array (
-                'id' => 11,
                 'data_type_id' => 1,
                 'field' => 'status',
                 'type' => 'select_dropdown',
@@ -197,7 +186,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             11 => 
             array (
-                'id' => 12,
                 'data_type_id' => 1,
                 'field' => 'created_at',
                 'type' => 'timestamp',
@@ -213,7 +201,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             12 => 
             array (
-                'id' => 13,
                 'data_type_id' => 1,
                 'field' => 'updated_at',
                 'type' => 'timestamp',
@@ -229,7 +216,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             13 => 
             array (
-                'id' => 14,
                 'data_type_id' => 2,
                 'field' => 'id',
                 'type' => 'number',
@@ -245,7 +231,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             14 => 
             array (
-                'id' => 15,
                 'data_type_id' => 2,
                 'field' => 'author_id',
                 'type' => 'text',
@@ -261,7 +246,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             15 => 
             array (
-                'id' => 16,
                 'data_type_id' => 2,
                 'field' => 'title',
                 'type' => 'text',
@@ -277,7 +261,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             16 => 
             array (
-                'id' => 17,
                 'data_type_id' => 2,
                 'field' => 'excerpt',
                 'type' => 'text_area',
@@ -293,7 +276,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             17 => 
             array (
-                'id' => 18,
                 'data_type_id' => 2,
                 'field' => 'body',
                 'type' => 'rich_text_box',
@@ -309,7 +291,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             18 => 
             array (
-                'id' => 19,
                 'data_type_id' => 2,
                 'field' => 'slug',
                 'type' => 'text',
@@ -325,7 +306,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             19 => 
             array (
-                'id' => 20,
                 'data_type_id' => 2,
                 'field' => 'meta_description',
                 'type' => 'text',
@@ -341,7 +321,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             20 => 
             array (
-                'id' => 21,
                 'data_type_id' => 2,
                 'field' => 'meta_keywords',
                 'type' => 'text',
@@ -357,7 +336,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             21 => 
             array (
-                'id' => 22,
                 'data_type_id' => 2,
                 'field' => 'status',
                 'type' => 'select_dropdown',
@@ -373,7 +351,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             22 => 
             array (
-                'id' => 23,
                 'data_type_id' => 2,
                 'field' => 'created_at',
                 'type' => 'timestamp',
@@ -389,7 +366,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             23 => 
             array (
-                'id' => 24,
                 'data_type_id' => 2,
                 'field' => 'updated_at',
                 'type' => 'timestamp',
@@ -405,7 +381,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             24 => 
             array (
-                'id' => 25,
                 'data_type_id' => 2,
                 'field' => 'image',
                 'type' => 'image',
@@ -421,7 +396,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             25 => 
             array (
-                'id' => 26,
                 'data_type_id' => 3,
                 'field' => 'id',
                 'type' => 'number',
@@ -437,7 +411,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             26 => 
             array (
-                'id' => 27,
                 'data_type_id' => 3,
                 'field' => 'name',
                 'type' => 'text',
@@ -453,7 +426,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             27 => 
             array (
-                'id' => 28,
                 'data_type_id' => 3,
                 'field' => 'email',
                 'type' => 'text',
@@ -469,7 +441,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             28 => 
             array (
-                'id' => 29,
                 'data_type_id' => 3,
                 'field' => 'password',
                 'type' => 'password',
@@ -485,7 +456,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             29 => 
             array (
-                'id' => 30,
                 'data_type_id' => 3,
                 'field' => 'user_belongsto_role_relationship',
                 'type' => 'relationship',
@@ -501,7 +471,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             30 => 
             array (
-                'id' => 31,
                 'data_type_id' => 3,
                 'field' => 'remember_token',
                 'type' => 'text',
@@ -517,7 +486,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             31 => 
             array (
-                'id' => 32,
                 'data_type_id' => 3,
                 'field' => 'created_at',
                 'type' => 'timestamp',
@@ -533,7 +501,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             32 => 
             array (
-                'id' => 33,
                 'data_type_id' => 3,
                 'field' => 'updated_at',
                 'type' => 'timestamp',
@@ -549,7 +516,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             33 => 
             array (
-                'id' => 34,
                 'data_type_id' => 3,
                 'field' => 'avatar',
                 'type' => 'image',
@@ -565,7 +531,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             34 => 
             array (
-                'id' => 35,
                 'data_type_id' => 5,
                 'field' => 'id',
                 'type' => 'number',
@@ -581,7 +546,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             35 => 
             array (
-                'id' => 36,
                 'data_type_id' => 5,
                 'field' => 'name',
                 'type' => 'text',
@@ -597,7 +561,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             36 => 
             array (
-                'id' => 37,
                 'data_type_id' => 5,
                 'field' => 'created_at',
                 'type' => 'timestamp',
@@ -613,7 +576,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             37 => 
             array (
-                'id' => 38,
                 'data_type_id' => 5,
                 'field' => 'updated_at',
                 'type' => 'timestamp',
@@ -629,7 +591,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             38 => 
             array (
-                'id' => 39,
                 'data_type_id' => 4,
                 'field' => 'id',
                 'type' => 'number',
@@ -645,7 +606,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             39 => 
             array (
-                'id' => 40,
                 'data_type_id' => 4,
                 'field' => 'parent_id',
                 'type' => 'select_dropdown',
@@ -661,7 +621,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             40 => 
             array (
-                'id' => 41,
                 'data_type_id' => 4,
                 'field' => 'order',
                 'type' => 'text',
@@ -677,7 +636,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             41 => 
             array (
-                'id' => 42,
                 'data_type_id' => 4,
                 'field' => 'name',
                 'type' => 'text',
@@ -693,7 +651,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             42 => 
             array (
-                'id' => 43,
                 'data_type_id' => 4,
                 'field' => 'slug',
                 'type' => 'text',
@@ -709,7 +666,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             43 => 
             array (
-                'id' => 44,
                 'data_type_id' => 4,
                 'field' => 'created_at',
                 'type' => 'timestamp',
@@ -725,7 +681,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             44 => 
             array (
-                'id' => 45,
                 'data_type_id' => 4,
                 'field' => 'updated_at',
                 'type' => 'timestamp',
@@ -741,7 +696,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             45 => 
             array (
-                'id' => 46,
                 'data_type_id' => 6,
                 'field' => 'id',
                 'type' => 'number',
@@ -757,7 +711,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             46 => 
             array (
-                'id' => 47,
                 'data_type_id' => 6,
                 'field' => 'name',
                 'type' => 'text',
@@ -773,7 +726,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             47 => 
             array (
-                'id' => 48,
                 'data_type_id' => 6,
                 'field' => 'created_at',
                 'type' => 'timestamp',
@@ -789,7 +741,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             48 => 
             array (
-                'id' => 49,
                 'data_type_id' => 6,
                 'field' => 'updated_at',
                 'type' => 'timestamp',
@@ -805,7 +756,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             49 => 
             array (
-                'id' => 50,
                 'data_type_id' => 6,
                 'field' => 'display_name',
                 'type' => 'text',
@@ -821,7 +771,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             50 => 
             array (
-                'id' => 51,
                 'data_type_id' => 1,
                 'field' => 'seo_title',
                 'type' => 'text',
@@ -837,7 +786,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             51 => 
             array (
-                'id' => 52,
                 'data_type_id' => 1,
                 'field' => 'featured',
                 'type' => 'checkbox',
@@ -853,7 +801,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             52 => 
             array (
-                'id' => 53,
                 'data_type_id' => 3,
                 'field' => 'role_id',
                 'type' => 'text',
@@ -869,7 +816,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             53 => 
             array (
-                'id' => 54,
                 'data_type_id' => 3,
                 'field' => 'username',
                 'type' => 'text',
@@ -885,7 +831,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             54 => 
             array (
-                'id' => 55,
                 'data_type_id' => 7,
                 'field' => 'id',
                 'type' => 'hidden',
@@ -901,7 +846,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             55 => 
             array (
-                'id' => 56,
                 'data_type_id' => 7,
                 'field' => 'title',
                 'type' => 'text',
@@ -917,7 +861,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             56 => 
             array (
-                'id' => 57,
                 'data_type_id' => 7,
                 'field' => 'description',
                 'type' => 'text_area',
@@ -933,7 +876,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             57 => 
             array (
-                'id' => 58,
                 'data_type_id' => 7,
                 'field' => 'body',
                 'type' => 'rich_text_box',
@@ -949,7 +891,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             58 => 
             array (
-                'id' => 59,
                 'data_type_id' => 7,
                 'field' => 'created_at',
                 'type' => 'timestamp',
@@ -965,7 +906,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             59 => 
             array (
-                'id' => 60,
                 'data_type_id' => 7,
                 'field' => 'updated_at',
                 'type' => 'timestamp',
@@ -981,7 +921,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             60 => 
             array (
-                'id' => 61,
                 'data_type_id' => 3,
                 'field' => 'settings',
                 'type' => 'hidden',
@@ -997,7 +936,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             61 => 
             array (
-                'id' => 62,
                 'data_type_id' => 3,
                 'field' => 'user_belongstomany_role_relationship',
                 'type' => 'relationship',
@@ -1013,7 +951,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             62 => 
             array (
-                'id' => 63,
                 'data_type_id' => 3,
                 'field' => 'locale',
                 'type' => 'text',
@@ -1029,7 +966,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             63 => 
             array (
-                'id' => 64,
                 'data_type_id' => 8,
                 'field' => 'id',
                 'type' => 'hidden',
@@ -1045,7 +981,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             64 => 
             array (
-                'id' => 65,
                 'data_type_id' => 8,
                 'field' => 'name',
                 'type' => 'text',
@@ -1061,7 +996,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             65 => 
             array (
-                'id' => 66,
                 'data_type_id' => 8,
                 'field' => 'description',
                 'type' => 'text_area',
@@ -1077,7 +1011,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             66 => 
             array (
-                'id' => 67,
                 'data_type_id' => 8,
                 'field' => 'features',
                 'type' => 'text_area',
@@ -1093,7 +1026,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             67 => 
             array (
-                'id' => 69,
                 'data_type_id' => 8,
                 'field' => 'role_id',
                 'type' => 'text',
@@ -1109,7 +1041,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             68 => 
             array (
-                'id' => 70,
                 'data_type_id' => 8,
                 'field' => 'created_at',
                 'type' => 'timestamp',
@@ -1125,7 +1056,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             69 => 
             array (
-                'id' => 71,
                 'data_type_id' => 8,
                 'field' => 'updated_at',
                 'type' => 'timestamp',
@@ -1141,7 +1071,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             70 => 
             array (
-                'id' => 72,
                 'data_type_id' => 8,
                 'field' => 'plan_belongsto_role_relationship',
                 'type' => 'relationship',
@@ -1157,7 +1086,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             71 => 
             array (
-                'id' => 73,
                 'data_type_id' => 8,
                 'field' => 'default',
                 'type' => 'checkbox',
@@ -1173,7 +1101,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             72 => 
             array (
-                'id' => 74,
                 'data_type_id' => 8,
                 'field' => 'price',
                 'type' => 'text',
@@ -1189,7 +1116,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             73 => 
             array (
-                'id' => 75,
                 'data_type_id' => 8,
                 'field' => 'plan_id',
                 'type' => 'text',
@@ -1205,7 +1131,6 @@ class DataRowsTableSeeder extends Seeder
             ),
             74 => 
             array (
-                'id' => 76,
                 'data_type_id' => 8,
                 'field' => 'trial_days',
                 'type' => 'number',
