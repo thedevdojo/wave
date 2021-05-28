@@ -32,13 +32,13 @@
 
     </div>
 
-    <div class="relative flex items-center z-10 -mt-28 sm:-mt-6 xl:-mt-24">
+    <div class="relative flex items-center z-10 -mt-22 sm:mt-20 xl:-mt-24">
         <div
-            class="absolute w-auto right-0.5 invisible transition-none transform translate-x-12 -translate-y-3/7 opacity-0 float-right -z-1"
-            data-replace='{ "transition-none": "transition-all duration-1000 delay-100", "invisible": "visible", "translate-x-12": "sm:-translate-x-8 xl:-translate-x-10", "opacity-0": "opacity-100" }'>
+            class="absolute right-0.5 xl:right-auto xl:inset-x-1/2 invisible transition-none transform translate-x-12 -translate-y-3/7 opacity-0 float-right -z-1"
+            data-replace='{ "transition-none": "transition-all duration-1000 delay-100", "invisible": "visible", "translate-x-12": "sm:-translate-x-8 xl:-translate-x-24 3xl:-translate-x-12", "opacity-0": "opacity-100" }'>
 
             <img src="{{ Voyager::image(theme('home_promo_image')) }}"
-                class="w-4/5 m-auto max-w-xl sm:w-auto lg:max-w-2xl xl:max-w-3xl 2xl:max-w-5xl ship">
+                class="w-4/5 mx-auto max-w-xl sm:w-auto lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl 4xl:max-w-5xl ship">
 
         </div>
 

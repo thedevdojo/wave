@@ -60,7 +60,12 @@ module.exports = {
             spacing: {
                 '3/7': '42.8571429%',
                 '9/20': '45%',
-            }
+                '-22': '-5.5rem'
+            },
+            screens: {
+                '3xl': '1680px',
+                '4xl': '1920px',
+            },
         }
     },
     variants: {

@@ -78,7 +78,7 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
                 'id' => 23,
                 'theme_id' => 1,
                 'key' => 'home_promo_image',
-                'value' => 'themes/May2021/dskAFB9S9ZyfW9d4KdoK.png',
+                'value' => 'themes/May2021/azzTLh3BVghTNlCzWFGK.png',
                 'created_at' => '2017-11-25 21:36:46',
                 'updated_at' => '2017-11-29 01:17:00'
             ),
