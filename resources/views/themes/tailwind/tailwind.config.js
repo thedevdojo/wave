@@ -63,7 +63,6 @@ module.exports = {
                 '-22': '-5.5rem'
             },
             screens: {
-                '3xl': '1680px',
                 '4xl': '1920px',
             },
         }

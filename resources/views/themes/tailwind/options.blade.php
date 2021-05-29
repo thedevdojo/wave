@@ -93,6 +93,8 @@
 			{!! theme_field('text', 'home_cta', 'Homepage CTA Text') !!}
 			{!! theme_field('text', 'home_cta_url', 'Homepage CTA URL') !!}
 			{!! theme_field('image', 'home_promo_image', 'Homepage Promo Image') !!}
+			{!! theme_field('image', 'home_ship_image', 'Homepage Ship Image') !!}
+			{!! theme_field('radio_btn', 'home_hero_layout_switch', 'Hero Layout Switch', 'ship', '{"default":"ship","options":{"default":"Default","ship":"Ship"}}') !!}
 
 		</div>
 
