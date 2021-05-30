@@ -22,6 +22,10 @@ class InstallMiddleware
             if( $request->route()->getName() != 'wave.install' ){
                 return redirect()->route('wave.install');
             }
+        }else{
+            if( $request->route()->getName() == 'wave.install' ){
+                return back();
+            }
         }
         return $next($request);
     }

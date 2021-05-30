@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class VoyagerThemeOptionsTableSeeder extends Seeder
@@ -90,6 +91,24 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
                 'value' => 'themes/August2018/TksmVWMqp5JXUQj8C6Ct.png',
                 'created_at' => '2018-08-28 23:12:11',
                 'updated_at' => '2018-08-28 23:12:11'
+            ),
+            8 =>
+            array(
+                'id' => 25,
+                'theme_id' => 1,
+                'key' => 'home_hero_layout_switch',
+                'value' => 'ship',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ),
+            9 =>
+            array(
+                'id' => 26,
+                'theme_id' => 1,
+                'key' => 'home_ship_image',
+                'value' => 'themes/May2021/azzTLh3BVghTNlCzWFGK.png',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
             )
         ));
 

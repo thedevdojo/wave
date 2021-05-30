@@ -49,6 +49,23 @@ svg {
     to {transform: translateX(-100%);}
   }
 
+  .ship {
+    animation: ship 6s linear infinite;
+  }
+  @keyframes ship {
+    0% {
+        transform: rotate(0deg) translateY(0.75vh);
+    }
+
+    50%{
+        transform: rotate(0.25deg) translateY(0);
+    }
+
+    100% {
+        transform: rotate(0deg) translateY(0.75vh);
+    }
+  }
+
   .form-control{
     @apply form-input w-full;
   }
