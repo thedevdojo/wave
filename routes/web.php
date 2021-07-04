@@ -22,3 +22,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 // Include Wave Routes
 Wave::routes();
+
+Route::get('radman', function(){
+    echo 'test';
+});
