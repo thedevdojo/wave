@@ -14,8 +14,8 @@ class CreateAnnouncementUserTable extends Migration {
 	{
 		Schema::create('announcement_user', function(Blueprint $table)
 		{
-			$table->integer('announcement_id')->unsigned();
-			$table->integer('user_id')->unsigned()->index();
+			$table->integer('announcement_id')->unsigned()->index();
+			$table->bigInteger('user_id')->unsigned()->index();
 		});
 	}
 
