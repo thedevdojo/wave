@@ -20,7 +20,6 @@
         "laravel/helpers": "^1.0",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.4",
-        "spatie/laravel-ray": "^1.17",
         "tcg/voyager": "1.4.x-dev",
         "tymon/jwt-auth": "dev-develop"
     },
