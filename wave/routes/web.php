@@ -9,7 +9,7 @@ Route::get('@{username}', '\Wave\Http\Controllers\ProfileController@index')->nam
 Route::view('docs/{page?}', 'docs::index')->where('page', '(.*)');
 
 // Additional Auth Routes
-Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('logout', 'Auth\LoginController@logout')->name('wave.logout');
 Route::get('user/verify/{verification_code}', 'Auth\RegisterController@verify')->name('verify');
 Route::post('register/complete', '\Wave\Http\Controllers\Auth\RegisterController@complete')->name('wave.register-complete');
 
