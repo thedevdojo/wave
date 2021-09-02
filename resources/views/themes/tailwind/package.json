@@ -10,7 +10,6 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "@tailwindcss/custom-forms": "^0.2.1",
         "axios": "^0.21.1",
         "cross-env": "^5.1",
         "laravel-mix": "^4.0.7",
@@ -24,6 +23,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@tailwindcss/forms": "^0.3.3",
         "@tailwindcss/typography": "^0.3.0",
         "alpinejs": "^2.6.0",
         "autoprefixer": "^10.2.4",
