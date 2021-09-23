@@ -173,6 +173,16 @@ else
     $page = $pages[$uri];
 }
 
+$title = 'Welcome to Wave';
+
+foreach($menu_items as $item){
+    foreach($item->sections as $index => $section){
+        if(Request::getRequestUri() && Request::getRequestUri() == $section->url){
+            $title = $section->title . ' - Wave SAAS Starter Kit';
+        }
+    }
+}
+
 $file = file_get_contents(  base_path() . '/wave/docs/' . $page );
 
 ?>
