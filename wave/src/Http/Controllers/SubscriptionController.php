@@ -107,18 +107,22 @@ class SubscriptionController extends Controller
 
                     if(auth()->guest()){
 
-                        // create a new user
-                        $registration = new \Wave\Http\Controllers\Auth\RegisterController;
+                        if(User::where('email', $subscription->user_email)->exists()){
+                            $user = User::where('email', $subscription->user_email)->first();
+                        } else {
+                            // create a new user
+                            $registration = new \Wave\Http\Controllers\Auth\RegisterController;
 
-                        $user_data = [
-                            'name' => '',
-                            'email' => $subscription->user_email,
-                            'password' => Hash::make(uniqid())
-                        ];
+                            $user_data = [
+                                'name' => '',
+                                'email' => $subscription->user_email,
+                                'password' => Hash::make(uniqid())
+                            ];
 
-                        $user = $registration->create($user_data);
+                            $user = $registration->create($user_data);
 
-                        Auth::login($user);
+                            Auth::login($user);
+                        }
 
                     } else {
                         $user = auth()->user();

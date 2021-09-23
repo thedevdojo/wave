@@ -4,8 +4,11 @@
     window.vendor_id = parseInt('{{ config("wave.paddle.vendor") }}');
 
     if(vendor_id){
-        Paddle.Environment.set('sandbox');
         Paddle.Setup({ vendor: vendor_id });
+    }
+
+    if("{{ config('wave.paddle.env') }}" == 'sandbox') {
+        Paddle.Environment.set('sandbox');
     }
 
     let checkoutBtns = document.getElementsByClassName("checkout");

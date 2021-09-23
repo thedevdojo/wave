@@ -1,0 +1,104 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Laravel template
+vendor/*
+node_modules/*
+npm-debug.log
+
+/storage/api-docs
+/storage/app
+/storage/framework/views
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/testing
+/storage/framework/logs
+/storage/logs
+
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+.env.*.php
+.env.php
+.env
+Homestead.yaml
+Homestead.json
+
+# Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
+.rocketeer/
+### Windows template
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+### macOS template
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+#storage/*.key
+
+/cronFile
+
+/storage/GeoLite2-City.mmdb
+
+.idea
+.git
+
+#/storage/*.key
+!.gitignore
+!.gitkeep
+!.gitmodules
+
+!/storage/framework/views/.gitignore
+!/storage/logs/.gitignore
+!/storage/framework/testing/disks/local/.gitkeep
+!/storage/framework/views/.gitkeep
+!/storage/logs/.gitkeep
+!/storage/app/dashboard/tmp/.gitkeep
+!/storage/app/public/.gitkeep
+!/storage/api-docs/.gitkeep

@@ -20,7 +20,6 @@
         "laravel/helpers": "^1.0",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.4",
-        "spatie/laravel-ray": "^1.17",
         "tcg/voyager": "1.4.x-dev",
         "tymon/jwt-auth": "dev-develop"
     },
@@ -30,6 +29,7 @@
         "laravel/dusk": "^6.0",
         "laravel/sail": "^1.4",
         "mockery/mockery": "^1.3.1",
+        "pestphp/pest-plugin-laravel": "^1.0",
         "phpunit/phpunit": "^9.3.3"
     },
     "autoload": {
