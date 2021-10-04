@@ -38,7 +38,7 @@ Next, we can install Wave with these **4 simple steps**:
 
 ### 1. Create a New Database
 
-During the installation we need to use a MySQL database. You will need to create a new database and save the credentials for the next step.
+We'll need to utilize a MySQL database during the installation. For the following stage, you'll need to create a new database and preserve the credentials.
 
 ### 2. Copy the `.env.example` file
 
@@ -60,15 +60,13 @@ DB_PASSWORD=
 
 ### 3. Add Composer Dependencies
 
-Next, we will need to install all our composer dependencies by running the following command:
-
+Following that, we'll need to install all composer dependencies through the following command:
 ```php
 composer install
 ```
 ### 4. Run Migrations and Seeds
 
-We need to migrate our database structure into our database, which we can do by running:
-
+We must migrate our database schema into our database, which we can accomplish by running the following command:
 ```php
 php artisan migrate
 ```
