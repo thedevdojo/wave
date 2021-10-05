@@ -38,7 +38,17 @@ Next, we can install Wave with these **4 simple steps**:
 
 ### 1. Create a New Database
 
-During the installation we need to use a MySQL database. You will need to create a new database and save the credentials for the next step.
+During the installation we need to use a MySQL database. You will need to create a new database and save the credentials for the next step:
+
+```sql
+CREATE DATABASE example_database;
+```
+```sql
+GRANT ALL ON example_database.* TO 'example_user'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
+```
+```sql
+FLUSH PRIVILEGES;
+```
 
 ### 2. Copy the `.env.example` file
 
@@ -65,6 +75,25 @@ Next, we will need to install all our composer dependencies by running the follo
 ```php
 composer install
 ```
+
+```diff
+
+! If you don't have php-curl, php-zip and php-dom you will not be able to install the dependencies. In such case you can install them with the following commands:
+```
+Debian / Ubuntu:
+```bash
+sudo apt install php-curl
+sudo apt install php-zip
+sudo apt install php-dom
+```
+
+RHEL-based:
+```bash
+sudo yum install php-curl
+sudo yum install php-zip
+sudo yum install php-dom
+```
+
 ### 4. Run Migrations and Seeds
 
 We need to migrate our database structure into our database, which we can do by running:
