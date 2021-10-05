@@ -76,10 +76,8 @@ Next, we will need to install all our composer dependencies by running the follo
 composer install
 ```
 
-```diff
-
 ⚠️ If you don't have php-curl, php-zip and php-dom you will not be able to install the dependencies. In such case you can install them with the following commands:
-```
+
 Debian / Ubuntu:
 ```bash
 sudo apt install php-curl
