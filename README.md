@@ -34,15 +34,15 @@ To install Wave, you'll want to clone or download this repo:
 git clone https://github.com/thedevdojo/wave.git project_name
 ```
 
-Next, we can install Wave with these **4 simple steps**:
+Next, we can install Wave with these **four simple steps**:
 
-### 1. Create a New Database
+### 1. Create a new database
 
 During the installation we need to use a MySQL database. You will need to create a new database and save the credentials for the next step.
 
 ### 2. Copy the `.env.example` file
 
-We need to specify our Environment variables for our application. You will see a file named `.env.example`, you will need to duplicate that file and rename it to `.env`.
+We need to specify our environment variables for our application. You will see a file named `.env.example`, you will need to duplicate that file and rename it to `.env`.
 
 Then, open up the `.env` file and update your *DB_DATABASE*, *DB_USERNAME*, and *DB_PASSWORD* in the appropriate fields. You will also want to update the *APP_URL* to the URL of your application.
 
@@ -58,14 +58,14 @@ DB_PASSWORD=
 ```
 
 
-### 3. Add Composer Dependencies
+### 3. Install Composer dependencies
 
-Next, we will need to install all our composer dependencies by running the following command:
+Next, we will need to install all our Composer dependencies by running the following command:
 
 ```php
 composer install
 ```
-### 4. Run Migrations and Seeds
+### 4. Run migration and seed
 
 We need to migrate our database structure into our database, which we can do by running:
 
@@ -83,11 +83,11 @@ php artisan db:seed
 🎉 And that's it! You will now be able to visit your URL and see your Wave application up and running.
 
 
-## Watch, Learn, and Build
+## Watch, learn, and build
 
-We've also got a full video series on how you can setup, build, and configure Wave. 🍿 You can watch first few videos for free, and additional videos will require a [DevDojo Pro](https://devdojo.com/pro) subscription. By subscribing to a [DevDojo Pro](https://devdojo.com/pro) subscription you will also be supporting the ongoing development of this project. It's a win win! 🙌
+We've also got a full video series on how you can setup, build, and configure Wave. 🍿 You can watch the first few videos for free, and additional videos will require a [DevDojo Pro](https://devdojo.com/pro) subscription. By subscribing to [DevDojo Pro](https://devdojo.com/pro) you will also be supporting the ongoing development of this project. It's a win win! 🙌
 
-[Click here to watch the Wave Video Series](https://devdojo.com/course/wave).
+[Click here to watch the Wave video series](https://devdojo.com/course/wave).
 
 
 ## Documentation
