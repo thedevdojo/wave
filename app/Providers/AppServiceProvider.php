@@ -17,8 +17,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() == 'production') {
             $this->app['request']->server->set('HTTPS', true);
         }
-        // rad man
-        Schema::defaultStringLength(191);
+        $this->setSchemaDefaultLength();
     }
 
     /**
@@ -29,5 +28,13 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
 
+    }
+
+    private function setSchemaDefaultLength(): void
+    {
+        try {
+            Schema::defaultStringLength(191);
+        }
+        catch (\Exception $exception){}
     }
 }
