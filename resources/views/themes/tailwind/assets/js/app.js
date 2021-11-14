@@ -39,6 +39,22 @@ document.addEventListener('alpine:init', () => {
             this.show = false;
         }
     });
+
+    Alpine.store('plan_modal', {
+        open: false,
+        plan_name: 'basic',
+        plan_id: 0,
+
+        switch(plan_id, plan_name) {
+            this.plan_name = plan_name;
+            this.plan_id = plan_id;
+            this.open = true;
+        },
+
+        close() {
+            this.open = false;
+        }
+    });
 });
 
 Alpine.start();
@@ -147,14 +163,10 @@ window.checkoutCancel = function(data){
 
 /********** End Billing Checkout Functionality ***********/
 
-
 /********** Switch Plans Button Click ***********/
 
-window.switchPlans = function(plan_id, plan_name){
-    document.getElementById('switchPlansModal').__x.$data.open = true;
-    document.getElementById('switchPlansModal').__x.$data.plan_name = plan_name;
-    document.getElementById('switchPlansModal').__x.$data.plan_id = plan_id;
-}
-
+window.switchPlans = function (plan_id, plan_name) {
+    Alpine.store('plan_modal').switch(plan_id, plan_name);
+};
 
 /********** Switch Plans Button Click ***********/
