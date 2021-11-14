@@ -1,7 +1,13 @@
-import 'alpinejs'
-window.axios = require('axios');
+import Alpine from 'alpinejs'
+import axios from 'axios';
+
+window.Alpine = Alpine;
+window.axios = axios;
+
 window.url = document.querySelector("meta[name='url']").getAttribute("content");
 window.csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+Alpine.start();
 
 /** Adds some simple class replacers, see the following article to learn more:
  * https://devdojo.com/tnylea/animating-tailwind-transitions-on-page-load
