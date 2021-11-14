@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 const glob = require('glob-all');
 
 require('laravel-mix-tailwind');

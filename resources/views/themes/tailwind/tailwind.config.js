@@ -73,7 +73,7 @@ module.exports = {
         container: ['responsive']
     },
     plugins: [
-        require('@tailwindcss/custom-forms'),
+        require('@tailwindcss/forms'),
         require('@tailwindcss/typography')
     ]
 }
