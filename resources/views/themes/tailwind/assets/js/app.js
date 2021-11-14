@@ -7,8 +7,6 @@ window.axios = axios;
 window.url = document.querySelector("meta[name='url']").getAttribute("content");
 window.csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
-Alpine.start();
-
 /** Adds some simple class replacers, see the following article to learn more:
  * https://devdojo.com/tnylea/animating-tailwind-transitions-on-page-load
  */
@@ -24,6 +22,27 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 });
 
+/********** ALPINE FUNCTIONALITY **********/
+document.addEventListener('alpine:init', () => {
+    Alpine.store('toast', {
+        type: '',
+        message: '',
+        show: false,
+
+        update({ type, message, show }) {
+            this.type = type;
+            this.message = message;
+            this.show = show;
+        },
+
+        close() {
+            this.show = false;
+        }
+    });
+});
+
+Alpine.start();
+/********** END ALPINE FUNCTIONALITY **********/
 
 /********** NOTIFICATION FUNCTIONALITY **********/
 
@@ -62,9 +81,7 @@ for (var i = 0; i < markAsRead.length; i++) {
 /********** START TOAST FUNCTIONALITY **********/
 
 window.popToast = function(type, message){
-    document.getElementById('toast').__x.$data.type = type;
-    document.getElementById('toast').__x.$data.message = message;
-    document.getElementById('toast').__x.$data.show = true;
+    Alpine.store('toast').update({ type, message, show: true });
 
     setTimeout(function(){
         document.getElementById('toast_bar').classList.remove('w-full');
@@ -72,7 +89,8 @@ window.popToast = function(type, message){
     }, 150);
     // After 4 seconds hide the toast
     setTimeout(function(){
-        document.getElementById('toast').__x.$data.show = false;
+        Alpine.store('toast').update({ type, message, show: false });
+        
         setTimeout(function(){
             document.getElementById('toast_bar').classList.remove('w-0');
             document.getElementById('toast_bar').classList.add('w-full');
