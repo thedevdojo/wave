@@ -4,9 +4,13 @@ Wave comes packaged with integrated billing. This means that you can charge your
 
 Wave integrates seamlessly with the <a href="https://paddle.com" target="_blank">Paddle</a> Payment Platform.
 
-- [Create a Paddle Account](#paddle-account)
-- [Add Paddle API Credentials](#paddle-credentials)
-- [Test Billing Process](#test-billing)
+- [Billing](#billing)
+  - [Create a Paddle Account](#create-a-paddle-account)
+    - [Add Paddle API Credentials](#add-paddle-api-credentials)
+      - [Ready to go Live?](#ready-to-go-live)
+    - [Test Billing Process](#test-billing-process)
+  - [Stripe integration](#stripe-integration)
+  - [Handle Webhooks](#handle-webhooks)
 
 <a name="paddle-account"></a>
 ## Create a Paddle Account
@@ -58,3 +62,35 @@ CVC: Any 3 digit code
 ---
 
 After adding your Paddle API credentials, you'll need to configure your app with a few [Subscription Plans](/docs/features/subscription-plans) in order to test out the whole process. Let's move on to the [next step](/docs/features/subscription-plans) where you will learn how to do this.
+
+---
+
+## Stripe integration
+
+Activate your Stripe integration via *CASHIER_VENDOR* variable in the `.env` file:
+
+`CASHIER_VENDOR="stripe"`
+
+```
+## NEW STRIPE INTEGRATION
+CASHIER_VENDOR="paddle"
+#CASHIER_VENDOR="stripe"
+
+CASHIER_STRIPE_CALCULATE_TAXES=FALSE
+CASHIER_STRIPE_ALLOW_PROMO_CODES=TRUE
+
+STRIPE_KEY="PUBLIC KEY"
+STRIPE_SECRET="PRIVATE KEY"
+## END NEW STRIPE INTEGRATION
+```
+
+Add your Public and Private key.
+
+Change your **plan_id** in the *plans* for your corresponding Stripe Plan ID
+
+
+## Handle Webhooks
+
+Finally, add this URL webhook into your Stripe webhooks in order to listen Cancel or Updates in the client account.
+
+`YOUR_URL/wave-stripe/webhook`
