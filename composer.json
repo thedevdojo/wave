@@ -16,10 +16,12 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.4",
         "lab404/laravel-impersonate": "^1.2",
+        "laravel/cashier": "^13.6",
         "laravel/framework": "^8.0",
         "laravel/helpers": "^1.0",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.4",
+        "stripe/stripe-php": "^7.107",
         "tcg/voyager": "1.4.x-dev",
         "tymon/jwt-auth": "dev-develop"
     },

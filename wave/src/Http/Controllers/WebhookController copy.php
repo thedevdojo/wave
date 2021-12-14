@@ -10,8 +10,8 @@ use Laravel\Cashier\Http\Controllers\WebhookController as StripeWebhookControlle
 class WebhookController extends StripeWebhookController
 {
 
-    public function handle(Request $request)
-    {
+    public function handle(Request $request) {
         $this->handleWebhook($request);
     }
+
 }

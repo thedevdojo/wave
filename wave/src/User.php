@@ -12,10 +12,13 @@ use Wave\PaddleSubscription;
 use \Storage;
 use Wave\Announcement;
 use Wave\ApiToken;
+use Laravel\Cashier\Billable as StripeBillable;
+
 
 class User extends \TCG\Voyager\Models\User implements JWTSubject
 {
     use Notifiable, Impersonate;
+    use StripeBillable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +26,7 @@ class User extends \TCG\Voyager\Models\User implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'username', 'password', 'verification_code', 'verified', 'trial_ends_at'
+        'name', 'email', 'username', 'password', 'verification_code', 'verified', 'trial_ends_at', 'role_id', 'stripe_id',
     ];
 
     /**
@@ -56,18 +59,29 @@ class User extends \TCG\Voyager\Models\User implements JWTSubject
         return true;
     }
 
-    public function subscribed($plan){
+    public function subscribed($plan = 'default', $price = null) {
 
-        $plan = Plan::where('slug', $plan)->first();
+        if(env('CASHIER_VENDOR') == 'stripe') {
+            $subscription = $this->subscription($plan);
 
-        // if the user is an admin they automatically have access to the default plan
-        if(isset($plan->default) && $plan->default && $this->hasRole('admin')) return true;
+            if (!$subscription || !$subscription->valid()) {
+                return false;
+            }
 
-        if(isset($plan->slug) && $this->hasRole($plan->slug)){
-            return true;
+            return !$price || $subscription->hasPrice($price);
+        } else {
+            $plan = Plan::where('slug', $plan)->first();
+    
+            // if the user is an admin they automatically have access to the default plan
+            if(isset($plan->default) && $plan->default && $this->hasRole('admin')) return true;
+    
+            if(isset($plan->slug) && $this->hasRole($plan->slug)){
+                return true;
+            }
+    
+            return false;
         }
 
-        return false;
     }
 
     public function subscriber(){
@@ -85,8 +99,13 @@ class User extends \TCG\Voyager\Models\User implements JWTSubject
         return false;
     }
 
-    public function subscription(){
-        return $this->hasOne(PaddleSubscription::class);
+    public function subscription($name = 'default')
+    {
+        if (env('CASHIER_VENDOR') == 'stripe') {
+            return $this->subscriptions->where('name', $name)->first();
+        } else {
+            return $this->hasOne(PaddleSubscription::class);
+        }
     }
 
 
