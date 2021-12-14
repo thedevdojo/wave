@@ -1,5 +1,9 @@
-import 'alpinejs'
-window.axios = require('axios');
+import Alpine from 'alpinejs'
+import axios from 'axios';
+
+window.Alpine = Alpine;
+window.axios = axios;
+
 window.url = document.querySelector("meta[name='url']").getAttribute("content");
 window.csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
@@ -18,6 +22,43 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 });
 
+/********** ALPINE FUNCTIONALITY **********/
+document.addEventListener('alpine:init', () => {
+    Alpine.store('toast', {
+        type: '',
+        message: '',
+        show: false,
+
+        update({ type, message, show }) {
+            this.type = type;
+            this.message = message;
+            this.show = show;
+        },
+
+        close() {
+            this.show = false;
+        }
+    });
+
+    Alpine.store('plan_modal', {
+        open: false,
+        plan_name: 'basic',
+        plan_id: 0,
+
+        switch(plan_id, plan_name) {
+            this.plan_name = plan_name;
+            this.plan_id = plan_id;
+            this.open = true;
+        },
+
+        close() {
+            this.open = false;
+        }
+    });
+});
+
+Alpine.start();
+/********** END ALPINE FUNCTIONALITY **********/
 
 /********** NOTIFICATION FUNCTIONALITY **********/
 
@@ -56,9 +97,7 @@ for (var i = 0; i < markAsRead.length; i++) {
 /********** START TOAST FUNCTIONALITY **********/
 
 window.popToast = function(type, message){
-    document.getElementById('toast').__x.$data.type = type;
-    document.getElementById('toast').__x.$data.message = message;
-    document.getElementById('toast').__x.$data.show = true;
+    Alpine.store('toast').update({ type, message, show: true });
 
     setTimeout(function(){
         document.getElementById('toast_bar').classList.remove('w-full');
@@ -66,7 +105,8 @@ window.popToast = function(type, message){
     }, 150);
     // After 4 seconds hide the toast
     setTimeout(function(){
-        document.getElementById('toast').__x.$data.show = false;
+        Alpine.store('toast').update({ type, message, show: false });
+        
         setTimeout(function(){
             document.getElementById('toast_bar').classList.remove('w-0');
             document.getElementById('toast_bar').classList.add('w-full');
@@ -123,14 +163,10 @@ window.checkoutCancel = function(data){
 
 /********** End Billing Checkout Functionality ***********/
 
-
 /********** Switch Plans Button Click ***********/
 
-window.switchPlans = function(plan_id, plan_name){
-    document.getElementById('switchPlansModal').__x.$data.open = true;
-    document.getElementById('switchPlansModal').__x.$data.plan_name = plan_name;
-    document.getElementById('switchPlansModal').__x.$data.plan_id = plan_id;
-}
-
+window.switchPlans = function (plan_id, plan_name) {
+    Alpine.store('plan_modal').switch(plan_id, plan_name);
+};
 
 /********** Switch Plans Button Click ***********/

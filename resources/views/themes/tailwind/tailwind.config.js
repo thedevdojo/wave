@@ -1,10 +1,10 @@
 module.exports = {
-    purge: [
+    content: [
         './**/*.php',
         './*.php',
         './assets/**/*.scss',
         './assets/**/*.js',
-      ],
+    ],
     theme: {
         extend: {
             rotate: {
@@ -16,7 +16,7 @@ module.exports = {
                 '3': '3deg',
             },
             borderRadius: {
-                'xl' : '0.8rem',
+                'xl': '0.8rem',
                 'xxl': '1rem',
             },
             height: {
@@ -56,24 +56,8 @@ module.exports = {
             }
         }
     },
-    variants: {
-        borderColor: ['responsive', 'hover', 'focus', 'group-hover'],
-        backgroundColor: ['hover', 'group-hover','responsive'],
-        textColor: ['group-hover', 'hover'],
-        border: ['group-hover'],
-        transform: ['group-hover'],
-        margin: ['hover', 'responsive'],
-        display: ['responsive', 'hover', 'focus'],
-        inset: ['responsive', 'group-hover'],
-        translate: ['responsive', 'hover', 'group-hover'],
-        gridTemplateColumns: ['responsive'],
-        height: ['responsive', 'group-hover'],
-        scale: ['group-hover', 'responsive'],
-        rotate: ['group-hover', 'responsive'],
-        container: ['responsive']
-    },
     plugins: [
-        require('@tailwindcss/custom-forms'),
+        require('@tailwindcss/forms'),
         require('@tailwindcss/typography')
     ]
 }
