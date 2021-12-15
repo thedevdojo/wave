@@ -87,7 +87,16 @@ class StripeController extends Controller
     private function createUserFromCheckout(\Stripe\Customer $customer)
     {
         $user = User::where('email', $customer->email)->first();
-        if ($user) return $user;
+        if ($user) {
+            if (!$user->stripe_id) {
+                $user->stripe_id = $customer->id;
+                $user->save();
+
+                $user->syncStripeCustomerDetails();;
+            }
+            session()->flash('existing_customer');
+            return $user;
+        };
 
         $role = \TCG\Voyager\Models\Role::where('name', '=', config('voyager.user.default_role'))->first();
 
