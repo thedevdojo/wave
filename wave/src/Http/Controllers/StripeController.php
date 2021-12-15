@@ -40,6 +40,10 @@ class StripeController extends Controller
             $sessionData['customer'] = auth()->user()->stripe_id;
         }
 
+        if (auth()->check() && !auth()->user()->stripe_id) {
+            $sessionData['customer_email'] = auth()->user()->email;
+        }
+
         $session = $stripe->checkout->sessions->create($sessionData);
 
         return response()->json($session, 200);
