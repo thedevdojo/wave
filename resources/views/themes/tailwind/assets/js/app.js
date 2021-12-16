@@ -101,6 +101,24 @@ document.addEventListener('alpine:init', () => {
 
     });
 
+    Alpine.store('confirmCancel', {
+        open: false,
+
+        openModal() {
+            this.open = true;
+        },
+
+        close() {
+            console.log(open)
+            this.open = false;
+        }
+
+    });
+
+    Alpine.store('upload-modal', {
+        open: false,
+    });
+
 });
 
 Alpine.start();
