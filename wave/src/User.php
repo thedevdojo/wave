@@ -103,9 +103,9 @@ class User extends \TCG\Voyager\Models\User implements JWTSubject
     {
         if (env('CASHIER_VENDOR') == 'stripe') {
             return $this->subscriptions->where('name', $name)->first();
-        } else {
-            return $this->hasOne(PaddleSubscription::class);
         }
+
+        return $this->hasOne(PaddleSubscription::class);
     }
 
 
