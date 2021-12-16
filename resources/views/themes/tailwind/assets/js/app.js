@@ -55,6 +55,52 @@ document.addEventListener('alpine:init', () => {
             this.open = false;
         }
     });
+
+    Alpine.store('viewApiKey', {
+        open: false,
+        id: '',
+        name: '',
+        key: '',
+
+        actionClicked(id, name, key) {
+            this.open = true;
+            this.id = id;
+            this.name = name;
+            this.key = key;
+        },
+
+    });
+
+    Alpine.store('editApiKey', {
+        open: false,
+        id: '',
+        name: '',
+        key: '',
+
+        actionClicked(id, name, key) {
+            this.open = true;
+            this.id = id;
+            this.name = name;
+            this.key = key;
+        },
+
+    });
+
+    Alpine.store('deleteApiKey', {
+        open: false,
+        id: '',
+        name: '',
+        key: '',
+
+        actionClicked(id, name, key) {
+            this.open = true;
+            this.id = id;
+            this.name = name;
+            this.key = key;
+        },
+
+    });
+
 });
 
 Alpine.start();
