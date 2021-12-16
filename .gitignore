@@ -15,4 +15,4 @@ yarn-error.log
 .DS_Store
 .phpunit.result.cache
 /wave/vendor/
-/public/wave/docs/
+/public/wave/docs
