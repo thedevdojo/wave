@@ -109,14 +109,22 @@ document.addEventListener('alpine:init', () => {
         },
 
         close() {
-            console.log(open)
             this.open = false;
         }
 
     });
 
-    Alpine.store('upload-modal', {
+    Alpine.store('uploadModal', {
         open: false,
+
+        openModal() {
+            this.open = true;
+        },
+
+        close() {
+            this.open = false;
+        }
+
     });
 
 });
