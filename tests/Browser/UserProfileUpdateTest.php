@@ -5,7 +5,7 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use App\User;
+use App\Models\User;
 
 class UserProfileUpdateTest extends DuskTestCase
 {

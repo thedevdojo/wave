@@ -264,7 +264,7 @@ return [
         'key'                       => 'Anahtar',
         'model_class'               => 'Model Sınıf Adı',
         'model_name'                => 'Model Adı',
-        'model_name_ph'             => 'ex. \App\User, Eğer boş ise tablo adını deneyin',
+        'model_name_ph'             => 'ex. \App\Models\User, Eğer boş ise tablo adını deneyin',
         'name_warning'              => 'Lütfen indeks eklemden önce kolon adı belirleyin',
         'no_composites_warning'     => 'This table has composite indexes. Please note that they are not supported '.
             'at the moment. Be careful when trying to add/remove indexes.',

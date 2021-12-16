@@ -268,7 +268,7 @@ return [
         'key'                       => 'Cheie',
         'model_class'               => 'Numele clasei modelului',
         'model_name'                => 'Numele modelului',
-        'model_name_ph'             => 'ex: \App\User, dacă lăsați gol, vom încerca și vom folosi numele tabelului',
+        'model_name_ph'             => 'ex: \App\Models\User, dacă lăsați gol, vom încerca și vom folosi numele tabelului',
         'name_warning'              => 'Vă rugăm să indicați numele coloanei înainte de adăugarea indexului',
         'no_composites_warning'     => 'În acest tabel există index compozit. Atrageți atenția că la momentul de față ele nu sunt suportate. Fiți atenți când încercați să adăugați/ștergeți indexuri.',
         'null'                      => 'Null',
@@ -323,7 +323,7 @@ return [
           'add'                  => 'Adaugă',
           'delete'               => 'Șterge',
           'create'               => 'Crează o Relație',
-          'namespace'            => 'Model Năimspăis (ex: App\User)',
+          'namespace'            => 'Model Năimspăis (ex: App\Models\User)',
       ],
     ],
 

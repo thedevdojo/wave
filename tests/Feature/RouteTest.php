@@ -13,7 +13,7 @@ test('available routes', function ($url) {
 
 test('available auth routes', function ($url) {
 
-    $user = \App\User::find(1);
+    $user = \App\Models\User::find(1);
 
     $this->actingAs($user);
 

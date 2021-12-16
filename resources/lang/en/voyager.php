@@ -285,7 +285,7 @@ return [
         'key'                       => 'Key',
         'model_class'               => 'Model Class Name',
         'model_name'                => 'Model Name',
-        'model_name_ph'             => 'ex. \App\User, if left empty will try and use the table name',
+        'model_name_ph'             => 'ex. \App\Models\User, if left empty will try and use the table name',
         'name_warning'              => 'Please name the column before adding an index',
         'no_composites_warning'     => 'This table has composite indexes. Please note that they are not supported at the moment. Be careful when trying to add/remove indexes.',
         'null'                      => 'Null',

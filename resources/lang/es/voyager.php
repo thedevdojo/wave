@@ -275,7 +275,7 @@ return [
         'key'                       => 'Clave',
         'model_class'               => 'Nombre de clase del modelo',
         'model_name'                => 'Nombre del modelo',
-        'model_name_ph'             => 'ej. \App\User, si se deja vacío intentará usar el nombre de la tabla ',
+        'model_name_ph'             => 'ej. \App\Models\User, si se deja vacío intentará usar el nombre de la tabla ',
         'name_warning'              => 'Por favor, nombre la columna antes de añadir un índice',
         'no_composites_warning'     => 'Esta tabla tiene índices compuestos. Tenga en cuenta que en este momento'.
             'no se admiten. Tenga cuidado al intentar agregar/quitar índices.',

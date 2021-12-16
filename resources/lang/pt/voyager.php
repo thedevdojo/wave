@@ -260,7 +260,7 @@ return [
         'key'                       => 'Key',
         'model_class'               => 'Nome da Classe do Model',
         'model_name'                => 'Nome do Model',
-        'model_name_ph'             => 'ex. \App\User, se vazio irá tentar usar o nome da tabela',
+        'model_name_ph'             => 'ex. \App\Models\User, se vazio irá tentar usar o nome da tabela',
         'name_warning'              => 'Por favor adicione o nome da coluna para criar o index',
         'no_composites_warning'     => 'Esta tabela tem composite indexes. Nota, eles não são suportados de momento. Tenha atenção ao tentar adicionar/remover indexes.',
         'null'                      => 'Null',

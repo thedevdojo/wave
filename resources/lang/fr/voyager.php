@@ -273,7 +273,7 @@ return [
         'key'                       => 'Clé',
         'model_class'               => 'Nom de la classe du modèle (model)',
         'model_name'                => 'Nom du modèle (model)',
-        'model_name_ph'             => 'exemple : \App\User. Si laissé vide, essayera d\'utiliser le nom de la table',
+        'model_name_ph'             => 'exemple : \App\Models\User. Si laissé vide, essayera d\'utiliser le nom de la table',
         'name_warning'              => 'Nommez la colonne avant d\'ajouter un index SVP',
         'no_composites_warning'     => 'Cette table comporte des index composites. Notez qu\'ils ne sont pas pris en '.
                                        'charge pour le moment. Faites attention lorsque vous essayez '.

@@ -281,7 +281,7 @@ return [
         'key'                      => 'Key',
         'model_class'              => 'Name der Model Klasse',
         'model_name'               => 'Model Name',
-        'model_name_ph'            => 'z. B. \App\User, falls leer gelassen wird versucht den Namen der Tabelle '.
+        'model_name_ph'            => 'z. B. \App\Models\User, falls leer gelassen wird versucht den Namen der Tabelle '.
                                        'zu verwenden',
         'name_warning' => 'Sie müssen einen Namen für die Spalte vergeben, '.
                                        ' bevor Sie einen Index hinzufügen',

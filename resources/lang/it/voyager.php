@@ -277,7 +277,7 @@ return [
         'key'                       => 'Chiave',
         'model_class'               => 'Nome della Classe del Model',
         'model_name'                => 'Nome Model',
-        'model_name_ph'             => 'es. \App\User, se lasciato vuoto proverà ad utilizzare il nome della tabella',
+        'model_name_ph'             => 'es. \App\Models\User, se lasciato vuoto proverà ad utilizzare il nome della tabella',
         'name_warning'              => 'Per favore dare un nome alla colonna prima di inserire un indice',
         'no_composites_warning'     => 'Questa tabella ha indici compositi. Si prega di notare che non sono supportati '.
                                       'al momento. Fare attenzione quando si tenta di aggiungere/eliminare gli indici.',

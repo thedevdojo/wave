@@ -2,9 +2,10 @@
 
 Wave leverages the default <a href="https://laravel.com/docs/notifications" target="_blank">Laravel Notification</a> system and gives you an elegant UI to display those notifications in your app.
 
-- [When to Use Notifications](#when-to-use)
-- [Creating Notifications](#create-notifications)
-- [Viewing Notifications](#viewing-notifications)
+- [Notifications](#notifications)
+    - [When to use Notifications](#when-to-use-notifications)
+    - [Creating Notifications](#creating-notifications)
+    - [Viewing Notifications](#viewing-notifications)
 
 ---
 
@@ -84,7 +85,7 @@ php artisan tinker
 Inside of the tinker command you will want to run the following command a few times:
 
 ```php
-App\User::find(1)->notify(new App\Notifications\TestNotification);
+App\Models\User::find(1)->notify(new App\Notifications\TestNotification);
 ```
 
 After you have run that command, let's move on to learning how the user can view those notifications:
