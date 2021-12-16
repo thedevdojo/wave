@@ -92,7 +92,7 @@ class StripeController extends Controller
                 $user->stripe_id = $customer->id;
                 $user->save();
 
-                $user->syncStripeCustomerDetails();;
+                $user->syncStripeCustomerDetails();
             }
             session()->flash('existing_customer');
             return $user;
