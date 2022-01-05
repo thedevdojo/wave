@@ -11,7 +11,7 @@
             <p class="py-0 my-0">This file can be modified inside of your <code class="px-2 py-1 font-mono text-base font-medium text-gray-600 bg-indigo-100 rounded-md">resources/views/{{ theme_folder('/welcome.blade.php') }}</code> file ✌️</p>
         </div>
 
-        @if(Request::get('complete'))
+        @if(Request::get('complete') || session('complete'))
             <div class="flex flex-col justify-center py-10 sm:py-5 sm:px-6 lg:px-8">
                 <div class="mt-8 text-left sm:mx-auto sm:w-full sm:max-w-md">
                     <div class="px-4 py-8 bg-white border shadow border-gray-50 sm:rounded-lg sm:px-10">
