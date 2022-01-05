@@ -75,3 +75,8 @@
         @endif
     @endif
 </div>
+<script>
+	window.cancelClicked = function(){
+		Alpine.store('confirmCancel').openModal();
+	}
+</script>
