@@ -148,6 +148,76 @@ class WaveServiceProvider extends ServiceProvider
             return '{!! view("wave::checkout")->render() !!}';
         });
 
+        // admin Directives
+
+        Blade::directive('admin', function () {
+            return "<?php if (!auth()->guest() && auth()->user()->hasRole('admin')) { ?>";
+        });
+
+        Blade::directive('notadmin', function () {
+            return "<?php } else { ?>";
+        });
+
+        Blade::directive('endadmin', function () {
+            return "<?php } ?>";
+        });
+
+        // superadmin Directives
+
+        Blade::directive('superadmin', function () {
+            return "<?php if (!auth()->guest() && auth()->user()->hasRole('superadmin')) { ?>";
+        });
+
+        Blade::directive('notsuperadmin', function () {
+            return "<?php } else { ?>";
+        });
+
+        Blade::directive('endsuperadmin', function () {
+            return "<?php } ?>";
+        });
+
+        // marketing Directives
+
+        Blade::directive('marketing', function () {
+            return "<?php if (!auth()->guest() && auth()->user()->hasRole('marketing')) { ?>";
+        });
+
+        Blade::directive('notmarketing', function () {
+            return "<?php } else { ?>";
+        });
+
+        Blade::directive('endmarketing', function () {
+            return "<?php } ?>";
+        });
+
+        // sales Directives
+
+        Blade::directive('sales', function () {
+            return "<?php if (!auth()->guest() && auth()->user()->hasRole('sales')) { ?>";
+        });
+
+        Blade::directive('notsales', function () {
+            return "<?php } else { ?>";
+        });
+
+        Blade::directive('endsales', function () {
+            return "<?php } ?>";
+        });
+
+        // customer Directives
+
+        Blade::directive('customer', function () {
+            return "<?php if (!auth()->guest() && auth()->user()->hasRole('customer')) { ?>";
+        });
+
+        Blade::directive('notcustomer', function () {
+            return "<?php } else { ?>";
+        });
+
+        Blade::directive('endcustomer', function () {
+            return "<?php } ?>";
+        });
+
     }
 
     private function loadLivewireComponents(){
