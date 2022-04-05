@@ -9,6 +9,8 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-gd": "*",
+        "ext-exif": "*",
         "devdojo/app": "0.11.0",
         "devdojo/themes": "0.0.5",
         "fideloper/proxy": "^4.2",
