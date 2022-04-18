@@ -148,6 +148,24 @@ class WaveServiceProvider extends ServiceProvider
             return '{!! view("wave::checkout")->render() !!}';
         });
 
+        // role Directives
+
+        Blade::directive('role', function ($role) {
+            return "<?php if (!auth()->guest() && auth()->user()->hasRole($role)) { ?>";
+        });
+
+        Blade::directive('notrole', function () {
+            return "<?php } else { ?>";
+        });
+
+
+        Blade::directive('endrole', function () {
+            return "<?php } ?>";
+        });
+
+
+
+
     }
 
     private function loadLivewireComponents(){
