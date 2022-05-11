@@ -3,6 +3,7 @@
 namespace Wave\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use TCG\Voyager\Models\DataType;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use TCG\Voyager\Http\Controllers\ContentTypes\Text;
@@ -208,7 +209,6 @@ class ApiController extends \TCG\Voyager\Http\Controllers\Controller
 
         // Check permission
         $this->authorize('delete', app($dataType->model_name));
-
         $data = call_user_func([$dataType->model_name, 'findOrFail'], $id);
 
         $res = $data->delete($id);

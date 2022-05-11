@@ -5,6 +5,7 @@ namespace Wave;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 use Lab404\Impersonate\Models\Impersonate;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Wave\Plan;
@@ -121,7 +122,7 @@ class User extends \TCG\Voyager\Models\User implements JWTSubject
     }
 
     public function createApiKey($name){
-        return ApiKey::create(['user_id' => $this->id, 'name' => $name, 'key' => str_random(60)]);
+        return ApiKey::create(['user_id' => $this->id, 'name' => $name, 'key' => Str::random(60)]);
     }
 
     public function apiKeys(){

@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 use Wave\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
-
-
+use Illuminate\Support\Str;
 
 class RegisterController extends \App\Http\Controllers\Controller
 {
@@ -87,14 +86,14 @@ class RegisterController extends \App\Http\Controllers\Controller
         $verified = 1;
 
         if(setting('auth.verify_email', false)){
-            $verification_code = str_random(30);
+            $verification_code = Str::random(30);
             $verified = 0;
         }
 
         if(isset($data['username']) && !empty($data['username'])){
             $username = $data['username'];
         } elseif(isset($data['name']) && !empty($data['name'])) {
-            $username = str_slug($data['name']);
+            $username = Str::slug($data['name']);
         } else {
             $username = $this->getUniqueUsernameFromEmail($data['email']);
         }
@@ -213,7 +212,7 @@ class RegisterController extends \App\Http\Controllers\Controller
 
     public function getUniqueUsernameFromEmail($email)
     {
-        $username = strtolower(trim(str_slug(explode('@', $email)[0])));
+        $username = strtolower(trim(Str::slug(explode('@', $email)[0])));
 
         $new_username = $username;
 

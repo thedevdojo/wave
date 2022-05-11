@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Validator;
 use Wave\User;
 use Wave\KeyValue;
@@ -93,8 +94,8 @@ class SettingsController extends Controller
         $request->validate([
             'key_name' => 'required'
         ]);
-    
-        $apiKey = auth()->user()->createApiKey(str_slug($request->key_name));
+
+        $apiKey = auth()->user()->createApiKey(Str::slug($request->key_name));
         if(isset($apiKey->id)){
             return back()->with(['message' => 'Successfully created new API Key', 'message_type' => 'success']);
         } else {
@@ -110,7 +111,7 @@ class SettingsController extends Controller
         if($apiKey->user_id != auth()->user()->id){
             return back()->with(['message' => 'Canot update key name. Invalid User', 'message_type' => 'danger']);
         }
-        $apiKey->name = str_slug($request->key_name);
+        $apiKey->name = Str::slug($request->key_name);
         $apiKey->save();
         return back()->with(['message' => 'Successfully update API Key name.', 'message_type' => 'success']);
     }

@@ -2,6 +2,7 @@
 
 namespace Wave\Http\Livewire\Settings;
 
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Wave\ApiKey;
 
@@ -69,7 +70,7 @@ class Api extends Component
 
         $this->validateOnly('key_name');
 
-        $apiKey = auth()->user()->createApiKey(str_slug($this->key_name));
+        $apiKey = auth()->user()->createApiKey(Str::slug($this->key_name));
 
         // Display success toast notification
         $this->dispatchBrowserEvent('popToast', ['type' => 'success', 'message' => 'Successfully created new API Key']);
