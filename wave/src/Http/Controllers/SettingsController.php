@@ -2,16 +2,15 @@
 
 namespace Wave\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Validator;
-use Wave\User;
-use Wave\KeyValue;
-use Wave\ApiKey;
 use TCG\Voyager\Http\Controllers\Controller;
+use Wave\ApiKey;
+use Wave\KeyValue;
 
 class SettingsController extends Controller
 {

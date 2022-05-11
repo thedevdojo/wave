@@ -3,17 +3,14 @@
 namespace Wave\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Hash;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use TCG\Voyager\Models\Role;
+use Wave\PaddleSubscription;
 use Wave\Plan;
 use Wave\User;
-use Wave\PaddleSubscription;
-use TCG\Voyager\Models\Role;
 
 class SubscriptionController extends Controller
 {

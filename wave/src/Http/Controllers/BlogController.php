@@ -2,14 +2,14 @@
 
 namespace Wave\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Wave\Post;
+use App\Http\Controllers\Controller;
 use Wave\Category;
+use Wave\Post;
 
-class BlogController extends \App\Http\Controllers\Controller
+class BlogController extends Controller
 {
     public function index(){
-    	
+
         $posts = Post::orderBy('created_at', 'DESC')->paginate(6);
         $categories = Category::all();
 
@@ -22,7 +22,7 @@ class BlogController extends \App\Http\Controllers\Controller
     }
 
     public function category($slug){
-        
+
         $category = Category::where('slug', '=', $slug)->firstOrFail();
         $posts = $category->posts()->orderBy('created_at', 'DESC')->paginate(6);
         $categories = Category::all();
