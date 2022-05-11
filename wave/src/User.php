@@ -4,17 +4,16 @@ namespace Wave;
 
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Lab404\Impersonate\Models\Impersonate;
+use TCG\Voyager\Models\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Wave\Plan;
-use Wave\PaddleSubscription;
-use \Storage;
 use Wave\Announcement;
-use Wave\ApiToken;
+use Wave\PaddleSubscription;
+use Wave\Plan;
 
-class User extends \TCG\Voyager\Models\User implements JWTSubject
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, Impersonate;
 
