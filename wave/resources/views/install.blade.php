@@ -32,7 +32,7 @@
                     <div class="flex flex-col items-center w-full max-w-lg p-10 mx-auto mt-8 bg-white border border-gray-100 shadow-xl rounded-xl">
                         <h1 class="text-3xl font-semibold text-green-400">Successfully Installed 🎉</h1>
                         <p class="mt-5 text-gray-500">Click the continue button below to view your new SAAS application.</p>
-                        <a href="/" class="flex justify-center w-full px-4 py-2 mt-8 text-sm text-lg font-medium text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
+                        <a href="/" class="flex justify-center w-full px-4 py-2 mt-8 text-lg font-medium text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
                             Continue
                         </a>
                     </div>
@@ -45,7 +45,7 @@
                     <div class="flex flex-col items-center w-full max-w-lg p-10 mx-auto mt-8 bg-white border border-gray-100 shadow-xl rounded-xl">
                         <h1 class="text-3xl font-semibold text-blue-600">Welcome to Wave</h1>
                         <p class="mt-5 text-gray-500">If you're ready to get started, click on the 'Install Wave' button below. In this future this installation screen will have a few setup options.</p>
-                        <a href="/install?complete=true" class="flex justify-center w-full px-4 py-2 mt-8 text-sm text-lg font-medium text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
+                        <a href="/install?complete=true" class="flex justify-center w-full px-4 py-2 mt-8 text-lg font-medium text-white transition duration-150 ease-in-out bg-blue-600 border border-transparent rounded-md hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
                             Install Wave
                         </a>
                     </div>
