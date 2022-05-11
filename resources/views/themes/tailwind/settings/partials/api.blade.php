@@ -45,7 +45,7 @@
 								{{ $apiKey->created_at->format('F j, Y') }}
 							</td>
 							<td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap">
-								@if(is_null($apiKey->last_used)){{ 'Never Used' }}@else{{ $apiKey->last_used }}@endif
+								@if(is_null($apiKey->last_used_at)){{ 'Never Used' }}@else{{ $apiKey->last_used_at->format('F j, Y') }}@endif
 							</td>
 							<td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
 								<button x-data onclick="actionClicked('view', '{{ $apiKey->id }}', '{{ $apiKey->name }}', '{{ $apiKey->key }}')" class="mr-2 text-indigo-600 hover:underline focus:outline-none">

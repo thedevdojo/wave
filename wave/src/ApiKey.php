@@ -18,6 +18,15 @@ class ApiKey extends Model
         'user_id', 'name', 'key', 'last_used_at'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'last_used_at' => 'datetime'
+    ];
+
     public function user(){
         return $this->belongsTo(config('auth.providers.users.model'));
     }

@@ -2,6 +2,7 @@
 
 namespace Wave\Http\Controllers\API;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use TCG\Voyager\Models\Role;
@@ -55,6 +56,10 @@ class AuthController extends \App\Http\Controllers\Controller
         if(isset($request->key)){
 
             $key = \Wave\ApiKey::where('key', '=', $request->key)->first();
+
+            $key->update([
+                'last_used_at' => Carbon::now(),
+            ]);
 
             if(isset($key->id)){
                 return response()->json(['access_token' => JWTAuth::fromUser($key->user, ['exp' => config('wave.api.key_token_expires', 1)])]);
