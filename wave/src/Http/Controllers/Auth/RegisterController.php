@@ -2,8 +2,8 @@
 
 namespace Wave\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-class RegisterController extends \App\Http\Controllers\Controller
+class RegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ class RegisterController extends \App\Http\Controllers\Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Modes\User
      */
     public function create(array $data)
     {
