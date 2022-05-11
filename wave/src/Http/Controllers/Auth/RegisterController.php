@@ -4,14 +4,15 @@ namespace Wave\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Wave\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use TCG\Voyager\Models\Role;
+use Wave\Notifications\VerifyEmail;
 
 class RegisterController extends Controller
 {
@@ -80,7 +81,7 @@ class RegisterController extends Controller
      */
     public function create(array $data)
     {
-        $role = \TCG\Voyager\Models\Role::where('name', '=', config('voyager.user.default_role'))->first();
+        $role = Role::where('name', '=', config('voyager.user.default_role'))->first();
 
         $verification_code = NULL;
         $verified = 1;
