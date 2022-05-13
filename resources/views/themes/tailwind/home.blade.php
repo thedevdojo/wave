@@ -68,8 +68,8 @@
                 @foreach(config('features') as $feature)
                     <div>
                         <img src="{{ $feature->image }}" class="w-16 rounded sm:mx-auto">
-                        <h3 class="mt-6 text-sm font-semibold leading-6 sm:text-center text-wave-100">{{ $feature->title }}</h3>
-                        <p class="mt-2 text-sm leading-5 sm:text-center text-wave-200">{{ $feature->description }}</p>
+                        <h3 class="mt-6 text-sm font-semibold leading-6 sm:text-center text-wave-100">{!! $feature->title !!}</h3>
+                        <p class="mt-2 text-sm leading-5 sm:text-center text-wave-200">{!! $feature->description !!}</p>
                     </div>
                 @endforeach
             </div>
