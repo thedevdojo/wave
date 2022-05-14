@@ -18,7 +18,7 @@ return [
     ],
     (object)[
         'title' => 'Subscriptions',
-        'description' => 'Allow users to pay for your service and signup for a subscription using Stripe or Braintree Payments.',
+        'description' => 'Allow users to pay for your service and signup for a subscription using <a href="https://paddle.com">Paddle</a> payments.',
         'image' => '/themes/tailwind/images/subscriptions.png'
     ],
     (object)[
