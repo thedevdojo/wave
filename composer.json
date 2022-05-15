@@ -17,7 +17,6 @@
         "intervention/image": "^2.7",
         "lab404/laravel-impersonate": "^1.7",
         "laravel/framework": "^9.11",
-        "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.4",
         "tcg/voyager": "1.5.x-dev",
