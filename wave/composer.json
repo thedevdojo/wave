@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "tcg/voyager": "1.*",
+        "tcg/voyager": "1.*"
     },
     "autoload": {
         "psr-4": {
