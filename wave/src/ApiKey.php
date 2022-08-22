@@ -23,15 +23,6 @@ class ApiKey extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'last_used_at' => 'datetime',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
      * @var array
      */
     protected $casts = [
