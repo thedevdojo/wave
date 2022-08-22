@@ -20,6 +20,8 @@ class PaddleSubscription extends Model
         'update_url',
         'cancel_url',
         'cancelled_at',
+        'last_payment_at',
+        'next_payment_at',
     ];
 
     /**
@@ -28,7 +30,8 @@ class PaddleSubscription extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'next_bill_date' => 'datetime',
         'cancelled_at' => 'datetime',
+        'last_payment_at' => 'datetime',
+        'next_payment_at' => 'datetime',
     ];
 }

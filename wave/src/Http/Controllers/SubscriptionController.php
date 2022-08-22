@@ -67,6 +67,7 @@ class SubscriptionController extends Controller
 
     private function cancelSubscription($subscription_id){
         $subscription = PaddleSubscription::where('subscription_id', $subscription_id)->first();
+        $subscription->cancelled_at = Carbon::now();
         $subscription->status = 'cancelled';
         $subscription->save();
         $user = User::find( $subscription->user_id );
@@ -135,8 +136,9 @@ class SubscriptionController extends Controller
                         'subscription_id' => $order->subscription_id,
                         'plan_id' => $order->product_id,
                         'user_id' => $user->id,
-                        'status' => 'active', // https://paddle.com/docs/subscription-status-reference/
-                        'next_bill_data' => \Carbon\Carbon::now()->addMonths(1)->toDateTimeString(),
+                        'status' => 'active', // https://developer.paddle.com/reference/ZG9jOjI1MzU0MDI2-subscription-status-reference
+                        'last_payment_at' => $subscription->last_payment->date,
+                        'next_payment_at' => $subscription->next_payment->date,
                         'cancel_url' => $subscription->cancel_url,
                         'update_url' => $subscription->update_url
                     ]);
