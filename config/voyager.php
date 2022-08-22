@@ -13,7 +13,7 @@ return [
     'user' => [
         'add_default_role_on_register' => true,
         'default_role'                 => 'trial',
-        'namespace'                    => App\User::class,
+        'namespace'                    => \App\Models\User::class,
         'default_avatar'               => 'users/default.png',
     ],
 

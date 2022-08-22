@@ -2,15 +2,13 @@
 
 namespace Tests\Browser;
 
+use App\Models\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use App\User;
 
 class AuthTest extends DuskTestCase
 {
     //use DatabaseMigrations;
-
     public function setUp(): void
     {
         parent::setUp();

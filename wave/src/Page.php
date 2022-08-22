@@ -3,6 +3,7 @@
 namespace Wave;
 
 use Illuminate\Database\Eloquent\Model;
+use TCG\Voyager\Facades\Voyager;
 
 class Page extends Model
 {
@@ -11,6 +12,6 @@ class Page extends Model
     }
 
     public function image(){
-    	return \Voyager::image($this->image);
+    	return Voyager::image($this->image);
     }
 }

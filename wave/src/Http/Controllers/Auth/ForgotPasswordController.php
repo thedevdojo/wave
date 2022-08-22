@@ -5,7 +5,7 @@ namespace Wave\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
-class ForgotPasswordController extends \App\Http\Controllers\Controller
+class ForgotPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------

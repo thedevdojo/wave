@@ -84,7 +84,7 @@ php artisan tinker
 Inside of the tinker command you will want to run the following command a few times:
 
 ```php
-App\User::find(1)->notify(new App\Notifications\TestNotification);
+App\Models\User::find(1)->notify(new App\Notifications\TestNotification);
 ```
 
 After you have run that command, let's move on to learning how the user can view those notifications:

@@ -2,19 +2,19 @@
 
 namespace Wave\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Wave\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use TCG\Voyager\Models\Role;
+use Wave\Notifications\VerifyEmail;
 
-
-
-class RegisterController extends \App\Http\Controllers\Controller
+class RegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -77,24 +77,24 @@ class RegisterController extends \App\Http\Controllers\Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     public function create(array $data)
     {
-        $role = \TCG\Voyager\Models\Role::where('name', '=', config('voyager.user.default_role'))->first();
+        $role = Role::where('name', '=', config('voyager.user.default_role'))->first();
 
         $verification_code = NULL;
         $verified = 1;
 
         if(setting('auth.verify_email', false)){
-            $verification_code = str_random(30);
+            $verification_code = Str::random(30);
             $verified = 0;
         }
 
         if(isset($data['username']) && !empty($data['username'])){
             $username = $data['username'];
         } elseif(isset($data['name']) && !empty($data['name'])) {
-            $username = str_slug($data['name']);
+            $username = Str::slug($data['name']);
         } else {
             $username = $this->getUniqueUsernameFromEmail($data['email']);
         }
@@ -213,7 +213,7 @@ class RegisterController extends \App\Http\Controllers\Controller
 
     public function getUniqueUsernameFromEmail($email)
     {
-        $username = strtolower(trim(str_slug(explode('@', $email)[0])));
+        $username = strtolower(trim(Str::slug(explode('@', $email)[0])));
 
         $new_username = $username;
 

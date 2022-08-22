@@ -2,9 +2,9 @@
 
 namespace Wave\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ProfileController extends \App\Http\Controllers\Controller
+class ProfileController extends Controller
 {
     public function index($username){
     	$user = config('wave.user_model')::where('username', '=', $username)->firstOrFail();

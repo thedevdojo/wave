@@ -2,10 +2,10 @@
 
 namespace Wave\Http\Controllers;
 
-use Wave\Page;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class NotificationController extends \App\Http\Controllers\Controller
+class NotificationController extends Controller
 {
     public function index(){
         return view('theme::notifications.index');

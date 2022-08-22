@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::impersonate();
 
 Route::get('/', '\Wave\Http\Controllers\HomeController@index')->name('wave.home');
@@ -9,8 +11,8 @@ Route::get('@{username}', '\Wave\Http\Controllers\ProfileController@index')->nam
 Route::view('docs/{page?}', 'docs::index')->where('page', '(.*)');
 
 // Additional Auth Routes
-Route::get('logout', 'Auth\LoginController@logout')->name('wave.logout');
-Route::get('user/verify/{verification_code}', 'Auth\RegisterController@verify')->name('verify');
+Route::get('logout', '\Wave\Http\Controllers\Auth\LoginController@logout')->name('wave.logout');
+Route::get('user/verify/{verification_code}', '\Wave\Http\Controllers\Auth\RegisterController@verify')->name('verify');
 Route::post('register/complete', '\Wave\Http\Controllers\Auth\RegisterController@complete')->name('wave.register-complete');
 
 Route::get('blog', '\Wave\Http\Controllers\BlogController@index')->name('wave.blog');

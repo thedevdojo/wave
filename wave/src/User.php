@@ -4,35 +4,51 @@ namespace Wave;
 
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Lab404\Impersonate\Models\Impersonate;
+use TCG\Voyager\Models\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Wave\Plan;
-use Wave\PaddleSubscription;
-use \Storage;
 use Wave\Announcement;
-use Wave\ApiToken;
+use Wave\PaddleSubscription;
+use Wave\Plan;
 
-class User extends \TCG\Voyager\Models\User implements JWTSubject
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, Impersonate;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'username', 'password', 'verification_code', 'verified', 'trial_ends_at'
+        'name',
+        'email',
+        'username',
+        'password',
+        'verification_code',
+        'verified',
+        'trial_ends_at',
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes that should be hidden for serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'trial_ends_at' => 'datetime',
     ];
 
     public function keyValues()
@@ -121,7 +137,7 @@ class User extends \TCG\Voyager\Models\User implements JWTSubject
     }
 
     public function createApiKey($name){
-        return ApiKey::create(['user_id' => $this->id, 'name' => $name, 'key' => str_random(60)]);
+        return ApiKey::create(['user_id' => $this->id, 'name' => $name, 'key' => Str::random(60)]);
     }
 
     public function apiKeys(){
