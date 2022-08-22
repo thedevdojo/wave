@@ -2,14 +2,16 @@
 
 namespace Wave\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use TCG\Voyager\Models\Role;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Validator;
+use Wave\ApiKey;
 use Wave\User;
 
-class AuthController extends \App\Http\Controllers\Controller
+class AuthController extends Controller
 {
     /**
      * Create a new AuthController instance.
@@ -54,7 +56,7 @@ class AuthController extends \App\Http\Controllers\Controller
 
         if(isset($request->key)){
 
-            $key = \Wave\ApiKey::where('key', '=', $request->key)->first();
+            $key = ApiKey::where('key', '=', $request->key)->first();
 
             if(isset($key->id)){
                 return response()->json(['access_token' => JWTAuth::fromUser($key->user, ['exp' => config('wave.api.key_token_expires', 1)])]);
@@ -113,7 +115,6 @@ class AuthController extends \App\Http\Controllers\Controller
             'password' => bcrypt($request->password),
         ]);
 
-        
         $credentials = ['email' => $request['email'], 'password' => $request['password']];
 
         if (! $token = JWTAuth::attempt($credentials)) {

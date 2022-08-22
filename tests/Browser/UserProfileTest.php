@@ -2,10 +2,10 @@
 
 namespace Tests\Browser;
 
+use App\Models\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use App\User;
 
 class UserProfileTest extends DuskTestCase
 {

@@ -4,18 +4,29 @@ namespace Wave;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 class ApiKey extends Model
 {
 	protected $table = 'api_keys';
- 
- 	/**
+
+    /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
-        'user_id', 'name', 'key', 'last_used_at'
+        'user_id',
+        'name',
+        'key',
+        'last_used_at',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'last_used_at' => 'datetime',
     ];
 
     public function user(){

@@ -2,10 +2,10 @@
 
 namespace Wave\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Wave\Announcement;
-use Illuminate\Http\Request;
 
-class AnnouncementController extends \App\Http\Controllers\Controller
+class AnnouncementController extends Controller
 {
     public function index(){
     	$announcements = Announcement::paginate(10);

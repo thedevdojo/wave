@@ -2,10 +2,9 @@
 
 namespace Wave\Http\Controllers;
 
-use \App\Http\Requests;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Controller;
 
-class WebhookController
+class WebhookController extends Controller
 {
 
 	public function handleCustomerSubscriptionDeleted(array $payload)

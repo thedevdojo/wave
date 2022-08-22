@@ -2,10 +2,10 @@
 
 namespace Wave\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Wave\Page;
-use Illuminate\Http\Request;
 
-class PageController extends \App\Http\Controllers\Controller
+class PageController extends Controller
 {
     public function page($slug){
     	$page = Page::where('slug', '=', $slug)->firstOrFail();
