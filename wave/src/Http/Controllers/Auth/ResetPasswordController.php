@@ -4,9 +4,10 @@ namespace Wave\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ResetPasswordController extends \App\Http\Controllers\Controller
+class ResetPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------

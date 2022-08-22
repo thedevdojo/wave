@@ -5,8 +5,9 @@ namespace Wave\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class LoginController extends \App\Http\Controllers\Controller
+class LoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +78,7 @@ class LoginController extends \App\Http\Controllers\Controller
 
 
     public function logout(){
-        \Auth::logout();
+        Auth::logout();
         return redirect(route('wave.home'));
     }
 }

@@ -21,7 +21,7 @@ dataset('authroutes', function () {
         '/admin/categories/1',
         '/admin/categories/1/edit',
         '/admin/database',
-        '/admin/hooks',
+        // '/admin/hooks', Hooks: Removed in Voyager 1.5+
         '/admin/media',
         '/admin/menus',
         '/admin/menus/create',

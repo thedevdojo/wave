@@ -11,14 +11,18 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
+use Wave\Facades\Wave;
 
 // Authentication routes
 Auth::routes();
 
-
+// Voyager Admin routes
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
-// Include Wave Routes
+// Wave routes
 Wave::routes();

@@ -3,17 +3,14 @@
 namespace Wave\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Hash;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use TCG\Voyager\Models\Role;
+use Wave\PaddleSubscription;
 use Wave\Plan;
 use Wave\User;
-use Wave\PaddleSubscription;
-use TCG\Voyager\Models\Role;
 
 class SubscriptionController extends Controller
 {
@@ -191,22 +188,30 @@ class SubscriptionController extends Controller
         $plan = Plan::where('plan_id', $request->plan_id)->first();
 
         if(isset($plan->id)){
-
-
             // Update the user plan with Paddle
             $response = Http::post($this->paddle_vendors_url . '/2.0/subscription/users/update', [
                 'vendor_id' => $this->vendor_id,
                 'vendor_auth_code' => $this->vendor_auth_code,
-                'subscription_id' => auth()->user()->subscription->subscription_id,
+                'subscription_id' => $request->user()->subscription->subscription_id,
                 'plan_id' => $request->plan_id
             ]);
 
-            // Next, update the user role associated with the updated plan
-            auth()->user()->role_id = $plan->role_id;
-            auth()->user()->save();
-
             if($response->successful()){
-                return back()->with(['message' => 'Successfully switched to the ' . $plan->name . ' plan.', 'message_type' => 'success']);
+                $body = $response->json();
+
+                if($body['success']){
+                    // Next, update the user role associated with the updated plan
+                    $request->user()->forceFill([
+                        'role_id' => $plan->role_id
+                    ])->save();
+
+                    // And, update the subscription with the updated plan.
+                    $request->user()->subscription()->update([
+                        'plan_id' => $request->plan_id
+                    ]);
+
+                    return back()->with(['message' => 'Successfully switched to the ' . $plan->name . ' plan.', 'message_type' => 'success']);
+                }
             }
 
         }

@@ -8,6 +8,16 @@ use Illuminate\Support\Facades\Schema;
 class AppServiceProvider extends ServiceProvider
 {
     /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
      * Bootstrap any application services.
      *
      * @return void
@@ -17,17 +27,8 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() == 'production') {
             $this->app['request']->server->set('HTTPS', true);
         }
+
         $this->setSchemaDefaultLength();
-    }
-
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
     }
 
     private function setSchemaDefaultLength(): void

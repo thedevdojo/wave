@@ -70,7 +70,7 @@ return [
 		'min_password_length' => 5,
 	],
 
-	'user_model' => App\User::class,
+	'user_model' => App\Models\User::class,
 	'show_docs' => env('WAVE_DOCS', true),
     'demo' => env('WAVE_DEMO', false),
     'dev_bar' => env('WAVE_BAR', false),
@@ -94,9 +94,9 @@ return [
 
 - **auth => min_password_length** - This is the minimum password length a user must enter when registering for an acccount.
 
-- **user_model** - This is the default user model of your application. In most cases this is going to be the `App\User` model. If you are using a different user model you will want to add that here.
+- **user_model** - This is the default user model of your application. In most cases this is going to be the `App\Models\User` model. If you are using a different user model you will want to add that here.
 
-    Remember your User Model will also need to extend the `\Wave\User` model. If you take a look at the `App\User` model you can see it extends from the Wave user model:
+    Remember your User Model will also need to extend the `\Wave\User` model. If you take a look at the `App\Models\User` model you can see it extends from the Wave user model:
 
     ```php
     class User extends \Wave\User

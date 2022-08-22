@@ -2,9 +2,10 @@
 
 namespace Wave\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
-class HomeController extends \App\Http\Controllers\Controller
+class HomeController extends Controller
 {
 
     /**
@@ -15,7 +16,7 @@ class HomeController extends \App\Http\Controllers\Controller
     public function index()
     {
     	if(setting('auth.dashboard_redirect', true) != "null"){
-    		if(!\Auth::guest()){
+    		if(!Auth::guest()){
     			return redirect('dashboard');
     		}
     	}

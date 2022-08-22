@@ -2,9 +2,9 @@
 
 namespace Wave\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class DashboardController extends \App\Http\Controllers\Controller
+class DashboardController extends Controller
 {
     /**
      * Create a new controller instance.
