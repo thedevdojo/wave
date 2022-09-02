@@ -137,7 +137,7 @@ spec:
     git:
       repo_clone_url: https://github.com/thedevdojo/wave.git
       branch: main
-    run_command: php artisan migrate --seed
+    run_command: php artisan migrate --force --seed
     envs:
     - key: APP_NAME
       scope: RUN_TIME

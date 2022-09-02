@@ -136,7 +136,7 @@ jobs:
     repo: thedevdojo/wave
     branch: main
     deploy_on_push: true
-  run_command: php artisan migrate --seed ; php artisan storage:link
+  run_command: php artisan migrate  --force --seed ; php artisan storage:link
   envs:
   - key: APP_NAME
     scope: RUN_TIME
