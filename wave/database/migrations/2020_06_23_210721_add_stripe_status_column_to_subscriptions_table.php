@@ -26,7 +26,7 @@ class AddStripeStatusColumnToSubscriptionsTable extends Migration
     public function down()
     {
         Schema::table('subscriptions', function (Blueprint $table) {
-            $table->dropColumn('stripe_status');
+            //$table->dropColumn('stripe_status');
         });
     }
 }
