@@ -26,7 +26,7 @@ class SettingsController extends Controller
             'name' => 'required|string',
             'email' => 'sometimes|required|email|unique:users,email,' . Auth::user()->id,
             'username' => 'sometimes|required|unique:users,username,' . Auth::user()->id,
-            'avatar' => 'base64image'
+            'avatar' => 'nullable|base64image'
         ],
         [
             'avatar.base64image' => 'The avatar must be a valid image.'
