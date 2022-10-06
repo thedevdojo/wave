@@ -28,8 +28,7 @@ Route::get('p/{page}', '\Wave\Http\Controllers\PageController@page');
 Route::view('pricing', 'theme::pricing')->name('wave.pricing');
 
 /***** Billing Routes *****/
-Route::post('/billing/webhook', '\Wave\Http\Controllers\WebhookController@handleWebhook');
-Route::post('paddle/webhook', '\Wave\Http\Controllers\SubscriptionController@hook');
+Route::post('paddle/webhook', '\Wave\Http\Controllers\SubscriptionController@webhook');
 Route::post('checkout', '\Wave\Http\Controllers\SubscriptionController@checkout')->name('checkout');
 
 Route::get('test', '\Wave\Http\Controllers\SubscriptionController@test');
