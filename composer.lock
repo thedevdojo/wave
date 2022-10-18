@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04daad1f610003e0c0e3f1702c307f1e",
+    "content-hash": "d96fd19dd0b4ec645343d5fedef62227",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -164,16 +164,16 @@
         },
         {
             "name": "devdojo/themes",
-            "version": "0.0.5",
+            "version": "0.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thedevdojo/themes.git",
-                "reference": "2ad678783d370de7a4aae1be75b6dd863971ac0e"
+                "reference": "a23b40c5341b176419ab36f9bbe41d0777af0815"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thedevdojo/themes/zipball/2ad678783d370de7a4aae1be75b6dd863971ac0e",
-                "reference": "2ad678783d370de7a4aae1be75b6dd863971ac0e",
+                "url": "https://api.github.com/repos/thedevdojo/themes/zipball/a23b40c5341b176419ab36f9bbe41d0777af0815",
+                "reference": "a23b40c5341b176419ab36f9bbe41d0777af0815",
                 "shasum": ""
             },
             "type": "library",
@@ -193,9 +193,9 @@
             "description": "This is a themes package for Laravel",
             "support": {
                 "issues": "https://github.com/thedevdojo/themes/issues",
-                "source": "https://github.com/thedevdojo/themes/tree/0.0.5"
+                "source": "https://github.com/thedevdojo/themes/tree/0.0.6"
             },
-            "time": "2021-04-04T19:26:29+00:00"
+            "time": "2022-10-18T15:12:41+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
