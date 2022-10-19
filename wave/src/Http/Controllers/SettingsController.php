@@ -18,7 +18,7 @@ class SettingsController extends Controller
         if(empty($section)){
             return redirect(route('wave.settings', 'profile'));
         }
-    	return view('theme::settings.index', compact('section'));
+        return view('theme::settings.index', compact('section'));
     }
 
     public function profilePut(Request $request){
@@ -32,39 +32,44 @@ class SettingsController extends Controller
             'avatar.base64image' => 'The avatar must be a valid image.'
         ]);
 
-    	$authed_user = auth()->user();
+        $authed_user = auth()->user();
 
-    	$authed_user->name = $request->name;
-    	$authed_user->email = $request->email;
+        $authed_user->name = $request->name;
+        $authed_user->email = $request->email;
         if($request->avatar){
-    	   $authed_user->avatar = $this->saveAvatar($request->avatar, $authed_user->username);
+           $authed_user->avatar = $this->saveAvatar($request->avatar, $authed_user->username);
         }
-    	$authed_user->save();
+        $authed_user->save();
 
-    	foreach(config('wave.profile_fields') as $key){
-    		if(isset($request->{$key})){
-	    		$type = $key . '_type__wave_keyvalue';
-	    		if($request->{$type} == 'checkbox'){
-	                if(!isset($request->{$key})){
-	                    $request->request->add([$key => null]);
-	                }
-	            }
+        foreach(config('wave.profile_fields') as $key){
+            if(isset($request->{$key})){
+                $type = $key . '_type__wave_keyvalue';
+                if($request->{$type} == 'checkbox'){
+                    if(!isset($request->{$key})){
+                        $request->request->add([$key => null]);
+                    }
+                }
 
-	            $row = (object)['field' => $key, 'type' => $request->{$type}, 'details' => ''];
-	            $value = $this->getContentBasedOnType($request, 'themes', $row);
+                $row = (object)['field' => $key, 'type' => $request->{$type}, 'details' => ''];
+                $value = $this->getContentBasedOnType($request, 'themes', $row);
 
-	    		if(!is_null($authed_user->keyValue($key))){
-	    			$keyValue = KeyValue::where('keyvalue_id', '=', $authed_user->id)->where('keyvalue_type', '=', 'users')->where('key', '=', $key)->first();
-	    			$keyValue->value = $value;
-	    			$keyValue->type = $request->{$type};
-	    			$keyValue->save();
-	    		} else {
-	    			KeyValue::create(['type' => $request->{$type}, 'keyvalue_id' => $authed_user->id, 'keyvalue_type' => 'users', 'key' => $key, 'value' => $value]);
-	    		}
-	    	}
-    	}
+                if(!is_null($authed_user->keyValue($key))){
+                    $keyValue = KeyValue::where('keyvalue_id', '=', $authed_user->id)->where('keyvalue_type', '=', 'users')->where('key', '=', $key)->first();
+                    $keyValue->value = $value;
+                    $keyValue->type = $request->{$type};
+                    $keyValue->save();
+                } else {
+                    KeyValue::create(['type' => $request->{$type}, 'keyvalue_id' => $authed_user->id, 'keyvalue_type' => 'users', 'key' => $key, 'value' => $value]);
+                }
+            } else {
+                if(!is_null($authed_user->keyValue($key))){
+                    $keyValue = KeyValue::where('keyvalue_id', '=', $authed_user->id)->where('keyvalue_type', '=', 'users')->where('key', '=', $key)->first();
+                    $keyValue->delete();
+                }
+            }
+        }
 
-    	return back()->with(['message' => 'Successfully updated user profile', 'message_type' => 'success']);
+        return back()->with(['message' => 'Successfully updated user profile', 'message_type' => 'success']);
     }
 
     public function securityPut(Request $request){
@@ -132,9 +137,9 @@ class SettingsController extends Controller
     }
 
     private function saveAvatar($avatar, $filename){
-    	$path = 'avatars/' . $filename . '.png';
-    	Storage::disk(config('voyager.storage.disk'))->put($path, file_get_contents($avatar));
-    	return $path;
+        $path = 'avatars/' . $filename . '.png';
+        Storage::disk(config('voyager.storage.disk'))->put($path, file_get_contents($avatar));
+        return $path;
     }
 
     public function invoice(Request $request, $invoiceId) {
