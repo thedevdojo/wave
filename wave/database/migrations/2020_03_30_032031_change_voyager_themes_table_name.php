@@ -13,8 +13,12 @@ class ChangeVoyagerThemesTableName extends Migration
      */
     public function up()
     {
-        Schema::rename('voyager_themes', 'themes');
-        Schema::rename('voyager_theme_options', 'theme_options');
+        if (!Schema::hasTable('themes')) {
+            Schema::rename('voyager_themes', 'themes');
+        }
+        if (!Schema::hasTable('theme_options')) {
+            Schema::rename('voyager_theme_options', 'theme_options');
+        }
     }
 
     /**
@@ -24,7 +28,11 @@ class ChangeVoyagerThemesTableName extends Migration
      */
     public function down()
     {
-        Schema::rename('themes', 'voyager_themes');
-        Schema::rename('theme_options', 'voyager_theme_options');
+        if (!Schema::hasTable('voyager_themes')) {
+            Schema::rename('themes', 'voyager_themes');
+        }
+        if (!Schema::hasTable('voyager_theme_options')) {
+            Schema::rename('theme_options', 'voyager_theme_options');
+        }
     }
 }

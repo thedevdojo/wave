@@ -13,7 +13,7 @@
         "ext-gd": "*",
         "ext-redis": "*",
         "devdojo/app": "0.11.0",
-        "devdojo/themes": "0.0.5",
+        "devdojo/themes": "0.0.7",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "lab404/laravel-impersonate": "^1.7",
