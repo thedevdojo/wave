@@ -108,7 +108,7 @@ return [
 
 - **dev_bar** - If you enable the **dev_bar**, you will have a developer bar at the bottom of your screen that will allow you to easily jump to the documentation or the admin.
 
-- **paddle** - This is the configuration settings you will need to integrate billing into your application. You can learn more about these configurations from the [billing documentation](/docs/billing/themes).
+- **paddle** - This is the configuration settings you will need to integrate billing into your application. You can learn more about these configurations from the [billing documentation](/docs/features/billing).
 
     ---
 
