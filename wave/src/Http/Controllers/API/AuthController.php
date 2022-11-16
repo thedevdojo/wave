@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use TCG\Voyager\Models\Role;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiKey;
-use Wave\User;
+use App\Models\User;
 
 class AuthController extends Controller
 {
