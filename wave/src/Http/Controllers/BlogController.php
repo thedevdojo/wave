@@ -38,7 +38,8 @@ class BlogController extends Controller
     public function post($category, $slug){
 
     	$post = Post::where('slug', '=', $slug)->firstOrFail();
-
+        $category = Category::where('slug', '=', $category)->firstOrFail();
+        
         $seo = [
             'seo_title' => $post->title,
             'seo_description' => $post->seo_description,
