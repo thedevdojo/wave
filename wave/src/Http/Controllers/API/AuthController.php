@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use TCG\Voyager\Models\Role;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiKey;
-use Wave\User;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -117,6 +117,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'username' => $request->username,
             'password' => bcrypt($request->password),
+            'role_id' => $role->id,
         ]);
 
         $credentials = ['email' => $request['email'], 'password' => $request['password']];
