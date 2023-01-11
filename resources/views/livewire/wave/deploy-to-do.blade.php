@@ -73,7 +73,7 @@
 
                     <div class="relative flex flex-col h-full p-8">
                         <h2 class="font-bold text-black">{{ $app['app']['spec']['name'] }}</h2>
-                        <a href="{{ $app['app']['live_url_base'] }}" target="_blank" class="text-sm font-medium text-blue-500 underline">{{ $app['app']['live_url_base'] }}</a>
+                        <a href="{{ $app['app']['live_url_base'] ?? '#' }}" target="_blank" class="text-sm font-medium text-blue-500 underline">{{ $app['app']['live_url_base'] ?? 'Deploying...' }}</a>
                         <a href="https://cloud.digitalocean.com/apps/{{ $app_id }}" target="_blank" class="inline-block w-full px-5 py-3 mt-5 text-sm font-bold text-center text-white bg-blue-600 rounded-lg">Configure on DigitalOcean</a>
                     </div>
                 </div>
@@ -82,8 +82,12 @@
                 @foreach($deployments['deployments'] as $deployment)
                     @php
                         $success = false;
-                        if($deployment['progress']['success_steps'] == $deployment['progress']['total_steps']){
-                            $success = true;
+                        if(isset($deployment['progress']['success_steps']) && isset($deployment['progress']['total_steps'])) {
+                            if($deployment['progress']['success_steps'] == $deployment['progress']['total_steps']) {
+                                $success = true;
+                            } else {
+                                $success = true;
+                            }
                         }
                     @endphp
                     <div class="flex items-center p-5 overflow-hidden bg-white border border-gray-100 rounded-lg shadow-xl">
