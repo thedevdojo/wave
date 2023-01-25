@@ -5,6 +5,7 @@ services:
     repo: thedevdojo/wave
     branch: main
     deploy_on_push: true
+  build_command: cd resources/views/themes/tailwind && npm install && npm run production
   run_command: php artisan migrate --force ; heroku-php-apache2 public/
   envs:
   - key: APP_NAME
