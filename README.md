@@ -40,6 +40,12 @@ Next, we can install Wave with these **4 simple steps**:
 
 We'll need to utilize a MySQL database during the installation. For the following stage, you'll need to create a new database and preserve the credentials.
 
+```sql
+CREATE DATABASE wave;
+CREATE USER 'wave'@'localhost' IDENTIFIED BY 'wave_password';
+GRANT ALL PRIVILEGES ON wave.* TO 'wave'@'localhost';
+```
+
 ### 2. Copy the `.env.example` file
 
 We need to specify our Environment variables for our application. You will see a file named `.env.example`, you will need to duplicate that file and rename it to `.env`.
@@ -60,10 +66,15 @@ DB_PASSWORD=
 
 ### 3. Add Composer Dependencies
 
+First, you should ensure that your web server has the required PHP extensions installed:
+
+> [Laravel PHP Requirements](https://laravel.com/docs/9.x/deployment#server-requirements)
+
 Following that, we'll need to install all composer dependencies through the following command:
 ```php
 composer install
 ```
+
 ### 4. Run Migrations and Seeds
 
 We must migrate our database schema into our database, which we can accomplish by running the following command:

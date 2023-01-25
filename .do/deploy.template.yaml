@@ -4,8 +4,8 @@ spec:
   - name: web
     git:
       branch: main
-      build_command: cd resources/views/themes/tailwind && npm install && npm run production
       repo_clone_url: https://github.com/thedevdojo/wave.git
+    build_command: cd resources/views/themes/tailwind && npm install && npm run production
     run_command: php artisan migrate --force ; heroku-php-apache2 public/
     envs:
     - key: APP_NAME
