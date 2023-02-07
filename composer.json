@@ -22,7 +22,7 @@
         "livewire/livewire": "^2.4",
         "tcg/voyager": "1.5.x-dev",
         "tymon/jwt-auth": "@dev",
-        "chrisnharvey/laravel-sql-require-primary-key": "^1.0"
+        "chrisnharvey/laravel-sql-require-primary-key": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
