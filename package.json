@@ -8,7 +8,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "^0.4.0",
+        "@tailwindcss/custom-forms": "^0.4.0",
         "axios": "^0.21",
         "cross-env": "^5.1",
         "laravel-mix": "^6.0.39",
