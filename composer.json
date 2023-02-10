@@ -22,7 +22,7 @@
         "livewire/livewire": "^2.4",
         "tcg/voyager": "1.5.x-dev",
         "tymon/jwt-auth": "@dev",
-        "themes": "*",
+        "themes": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
