@@ -27,5 +27,9 @@
     "dependencies": {
         "alpinejs": "^3.5.1",
         "glob-all": "^3.2.1"
-    }
+    },
+    "plugins": [
+        "tallstack",
+        "themes"
+    ]
 }
