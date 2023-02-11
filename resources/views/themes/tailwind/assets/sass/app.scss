@@ -14,7 +14,7 @@ svg {
   .wave {
     animation: wave 3s linear;
     animation-iteration-count:infinite;
-    fill: #0069ff;
+    fill: #222a68;
   }
 
   #wave2 {
@@ -57,7 +57,7 @@ svg {
 /****** Form Input CLASSES **********/
 
 .form-input, .form-textarea, .form-select {
-    @apply appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring focus:ring-opacity-30 focus:ring-wave-500 focus:border-wave-400;
+    @apply appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring focus:ring-opacity-30 focus:#39859c focus:#222a68;
 }
 
 .form-select{
