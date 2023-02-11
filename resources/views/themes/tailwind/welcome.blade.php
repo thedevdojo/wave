@@ -4,7 +4,7 @@
 
 	<div class="py-20 mx-auto text-center max-w-7xl">
         <div class="w-full space-y-2">
-            <h1 class="mb-5 text-5xl font-medium">Welcome Aboard!</h1>
+            <h1 class="mb-5 text-5xl font-medium">Howdy Pilgrim</h1>
             <p class="py-0 my-0">Thanks for subscribing and welcome aboard.
 
                 @if(Request::get('complete')){{ 'Please finish completing your profile information below.' }} @endif</p>
