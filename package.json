@@ -8,7 +8,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@tailwindcss/custom-forms": "*",
+        "@tailwindcss/forms": "*",
         "@tailwindcss/typography": "^0.5.0",
         "autoprefixer": "^10.4.0",
         "axios": "^0.24.0",
@@ -26,7 +26,9 @@
         "glob-all": "^3.2.1"
     },
     "plugins": [
+        "tailwindcss",
         "tallstack",
-        "themes"
+        "themes",
+        "Voyager"
     ]
 }
