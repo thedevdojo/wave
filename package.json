@@ -1,14 +1,16 @@
 {
     "private": true,
     "scripts": {
-        "dev": "mix",
+        "dev": "npm run development",
+        "development": "mix",
         "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
+        "prod": "npm run production",
         "production": "mix --production"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "*",
+        "@tailwindcss/forms": "^2.1.2",
         "@tailwindcss/typography": "^0.5.0",
         "autoprefixer": "^10.4.0",
         "axios": "^0.24.0",
@@ -23,15 +25,11 @@
         "tailwindcss": "*",
         "Voyager": "*",
         "devdojo/tallstack": "*",
-        "themes": "*"}
+        "themes": "*"
+    },
     "dependencies": {
         "alpinejs": "^3.5.1",
         "glob-all": "^3.2.1"
-    },
-    "plugins": [
-        "tailwindcss",
-        "tallstack",
-        "themes",
-        "Voyager"
-    ]
+    }
+
 }
