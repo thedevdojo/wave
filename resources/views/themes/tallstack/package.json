@@ -20,7 +20,7 @@
         "tailwindcss": "^2.2.19"
     },
     "dependencies": {
-        "@tailwindcss/forms": "^0.3.4",
+        "@tailwindcss/custom-forms": "^0.3.4",
         "@tailwindcss/typography": "^0.4.1",
         "alpinejs": "^2.6.0",
         "glob-all": "^3.2.1",
