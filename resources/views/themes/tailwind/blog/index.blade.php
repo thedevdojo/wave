@@ -10,7 +10,7 @@
     <div class="relative mx-auto max-w-7xl">
 		<div class="flex flex-col justify-start">
 			<h1 class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
-				Our Awesome Blog
+				Blog
 			</h1>
 			<p class="mt-3 text-xl leading-7 text-gray-500 sm:mt-4">
 				Check out some of our latest blog posts below.
