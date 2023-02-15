@@ -21,4 +21,4 @@ mix.copy('./tallstack.jpg', '../../../../../views/themes/tallstack/');
 mix.setPublicPath('../../../../../views/themes/tallstack/')
 	.sass('assets/sass/app.scss', 'css')
 	.js('assets/js/app.js', 'js')
-	.tailwind('./tailwind.config.js')
+	.tailwind('./tallstack.config.js')
