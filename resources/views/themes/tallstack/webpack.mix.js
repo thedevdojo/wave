@@ -18,7 +18,7 @@ require('laravel-mix-purgecss');
 
 mix.copy('./tallstack.jpg', '../../../../resources/views/themes/tallstack/');
 
-mix.setPublicPath('../../../../public/themes/tallstack/')
+mix.setPublicPath('../../../../resources/views/themes/tallstack/')
 	.sass('assets/sass/app.scss', 'css')
 	.js('assets/js/app.js', 'js')
 	.tailwind('./tailwind.config.js')
