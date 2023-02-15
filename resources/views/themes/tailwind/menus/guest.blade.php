@@ -24,7 +24,7 @@
                             <div class="relative flex flex-col items-start justify-start hidden w-full h-full max-w-xs bg-center bg-cover lg:block" style="background-image:url('https://cdn.devdojo.com/images/october2020/wave-menu-bg.jpeg')">
                                 <div class="relative flex flex-col items-start justify-center w-full h-full px-16 py-8">
 
-                                    <img src="public\wave\img\logo.png" class="z-20 w-auto h-10">
+                                    <img src="https://focusforge.app/storage/Heritage%20Type%20Co.%20-%20Monogram%20Badge.png" class="z-20 w-auto h-10">
                                     <h3 class="z-30 mt-1 mt-3 text-lg font-thin text-wave-200">A Collaborative, Creative Environment.</h3>
 
                                     <span class="relative z-20 inline-flex mt-5 rounded-md shadow-sm">
