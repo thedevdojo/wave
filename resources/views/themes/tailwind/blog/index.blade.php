@@ -7,15 +7,8 @@
     <div class="absolute inset-0">
         <div class="bg-white h-1/3 sm:h-2/3"></div>
     </div>
-    <div class="relative mx-auto max-w-7xl">
-		<div class="flex flex-col justify-start">
-			<h1 class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
-				Blog
-			</h1>
-			<p class="mt-3 text-xl leading-7 text-gray-500 sm:mt-4">
-				Check out some of our latest blog posts below.
-			</p>
-			<ul class="flex self-start inline w-auto px-3 py-1 mt-3 text-xs font-medium text-gray-600 bg-blue-100 rounded-md">
+    <div>
+    <ul class="flex self-start inline w-auto px-3 py-1 mt-3 text-xs font-medium text-gray-600 bg-blue-100 rounded-md">
 				<li class="mr-4 font-bold text-blue-600 uppercase">Categories:</li>
 				@foreach($categories as $cat)
 					<li class="@if(isset($category) && isset($category->slug) && ($category->slug == $cat->slug)){{ 'text-blue-700' }}@endif"><a href="{{ route('wave.blog.category', $cat->slug) }}">{{ $cat->name }}</a></li>
@@ -24,6 +17,47 @@
 					@endif
 				@endforeach
 			</ul>
+    </div>
+    <div class="relative mx-auto max-w-7xl">
+		<div class="flex flex-col justify-start">
+        <section class="w-full bg-white">
+    <div class="px-10 pt-16 pb-16 ml-auto mr-auto max-w-7xl md:px-24 lg:px-12 lg:py-20">
+        <div class="grid gap-5 lg:grid-cols-2">
+            <div class="flex flex-col justify-center md:pr-8 xl:pr-0 lg:max-w-lg">
+                <div class="flex items-center justify-center w-16 h-16 mb-5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500">
+                    <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                </div>
+                <div class="max-w-xl mb-6">
+                    <div class="mb-6">
+                        <p class="inline font-sans text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl sm:leading-none">Welcome to the Blog! </p>
+                        <p class="block font-sans text-5xl font-bold tracking-tight text-purple-700 sm:text-6xl sm:leading-none">Check back often.</p>
+                    </div>
+                    <p class="text-base text-gray-700 md:text-lg">Beep Boop Bop</p>
+                </div>
+                <div class="max-w-xl mb-6">
+                    <p class="relative">
+                        <a href="#_" class="inline-flex flex-col items-center font-semibold text-purple-700 transition-colors duration-200 cursor-pointer group">
+                            <span class="flex items-center w-full">
+                                <span>Learn more</span>
+                                <svg class="inline-block w-3 ml-2" fill="currentColor" viewBox="0 0 12 12"><path d="M9.707,5.293l-5-5A1,1,0,0,0,3.293,1.707L7.586,6,3.293,10.293a1,1,0,1,0,1.414,1.414l5-5A1,1,0,0,0,9.707,5.293Z"></path></svg>
+                            </span>
+                            <span class="w-full h-0.5 translate-y-2 group-hover:translate-y-1 duration-200 ease-out transition opacity-0 group-hover:opacity-100 block bg-purple-600"></span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="flex justify-center w-full lg:items-center">
+                <div class="flex flex-col items-end pr-3">
+                    <img src="https://cdn.devdojo.com/images/july2021/content-19-1.jpg" class="object-cover w-full h-full mb-6 rounded shadow-lg lg:h-48 xl:h-56 lg:w-48 xl:w-56">
+                    <img src="https://cdn.devdojo.com/images/july2021/content-19-2.jpg" class="object-cover w-full h-full rounded shadow-lg lg:h-32 xl:h-40 lg:w-32 xl:w-40">
+                </div>
+                <div class="pl-3">
+                    <img src="https://cdn.devdojo.com/images/july2021/content-19-3.jpg" class="object-cover w-full h-full rounded shadow-lg lg:h-64 xl:h-80 lg:w-64 xl:w-80">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 		</div>
         <div class="grid gap-5 mx-auto mt-12 sm:grid-cols-2 lg:grid-cols-3">
 
