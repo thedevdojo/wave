@@ -24,13 +24,13 @@
                             <div class="relative flex flex-col items-start justify-start hidden w-full h-full max-w-xs bg-center bg-cover lg:block" style="background-image:url('https://cdn.devdojo.com/images/october2020/wave-menu-bg.jpeg')">
                                 <div class="relative flex flex-col items-start justify-center w-full h-full px-16 py-8">
 
-                                    <img src="https://focusforge.app/storage/Foiled%20Streetwear%20Brand%20Logo%20Flash%20Sheet.png" class="z-20 w-auto h-10">
-                                    <h3 class="z-30 mt-1 mt-3 text-lg font-thin text-wave-200">A Collaborative, Creative Environment.</h3>
+                                    <img src="https://cdn.devdojo.com/images/april2021/wave-light-logo.png" class="z-20 w-auto h-10">
+                                    <h3 class="z-30 mt-1 mt-3 text-lg font-thin text-wave-200">The Software as a Service Starter Kit.</h3>
 
                                     <span class="relative z-20 inline-flex mt-5 rounded-md shadow-sm">
-                                        <a href="/#" class="relative inline-flex items-center px-4 py-2 text-sm font-medium leading-5 transition duration-150 ease-in-out bg-white border border-transparent rounded-md text-wave-500 hover:bg-gray-100 focus:outline-none focus:border-gray-300 focus:shadow-outline-gray active:bg-gray-100">
-                                            Follow us on our socials
-                                            <span class="absolute top-0 right-0 px-3 py-1 -mt-4 -mr-8 text-xs text-white rounded-full bg-wave-400">Version 1</span>
+                                        <a href="https://devdojo.com/wave" class="relative inline-flex items-center px-4 py-2 text-sm font-medium leading-5 transition duration-150 ease-in-out bg-white border border-transparent rounded-md text-wave-500 hover:bg-gray-100 focus:outline-none focus:border-gray-300 focus:shadow-outline-gray active:bg-gray-100">
+                                            Get Wave Today
+                                            <span class="absolute top-0 right-0 px-3 py-1 -mt-4 -mr-8 text-xs text-white rounded-full bg-wave-400">Version 2</span>
                                         </a>
                                     </span>
                                 </div>
@@ -44,10 +44,10 @@
                                     </div>
                                     <div class="space-y-1">
                                         <p class="text-base font-medium leading-6 text-gray-900">
-                                            Scripting
+                                            Authentication
                                         </p>
                                         <p class="text-sm leading-5 text-gray-500">
-                                            Full development assistance.
+                                            Full authentication system including register, login, and lost password.
                                         </p>
                                     </div>
                                 </a>
@@ -60,7 +60,7 @@
                                             Billing
                                         </p>
                                         <p class="text-sm leading-5 text-gray-500">
-                                            Free API calls included every month.
+                                            Subscription billing built on top of Paddle
                                         </p>
                                     </div>
                                 </a>
@@ -129,10 +129,10 @@
                                 </div>
                                 <div class="space-y-1">
                                     <p class="text-base font-medium leading-6 text-gray-900">
-                                        Beautiful
+                                        Themes
                                     </p>
                                     <p class="text-sm leading-5 text-gray-500">
-                                        Support with your favorite CSS libraries.
+                                        Theme support with your favorite CSS libraries.
                                     </p>
                                 </div>
                             </a>
@@ -145,7 +145,7 @@
                                             Developer API
                                         </p>
                                         <p class="text-sm leading-5 text-gray-500">
-                                            Access Keys to the API to build your own custom integrations.
+                                            Grant access keys and tokens for your users.
                                         </p>
                                     </div>
                                 </a>
@@ -161,8 +161,8 @@
         </div>
     </div>
 
-    <a href="/#Media" class="text-base font-medium leading-6 text-gray-500 transition duration-150 ease-in-out hover:text-wave-600 focus:outline-none focus:text-wave-600">
-        Media
+    <a href="/#pricing" class="text-base font-medium leading-6 text-gray-500 transition duration-150 ease-in-out hover:text-wave-600 focus:outline-none focus:text-wave-600">
+        Pricing
     </a>
     <a href="{{ route('wave.blog') }}" class="text-base font-medium leading-6 text-gray-500 transition duration-150 ease-in-out hover:text-wave-600 focus:outline-none focus:text-wave-600">
         Blog
@@ -193,14 +193,14 @@
                             <svg class="flex-shrink-0 w-4 h-4 mt-1 text-gray-500 duration-200 group-hover:text-gray-800 transition-color ease" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M4.04 2c1.91 0 3.46.9 3.46 2.55V15c-.45 0-.9-.3-1.17-.53-.86-.71-2.52-.75-4.31-.75H.83a.82.82 0 0 1-.59-.25.86.86 0 0 1-.24-.6V2.85C0 2.38.37 2 .83 2h3.2zm11.13 0c.22 0 .43.1.59.25.15.16.24.38.24.6v10.02c0 .23-.09.44-.24.6a.82.82 0 0 1-.6.25h-1.18c-1.8 0-3.45.04-4.3.75-.28.23-.73.53-1.18.53V4.55C8.5 2.91 10.05 2 11.96 2h3.2z" fill-rule="evenodd"></path></svg>
                             <div class="space-y-1">
                                 <p class="text-base font-medium leading-6 text-gray-700 duration-200 group-hover:text-gray-900 transition-color ease">
-                                    Contact
+                                    Documentation
                                 </p>
                                 <p class="text-xs font-normal leading-5 text-gray-500 duration-200 group-hover:text-gray-700 transition-color ease">
-                                    We're on a variety of platforms, so feel free to send us a message!
+                                    Learn how to setup, install, and configure wave.
                                 </p>
                             </div>
                         </a>
-                        <a href="#_" target="_blank" class="flex items-start px-10 -m-3 space-x-3 transition duration-150 ease-in-out rounded-lg py-7 group">
+                        <a href="https://devdojo.com/course/wave" target="_blank" class="flex items-start px-10 -m-3 space-x-3 transition duration-150 ease-in-out rounded-lg py-7 group">
                             <svg class="flex-shrink-0 w-6 h-6 text-gray-500 duration-200 group-hover:text-gray-800 transition-color ease" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path></svg>
                             <div class="space-y-1">
                                 <p class="text-base font-medium leading-6 text-gray-700 duration-200 group-hover:text-gray-900 transition-color ease">
@@ -218,7 +218,7 @@
                                     Blog
                                 </p>
                                 <p class="text-xs font-normal leading-5 text-gray-500 duration-200 group-hover:text-gray-700 transition-color ease">
-                                    Stay up to date with the community and other like-minded individuals!
+                                    Wave comes with a full blogging platform
                                 </p>
                             </div>
                         </a>
