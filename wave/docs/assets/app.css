@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+[x-cloak] {
+  display: none; }
+
+html, body {
+  scroll-behavior: smooth; }
+
+.docs .prose h1, .docs .lg\:prose-xl h1 {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-wave-500 to-purple-500 mb-5 pb-5; }
+.docs .prose pre {
+  background: #1e1b47; }
+.docs .prose p code {
+  font-size: 15px;
+  color: #3c4257;
+  font-weight: 500;
+  padding: 1px 2px;
+  background: #f8fafc;
+  border: 1px solid #e3e8ee;
+  border-radius: 4px; }
+  .docs .prose p code::before, .docs .prose p code::after {
+    content: ""; }
+.docs .prose blockquote p::before, .docs .prose blockquote p::after {
+  content: ""; }
