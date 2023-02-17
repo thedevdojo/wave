@@ -1,0 +1,85 @@
+{
+    "name": "laravel/laravel",
+    "description": "The Laravel Framework.",
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": "^8.0.2",
+        "ext-exif": "*",
+        "ext-gd": "*",
+        "ext-redis": "*",
+        "devdojo/app": "0.11.0",
+        "devdojo/themes": "0.0.7",
+        "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^2.7",
+        "lab404/laravel-impersonate": "^1.7",
+        "laravel/framework": "^9.11",
+        "laravel/tinker": "^2.7",
+        "livewire/livewire": "^2.4",
+        "tcg/voyager": "1.5.x-dev",
+        "tymon/jwt-auth": "@dev"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.9.1",
+        "laravel/dusk": "^6.0",
+        "laravel/sail": "^1.0.1",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^6.1",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.2",
+        "phpunit/phpunit": "^9.5.10",
+        "spatie/laravel-ignition": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
+            "Wave\\": "wave/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [],
+            "providers" : [
+                "Wave\\WaveServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover",
+            "@php artisan storage:link"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "repositories": {
+        "hooks": {
+            "type": "composer",
+            "url": "https://larapack.io"
+        }
+    }
+}

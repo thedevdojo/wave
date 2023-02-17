@@ -1,0 +1,281 @@
+{
+    "spec": {
+        "name": "${wave.name}",
+        "services": [
+            {
+                "name": "web",
+                "github": {
+                    "repo": "${wave.repo}",
+                    "branch": "main",
+                    "deploy_on_push": true
+                },
+                "run_command": "php artisan migrate --force ; heroku-php-apache2 public/",
+                "envs": [
+                    {
+                        "key": "APP_NAME",
+                        "value": "Wave",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "APP_ENV",
+                        "value": "production",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "APP_KEY",
+                        "value": "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8=",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "APP_DEBUG",
+                        "value": "false",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "APP_URL",
+                        "value": "${APP_URL}",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "LOG_CHANNEL",
+                        "value": "stack",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "LOG_LEVEL",
+                        "value": "debug",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "DB_CONNECTION",
+                        "value": "pgsql"
+                    },
+                    {
+                        "key": "DB_HOST",
+                        "value": "${wave-db.HOSTNAME}"
+                    },
+                    {
+                        "key": "DB_PORT",
+                        "value": "${wave-db.PORT}"
+                    },
+                    {
+                        "key": "DB_DATABASE",
+                        "value": "${wave-db.DATABASE}"
+                    },
+                    {
+                        "key": "DB_USERNAME",
+                        "value": "${wave-db.USERNAME}",
+                        "type": "SECRET"
+                    },
+                    {
+                        "key": "DB_PASSWORD",
+                        "value": "${wave-db.PASSWORD}",
+                        "type": "SECRET"
+                    },
+                    {
+                        "key": "BROADCAST_DRIVER",
+                        "value": "log",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "CACHE_DRIVER",
+                        "value": "file",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "QUEUE_CONNECTION",
+                        "value": "sync",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "SESSION_DRIVER",
+                        "value": "file",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "SESSION_LIFETIME",
+                        "value": "120",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "MEMCACHED_HOST",
+                        "value": "127.0.0.1",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "REDIS_HOST",
+                        "value": "127.0.0.1",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "REDIS_PASSWORD",
+                        "value": "null",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "REDIS_PORT",
+                        "value": "6379",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "MAIL_MAILER",
+                        "value": "smtp",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "MAIL_HOST",
+                        "value": "mailhog",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "MAIL_PORT",
+                        "value": "1025",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "MAIL_USERNAME",
+                        "value": "null",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "MAIL_PASSWORD",
+                        "value": "null",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "key",
+                        "value": "null",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "MAIL_ENCRYPTION",
+                        "value": "null",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "MAIL_FROM_ADDRESS",
+                        "value": "null",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "MAIL_FROM_NAME",
+                        "value": "${APP_NAME}",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "DO_SPACES",
+                        "value": "false",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "DO_SPACES_KEY",
+                        "value": "YOUR_DO_SPACES_KEY",
+                        "scope": "RUN_TIME",
+                        "type": "SECRET"
+                    },
+                    {
+                        "key": "DO_SPACES_SECRET",
+                        "value": "YOUR_DO_SPACES_SECRET",
+                        "scope": "RUN_TIME",
+                        "type": "SECRET"
+                    },
+                    {
+                        "key": "DO_SPACES_ENDPOINT",
+                        "value": "YOUR_DO_SPACES_ENDPOINT",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "DO_SPACES_REGION",
+                        "value": "YOUR_DO_SPACES_REGION",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "DO_SPACES_BUCKET",
+                        "value": "YOUR_DO_SPACES_BUCKET",
+                        "scope": "RUN_TIME"
+                    }
+                ]
+            }
+        ],
+        "jobs": [
+            {
+                "name": "migrate",
+                "github": {
+                    "repo": "${wave.repo}",
+                    "branch": "main",
+                    "deploy_on_push": true
+                },
+                "run_command": "php artisan migrate --seed ; php artisan storage:link",
+                "envs": [
+                    {
+                        "key": "APP_NAME",
+                        "value": "Wave",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "APP_ENV",
+                        "value": "production",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "APP_KEY",
+                        "value": "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8=",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "APP_DEBUG",
+                        "value": "false",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "APP_URL",
+                        "value": "${APP_URL}",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "LOG_CHANNEL",
+                        "value": "stack",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "LOG_LEVEL",
+                        "value": "debug",
+                        "scope": "RUN_TIME"
+                    },
+                    {
+                        "key": "DB_CONNECTION",
+                        "value": "pgsql"
+                    },
+                    {
+                        "key": "DB_HOST",
+                        "value": "${wave-db.HOSTNAME}"
+                    },
+                    {
+                        "key": "DB_PORT",
+                        "value": "${wave-db.PORT}"
+                    },
+                    {
+                        "key": "DB_DATABASE",
+                        "value": "${wave-db.DATABASE}"
+                    },
+                    {
+                        "key": "DB_USERNAME",
+                        "value": "${wave-db.USERNAME}",
+                        "type": "SECRET"
+                    },
+                    {
+                        "key": "DB_PASSWORD",
+                        "value": "${wave-db.PASSWORD}",
+                        "type": "SECRET"
+                    }
+                ],
+                "kind": "POST_DEPLOY"
+            }
+        ],
+        "databases": [
+            {
+                "name": "wave-db"
+            }
+        ]
+    }
+}

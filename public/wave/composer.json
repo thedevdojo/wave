@@ -1,0 +1,33 @@
+{
+    "name": "thedevdojo/wave",
+    "description": "Wave is a SAAS and Web Application Starter Kit",
+    "keywords": ["laravel", "admin", "panel", "saas"],
+    "license": "MIT",
+    "homepage": "https://wave.devdojo.com",
+    "support": {
+        "issues": "https://devdojo.com/forums",
+        "source": "https://wave.devdojo.com"
+    },
+    "authors": [
+        {
+            "name": "Tony Lea",
+            "email": "tony@devdojo.com"
+        }
+    ],
+    "require": {
+        "tcg/voyager": "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wave\\": "/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wave\\Http\\Providers\\WaveServiceProvider"
+            ]
+        }
+    }
+}
