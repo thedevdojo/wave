@@ -1,5 +1,5 @@
 .bg-gradient-primary {
-    background: linear-gradient(90deg,#0069ff,#1633ff) !important;
+    background: linear-gradient(90deg,#222a68,#222A68) !important;
 }
 
 .navbar-nav li{
@@ -15,19 +15,19 @@
 }
 
 .btn-primary, .custom-toggle input:checked+.custom-toggle-slider:before, .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):active, .show>.btn-outline-primary.dropdown-toggle, .dropdown-item.active, .dropdown-item:active, .alert-primary{
-	background-color:#0069ff;
+	background-color:#39859c;
 }
 
 .btn-primary, .custom-toggle input:checked+.custom-toggle-slider, .documentation .article h1:first-of-type, .documentation .sidebar>ul>li>ul>li.is-active, .btn-outline-primary, .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):active, .show>.btn-outline-primary.dropdown-toggle{
-	border-color:#0069ff;
+	border-color:#39859c;
 }
 
 .btn-outline-primary{
-	color:#0069ff;
+	color:#39859c;
 }
 
 .documentation .article h2 a:before{
-	color:#0069ff;
+	color:#39859c;
 	opacity:0.8;
 }
 
