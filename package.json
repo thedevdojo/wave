@@ -1,12 +1,10 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
-        "prod": "npm run production",
         "production": "mix --production"
     },
     "devDependencies": {
@@ -21,9 +19,8 @@
         "postcss": "^8.4.4",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.43.4",
-        "sass-loader": "^12.3.0",
-        "tailwindcss": "*"
-    },
+        "sass-loader": "^12.3.0"
+        },
     "dependencies": {
         "alpinejs": "^3.5.1",
         "glob-all": "^3.2.1"
