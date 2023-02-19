@@ -14,11 +14,15 @@ class PasswordResetsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('password_resets')->delete();
-        
-        
-        
+        \DB::table('password_resets')->insert(array (
+            0 =>
+            array (
+                'id' => 1,
+            ),
+        ));
+
     }
 }
