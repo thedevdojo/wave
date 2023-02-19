@@ -17,12 +17,7 @@ class PasswordResetsTableSeeder extends Seeder
 
 
         \DB::table('password_resets')->delete();
-        \DB::table('password_resets')->insert(array (
-            0 =>
-            array (
-                'id' => 1,
-            ),
-        ));
+        \DB::table('password_resets')->insert();
 
     }
 }
