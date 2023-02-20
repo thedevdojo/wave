@@ -14,11 +14,11 @@ class NotificationsTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('notifications')->delete();
-        \DB::table('password_resets')->insert();
-
-
+        
+        
+        
     }
 }
