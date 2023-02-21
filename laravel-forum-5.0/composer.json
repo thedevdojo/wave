@@ -1,0 +1,39 @@
+{
+    "name": "riari/laravel-forum",
+    "description": "A Laravel 6/7/8/9 package providing a solid foundation for building discussion forums",
+    "keywords": ["laravel", "laravel-6", "laravel-7", "laravel-8", "forum", "discuss"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Riari",
+            "email": "riari@teamteatime.net"
+        },
+        {
+            "name": "NeeHi",
+            "email": "neehi@teamteatime.net"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "^9",
+        "kalnoy/nestedset": "^6.0",
+        "doctrine/dbal": "^3.5"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "TeamTeaTime\\Forum\\": "src",
+            "TeamTeaTime\\Forum\\Database\\Factories\\": "database/factories",
+            "TeamTeaTime\\Forum\\Database\\Seeders\\": "database/seeders"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TeamTeaTime\\Forum\\ForumServiceProvider"
+            ]
+        }
+    }
+}

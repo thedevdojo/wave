@@ -1,0 +1,23 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "5.0" ]
+  pull_request:
+    branches: [ "5.0" ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Bring up MySQL service
+        run: docker-compose up -d mysql
+
+      - name: Run Composer install
+        run: docker-compose run composer install
+
+      - name: Run PHPUnit
+        run: docker-compose run phpunit

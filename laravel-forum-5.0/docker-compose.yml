@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    container_name: lf-tests-mysql
+    build:
+      context: .
+      dockerfile: docker/mysql/Dockerfile
+    tmpfs: /var/lib/mysql
+
+  composer:
+    build:
+      context: .
+      dockerfile: docker/composer/Dockerfile
+    environment:
+      COMPOSER_CACHE_DIR: /app/var/cache/composer
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: /usr/bin/composer
+
+  phpunit:
+    build:
+      context: .
+      dockerfile: docker/phpunit/Dockerfile
+    restart: "no"
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: vendor/bin/phpunit

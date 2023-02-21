@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true"
+>
+    <testsuites>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./src/Tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./src/</directory>
+        </include>
+    </coverage>
+    <php>
+        <env name="APP_ENV" value="testing" />
+        <env name="APP_KEY" value="QmtZfMXH8aHXt6jVv6bCbMJo6XsrYfbT"/>
+        <env name="DB_CONNECTION" value="mysql" />
+        <env name="DB_HOST" value="lf-tests-mysql" />
+        <env name="DB_DATABASE" value="tests" />
+        <env name="DB_USERNAME" value="tests" />
+        <env name="DB_PASSWORD" value="secret" />
+        <env name="CACHE_DRIVER" value="array" />
+        <env name="SESSION_DRIVER" value="array" />
+        <env name="QUEUE_DRIVER" value="sync" />
+    </php>
+</phpunit>
