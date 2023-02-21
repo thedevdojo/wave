@@ -22,15 +22,15 @@
                                     Documentation
                                 </p>
                                 <p class="text-xs leading-5 text-gray-500">
-                                    View The Wave Docs
+
                                 </p>
                             </a>
-                            <a href="https://devdojo.com/course/wave" target="_blank" class="block px-5 py-3 -m-3 space-y-1 transition duration-150 ease-in-out rounded-xl hover:bg-gray-100">
+                            <a href="#_" target="_blank" class="block px-5 py-3 -m-3 space-y-1 transition duration-150 ease-in-out rounded-xl hover:bg-gray-100">
                                 <p class="text-base font-medium leading-6 text-gray-900">
-                                    Videos
+                                    Forum Access
                                 </p>
                                 <p class="text-xs leading-5 text-gray-500">
-                                    Watch videos to learn how to use Wave.
+                                    Not currently functional.
                                 </p>
                             </a>
                             <a href="{{ route('wave.blog') }}" class="block px-5 py-3 -m-3 space-y-1 transition duration-150 ease-in-out rounded-xl hover:bg-gray-100">

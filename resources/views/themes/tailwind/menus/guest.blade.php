@@ -25,12 +25,12 @@
                                 <div class="relative flex flex-col items-start justify-center w-full h-full px-16 py-8">
 
                                     <img src="https://cdn.devdojo.com/images/april2021/wave-light-logo.png" class="z-20 w-auto h-10">
-                                    <h3 class="z-30 mt-1 mt-3 text-lg font-thin text-wave-200">The Software as a Service Starter Kit.</h3>
+                                    <h3 class="z-30 mt-1 mt-3 text-lg font-thin text-wave-200">The Focus Forge</h3>
 
                                     <span class="relative z-20 inline-flex mt-5 rounded-md shadow-sm">
-                                        <a href="https://devdojo.com/wave" class="relative inline-flex items-center px-4 py-2 text-sm font-medium leading-5 transition duration-150 ease-in-out bg-white border border-transparent rounded-md text-wave-500 hover:bg-gray-100 focus:outline-none focus:border-gray-300 focus:shadow-outline-gray active:bg-gray-100">
-                                            Get Wave Today
-                                            <span class="absolute top-0 right-0 px-3 py-1 -mt-4 -mr-8 text-xs text-white rounded-full bg-wave-400">Version 2</span>
+                                        <a href="#_" class="relative inline-flex items-center px-4 py-2 text-sm font-medium leading-5 transition duration-150 ease-in-out bg-white border border-transparent rounded-md text-wave-500 hover:bg-gray-100 focus:outline-none focus:border-gray-300 focus:shadow-outline-gray active:bg-gray-100">
+                                            Sign-up Today!
+                                            <span class="absolute top-0 right-0 px-3 py-1 -mt-4 -mr-8 text-xs text-white rounded-full bg-wave-400">Version 1</span>
                                         </a>
                                     </span>
                                 </div>
@@ -47,7 +47,7 @@
                                             Authentication
                                         </p>
                                         <p class="text-sm leading-5 text-gray-500">
-                                            Full authentication system including register, login, and lost password.
+                                            Full authentication system including register, login, and lost password. Secured by full end-to-end encryption.
                                         </p>
                                     </div>
                                 </a>
@@ -105,7 +105,7 @@
                                         Notifications
                                     </p>
                                     <p class="text-sm leading-5 text-gray-500">
-                                        User notification system that's easy to implement in your SAAS.
+                                        User notification system.
                                     </p>
                                 </div>
                             </a>
@@ -129,10 +129,10 @@
                                 </div>
                                 <div class="space-y-1">
                                     <p class="text-base font-medium leading-6 text-gray-900">
-                                        Themes
+                                        Community
                                     </p>
                                     <p class="text-sm leading-5 text-gray-500">
-                                        Theme support with your favorite CSS libraries.
+                                        Message Board and Forum.
                                     </p>
                                 </div>
                             </a>
@@ -142,10 +142,10 @@
                                     </div>
                                     <div class="space-y-1">
                                         <p class="text-base font-medium leading-6 text-gray-900">
-                                            Developer API
+                                            API Access
                                         </p>
                                         <p class="text-sm leading-5 text-gray-500">
-                                            Grant access keys and tokens for your users.
+                                            Services and API access allowing services to be charged by API call.
                                         </p>
                                     </div>
                                 </a>
@@ -193,10 +193,10 @@
                             <svg class="flex-shrink-0 w-4 h-4 mt-1 text-gray-500 duration-200 group-hover:text-gray-800 transition-color ease" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M4.04 2c1.91 0 3.46.9 3.46 2.55V15c-.45 0-.9-.3-1.17-.53-.86-.71-2.52-.75-4.31-.75H.83a.82.82 0 0 1-.59-.25.86.86 0 0 1-.24-.6V2.85C0 2.38.37 2 .83 2h3.2zm11.13 0c.22 0 .43.1.59.25.15.16.24.38.24.6v10.02c0 .23-.09.44-.24.6a.82.82 0 0 1-.6.25h-1.18c-1.8 0-3.45.04-4.3.75-.28.23-.73.53-1.18.53V4.55C8.5 2.91 10.05 2 11.96 2h3.2z" fill-rule="evenodd"></path></svg>
                             <div class="space-y-1">
                                 <p class="text-base font-medium leading-6 text-gray-700 duration-200 group-hover:text-gray-900 transition-color ease">
-                                    Documentation
+                                    Media
                                 </p>
                                 <p class="text-xs font-normal leading-5 text-gray-500 duration-200 group-hover:text-gray-700 transition-color ease">
-                                    Learn how to setup, install, and configure wave.
+                                    Check out some of our media projects.
                                 </p>
                             </div>
                         </a>
