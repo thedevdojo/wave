@@ -29,12 +29,12 @@ return [
     'storage' => [
         'use_database' => true,
         'database' => [
-            'driver'    => 'mysql',
-            'host'      => 'db-mysql-nyc1-64051-do-user-13473365-0.b.db.ondigitalocean.com',
+            'driver'    => 'postgresql',
+            'host'      => 'app-95eb88d5-5160-4a1e-9bae-aba24a979d8e-do-user-13473365-0.b.db.ondigitalocean.com',
             'port'      => '25060',
-            'database'  => 'pagebuilderdb',
-            'username'  => 'pagebuilder',
-            'password'  => 'AVNS_bAwMc9Bk5br6KUZNwRd',
+            'database'  => 'defaultdb',
+            'username'  => 'doadmin',
+            'password'  => 'AVNS_IrykOkKb4m0CsCASvyH',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => ''
