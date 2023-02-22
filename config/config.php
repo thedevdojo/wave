@@ -12,7 +12,7 @@ return [
      |
      */
     'general' => [
-        'base_url' => '206.81.9.254',
+        'base_url' => 'https://focusforge.app',
         'language' => 'en',
         'assets_url' => '/assets',
         'uploads_url' => '/uploads'
