@@ -112,7 +112,7 @@ class BlockAdapter
      */
     public function getBlockSettingsArray()
     {
-        $blockSettings = $this->block::getDynamicConfig($this->getSlug())['settings'] ?? $this->block->get('settings');
+        $blockSettings = $this->block->get('settings');
         if ($this->block->isHtmlBlock() || ! is_array($blockSettings)) {
             return [];
         }

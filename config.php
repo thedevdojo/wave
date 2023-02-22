@@ -29,15 +29,14 @@ return [
     'storage' => [
         'use_database' => true,
         'database' => [
-            'driver'    => 'postgresql',
-            'host'      => 'app-95eb88d5-5160-4a1e-9bae-aba24a979d8e-do-user-13473365-0.b.db.ondigitalocean.com',
+            'driver'    => 'mysql',
+            'host'      => 'db-mysql-nyc1-36875-do-user-13473365-0.b.db.ondigitalocean.com',
             'port'      => '25060',
             'database'  => 'defaultdb',
             'username'  => 'doadmin',
-            'password'  => 'AVNS_IrykOkKb4m0CsCASvyH',
+            'password'  => 'AVNS_VB-Nfvh7l2Lh-y81uo4',
             'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => ''
+            'collation' => 'utf8_unicode_ci'
         ],
         'uploads_folder' => __DIR__ . '/uploads'
     ],
@@ -56,7 +55,7 @@ return [
         'class' => PHPageBuilder\Modules\Auth\Auth::class,
         'url' => '/admin/auth',
         'username' => 'admin',
-        'password' => 'password'
+        'password' => 'changethispassword'
     ],
 
     /*
