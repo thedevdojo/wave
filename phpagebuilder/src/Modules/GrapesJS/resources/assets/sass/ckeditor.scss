@@ -1,0 +1,16 @@
+.cke_dialog_body {
+  .cke_dialog_ui_vbox_child {
+    padding: 0;
+  }
+  input.cke_dialog_ui_input_text,
+  input.cke_dialog_ui_input_password,
+  input.cke_dialog_ui_input_tel,
+  textarea.cke_dialog_ui_input_textarea,
+  div.cke_dialog_ui_input_select {
+    margin-bottom: 10px;
+  }
+
+  .cke_dialog_ui_input_select {
+    width: 100% !important;
+  }
+}

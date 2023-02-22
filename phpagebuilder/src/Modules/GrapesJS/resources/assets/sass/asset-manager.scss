@@ -1,0 +1,58 @@
+.gjs-am-assets-header {
+  display: none;
+}
+.gjs-am-assets-cont {
+  background: none;
+  padding-top: 0;
+}
+.gjs-am-assets {
+  height: 325px;
+}
+.gjs-am-asset {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.gjs-btn-prim {
+  display: inline-block;
+  margin-top: 10px;
+  padding: .375rem .75rem;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  color: #fff;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+}
+
+.gjs-am-add-asset {
+  button {
+    float: left;
+    width: auto;
+  }
+  .gjs-am-add-field {
+    width: 100%;
+  }
+}
+
+.gjs-am-file-uploader {
+  & > form {
+    background-color: rgba(195, 226, 236, 0.14);
+    border: 2px dashed rgb(189, 194, 200);
+  }
+  #gjs-am-title {
+    color: #7e8793;
+    text-shadow: none;
+  }
+}
