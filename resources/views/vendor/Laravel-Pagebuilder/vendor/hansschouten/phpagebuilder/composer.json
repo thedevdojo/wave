@@ -1,0 +1,27 @@
+{
+    "name": "hansschouten/phpagebuilder",
+    "description": "A drag and drop pagebuilder to manage pages in any PHP project.",
+    "keywords": [
+        "pagebuilder"
+    ],
+    "homepage": "https://github.com/HansSchouten/PHPagebuilder",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hans Schouten",
+            "email": "hans@falcosolutions.nl"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPageBuilder\\": "src/"
+        },
+        "files": [
+            "src/Core/helpers.php"
+        ]
+    }
+}
