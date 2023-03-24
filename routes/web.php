@@ -26,3 +26,9 @@ Route::group(['prefix' => 'admin'], function () {
 
 // Wave routes
 Wave::routes();
+
+// Socialite auth
+Route::middleware('guest')->group(function () {
+    Route::get('auth/google/redirect', [App\Http\Controllers\Auth\SocialiteController::class, 'redirect'])->name('google.login');
+    Route::get('auth/google/callback', [App\Http\Controllers\Auth\SocialiteController::class, 'callback']);
+});
