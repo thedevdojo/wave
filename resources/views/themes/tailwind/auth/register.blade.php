@@ -117,6 +117,17 @@
                             Already have an account? Login here
                         </a>
                     </div>
+                    <!--google-->
+                    <div class="mt-6">
+                        <span class="block w-full rounded-md shadow-sm">
+                            <a href="auth/google/redirect">
+                            <button type="button" class="flex justify-center w-full px-4 py-2 text-sm font-medium transition duration-150 ease-in-out border border-transparent rounded-md bg-wave-100 hover:bg-wave-400 focus:outline-none focus:border-wave-150 focus:shadow-outline-wave active:bg-wave-150">
+                                <img style="height:13px; margin:4px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/471px-Google_%22G%22_Logo.svg.png">&nbspSign In
+                            </button>
+                            </a>
+                        </span>
+                    </div>
+                    <!--google-->
                 </form>
             </div>
         </div>
