@@ -22,6 +22,7 @@ class User extends Authenticatable
         'verification_code',
         'verified',
         'trial_ends_at',
+        'provider_id',
     ];
 
     /**
