@@ -52,6 +52,17 @@
                             <div class="mb-6">
                                 <button type="submit" class="w-full px-3 py-3 text-white bg-blue-500 rounded-md focus:bg-blue-600 focus:outline-none">Login</button>
                             </div>
+                            <!--google-->
+                            <div class="mt-6">
+                                <span class="block w-full rounded-md shadow-sm">
+                                    <a href="auth/google/redirect">
+                                    <button type="button" class="flex justify-center w-full px-4 py-2 text-sm font-medium transition duration-150 ease-in-out border border-transparent rounded-md bg-wave-100 hover:bg-wave-400 focus:outline-none focus:border-wave-150 focus:shadow-outline-wave active:bg-wave-150">
+                                        <img style="height:13px; margin:4px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/471px-Google_%22G%22_Logo.svg.png">&nbspSign In
+                                    </button>
+                                    </a>
+                                </span>
+                            </div>
+                            <!--google-->
                             <p class="text-sm text-center text-gray-400">Don&#x27;t have an account yet? <a href="{{ url()->route('register') }}" class="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500">Sign up</a>.</p>
                         </form>
                     </div>
