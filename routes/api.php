@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Wave::api();
+
+Route::post('auth/mobile', [App\Http\Controllers\Auth\SocialiteController::class, 'auth']);
