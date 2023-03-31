@@ -31,5 +31,5 @@ Wave::routes();
 Route::middleware('guest')->group(function () {
     Route::get('auth/google/redirect', [App\Http\Controllers\Auth\SocialiteController::class, 'redirect'])->name('google.login');
     Route::get('auth/google/callback', [App\Http\Controllers\Auth\SocialiteController::class, 'callback']);
-    Route::get('auth/google/redirect', [App\Http\Controllers\Auth\SocialiteController::class, 'redirect']);
+    Route::get('admin/auth/google/redirect', [App\Http\Controllers\Auth\SocialiteController::class, 'redirect']);
 });
