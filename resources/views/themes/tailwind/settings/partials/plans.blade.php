@@ -3,7 +3,7 @@
 <div class="flex flex-col">
 
 	@subscriber
-		@if (config('payment.vendor') == 'stripe' && optional(auth()->user()->subscription('default'))->onGracePeriod())
+		@if (config('payment.vendor') == 'stripe' && optional(auth()->user()->subscription('default'))?->onGracePeriod())
 			<div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4">
 				<div class="flex">
 					<div class="flex-shrink-0">
