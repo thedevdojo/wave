@@ -148,7 +148,6 @@ class WaveServiceProvider extends ServiceProvider
 
         Blade::directive('waveCheckout', function() use ($paymentVendor){
             $view = ($paymentVendor == 'stripe') ? 'wave::stripe-checkout' : 'wave::checkout';
-            Log::info($view);
             return '{!! view("' . $view . '")->render() !!}';
         });
 
