@@ -17,10 +17,10 @@
 <script>
 
 	// Create a Stripe client.
-	@if(env('STRIPE_MODE') == 'live')
-		var stripe = Stripe('{{ env('STRIPE_LIVE_KEY') }}');
+	@if(config('payment.stripe.mode') == 'live')
+		var stripe = Stripe('{{ config('payment.stripe.live_key') }}');
 	@else
-		var stripe = Stripe('{{ env('STRIPE_TEST_KEY') }}');
+		var stripe = Stripe('{{ config('payment.stripe.test_key') }}');
 	@endif
 
 	// Create an instance of Elements.

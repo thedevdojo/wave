@@ -69,3 +69,14 @@ Route::group(['middleware' => 'auth'], function(){
 Route::group(['middleware' => 'admin.user'], function(){
     Route::view('admin/do', 'wave::do');
 });
+
+// Stripe routes
+if (config('payment.vendor') == 'stripe') {
+	Route::post('stripe/create-checkout-session', '\Wave\Http\Controllers\StripeController@postCreateCheckoutSession')->name('stripe.create-checkout-session');
+	Route::get('stripe/success-checkout-session', '\Wave\Http\Controllers\StripeController@postSuccessCheckout')->name('stripe.success-checkout');
+	Route::get('stripe/error-checkout-session', '\Wave\Http\Controllers\StripeController@postErrorCheckout')->name('stripe.error-checkout');
+
+	Route::get('stripe/billing-portal', '\Wave\Http\Controllers\StripeController@getBillingPortal')->name('stripe.billing-portal')->middleware('auth');
+
+	Route::post('wave-stripe/webhook', '\Wave\Http\Controllers\WebhookController@handleWebhook')->name('stripe.webhook');
+}

@@ -4,20 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Wave\User;
 use Illuminate\Support\Facades\Schema;
+use Laravel\Cashier\Cashier as StripeCashier;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
-
     /**
      * Bootstrap any application services.
      *
@@ -58,6 +50,25 @@ class AppServiceProvider extends ServiceProvider
 
             return true;
         });
+
+        if (config('payment.vendor') == 'stripe') {
+            StripeCashier::useCustomerModel(User::class);
+
+            if (config('payment.stripe.calculate_taxes')) {
+                StripeCashier::calculateTaxes();
+            }
+        }
+
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        StripeCashier::ignoreMigrations();
     }
 
     private function setSchemaDefaultLength(): void

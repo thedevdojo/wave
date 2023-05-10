@@ -19,6 +19,10 @@
         "lab404/laravel-impersonate": "^1.7",
         "laravel/framework": "^9.11",
         "laravel/tinker": "^2.7",
+        "fideloper/proxy": "^4.2",
+        "fruitcake/laravel-cors": "^3.0",
+        "laravel/cashier": "^13.6",
+        "laravel/helpers": "^1.0",
         "livewire/livewire": "^2.4",
         "tcg/voyager": "1.5.x-dev",
         "tymon/jwt-auth": "@dev"

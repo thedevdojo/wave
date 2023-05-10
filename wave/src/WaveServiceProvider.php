@@ -5,6 +5,7 @@ namespace Wave;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Wave\Facades\Wave as WaveFacade;
 use Wave\TokenGuard;
@@ -54,11 +55,11 @@ class WaveServiceProvider extends ServiceProvider
 	            	return true;
 	        });
 	    }
-
+        $paymentVendor = config('payment.vendor');
         $this->loadViewsFrom(__DIR__.'/../docs/', 'docs');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'wave');
         $this->loadMigrationsFrom(realpath(__DIR__.'/../database/migrations'));
-        $this->loadBladeDirectives();
+        $this->loadBladeDirectives($paymentVendor);
 	}
 
 	protected function loadHelpers()
@@ -75,7 +76,9 @@ class WaveServiceProvider extends ServiceProvider
         }
     }
 
-    protected function loadBladeDirectives(){
+    protected function loadBladeDirectives(string $paymentVendor){
+
+//        $paymentVendor = config('payment.vendor');
 
         // Subscription Directives
 
@@ -143,9 +146,10 @@ class WaveServiceProvider extends ServiceProvider
             return "<?php } ?>";
         });
 
-
-        Blade::directive('waveCheckout', function(){
-            return '{!! view("wave::checkout")->render() !!}';
+        Blade::directive('waveCheckout', function() use ($paymentVendor){
+            $view = ($paymentVendor == 'stripe') ? 'wave::stripe-checkout' : 'wave::checkout';
+            Log::info($view);
+            return '{!! view("' . $view . '")->render() !!}';
         });
 
         // role Directives

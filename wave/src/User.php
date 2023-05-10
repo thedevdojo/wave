@@ -12,10 +12,13 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Wave\Announcement;
 use Wave\PaddleSubscription;
 use Wave\Plan;
+use Wave\ApiToken;
+use Laravel\Cashier\Billable as StripeBillable;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, Impersonate;
+    use StripeBillable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,13 +26,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'username',
-        'password',
-        'verification_code',
-        'verified',
-        'trial_ends_at',
+        'name', 'email', 'username', 'password', 'verification_code', 'verified', 'trial_ends_at', 'role_id', 'stripe_id',
     ];
 
     /**
@@ -72,18 +69,29 @@ class User extends Authenticatable implements JWTSubject
         return true;
     }
 
-    public function subscribed($plan){
+    public function subscribed($plan = 'default', $price = null) {
 
-        $plan = Plan::where('slug', $plan)->first();
+        if(config('payment.vendor') == 'stripe') {
+            $subscription = $this->subscription($plan);
 
-        // if the user is an admin they automatically have access to the default plan
-        if(isset($plan->default) && $plan->default && $this->hasRole('admin')) return true;
+            if (!$subscription || !$subscription->valid()) {
+                return false;
+            }
 
-        if(isset($plan->slug) && $this->hasRole($plan->slug)){
-            return true;
+            return !$price || $subscription->hasPrice($price);
+        } else {
+            $plan = Plan::where('slug', $plan)->first();
+
+            // if the user is an admin they automatically have access to the default plan
+            if(isset($plan->default) && $plan->default && $this->hasRole('admin')) return true;
+
+            if(isset($plan->slug) && $this->hasRole($plan->slug)){
+                return true;
+            }
+
+            return false;
         }
 
-        return false;
     }
 
     public function subscriber(){
@@ -101,7 +109,12 @@ class User extends Authenticatable implements JWTSubject
         return false;
     }
 
-    public function subscription(){
+    public function subscription($name = 'default')
+    {
+        if (config('payment.vendor') == 'stripe') {
+            return $this->subscriptions->where('name', $name)->first();
+        }
+
         return $this->hasOne(PaddleSubscription::class);
     }
 
