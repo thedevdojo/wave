@@ -56,52 +56,61 @@ class User extends Authenticatable implements JWTSubject
         return $this->morphMany('Wave\KeyValue', 'keyvalue');
     }
 
-    public function keyValue($key){
+    public function keyValue($key)
+    {
         return $this->morphMany('Wave\KeyValue', 'keyvalue')->where('key', '=', $key)->first();
     }
 
-    public function profile($key){
+    public function profile($key)
+    {
         $keyValue = $this->keyValue($key);
         return isset($keyValue->value) ? $keyValue->value : '';
     }
 
-    public function onTrial(){
-        if( is_null($this->trial_ends_at) ){
+    public function onTrial()
+    {
+        if (is_null($this->trial_ends_at)) {
+            return false;
+        }
+        if ($this->subscriber()) {
             return false;
         }
         return true;
     }
 
-    public function subscribed($plan){
+    public function subscribed($plan)
+    {
 
         $plan = Plan::where('slug', $plan)->first();
 
         // if the user is an admin they automatically have access to the default plan
-        if(isset($plan->default) && $plan->default && $this->hasRole('admin')) return true;
+        if (isset($plan->default) && $plan->default && $this->hasRole('admin')) return true;
 
-        if(isset($plan->slug) && $this->hasRole($plan->slug)){
+        if (isset($plan->slug) && $this->hasRole($plan->slug)) {
             return true;
         }
 
         return false;
     }
 
-    public function subscriber(){
+    public function subscriber()
+    {
 
-        if($this->hasRole('admin')) return true;
+        if ($this->hasRole('admin')) return true;
 
-        $roles = $this->roles->pluck('id')->push( $this->role_id )->unique();
+        $roles = $this->roles->pluck('id')->push($this->role_id)->unique();
         $plans = Plan::whereIn('role_id', $roles)->count();
 
         // If the user has a role that belongs to a plan
-        if($plans){
+        if ($plans) {
             return true;
         }
 
         return false;
     }
 
-    public function subscription(){
+    public function subscription()
+    {
         return $this->hasOne(PaddleSubscription::class);
     }
 
@@ -124,35 +133,41 @@ class User extends Authenticatable implements JWTSubject
         return !$this->hasRole('admin');
     }
 
-    public function hasAnnouncements(){
+    public function hasAnnouncements()
+    {
         // Get the latest Announcement
         $latest_announcement = Announcement::orderBy('created_at', 'DESC')->first();
 
-        if(!$latest_announcement) return false;
+        if (!$latest_announcement) return false;
         return !$this->announcements->contains($latest_announcement->id);
     }
 
-    public function announcements(){
+    public function announcements()
+    {
         return $this->belongsToMany('Wave\Announcement');
     }
 
-    public function createApiKey($name){
+    public function createApiKey($name)
+    {
         return ApiKey::create(['user_id' => $this->id, 'name' => $name, 'key' => Str::random(60)]);
     }
 
-    public function apiKeys(){
+    public function apiKeys()
+    {
         return $this->hasMany('Wave\ApiKey')->orderBy('created_at', 'DESC');
     }
 
-    public function daysLeftOnTrial(){
-        if($this->trial_ends_at && $this->trial_ends_at >= now()){
+    public function daysLeftOnTrial()
+    {
+        if ($this->trial_ends_at && $this->trial_ends_at >= now()) {
             $trial_ends = Carbon::parse($this->trial_ends_at)->addDay();
             return $trial_ends->diffInDays(now());
         }
         return 0;
     }
 
-    public function avatar(){
+    public function avatar()
+    {
         return Storage::url($this->avatar);
     }
 
