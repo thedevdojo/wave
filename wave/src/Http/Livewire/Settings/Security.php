@@ -13,7 +13,7 @@ class Security extends Component
     protected function rules()
     {
         return [
-            'current_password' => 'required|password',
+            'current_password' => 'required',
             'password' => 'required|confirmed|min:'.config('wave.auth.min_password_length')
         ];
     }
