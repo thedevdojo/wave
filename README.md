@@ -1,4 +1,8 @@
-<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/github-wave-logo.svg" width="240"></a></p>
+<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/assets/img/github-wave-logo.svg" width="200"></a></p>
+
+> **Note**
+>
+> DevDojo is excited to announce the rebranding of our project, Wave. The new iteration will be known as [Foundation](https://devdojo.com/foundation). Until we release the new version you can continue using Wave 2.0 and when the new version is available, you can migrate over to the new platform. This new new version is going to to be epic and it will help in our mission to make the process of building a SAAS as easy as possible. Be sure to [signup here to be notified about updates](https://devdojo.com/foundation) on this project. Good things are coming 😉
 
 <p align="center"><a href="https://www.producthunt.com/posts/wave-2-0" target="_blank"><img src="https://cdn.devdojo.com/images/april2021/upvote-product-hunt-img.png" height="auto" width="auto"></a></p>
 
