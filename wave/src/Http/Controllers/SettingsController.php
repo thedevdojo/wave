@@ -75,16 +75,12 @@ class SettingsController extends Controller
     public function securityPut(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'current_password' => 'required',
+            'current_password' => 'required|current_password',
             'password' => 'required|confirmed|min:'.config('wave.auth.min_password_length'),
         ]);
 
         if ($validator->fails()) {
             return back()->with(['message' => $validator->errors()->first(), 'message_type' => 'danger']);
-        }
-
-        if (! Hash::check($request->current_password, $request->user()->password)) {
-            return back()->with(['message' => 'Incorrect current password entered.', 'message_type' => 'danger']);
         }
 
         auth()->user()->forceFill([
