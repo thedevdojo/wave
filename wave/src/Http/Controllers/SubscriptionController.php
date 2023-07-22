@@ -31,36 +31,6 @@ class SubscriptionController extends Controller
         $this->paddle_vendors_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-vendors.paddle.com/api' : 'https://vendors.paddle.com/api';
     }
 
-
-    public function webhook(Request $request){
-
-        // Which alert/event is this request for?
-        $alert_name = $request->alert_name;
-        $subscription_id = $request->subscription_id;
-        $status = $request->status;
-
-
-        // Respond appropriately to this request.
-        switch($alert_name) {
-
-            case 'subscription_created':
-                break;
-            case 'subscription_updated':
-                break;
-            case 'subscription_cancelled':
-                $this->cancelSubscription($subscription_id);
-                return response()->json(['status' => 1]);
-                break;
-            case 'subscription_payment_succeeded':
-                break;
-            case 'subscription_payment_failed':
-                $this->cancelSubscription($subscription_id);
-                return response()->json(['status' => 1]);
-                break;
-        }
-
-    }
-
     public function cancel(Request $request){
         $this->cancelSubscription($request->id);
         return response()->json(['status' => 1]);
