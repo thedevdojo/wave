@@ -7,9 +7,17 @@ use TCG\Voyager\Models\Role;
 use Wave\PaddleSubscription;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use Wave\Http\Middleware\VerifyWebhook;
 
 class WebhookController extends Controller
 {
+    public function __construct()
+    {
+        if (config('wave.paddle.public_key')) {
+            $this->middleware(VerifyWebhook::class);
+        }
+    }
+
     public function __invoke(Request $request)
     {
         $method = match ($request->get('alert_name', null)) {
