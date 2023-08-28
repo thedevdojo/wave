@@ -52,11 +52,17 @@ class SubscriptionController extends Controller
     
         if($response->successful()){
             $resBody = json_decode($response->body());
-    
+     
             if(isset($resBody->data->status)){
                 $transaction = $resBody->data;
+                if (is_null($transaction->subscription_id)) {
+                    sleep(2);
+                    $response = Http::withToken($this->vendor_auth_code)->get($this->paddle_url . '/transactions/' . $request->checkout_id);
+                    $resBody = json_decode($response->body());
+                    $transaction = $resBody->data;
+                }
                 $plans = Plan::all();
-    
+
                 if($transaction->origin === "web" && $plans->contains('plan_id', $transaction->items[0]->price->id)){
                     $subscriptionUser = Http::withToken($this->vendor_auth_code)->get($this->paddle_url . '/subscriptions/' . $transaction->subscription_id);
                     $subscriptionData = json_decode($subscriptionUser->body());
@@ -147,41 +153,46 @@ class SubscriptionController extends Controller
 
     }
 
-    public function switchPlans(Request $request){
+    public function switchPlans(Request $request)
+    {
         $plan = Plan::where('plan_id', $request->plan_id)->first();
 
-        if(isset($plan->id)){
+        if (isset($plan->id)) {
             // Update the user plan with Paddle
-            $response = Http::post($this->paddle_url . '/2.0/subscription/users/update', [
-                'vendor_id' => $this->vendor_id,
-                'vendor_auth_code' => $this->vendor_auth_code,
-                'subscription_id' => $request->user()->subscription->subscription_id,
-                'plan_id' => $request->plan_id
-            ]);
-
-            if($response->successful()){
+            $response = Http::withToken($this->vendor_auth_code)->patch(
+                $this->paddle_url . '/subscriptions/' . (string)$request->user()->subscription->subscription_id, 
+                [
+                    'items' => [
+                        [
+                            'price_id' => $plan->plan_id,
+                            'quantity' => 1
+                        ]
+                    ],
+                    'proration_billing_mode' => 'prorated_immediately'
+                ]
+            );            
+    
+            if ($response->successful()) {
                 $body = $response->json();
-
-                if($body['success']){
-                    // Next, update the user role associated with the updated plan
+    
+                if (isset($body['data']) && $body['data']['status'] == 'active') {
+                    // Update the user role associated with the updated plan
                     $request->user()->forceFill([
                         'role_id' => $plan->role_id
                     ])->save();
-
-                    // And, update the subscription with the updated plan.
+    
+                    // Update the subscription with the updated plan in the local database
                     $request->user()->subscription()->update([
                         'plan_id' => $request->plan_id
                     ]);
-
+    
                     return back()->with(['message' => 'Successfully switched to the ' . $plan->name . ' plan.', 'message_type' => 'success']);
                 }
             }
-
         }
-
+    
         return back()->with(['message' => 'Sorry, there was an issue updating your plan.', 'message_type' => 'danger']);
-
-
     }
+    
 
 }

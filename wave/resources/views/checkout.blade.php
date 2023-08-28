@@ -9,7 +9,10 @@
             eventCallback: function(data) {
                 if (data.name == "checkout.completed") {
                     console.log(data);
-                    checkoutComplete(data.data);
+                    // Wait 2 seconds to allow Paddle to update their end
+                    setTimeout(function(){
+                        checkoutComplete(data.data);
+                    }, 2000);
                     Paddle.Checkout.close();
                 }
             }
