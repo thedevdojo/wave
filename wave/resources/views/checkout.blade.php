@@ -65,9 +65,11 @@
     }
 
     function waveCancel(){
-        Paddle.Checkout.open({
-            override: this.dataset.url,
-            successCallback: "checkoutCancel",
+        axios.post('/cancel', { _token: csrf, id: subscriptionId })
+            .then(function (response) {
+                if(parseInt(response.data.status) == 1){
+                    window.location = '/settings/subscription';
+                }
         });
     }
 

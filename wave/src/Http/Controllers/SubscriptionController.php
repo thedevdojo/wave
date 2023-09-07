@@ -34,14 +34,52 @@ class SubscriptionController extends Controller
     }
 
     private function cancelSubscription($subscription_id){
-        $subscription = PaddleSubscription::where('subscription_id', $subscription_id)->first();
-        $subscription->cancelled_at = Carbon::now();
-        $subscription->status = 'cancelled';
-        $subscription->save();
-        $user = User::find( $subscription->user_id );
-        $cancelledRole = Role::where('name', '=', 'cancelled')->first();
-        $user->role_id = $cancelledRole->id;
-        $user->save();
+        // Ensure user is authenticated
+        if (!auth()->check()) {
+            return redirect('/login')->with(['message' => 'Please log in to continue.', 'message_type' => 'danger']);
+        }
+
+        // Ensure the provided subscription ID matches the user's subscription ID
+        $localSubscription = PaddleSubscription::where('subscription_id', $subscription_id)->first();
+
+        if (!$localSubscription || auth()->user()->subscription->subscription_id != $subscription_id) {
+            return back()->with(['message' => 'Invalid subscription ID.', 'message_type' => 'danger']);
+        }
+
+        $response = Http::withToken($this->vendor_auth_code)
+        ->post($this->paddle_url . '/subscriptions/' . $subscription_id . '/cancel', [
+            'effective_from' => 'next_billing_period'
+        ]);
+
+        dd($response->json());
+
+        // Check if the request was successful
+        if ($response->successful()) {
+            $body = $response->json();
+            if (isset($body['success']) && $body['success']) {
+
+                // Update subscription in local database
+                $localSubscription->cancelled_at = Carbon::now();
+                $localSubscription->status = 'cancelled';
+                $localSubscription->save();
+
+                // Update user's role to "cancelled"
+                $user = User::find($localSubscription->user_id);
+                $cancelledRole = Role::where('name', '=', 'cancelled')->first();
+                $user->role_id = $cancelledRole->id;
+                $user->save();
+
+                return back()->with(['message' => 'Your subscription has been successfully canceled.', 'message_type' => 'success']);
+            } else {
+                // Handle any errors that were returned in the response body
+                $error = isset($body['error']['message']) ? $body['error']['message'] : 'Unknown error while canceling the subscription.';
+                return back()->with(['message' => $error, 'message_type' => 'danger']);
+            }
+        } else {
+            // Handle failed HTTP requests
+            return back()->with(['message' => 'Failed to cancel the subscription. Please try again later.', 'message_type' => 'danger']);
+        }
+
     }
 
     public function checkout(Request $request){
