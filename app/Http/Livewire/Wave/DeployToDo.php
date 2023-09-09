@@ -56,6 +56,7 @@ class DeployToDo extends Component
             // repo must contain a '/', do a check for that
             $repoSplit = explode('/', $this->repo);
             $repoName = (isset($repoSplit[0]) && isset($repoSplit[1])) ? $repoSplit[0] . '-' . $repoSplit[1] : false;
+            $repoName = strtolower($repoName);
             if(!$repoName){
                 $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Please make sure you enter a valiid repo (ex: user/repo)']);
                 return;
@@ -74,7 +75,6 @@ class DeployToDo extends Component
             // replace values with repoName and Repo url
             $finalJSONPayload = json_encode($this->deploy);
             $finalJSONPayload = str_replace('${wave.name}', str_replace('_', '-', $repoName), $finalJSONPayload);
-            //dd($this->repo);
             $finalJSONPayload = str_replace('${wave.repo}', $this->repo, $finalJSONPayload);
 
             $response = Http::withToken($this->api_key)->withBody( $finalJSONPayload, 'application/json')
