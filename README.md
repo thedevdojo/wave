@@ -30,8 +30,9 @@ View a live [demo here](https://wave.devdojo.com), or deploy your own instance t
 
 <a href="https://cloud.digitalocean.com/apps/new?repo=https://github.com/thedevdojo/wave/tree/main" target="_blank"><img src="https://www.deploytodo.com/do-btn-blue.svg" width="240" alt="Deploy to DO"></a>
 
-
 ## Installation
+
+Wave runs on **PHP 8.1** and **Laravel 10.x**.
 
 To install Wave, you'll want to clone or download this repo:
 
