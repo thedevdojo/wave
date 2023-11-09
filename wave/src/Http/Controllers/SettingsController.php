@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use TCG\Voyager\Http\Controllers\Controller;
 use Wave\ApiKey;
+use Wave\Http\Requests\ProfileUpdateRequest;
 use Wave\KeyValue;
 
 class SettingsController extends Controller
@@ -21,25 +22,14 @@ class SettingsController extends Controller
         return view('theme::settings.index', compact('section'));
     }
 
-    public function profilePut(Request $request){
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'sometimes|required|email|unique:users,email,' . Auth::user()->id,
-            'username' => 'sometimes|required|unique:users,username,' . Auth::user()->id,
-            'avatar' => 'nullable|base64image'
-        ],
-        [
-            'avatar.base64image' => 'The avatar must be a valid image.'
-        ]);
+    public function profilePut(ProfileUpdateRequest $request){
+        $currentUser = auth()->user();
 
-        $authed_user = auth()->user();
-
-        $authed_user->name = $request->name;
-        $authed_user->email = $request->email;
-        if($request->avatar){
-           $authed_user->avatar = $this->saveAvatar($request->avatar, $authed_user->username);
-        }
-        $authed_user->save();
+        $currentUser->fill([
+            'name' => $request->name,
+            'email' => $request->email,
+            'avatar' => $request->avatar ?? $currentUser->avatar
+        ])->save();
 
         foreach(config('wave.profile_fields') as $key){
             if(isset($request->{$key})){
@@ -53,17 +43,17 @@ class SettingsController extends Controller
                 $row = (object)['field' => $key, 'type' => $request->{$type}, 'details' => ''];
                 $value = $this->getContentBasedOnType($request, 'themes', $row);
 
-                if(!is_null($authed_user->keyValue($key))){
-                    $keyValue = KeyValue::where('keyvalue_id', '=', $authed_user->id)->where('keyvalue_type', '=', 'users')->where('key', '=', $key)->first();
+                if(!is_null($currentUser->keyValue($key))){
+                    $keyValue = KeyValue::where('keyvalue_id', '=', $currentUser->id)->where('keyvalue_type', '=', 'users')->where('key', '=', $key)->first();
                     $keyValue->value = $value;
                     $keyValue->type = $request->{$type};
                     $keyValue->save();
                 } else {
-                    KeyValue::create(['type' => $request->{$type}, 'keyvalue_id' => $authed_user->id, 'keyvalue_type' => 'users', 'key' => $key, 'value' => $value]);
+                    KeyValue::create(['type' => $request->{$type}, 'keyvalue_id' => $currentUser->id, 'keyvalue_type' => 'users', 'key' => $key, 'value' => $value]);
                 }
             } else {
-                if(!is_null($authed_user->keyValue($key))){
-                    $keyValue = KeyValue::where('keyvalue_id', '=', $authed_user->id)->where('keyvalue_type', '=', 'users')->where('key', '=', $key)->first();
+                if(!is_null($currentUser->keyValue($key))){
+                    $keyValue = KeyValue::where('keyvalue_id', '=', $currentUser->id)->where('keyvalue_type', '=', 'users')->where('key', '=', $key)->first();
                     $keyValue->delete();
                 }
             }
