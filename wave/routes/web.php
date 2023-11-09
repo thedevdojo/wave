@@ -43,17 +43,6 @@ Route::get('install', function () {
     return view('wave::install');
 })->name('wave.install');
 
-Route::controller(RegisterController::class)->group(function () {
-    Route::get('user/verify/{verification_code}', 'verify')->name('wave.register');
-    Route::post('register/complete', 'complete')->name('wave.register-complete');;
-});
-
-Route::controller(BlogController::class)->prefix('blog')->group(function () {
-    Route::get('', 'index')->name('wave.blog');
-    Route::get('{category}', 'category')->name('wave.blog.category');
-    Route::get('{category}/{post}', 'post')->name('wave.blog.post');
-});
-
 Route::controller(SubscriptionController::class)->group(function () {
     Route::get('test', 'test');
     Route::post('checkout', 'checkout')->name('checkout');
@@ -67,43 +56,59 @@ Route::group(['middleware' => 'admin.user'], function () {
     Route::view('admin/do', 'wave::do');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::controller(RegisterController::class)
+    ->name('wave.')
+    ->group(function () {
+        Route::get('user/verify/{verification_code}', 'verify')->name('register');
+        Route::post('register/complete', 'complete')->name('register-complete');;
+    });
 
-    Route::view('checkout/welcome', 'theme::welcome');
-    Route::view('trial_over', 'theme::trial_over')->name('wave.trial_over');
-    Route::view('cancelled', 'theme::cancelled')->name('wave.cancelled');
+Route::controller(BlogController::class)
+    ->name('wave.')
+    ->prefix('blog')->group(function () {
+        Route::get('', 'index')->name('blog');
+        Route::get('{category}', 'category')->name('blog.category');
+        Route::get('{category}/{post}', 'post')->name('blog.post');
+    });
 
-    Route::controller(SettingsController::class)
-        ->prefix('settings')
-        ->group(function () {
-            Route::get('{section?}', 'index')->name('wave.settings');
-            Route::post('profile', 'profilePut')->name('wave.settings.profile.put');
-            Route::put('security', 'securityPut')->name('wave.settings.security.put');
-            Route::post('api', 'apiPost')->name('wave.settings.api.post');
-            Route::put('api/{id?}', 'apiPut')->name('wave.settings.api.put');
-            Route::delete('api/{id?}', 'apiDelete')->name('wave.settings.api.delete');
-            Route::get('invoices/{invoice}', 'invoice')->name('wave.invoice');
-        });
+Route::name('wave.')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::view('checkout/welcome', 'theme::welcome');
+        Route::view('trial_over', 'theme::trial_over')->name('trial_over');
+        Route::view('cancelled', 'theme::cancelled')->name('cancelled');
 
-    Route::controller(AnnouncementController::class)
-        ->prefix('announcements')
-        ->group(function () {
-            Route::get('', 'index')->name('wave.announcements');
-            Route::get('{id}', 'announcement')->name('wave.announcement');
-            Route::post('read', 'read')->name('wave.announcements.read');
-        });
+        Route::controller(SettingsController::class)
+            ->prefix('settings')
+            ->group(function () {
+                Route::get('{section?}', 'index')->name('settings');
+                Route::post('profile', 'profilePut')->name('settings.profile.put');
+                Route::put('security', 'securityPut')->name('settings.security.put');
+                Route::post('api', 'apiPost')->name('settings.api.post');
+                Route::put('api/{id?}', 'apiPut')->name('settings.api.put');
+                Route::delete('api/{id?}', 'apiDelete')->name('settings.api.delete');
+                Route::get('invoices/{invoice}', 'invoice')->name('invoice');
+            });
 
-    Route::controller(NotificationController::class)
-        ->prefix('notifications')
-        ->group(function () {
-            Route::get('', 'index')->name('wave.notifications');
-            Route::post('read/{id}', 'delete')->name('wave.notification.read');
-        });
+        Route::controller(AnnouncementController::class)
+            ->prefix('announcements')
+            ->group(function () {
+                Route::get('', 'index')->name('announcements');
+                Route::get('{id}', 'announcement')->name('announcement');
+                Route::post('read', 'read')->name('announcements.read');
+            });
 
-    Route::controller(SubscriptionController::class)
-        ->group(function () {
-            Route::post('subscribe', 'subscribe')->name('wave.subscribe');
-            Route::post('switch-plans', 'switchPlans')->name('wave.switch-plans');
-            Route::post('cancel', 'cancel')->name('wave.cancel');
-        });
-});
+        Route::controller(NotificationController::class)
+            ->prefix('notifications')
+            ->group(function () {
+                Route::get('', 'index')->name('notifications');
+                Route::post('read/{id}', 'delete')->name('notification.read');
+            });
+
+        Route::controller(SubscriptionController::class)
+            ->group(function () {
+                Route::post('subscribe', 'subscribe')->name('subscribe');
+                Route::post('switch-plans', 'switchPlans')->name('switch-plans');
+                Route::post('cancel', 'cancel')->name('cancel');
+            });
+    });
