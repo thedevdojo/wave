@@ -1,24 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Wave\Http\Controllers\API\ApiController;
+use Wave\Http\Controllers\API\AuthController;
 
-Route::post('login', '\Wave\Http\Controllers\API\AuthController@login');
-Route::post('register', '\Wave\Http\Controllers\API\AuthController@register');
-Route::post('logout', '\Wave\Http\Controllers\API\AuthController@logout');
-Route::post('refresh', '\Wave\Http\Controllers\API\AuthController@refresh');
-Route::post('token', '\Wave\Http\Controllers\API\AuthController@token');
+Route::controller(AuthController::class)->group(function () {
+    Route::post('login', 'login');
+    Route::post('register', 'register');
+    Route::post('logout', 'logout');
+    Route::post('refresh', 'refresh');
+    Route::post('token', 'token');
+});
 
-// BROWSE
-Route::get('/{datatype}', '\Wave\Http\Controllers\API\ApiController@browse');
-
-// READ
-Route::get('/{datatype}/{id}', '\Wave\Http\Controllers\API\ApiController@read');
-
-// EDIT
-Route::put('/{datatype}/{id}', '\Wave\Http\Controllers\API\ApiController@edit');
-
-// ADD
-Route::post('/{datatype}', '\Wave\Http\Controllers\API\ApiController@add');
-
-// DELETE
-Route::delete('/{datatype}/{id}', '\Wave\Http\Controllers\API\ApiController@delete');
+Route::controller(ApiController::class)->group(function () {
+    Route::get('{datatype}', 'browse');
+    Route::get('{datatype}/{id}', 'read');
+    Route::put('{datatype}/{id}', 'edit');
+    Route::post('{datatype}', 'add');
+    Route::delete('{datatype}/{id}', 'delete');
+});
