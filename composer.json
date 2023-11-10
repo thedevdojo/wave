@@ -19,7 +19,7 @@
         "laravel/framework": "^10.0",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.4",
-        "tcg/voyager": "dev-1.6-l10",
+        "tcg/voyager": "1.7",
         "tymon/jwt-auth": "@dev"
     },
     "require-dev": {
