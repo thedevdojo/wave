@@ -8,31 +8,30 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.1",
         "ext-exif": "*",
         "ext-gd": "*",
-        "ext-redis": "*",
         "devdojo/app": "0.11.0",
         "devdojo/themes": "0.0.7",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "lab404/laravel-impersonate": "^1.7",
-        "laravel/framework": "^9.11",
+        "laravel/framework": "^10.0",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.4",
-        "tcg/voyager": "1.5.x-dev",
+        "tcg/voyager": "1.7",
         "tymon/jwt-auth": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
-        "laravel/dusk": "^6.0",
+        "laravel/dusk": "^7.8",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
-        "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-laravel": "^1.2",
-        "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "nunomaduro/collision": "6.4.0|^7.0",
+        "pestphp/pest": "^2.8",
+        "pestphp/pest-plugin-laravel": "^2.1",
+        "phpunit/phpunit": "^10.0",
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -50,7 +49,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [],
-            "providers" : [
+            "providers": [
                 "Wave\\WaveServiceProvider"
             ]
         }
