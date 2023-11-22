@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/storage/debugbar/*
 
 # Wave ignores.
 /public/.well-known
