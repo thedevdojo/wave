@@ -24,11 +24,12 @@ class SettingsController extends Controller
 
     public function profilePut(ProfileUpdateRequest $request){
         $currentUser = auth()->user();
+        $avatar = $request->avatar ? $this->saveAvatar($request->avatar, $currentUser->id) : $currentUser->avatar;
 
         $currentUser->fill([
             'name' => $request->name,
             'email' => $request->email,
-            'avatar' => $request->avatar ?? $currentUser->avatar
+            'avatar' => $avatar
         ])->save();
 
         foreach(config('wave.profile_fields') as $key){
