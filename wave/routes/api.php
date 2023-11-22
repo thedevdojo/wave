@@ -12,10 +12,12 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('token', 'token');
 });
 
-Route::controller(ApiController::class)->group(function () {
-    Route::get('{datatype}', 'browse');
-    Route::get('{datatype}/{id}', 'read');
-    Route::put('{datatype}/{id}', 'edit');
-    Route::post('{datatype}', 'add');
-    Route::delete('{datatype}/{id}', 'delete');
-});
+Route::middleware(['auth:api'])
+    ->controller(ApiController::class)
+    ->group(function () {
+        Route::get('{datatype}', 'browse');
+        Route::get('{datatype}/{id}', 'read');
+        Route::put('{datatype}/{id}', 'edit');
+        Route::post('{datatype}', 'add');
+        Route::delete('{datatype}/{id}', 'delete');
+    });
