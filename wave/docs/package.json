@@ -9,7 +9,7 @@
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.4.0",
-        "axios": "^0.21",
+        "axios": "^1.6",
         "cross-env": "^5.1",
         "laravel-mix": "^6.0.39",
         "less": "^3.12.2",
