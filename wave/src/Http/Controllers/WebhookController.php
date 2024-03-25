@@ -21,7 +21,7 @@ class WebhookController extends Controller
     public function __invoke(Request $request)
     {
         $method = match ($request->get('alert_name', null)) {
-            'subscription_cancelled',
+            'subscription.canceled' => 'subscriptionCancelled',
             'subscription_payment_failed' => 'subscriptionCancelled',
             default => null,
         };

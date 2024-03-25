@@ -94,7 +94,7 @@ class SubscriptionController extends Controller
             if(isset($resBody->data->status)){
                 $transaction = $resBody->data;
                 if (is_null($transaction->subscription_id)) {
-                    sleep(2);
+                    sleep(4);
                     $response = Http::withToken($this->vendor_auth_code)->get($this->paddle_url . '/transactions/' . $request->checkout_id);
                     $resBody = json_decode($response->body());
                     $transaction = $resBody->data;
@@ -104,8 +104,16 @@ class SubscriptionController extends Controller
                 if($transaction->origin === "web" && $plans->contains('plan_id', $transaction->items[0]->price->id)){
                     $subscriptionUser = Http::withToken($this->vendor_auth_code)->get($this->paddle_url . '/subscriptions/' . $transaction->subscription_id);
                     $subscriptionData = json_decode($subscriptionUser->body());
-                    $subscription = $subscriptionData->data; // Adjusted this from 'response[0]' to 'data'
-                
+                    if (isset($resBody->data)) {
+                        $subscription = $subscriptionData->data;
+                    } else {
+                        // Retry fetching the subscription data
+                        sleep(4);
+                        $subscriptionUser = Http::withToken($this->vendor_auth_code)->get($this->paddle_url . '/subscriptions/' . $transaction->subscription_id);
+                        $subscriptionData = json_decode($subscriptionUser->body());
+                        $subscription = $subscriptionData->data;
+                    }
+
                     // Fetch customer's details using the customer_id
                     $customerResponse = Http::withToken($this->vendor_auth_code)->get($this->paddle_url . '/customers/' . $subscription->customer_id);
                     $customerData = json_decode($customerResponse->body());
