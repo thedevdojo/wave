@@ -65,7 +65,7 @@
     }
 
     function waveCancel(){
-        axios.post('/cancel', { _token: csrf, id: subscriptionId })
+        axios.post('/cancel', { _token: csrf })
             .then(function (response) {
                 if(parseInt(response.data.status) == 1){
                     window.location = '/settings/subscription';
