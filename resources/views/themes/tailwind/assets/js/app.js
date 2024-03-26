@@ -193,24 +193,20 @@ window.popToast = function(type, message){
 /***** Payment Success Functionality */
 
 window.checkoutComplete = function(data) {
-    var checkoutId = data.checkout.id;
+    var checkoutId = data.transaction_id;
 
-    Paddle.Order.details(checkoutId, function(data) {
-        // Order data, downloads, receipts etc... available within 'data' variable.
-        document.getElementById('fullscreenLoaderMessage').innerText = 'Finishing Up Your Order';
-        document.getElementById('fullscreenLoader').classList.remove('hidden');
-        axios.post('/checkout', { _token: csrf, checkout_id: data.checkout.checkout_id })
-            .then(function (response) {
-                console.log(response);
-                if(parseInt(response.data.status) == 1){
-                    let queryParams = '';
-                    if(parseInt(response.data.guest) == 1){
-                        queryParams = '?complete=true';
-                    }
-                    window.location = '/checkout/welcome' + queryParams;
+    axios.post('/checkout', { _token: csrf, checkout_id: checkoutId })
+        .then(function (response) {
+            console.log(response);
+            if(parseInt(response.data.status) == 1){
+                let queryParams = '';
+                if(parseInt(response.data.guest) == 1){
+                    queryParams = '?complete=true';
                 }
-        });
+                window.location = '/checkout/welcome' + queryParams;
+            }
     });
+
 }
 
 window.checkoutUpdate = function(data){
@@ -222,7 +218,7 @@ window.checkoutUpdate = function(data){
 }
 
 window.checkoutCancel = function(data){
-    let subscriptionId = data.checkout.id;
+    let subscriptionId = data.id;
     axios.post('/cancel', { _token: csrf, id: subscriptionId })
         .then(function (response) {
             if(parseInt(response.data.status) == 1){

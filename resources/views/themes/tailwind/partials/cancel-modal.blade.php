@@ -29,10 +29,9 @@
 				</div>
 				<div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
 					<span class="flex flex-1 w-full rounded-md shadow-sm sm:ml-3 sm:w-full">
-					<div data-url="{{ auth()->user()->subscription->cancel_url }}" @click="$store.confirmCancel.open=false" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer checkout-cancel hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5">
-						Cancel Subscription
-					</div>
-
+						<div data-url="{{ auth()->user()->subscription->cancel_url }}" id="cancelSubscriptionButton" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer checkout-cancel hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5">
+							Cancel Subscription
+						</div>
 					</span>
 					<span class="flex flex-1 w-full mt-3 rounded-md shadow-sm sm:mt-0 sm:w-full">
 						<button onclick="closeCancelModal()" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5">
@@ -50,4 +49,22 @@
 	window.closeCancelModal = function(){
 		Alpine.store('confirmCancel').close();
 	}
+	document.getElementById('cancelSubscriptionButton').addEventListener('click', function() {
+		fetch('/cancel', {
+			method: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ subscription_id: this.getAttribute('data-url') })
+		})
+		.then(response => response.json())
+		.then(data => {
+			console.log('Success:', data);
+			closeCancelModal();
+		})
+		.catch(error => {
+			console.error('Error:', error);
+		});
+	});
 </script>
