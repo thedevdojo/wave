@@ -115,6 +115,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
+    public function latestSubscription()
+    {
+        return $this->hasOne(PaddleSubscription::class)->latest();
+    }
+
+
     /**
      * @return bool
      */

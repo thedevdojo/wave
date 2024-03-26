@@ -39,13 +39,13 @@ class SubscriptionController extends Controller
             return redirect('/login')->with(['message' => 'Please log in to continue.', 'message_type' => 'danger']);
         }
 
-        // Auth user get subscription id
-        $subscription_id = auth()->user()->subscription->subscription_id;
+        // Auth user get latest subscription id
+        $subscription_id = auth()->user()->latestSubscription->subscription_id;
 
         // Ensure the provided subscription ID matches the user's subscription ID
         $localSubscription = PaddleSubscription::where('subscription_id', $subscription_id)->first();
     
-        if (!$localSubscription || auth()->user()->subscription->subscription_id != $subscription_id) {
+        if (!$localSubscription || auth()->user()->latestSubscription->subscription_id != $subscription_id) {
             return back()->with(['message' => 'Invalid subscription ID.', 'message_type' => 'danger']);
         }
 
@@ -103,7 +103,7 @@ class SubscriptionController extends Controller
                     break;
                 }
             }
-    
+
             sleep($initialDelay * (2 ** $i));
         }
     
@@ -200,7 +200,7 @@ class SubscriptionController extends Controller
         if (isset($plan->id)) {
             // Update the user plan with Paddle
             $response = Http::withToken($this->vendor_auth_code)->patch(
-                $this->paddle_url . '/subscriptions/' . (string)$request->user()->subscription->subscription_id, 
+                $this->paddle_url . '/subscriptions/' . (string)$request->user()->latestSubscription->subscription_id,
                 [
                     'items' => [
                         [
@@ -210,7 +210,7 @@ class SubscriptionController extends Controller
                     ],
                     'proration_billing_mode' => 'prorated_immediately'
                 ]
-            );            
+            );
     
             if ($response->successful()) {
                 $body = $response->json();
