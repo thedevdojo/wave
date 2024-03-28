@@ -3,12 +3,12 @@
 	@subscriber
         @php
             $subscription = new \Wave\Http\Controllers\SubscriptionController;
-            $invoices = $subscription->invoices( auth()->user() );
+            $transactions = $subscription->transactions( auth()->user() );
         @endphp
 
 
 
-        @if(isset($invoices->success) && $invoices->success == true)
+        @if(count($transactions) > 0)
 
             <table class="min-w-full overflow-hidden divide-y divide-gray-200 rounded-lg">
                 <thead>
@@ -25,17 +25,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($invoices->response as $invoice)
+                    @foreach($transactions as $transaction)
                         <tr class="@if($loop->index%2 == 0){{ 'bg-gray-50' }}@else{{ 'bg-gray-100' }}@endif">
                             <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
-                                {{ Carbon\Carbon::parse($invoice->payout_date)->toFormattedDateString() }}
+                                {{ Carbon\Carbon::parse($transaction->created_at)->toFormattedDateString() }}
                             </td>
                             <td class="px-6 py-4 text-sm font-medium leading-5 text-right text-gray-900 whitespace-no-wrap">
-                                ${{ $invoice->amount }}
+                                {{ $transaction->details->totals->subtotal }}
                             </td>
                             <td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
-                                <a href="{{ $invoice->receipt_url }}" target="_blank" class="mr-2 text-indigo-600 hover:underline focus:outline-none">
-                                    Download
+                                <a href="/settings/invoices/{{ $transaction->id }}" target="_blank" class="mr-2 text-indigo-600 hover:underline focus:outline-none">
+                                    Generate Invoice
                                 </a>
                             </td>
 
@@ -45,7 +45,7 @@
             </table>
 
         @else
-            <p>Sorry, there seems to be an issue retrieving your invoices or you may not have any invoices yet.</p>
+            <p>You currently do not have any invoices associated with your account</p>
         @endif
 
 	@notsubscriber

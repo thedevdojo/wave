@@ -1,26 +1,24 @@
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 <script>
 
-    window.vendor_id = parseInt('{{ config("wave.paddle.vendor") }}');
-
-        
-        Paddle.Initialize({ 
-
-            token: 'test_fa19977d2cd05ecf60d462606b8', // replace with a client-side token
-            checkout: {
-                settings: {
-                    displayMode: "overlay",
-                    frameStyle: "width: 100%; min-width: 312px; background-color: transparent; border: none;",
-                    locale: "en",
-                    allowLogout: false
-                }
-            },
-            eventCallback: function(data) {
-                if (data.name == "checkout.completed") {
-                    checkoutComplete(data.data);
-                }
+    window.client_side_token = '{{ config("wave.paddle.client_side_token") }}';
+     
+    Paddle.Initialize({ 
+        token: client_side_token,
+        checkout: {
+            settings: {
+                displayMode: "overlay",
+                frameStyle: "width: 100%; min-width: 312px; background-color: transparent; border: none;",
+                locale: "en",
+                allowLogout: false
             }
-        });
+        },
+        eventCallback: function(data) {
+            if (data.name == "checkout.completed") {
+                checkoutComplete(data.data);
+            }
+        }
+    });
 
     if("{{ config('wave.paddle.env') }}" == 'sandbox') {
         Paddle.Environment.set('sandbox');
@@ -43,20 +41,25 @@
         cancelBtns[i].addEventListener('click', waveCancel, false);
     }
 
-
     function waveCheckout(plan_id) {
-        if(vendor_id){
+        if(client_side_token){
             let product =  [{
                 priceId: plan_id,
                 quantity: 1
             }];
+            custom = {};
+            @if(!auth()->guest())
+                customer = {
+                    email: '{{ auth()->user()->email }}'
+                };
+            @endif
             Paddle.Checkout.open({
                 items: product,
-                email: '@if(!auth()->guest()){{ auth()->user()->email }}@endif',
+                customer: customer,
                 successCallback: "checkoutComplete",
             });
         } else {
-            alert('Paddle Vendor ID is not set, please see the docs and learn how to setup billing.');
+            alert('Paddle API keys and tokens must be set');
         }
     }
 
@@ -76,14 +79,10 @@
         });
     }
 
-
-    /********** Start Billing Checkout Functionality ***********/
-
-    /***** Payment Success Functionality */
-
     window.checkoutComplete = function(data) {
         var checkoutId = data.transaction_id;
-         addCheckoutOverlay();
+        
+        addCheckoutOverlay();
         Paddle.Checkout.close();
 
         axios.post('/checkout', { _token: csrf, checkout_id: checkoutId })
@@ -99,7 +98,6 @@
                     window.location = '/checkout/welcome' + queryParams;
                 }
         });
-
     }
 
     window.addCheckoutOverlay = function(){
@@ -143,9 +141,5 @@
                 }
         });
     }
-
-    /***** End Payment Success Functionality */
-
-    /********** End Billing Checkout Functionality ***********/
 
 </script>

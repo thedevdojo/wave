@@ -22,7 +22,9 @@ return [
 
     'paddle' => [
         'vendor' => env('PADDLE_VENDOR_ID', ''),
-        'auth_code' => env('PADDLE_VENDOR_AUTH_CODE', ''),
+        'auth_code' => env('PADDLE_API_KEY', ''),
+		'api_key' => env('PADDLE_API_KEY', ''),
+		'client_side_token' => env('PADDLE_CLIENT_SIDE_TOKEN', ''),
         'env' => env('PADDLE_ENV', 'sandbox'),
         'public_key' => env('PADDLE_PUBLIC_KEY', ''),
     ]

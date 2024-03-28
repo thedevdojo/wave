@@ -19,10 +19,10 @@ class SubscriptionController extends Controller
     private $paddle_url;
 
     private $vendor_id;
-    private $vendor_auth_code;
+    private $api_key;
 
     public function __construct(){
-        $this->vendor_auth_code = config('wave.paddle.auth_code');
+        $this->api_key = config('wave.paddle.auth_code');
         $this->vendor_id = config('wave.paddle.vendor');
 
         $this->paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
@@ -49,7 +49,7 @@ class SubscriptionController extends Controller
             return back()->with(['message' => 'Invalid subscription ID.', 'message_type' => 'danger']);
         }
 
-        $response = Http::withToken($this->vendor_auth_code)
+        $response = Http::withToken($this->api_key)
         ->post($this->paddle_url . '/subscriptions/' . $subscription_id . '/cancel', [
             'effective_from' => 'immediately'
         ]);
@@ -94,7 +94,7 @@ class SubscriptionController extends Controller
         $guest = (auth()->guest()) ? 1 : 0;
     
         for ($i = 0; $i < $retryCount; $i++) {
-            $response = Http::withToken($this->vendor_auth_code)->get($this->paddle_url . '/transactions/' . $request->checkout_id);
+            $response = Http::withToken($this->api_key)->get($this->paddle_url . '/transactions/' . $request->checkout_id);
     
             if ($response->successful()) {
                 $resBody = json_decode($response->body());
@@ -111,11 +111,11 @@ class SubscriptionController extends Controller
             // Proceed with processing the transaction
             $plans = Plan::all();
             if($transaction->origin === "web" && $plans->contains('plan_id', $transaction->items[0]->price->id)){
-                $subscriptionUser = Http::withToken($this->vendor_auth_code)->get($this->paddle_url . '/subscriptions/' . $transaction->subscription_id);
+                $subscriptionUser = Http::withToken($this->api_key)->get($this->paddle_url . '/subscriptions/' . $transaction->subscription_id);
                 $subscriptionData = json_decode($subscriptionUser->body());
                 $subscription = $subscriptionData->data;
     
-                $customerResponse = Http::withToken($this->vendor_auth_code)->get($this->paddle_url . '/customers/' . $subscription->customer_id);
+                $customerResponse = Http::withToken($this->api_key)->get($this->paddle_url . '/customers/' . $subscription->customer_id);
                 $customerData = json_decode($customerResponse->body());
                 $customerEmail = $customerData->data->email;
                 $customerName = $customerData->data->name;
@@ -174,23 +174,25 @@ class SubscriptionController extends Controller
         ]);
     }    
 
-    public function invoices(User $user){
+    public function transactions(User $user){
 
         $invoices = [];
+        $response = Http::withToken($this->api_key)->get($this->paddle_url . '/transactions', [
+            'subscription_id' => $user->subscription->subscription_id
+        ]);
 
-        if(isset($user->subscription->subscription_id)){
-            $response = Http::post($this->paddle_url . '/2.0/subscription/payments', [
-                'vendor_id' => $this->vendor_id,
-                'vendor_auth_code' => $this->vendor_auth_code,
-                'subscription_id' => $user->subscription->subscription_id,
-                'is_paid' => 1
-            ]);
 
-            $invoices = json_decode($response->body());
-        }
+        $transactions = json_decode($response->body());
+        return $transactions->data;
 
-        return $invoices;
+    }
 
+    public function invoice(Request $request, $transactionId) {
+
+        $response = Http::withToken($this->api_key)->get($this->paddle_url . '/transactions/' . $transactionId . '/invoice');
+        $invoice = json_decode($response->body());
+        // redirect user to the invoice download URL
+        return redirect($invoice->data->url);
     }
 
     public function switchPlans(Request $request)
@@ -199,7 +201,7 @@ class SubscriptionController extends Controller
 
         if (isset($plan->id)) {
             // Update the user plan with Paddle
-            $response = Http::withToken($this->vendor_auth_code)->patch(
+            $response = Http::withToken($this->api_key)->patch(
                 $this->paddle_url . '/subscriptions/' . (string)$request->user()->latestSubscription->subscription_id,
                 [
                     'items' => [
