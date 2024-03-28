@@ -188,48 +188,6 @@ window.popToast = function(type, message){
 
 /********** END TOAST FUNCTIONALITY **********/
 
-/********** Start Billing Checkout Functionality ***********/
-
-/***** Payment Success Functionality */
-
-window.checkoutComplete = function(data) {
-    var checkoutId = data.transaction_id;
-
-    axios.post('/checkout', { _token: csrf, checkout_id: checkoutId })
-        .then(function (response) {
-            console.log(response);
-            if(parseInt(response.data.status) == 1){
-                let queryParams = '';
-                if(parseInt(response.data.guest) == 1){
-                    queryParams = '?complete=true';
-                }
-                window.location = '/checkout/welcome' + queryParams;
-            }
-    });
-
-}
-
-window.checkoutUpdate = function(data){
-    if(data.checkout.completed){
-        popToast('success', 'Your payment info has been successfully updated.');
-    } else {
-        popToast('danger', 'Sorry, there seems to be a problem updating your payment info');
-    }
-}
-
-window.checkoutCancel = function(data){
-    let subscriptionId = data.id;
-    axios.post('/cancel', { _token: csrf, id: subscriptionId })
-        .then(function (response) {
-            if(parseInt(response.data.status) == 1){
-                window.location = '/settings/subscription';
-            }
-    });
-}
-
-/***** End Payment Success Functionality */
-
-/********** End Billing Checkout Functionality ***********/
 
 /********** Switch Plans Button Click ***********/
 
