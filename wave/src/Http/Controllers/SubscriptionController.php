@@ -22,7 +22,7 @@ class SubscriptionController extends Controller
     private $api_key;
 
     public function __construct(){
-        $this->api_key = config('wave.paddle.auth_code');
+        $this->api_key = config('wave.paddle.api_key');
         $this->vendor_id = config('wave.paddle.vendor');
 
         $this->paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
