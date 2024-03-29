@@ -20,9 +20,9 @@ use Wave\Facades\Wave;
 Auth::routes();
 
 // Voyager Admin routes
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
+// Route::group(['prefix' => 'admin'], function () {
+//     Voyager::routes();
+// });
 
 // Wave routes
 Wave::routes();

@@ -7,13 +7,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Lab404\Impersonate\Models\Impersonate;
-use TCG\Voyager\Models\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Model;
 use Wave\Announcement;
 use Wave\PaddleSubscription;
 use Wave\Plan;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Model implements JWTSubject
 {
     use Notifiable, Impersonate;
 
