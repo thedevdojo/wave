@@ -96,6 +96,7 @@ class SubscriptionController extends Controller
         for ($i = 0; $i < $retryCount; $i++) {
             $response = Http::withToken($this->api_key)->get($this->paddle_url . '/transactions/' . $request->checkout_id);
     
+            \Illuminate\Support\Facades\Log::info($response->body());
             if ($response->successful()) {
                 $resBody = json_decode($response->body());
                 if (isset($resBody->data->status) && !is_null($resBody->data->subscription_id)) {
