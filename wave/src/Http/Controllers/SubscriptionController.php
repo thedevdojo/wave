@@ -177,6 +177,11 @@ class SubscriptionController extends Controller
 
     public function transactions(User $user){
 
+        // Check if user has a subscription
+        if (!$user->latestSubscription) {
+            return [];
+        }
+
         $invoices = [];
         $response = Http::withToken($this->api_key)->get($this->paddle_url . '/transactions', [
             'subscription_id' => $user->latestSubscription->subscription_id
