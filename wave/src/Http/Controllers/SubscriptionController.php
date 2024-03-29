@@ -179,7 +179,7 @@ class SubscriptionController extends Controller
 
         $invoices = [];
         $response = Http::withToken($this->api_key)->get($this->paddle_url . '/transactions', [
-            'subscription_id' => $user->subscription->subscription_id
+            'subscription_id' => $user->latestSubscription->subscription_id
         ]);
 
 
