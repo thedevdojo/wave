@@ -47,7 +47,7 @@
                 priceId: plan_id,
                 quantity: 1
             }];
-            custom = {};
+            customer = {};
             @if(!auth()->guest())
                 customer = {
                     email: '{{ auth()->user()->email }}'
@@ -55,7 +55,8 @@
             @endif
             Paddle.Checkout.open({
                 items: product,
-                customer: customer,
+                // Customer might be null if the user is not logged in
+                customer: customer || null,
                 successCallback: "checkoutComplete",
             });
         } else {

@@ -26,11 +26,14 @@ Inside of your Paddle Dashboard you'll see a button under the **Developer Tools*
 
 ![paddle-authentication.png](https://imgur.com/xdDuVKn.png)
 
-On this page you'll find your **Seller ID** and your **API Auth Code**. These are the credentials that you will need to add to your `.env` file for `PADDLE_VENDOR_ID` and `PADDLE_VENDOR_AUTH_CODE`:
+Along with the **API Auth Code**, you'll also need to get your **Client Side Token**.
+
+On this page you'll find your **Seller ID** and your **API Auth Code**. These are the credentials that you will need to add to your `.env` file for `PADDLE_VENDOR_ID`, `PADDLE_VENDOR_AUTH_CODE` and `PADDLE_CLIENT_SIDE_TOKEN`:
 
 ```
 PADDLE_VENDOR_ID=9999
 PADDLE_VENDOR_AUTH_CODE=YOUR_REALLY_LONG_API_KEY_HERE
+PADDLE_CLIENT_SIDE_TOKEN=YOUR_CLIENT_SIDE_TOKEN
 PADDLE_ENV=sandbox
 ```
 
