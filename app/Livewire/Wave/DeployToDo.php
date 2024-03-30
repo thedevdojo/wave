@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Wave;
+namespace App\Livewire\Wave;
 
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
@@ -58,17 +58,17 @@ class DeployToDo extends Component
             $repoName = (isset($repoSplit[0]) && isset($repoSplit[1])) ? $repoSplit[0] . '-' . $repoSplit[1] : false;
             $repoName = strtolower($repoName);
             if(!$repoName){
-                $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Please make sure you enter a valiid repo (ex: user/repo)']);
+                $this->dispatch('notify', ['type' => 'error', 'message' => 'Please make sure you enter a valiid repo (ex: user/repo)']);
                 return;
             }
 
             if(empty($this->api_key)){
-                $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'C\'mon, you can\'t leave the API key field empty.']);
+                $this->dispatch('notify', ['type' => 'error', 'message' => 'C\'mon, you can\'t leave the API key field empty.']);
                 return;
             }
 
             if(is_null($this->deploy)){
-                $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Sorry it looks like your deploy.json does not contain valid JSON']);
+                $this->dispatch('notify', ['type' => 'error', 'message' => 'Sorry it looks like your deploy.json does not contain valid JSON']);
                 return;
             }
 
@@ -83,7 +83,7 @@ class DeployToDo extends Component
             // if the response is not successful, display the message back from DigitalOcean
             if(!$response->successful()){
                 $responseBody = json_decode($response->body(), true);
-                $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => $responseBody['message']]);
+                $this->dispatch('notify', ['type' => 'error', 'message' => $responseBody['message']]);
                 return;
 
             }
@@ -95,7 +95,7 @@ class DeployToDo extends Component
 
             $this->checkForAppDeployment();
 
-            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully deployed your application!']);
+            $this->dispatch('notify', ['type' => 'success', 'message' => 'Successfully deployed your application!']);
             //dd('hit');
         }
     }

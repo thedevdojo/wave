@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use TCG\Voyager\Models\Role;
+use Wave\Role;
 use Wave\Notifications\VerifyEmail;
 
 class RegisterController extends Controller
@@ -204,7 +204,7 @@ class RegisterController extends Controller
             // send email verification
             return redirect()->route('login')->with(['message' => 'Thanks for signing up! Please check your email to verify your account.', 'message_type' => 'success']);
         } else {
-            $this->guard()->login($user);
+            \Auth::login($user);
 
             return $this->registered($request, $user)
                         ?: redirect($this->redirectPath())->with(['message' => 'Thanks for signing up!', 'message_type' => 'success']);

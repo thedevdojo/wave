@@ -1,12 +1,12 @@
 <div>
 
-    <form wire:submit.prevent="save" method="POST">
+    <form wire:submit="save" method="POST">
         <div class="relative flex flex-col px-10 py-8">
 
             <div>
                 <label for="current_password" class="block text-sm font-medium leading-5 text-gray-700">Current Password</label>
                 <div class="mt-1 rounded-md shadow-sm">
-                    <input wire:model="current_password" id="current_password" type="password" name="current_password" placeholder="Current Password" class="w-full form-input">
+                    <input wire:model.live="current_password" id="current_password" type="password" name="current_password" placeholder="Current Password" class="w-full form-input">
                 </div>
                 @error('current_password') <span class="block mt-1 text-sm text-red-500">{{ $message }}</span> @enderror
             </div>
@@ -14,7 +14,7 @@
             <div class="mt-5">
                 <label for="password" class="block text-sm font-medium leading-5 text-gray-700">New Password</label>
                 <div class="mt-1 rounded-md shadow-sm">
-                    <input wire:model="password" id="password" type="password" name="password" placeholder="New Password" class="w-full form-input">
+                    <input wire:model.live="password" id="password" type="password" name="password" placeholder="New Password" class="w-full form-input">
                 </div>
                 @error('password') <span class="block mt-1 text-sm text-red-500">{{ $message }}</span> @enderror
             </div>
@@ -22,7 +22,7 @@
             <div class="mt-5">
                 <label for="password_confirmation" class="block text-sm font-medium leading-5 text-gray-700">Confirm New Password</label>
                 <div class="mt-1 rounded-md shadow-sm">
-                    <input wire:model="password_confirmation" id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm New Password" class="w-full form-input">
+                    <input wire:model.live="password_confirmation" id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm New Password" class="w-full form-input">
                 </div>
                 @error('password_confirmation') <span class="block mt-1 text-sm text-red-500">{{ $message }}</span> @enderror
             </div>

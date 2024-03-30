@@ -13,7 +13,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use TCG\Voyager\Facades\Voyager;
 use Wave\Facades\Wave;
 
 // Authentication routes
@@ -26,3 +25,7 @@ Auth::routes();
 
 // Wave routes
 Wave::routes();
+
+Route::get('test', function(){
+    dd(auth()->user()->role);
+});

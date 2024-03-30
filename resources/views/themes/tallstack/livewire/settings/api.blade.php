@@ -1,9 +1,9 @@
 <div class="flex flex-col px-10 py-8">
-	<form wire:submit.prevent="add">
+	<form wire:submit="add">
 		<div>
 			<label for="key_name" class="block text-sm font-medium leading-5 text-gray-700">Create a new API Key</label>
 			<div class="mt-1 rounded-md shadow-sm">
-				<input wire:model="key_name" id="key_name" type="text" name="key_name" placeholder="Key Name" class="w-full form-input">
+				<input wire:model.live="key_name" id="key_name" type="text" name="key_name" placeholder="Key Name" class="w-full form-input">
 			</div>
             @error('key_name') <span class="block mt-1 text-sm text-red-500">{{ $message }}</span> @enderror
 		</div>
@@ -81,7 +81,7 @@
 
 
 			<!-- View API KEY -->
-			<div x-data="{ open: @entangle('readModal') }" x-init="
+			<div x-data="{ open: @entangle('readModal').live }" x-init="
 				$watch('open', value => {
 				if (value === true) { document.body.classList.add('overflow-hidden') }
 				else { document.body.classList.remove('overflow-hidden') }
@@ -116,7 +116,7 @@
 			<!-- END View API Key -->
 
 			<!-- Edit API KEY -->
-			<div x-data="{ open: @entangle('editModal') }" x-init="
+			<div x-data="{ open: @entangle('editModal').live }" x-init="
 				$watch('open', value => {
 				if (value === true) { document.body.classList.add('overflow-hidden') }
 				else { document.body.classList.remove('overflow-hidden') }
@@ -135,11 +135,11 @@
 							</h3>
 						</div>
 						<div class="flex flex-col justify-between w-full mt-2">
-							<form wire:submit.prevent="edit">
+							<form wire:submit="edit">
 								<div>
 									<label for="key_name" class="block text-sm font-medium leading-5 text-gray-700">Change the name of this API Key</label>
 									<div class="mt-1 rounded-md shadow-sm">
-										<input wire:model.lazy="editKey.name" id="key_name" type="text" name="key_name" placeholder="Key Name" class="w-full form-input">
+										<input wire:model.blur="editKey.name" id="key_name" type="text" name="key_name" placeholder="Key Name" class="w-full form-input">
 									</div>
                                     @error('editKey.name') <span class="block mt-1 text-sm text-red-500">{{ $message }}</span> @enderror
 								</div>
@@ -155,7 +155,7 @@
 			<!-- END Edit API Key -->
 
 			<!-- Delete API KEY -->
-			<div x-data="{ open: @entangle('deleteModal') }" x-init="
+			<div x-data="{ open: @entangle('deleteModal').live }" x-init="
 				$watch('open', value => {
 				if (value === true) { document.body.classList.add('overflow-hidden') }
 				else { document.body.classList.remove('overflow-hidden') }
@@ -186,7 +186,7 @@
 							</div>
 							<div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
 							    <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-									<form wire:submit.prevent="delete">
+									<form wire:submit="delete">
 										<button @click="open=false" type="submit" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5">
 							            	Delete
 							        	</button>

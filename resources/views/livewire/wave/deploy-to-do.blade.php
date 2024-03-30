@@ -33,7 +33,7 @@
                         <label for="api_key" class="block pb-3 text-sm font-medium text-gray-700">
                             1. Enter your Github Repo <span class="font-normal">(exclude https://github.com/)</span>
                         </label>
-                        <input type="text" wire:model="repo" placeholder="thedevdojo/wave" class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none" name="repo">
+                        <input type="text" wire:model.live="repo" placeholder="thedevdojo/wave" class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none" name="repo">
                     </div>
 
                     <div class="relative mb-8">
@@ -49,7 +49,7 @@
                     <label for="api_key" class="block pb-3 text-sm font-medium text-gray-700">
                         3. Enter Your <a href="https://cloud.digitalocean.com/api_access" class="underline" target="_blank">DigitalOcean API Key</a>
                     </label>
-                <input type="password" wire:model="api_key" class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none" name="api_key">
+                <input type="password" wire:model.live="api_key" class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none" name="api_key">
                 <div class="block">
                         <button wire:click="deploy" class="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg">Deploy</button>
                     </div>

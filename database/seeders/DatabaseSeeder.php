@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         $this->call(AnnouncementsTableSeeder::class);
         $this->call(ApiKeysTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
-        $this->call(DataTypesTableSeeder::class);
-        $this->call(DataRowsTableSeeder::class);
-        $this->call(MenusTableSeeder::class);
-        $this->call(MenuItemsTableSeeder::class);
+        //$this->call(DataTypesTableSeeder::class);
+        //$this->call(DataRowsTableSeeder::class);
+        //$this->call(MenusTableSeeder::class);
+        //$this->call(MenuItemsTableSeeder::class);
         $this->call(NotificationsTableSeeder::class);
         $this->call(PagesTableSeeder::class);
         $this->call(PasswordResetsTableSeeder::class);
@@ -34,8 +34,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PostsTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(TranslationsTableSeeder::class);
-        $this->call(VoyagerThemesTableSeeder::class);
-        $this->call(VoyagerThemeOptionsTableSeeder::class);
+        //$this->call(VoyagerThemesTableSeeder::class);
+        //$this->call(VoyagerThemeOptionsTableSeeder::class);
         $this->call(WaveKeyValuesTableSeeder::class);
         fixPostgresSequence();
     }

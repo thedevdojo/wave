@@ -19,6 +19,7 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
+        'role_id',
         'verification_code',
         'verified',
         'trial_ends_at',
