@@ -77,7 +77,8 @@ if (!function_exists('wave_key_value')){
         $dataTypeContent = WaveKeyValueTypeHelper::create($key, $content);
 		$type = '<input type="hidden" value="' . $type . '" name="' . $key . '_type__wave_keyvalue">';
 
-        return app('voyager')->formField($row, '', $dataTypeContent->toObject()) . $details . $type;
+        return 'use filament form builder here';
+        //return app('voyager')->formField($row, '', $dataTypeContent->toObject()) . $details . $type;
 
 	}
 

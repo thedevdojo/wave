@@ -8,11 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use TCG\Voyager\Http\Controllers\Controller;
 use Wave\ApiKey;
 use Wave\KeyValue;
 
-class SettingsController extends Controller
+class SettingsController extends \App\Http\Controllers\Controller
 {
     public function index($section = ''){
         if(empty($section)){
