@@ -30,16 +30,16 @@
     <div class="hidden absolute inset-0 z-30 sm:block" :class="{ 'bottom-0': !open }">
 
         <div class="inset-0 z-40 transition duration-200 ease-out" :class="{ 'absolute h-14': open, 'relative h-10 -mt-10': !open }">
-            <div class="w-full h-full bg-gradient-to-r via-blue-500 to-purple-600 border-t border-blue-500 from-wave-500" :class="{ 'overflow-hidden': open }">
+            <div class="w-full h-full bg-gradient-to-r via-blue-500 to-purple-600 border-t border-blue-500 from-blue-500" :class="{ 'overflow-hidden': open }">
                 <div class="flex justify-between w-full h-full">
                     <div class="flex h-full">
                         
 
-                        <div @click="open=true; url='/docs'; active='docs';" class="flex justify-center items-center h-full text-xs leading-none text-blue-100 border-l border-blue-500 cursor-pointer hover:bg-wave-600" :class="{ 'px-3': !open, 'px-5': open, 'bg-wave-600': active == 'docs' && open, 'bg-wave-500': active != 'docs' }">
+                        <div @click="open=true; url='/docs'; active='docs';" class="flex justify-center items-center h-full text-xs leading-none text-blue-100 border-l border-blue-500 cursor-pointer hover:bg-blue-600" :class="{ 'px-3': !open, 'px-5': open, 'bg-blue-600': active == 'docs' && open, 'bg-blue-500': active != 'docs' }">
                             Documentation
                         </div>
                         @if(!auth()->guest() && auth()->user()->can('browse_admin'))
-                            <div @click="open=true; url='/admin'; active='admin';" class="flex justify-center items-center h-full text-xs leading-none text-blue-100 border-l border-blue-500 cursor-pointer hover:bg-wave-600" :class="{ 'px-3': !open, 'px-5': open, 'bg-wave-600': active == 'admin' && open, 'bg-wave-500': active != 'admin' }">
+                            <div @click="open=true; url='/admin'; active='admin';" class="flex justify-center items-center h-full text-xs leading-none text-blue-100 border-l border-blue-500 cursor-pointer hover:bg-blue-600" :class="{ 'px-3': !open, 'px-5': open, 'bg-blue-600': active == 'admin' && open, 'bg-blue-500': active != 'admin' }">
                                 Admin
                             </div>
                         @endif

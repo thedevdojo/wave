@@ -3,19 +3,15 @@
 @section('content')
 
 
-<div class="relative px-8 pt-8 pb-20 mx-auto xl:px-5 max-w-7xl sm:px-6 lg:pt-10 lg:pb-28">
-    <div class="absolute inset-0">
-        <div class="bg-white h-1/3 sm:h-2/3"></div>
-    </div>
+<div class="relative px-8 pt-8 pb-20 mx-auto max-w-7xl xl:px-5 sm:px-6 lg:pt-10 lg:pb-28">
     <div class="relative mx-auto max-w-7xl">
 		<div class="flex flex-col justify-start">
-			<h1 class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
-				Our Awesome Blog
-			</h1>
+            <h2 class="text-base font-semibold leading-7 text-indigo-600">Latest Articles</h2>
+            <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From The Blog</p>
 			<p class="mt-3 text-xl leading-7 text-gray-500 sm:mt-4">
 				Check out some of our latest blog posts below.
 			</p>
-			<ul class="flex self-start inline w-auto px-3 py-1 mt-3 text-xs font-medium text-gray-600 bg-blue-100 rounded-md">
+            <ul class="inline-block flex self-start px-3 py-2 mt-7 w-auto text-xs font-medium text-gray-600 bg-white rounded-full border border-zinc-100">
 				<li class="mr-4 font-bold text-blue-600 uppercase">Categories:</li>
 				@foreach($categories as $cat)
 					<li class="@if(isset($category) && isset($category->slug) && ($category->slug == $cat->slug)){{ 'text-blue-700' }}@endif"><a href="{{ route('wave.blog.category', $cat->slug) }}">{{ $cat->name }}</a></li>
@@ -25,11 +21,12 @@
 				@endforeach
 			</ul>
 		</div>
-        <div class="grid gap-5 mx-auto mt-12 sm:grid-cols-2 lg:grid-cols-3">
+        
+        <div class="grid gap-5 mx-auto mt-7 sm:grid-cols-2 lg:grid-cols-3">
 
 			<!-- Loop Through Posts Here -->
 			@foreach($posts as $post)
-			<article id="post-{{ $post->id }}" class="flex flex-col overflow-hidden rounded-lg shadow-lg" typeof="Article">
+			<article id="post-{{ $post->id }}" class="flex overflow-hidden flex-col rounded-lg shadow-lg" typeof="Article">
 
 				<meta property="name" content="{{ $post->title }}">
 				<meta property="author" typeof="Person" content="admin">
@@ -41,7 +38,7 @@
                     	<img class="object-cover w-full h-48" src="{{ $post->image() }}" alt="">
 					</a>
                 </div>
-                <div class="relative flex flex-col justify-between flex-1 p-6 bg-white">
+                <div class="flex relative flex-col flex-1 justify-between p-6 bg-white">
                     <div class="flex-1">
                         <a href="{{ $post->link() }}" class="block">
                             <h3 class="mt-2 text-xl font-semibold leading-7 text-gray-900">
@@ -54,7 +51,7 @@
                             </p>
                         </a>
                     </div>
-                    <p class="relative self-start inline-block px-2 py-1 mt-4 text-xs font-medium leading-5 text-gray-400 uppercase bg-gray-100 rounded">
+                    <p class="inline-block relative self-start px-2 py-1 mt-4 text-xs font-medium leading-5 text-gray-400 uppercase bg-gray-100 rounded">
                             <a href="{{ route('wave.blog.category', $post->category->slug) }}" class="text-gray-700 hover:underline" rel="category">
 								{{ $post->category->name }}
                             </a>

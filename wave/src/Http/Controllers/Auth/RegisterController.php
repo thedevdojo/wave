@@ -81,7 +81,7 @@ class RegisterController extends Controller
      */
     public function create(array $data)
     {
-        $role = Role::where('name', '=', config('voyager.user.default_role'))->first();
+        $role = Role::where('guard_name', '=', config('voyager.user.default_role'))->first();
 
         $verification_code = NULL;
         $verified = 1;
@@ -119,11 +119,12 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'username' => $username,
             'password' => bcrypt($data['password']),
-            'role_id' => $role->id,
             'verification_code' => $verification_code,
             'verified' => $verified,
             'trial_ends_at' => $trial_ends_at
         ]);
+
+        $user->assignRole($role);
 
         if(setting('auth.verify_email', false)){
             $this->sendVerificationEmail($user);

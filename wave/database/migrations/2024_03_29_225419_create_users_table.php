@@ -29,8 +29,6 @@ return new class extends Migration
             $table->dateTime('trial_ends_at')->nullable();
             $table->string('verification_code')->nullable();
             $table->tinyInteger('verified')->nullable();
-
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
         });
     }
 

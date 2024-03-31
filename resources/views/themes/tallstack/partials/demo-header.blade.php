@@ -1,4 +1,4 @@
-<div class="relative bottom-0 left-0 z-30 hidden w-full h-16 md:block bg-gradient-to-r from-wave-500 via-wave-600 to-purple-500">
+<div class="relative bottom-0 left-0 z-30 hidden w-full h-16 md:block bg-gradient-to-r from-blue-500 via-blue-600 to-purple-500">
     <div class="flex items-center justify-between w-full h-full px-3 mx-auto max-w-7xl">
         <div class="relative flex items-center">
             <a href="https://devdojo.com/wave" target="_blank" class="flex items-center text-sm text-blue-200 hover:underline">

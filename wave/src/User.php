@@ -13,10 +13,11 @@ use Wave\Announcement;
 use Wave\PaddleSubscription;
 use Wave\Plan;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, Impersonate;
+    use Notifiable, Impersonate, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -205,113 +206,113 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Return default User Role.
      */
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+    // public function role()
+    // {
+    //     return $this->belongsTo(Role::class);
+    // }
 
-    /**
-     * Return alternative User Roles.
-     */
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
-    }
+    // /**
+    //  * Return alternative User Roles.
+    //  */
+    // public function roles()
+    // {
+    //     return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    // }
 
-    /**
-     * Return all User Roles, merging the default and alternative roles.
-     */
-    public function roles_all()
-    {
-        $this->loadRolesRelations();
+    // /**
+    //  * Return all User Roles, merging the default and alternative roles.
+    //  */
+    // public function roles_all()
+    // {
+    //     $this->loadRolesRelations();
 
-        return collect([$this->role])->merge($this->roles);
-    }
+    //     return collect([$this->role])->merge($this->roles);
+    // }
 
-    /**
-     * Check if User has a Role(s) associated.
-     *
-     * @param string|array $name The role(s) to check.
-     *
-     * @return bool
-     */
-    public function hasRole($name)
-    {
-        $roles = $this->roles_all()->pluck('name')->toArray();
+    // /**
+    //  * Check if User has a Role(s) associated.
+    //  *
+    //  * @param string|array $name The role(s) to check.
+    //  *
+    //  * @return bool
+    //  */
+    // public function hasRole($name)
+    // {
+    //     $roles = $this->roles_all()->pluck('name')->toArray();
 
-        foreach ((is_array($name) ? $name : [$name]) as $role) {
-            if (in_array($role, $roles)) {
-                return true;
-            }
-        }
+    //     foreach ((is_array($name) ? $name : [$name]) as $role) {
+    //         if (in_array($role, $roles)) {
+    //             return true;
+    //         }
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
-    /**
-     * Set default User Role.
-     *
-     * @param string $name The role name to associate.
-     */
-    public function setRole($name)
-    {
-        $role = Role::where('name', '=', $name)->first();
+    // /**
+    //  * Set default User Role.
+    //  *
+    //  * @param string $name The role name to associate.
+    //  */
+    // public function setRole($name)
+    // {
+    //     $role = Role::where('name', '=', $name)->first();
 
-        if ($role) {
-            $this->role()->associate($role);
-            $this->save();
-        }
+    //     if ($role) {
+    //         $this->role()->associate($role);
+    //         $this->save();
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function hasPermission($name)
-    {
-        $this->loadPermissionsRelations();
+    // public function hasPermission($name)
+    // {
+    //     $this->loadPermissionsRelations();
 
-        $_permissions = $this->roles_all()
-                              ->pluck('permissions')->flatten()
-                              ->pluck('key')->unique()->toArray();
+    //     $_permissions = $this->roles_all()
+    //                           ->pluck('permissions')->flatten()
+    //                           ->pluck('key')->unique()->toArray();
 
-        return in_array($name, $_permissions);
-    }
+    //     return in_array($name, $_permissions);
+    // }
 
-    public function hasPermissionOrFail($name)
-    {
-        if (!$this->hasPermission($name)) {
-            throw new UnauthorizedHttpException(null);
-        }
+    // public function hasPermissionOrFail($name)
+    // {
+    //     if (!$this->hasPermission($name)) {
+    //         throw new UnauthorizedHttpException(null);
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
-    public function hasPermissionOrAbort($name, $statusCode = 403)
-    {
-        if (!$this->hasPermission($name)) {
-            return abort($statusCode);
-        }
+    // public function hasPermissionOrAbort($name, $statusCode = 403)
+    // {
+    //     if (!$this->hasPermission($name)) {
+    //         return abort($statusCode);
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
-    private function loadRolesRelations()
-    {
-        if (!$this->relationLoaded('role')) {
-            $this->load('role');
-        }
+    // private function loadRolesRelations()
+    // {
+    //     if (!$this->relationLoaded('role')) {
+    //         $this->load('role');
+    //     }
 
-        if (!$this->relationLoaded('roles')) {
-            $this->load('roles');
-        }
-    }
+    //     if (!$this->relationLoaded('roles')) {
+    //         $this->load('roles');
+    //     }
+    // }
 
-    private function loadPermissionsRelations()
-    {
-        $this->loadRolesRelations();
+    // private function loadPermissionsRelations()
+    // {
+    //     $this->loadRolesRelations();
 
-        if ($this->role && !$this->role->relationLoaded('permissions')) {
-            $this->role->load('permissions');
-            $this->load('roles.permissions');
-        }
-    }
+    //     if ($this->role && !$this->role->relationLoaded('permissions')) {
+    //         $this->role->load('permissions');
+    //         $this->load('roles.permissions');
+    //     }
+    // }
 }

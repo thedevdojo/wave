@@ -22,48 +22,48 @@ class RolesTableSeeder extends Seeder
             0 =>
             array (
                 'id' => 1,
-                'name' => 'admin',
-                'display_name' => 'Admin User',
+                'guard_name' => 'admin',
+                'name' => 'Admin User',
                 'created_at' => '2017-11-21 16:23:22',
                 'updated_at' => '2017-11-21 16:23:22',
             ),
             1 =>
             array (
                 'id' => 2,
-                'name' => 'trial',
-                'display_name' => 'Free Trial',
+                'guard_name' => 'trial',
+                'name' => 'Free Trial',
                 'created_at' => '2017-11-21 16:23:22',
                 'updated_at' => '2017-11-21 16:23:22',
             ),
             2 =>
             array (
                 'id' => 3,
-                'name' => 'basic',
-                'display_name' => 'Basic Plan',
+                'guard_name' => 'basic',
+                'name' => 'Basic Plan',
                 'created_at' => '2018-07-03 05:03:21',
                 'updated_at' => '2018-07-03 17:28:44',
             ),
             3 =>
             array (
                 'id' => 4,
-                'name' => 'pro',
-                'display_name' => 'Pro Plan',
+                'guard_name' => 'pro',
+                'name' => 'Pro Plan',
                 'created_at' => '2018-07-03 16:27:16',
                 'updated_at' => '2018-07-03 17:28:38',
             ),
             4 =>
             array (
                 'id' => 5,
-                'name' => 'premium',
-                'display_name' => 'Premium Plan',
+                'guard_name' => 'premium',
+                'name' => 'Premium Plan',
                 'created_at' => '2018-07-03 16:28:42',
                 'updated_at' => '2018-07-03 17:28:32',
             ),
             5 =>
             array (
                 'id' => 6,
-                'name' => 'cancelled',
-                'display_name' => 'Cancelled User',
+                'guard_name' => 'cancelled',
+                'name' => 'Cancelled User',
                 'created_at' => '2018-07-03 16:28:42',
                 'updated_at' => '2018-07-03 17:28:32',
             ),

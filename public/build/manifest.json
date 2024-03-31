@@ -1,0 +1,13 @@
+{
+  "resources/views/themes/tallstack/assets/css/app.css": {
+    "file": "assets/app-wUWUNeSZ.css",
+    "src": "resources/views/themes/tallstack/assets/css/app.css",
+    "isEntry": true
+  },
+  "resources/views/themes/tallstack/assets/js/app.js": {
+    "file": "assets/app-Cj2Yu7kg.js",
+    "name": "app",
+    "src": "resources/views/themes/tallstack/assets/js/app.js",
+    "isEntry": true
+  }
+}
