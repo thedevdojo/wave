@@ -10,9 +10,9 @@
 
                 <div class="flex flex-col items-start mb-16 w-full md:items-center lg:pr-12 lg:items-start lg:w-1/2 lg:mb-0">
 
-                    <h2 class="invisible text-sm font-semibold tracking-wide text-gray-700 uppercase opacity-0 transition-none duration-700 ease-out transform translate-y-12 sm:text-base lg:text-sm xl:text-base" data-replace='{ "transition-none": "transition-all", "invisible": "visible", "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }'>Welcome to Wave</h2>
+                    <h2 class="invisible text-sm font-semibold tracking-wide text-zinc-700 uppercase opacity-0 transition-none duration-700 ease-out transform translate-y-12 sm:text-base lg:text-sm xl:text-base" data-replace='{ "transition-none": "transition-all", "invisible": "visible", "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }'>Welcome to Wave</h2>
                     <h1 class="invisible pb-2 mt-3 text-4xl font-extrabold tracking-tight leading-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-500 to-purple-600 opacity-0 transition-none duration-700 ease-out delay-150 transform translate-y-12 scale-10 md:my-5 sm:leading-none lg:text-5xl xl:text-6xl" data-replace='{ "transition-none": "transition-all", "invisible": "visible", "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }'>Start crafting your next great idea.</h1>
-                    <p class="invisible mt-0 max-w-2xl text-base text-left text-gray-600 opacity-0 transition-none duration-700 ease-out delay-300 transform translate-y-12 md:text-center lg:text-left sm:mt-2 md:mt-0 sm:text-base lg:text-lg xl:text-xl" data-replace='{ "transition-none": "transition-all", "invisible": "visible", "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }'>Wave will help you rapidly build a Software as a Service. Out of the box Authentication, Subscriptions, Invoices, Announcements, User Profiles, API, and so much more!</p>
+                    <p class="invisible mt-0 max-w-2xl text-base text-left text-zinc-600 opacity-0 transition-none duration-700 ease-out delay-300 transform translate-y-12 md:text-center lg:text-left sm:mt-2 md:mt-0 sm:text-base lg:text-lg xl:text-xl" data-replace='{ "transition-none": "transition-all", "invisible": "visible", "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }'>Wave will help you rapidly build a Software as a Service. Out of the box Authentication, Subscriptions, Invoices, Announcements, User Profiles, API, and so much more!</p>
                     <div class="invisible mt-5 w-full opacity-0 transition-none duration-700 ease-out delay-500 transform translate-y-12 delay-450 sm:mt-8 sm:flex sm:justify-center lg:justify-start sm:w-auto" data-replace='{ "transition-none": "transition-all", "invisible": "visible", "translate-y-12": "translate-y-0", "opacity-0": "opacity-100" }'>
                         <div class="rounded-md">
                             <a href="{{ route('register') }}" class="flex justify-center items-center px-8 py-3 w-full text-base font-medium leading-6 text-white bg-blue-500 rounded-xl border border-transparent transition duration-150 ease-in-out hover:bg-blue-600 focus:outline-none focus:border-blue-600 focus:shadow-outline-indigo md:py-4 md:text-lg md:px-10">
@@ -75,7 +75,7 @@
         </div>
     </section>
 
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" class="bg-gray-100" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" class="bg-zinc-100" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 1440 156" style="enable-background:new 0 0 1440 126;" xml:space="preserve">
         <style type="text/css">
             .blue-svg{fill:#0069ff;}
@@ -90,15 +90,15 @@
 
     <!-- BEGINNING OF TESTIMONIALS SECTION -->
     <div id="testimonials">
-        <div class="flex relative justify-center items-center pt-32 pb-12 bg-gray-100 md:pb-32 lg:pb-64 min-w-screen">
-            <div class="px-10 pb-20 mx-auto max-w-6xl bg-gray-100">
+        <div class="flex relative justify-center items-center pt-32 pb-12 bg-zinc-100 md:pb-32 lg:pb-64 min-w-screen">
+            <div class="px-10 pb-20 mx-auto max-w-6xl bg-zinc-100">
                 <div class="flex flex-col items-center lg:flex-row">
                     <div class="flex flex-col justify-center mb-10 w-full h-full lg:pr-8 sm:w-4/5 md:items-center lg:mb-0 lg:items-start md:w-3/5 lg:w-1/2">
                         <p class="mb-2 text-base font-medium tracking-tight text-blue-500 uppercase">Our customers love our product</p>
                         <h2
-                            class="text-4xl font-extrabold tracking-tight leading-10 text-gray-900 sm:leading-none lg:text-5xl xl:text-6xl">
+                            class="text-4xl font-extrabold tracking-tight leading-10 text-zinc-900 sm:leading-none lg:text-5xl xl:text-6xl">
                             Testimonials</h2>
-                        <p class="pr-5 my-6 text-lg text-gray-600 md:text-center lg:text-left">This is an example section of where you will add your testimonials for your Software as a Service.</p>
+                        <p class="pr-5 my-6 text-lg text-zinc-600 md:text-center lg:text-left">This is an example section of where you will add your testimonials for your Software as a Service.</p>
                         <a href="#_" class="flex justify-center items-center px-8 py-3 text-base font-medium leading-6 text-white bg-blue-600 rounded-full border border-transparent shadow transition duration-150 ease-in-out hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave md:py-4 md:text-lg md:px-10">View Case Studies</a>
                     </div>
                     <div class="w-full sm:w-4/5 lg:w-1/2">
@@ -110,15 +110,15 @@
                                         <path
                                             d="M30.7 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2C12.7 83.1 5 72.6 5 61.5c0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S30.7 31.6 30.7 42zM82.4 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2-11.8 0-19.5-10.5-19.5-21.6 0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S82.4 31.6 82.4 42z" />
                                     </svg>
-                                    <p class="mt-2 text-base text-gray-600">Wave allowed me to build the Software as a Service of my dreams!
+                                    <p class="mt-2 text-base text-zinc-600">Wave allowed me to build the Software as a Service of my dreams!
                                     </p>
                                 </div>
 
-                                <h3 class="mt-3 text-base font-medium leading-5 text-gray-800 truncate sm:pl-12">Jane Cooper <span
-                                        class="mt-1 text-sm leading-5 text-gray-500 truncate">- CEO SomeCompany</span></h3>
-                                <p class="mt-1 text-sm leading-5 text-gray-500 truncate"></p>
+                                <h3 class="mt-3 text-base font-medium leading-5 text-zinc-800 truncate sm:pl-12">Jane Cooper <span
+                                        class="mt-1 text-sm leading-5 text-zinc-500 truncate">- CEO SomeCompany</span></h3>
+                                <p class="mt-1 text-sm leading-5 text-zinc-500 truncate"></p>
                             </div>
-                            <img class="flex-shrink-0 w-24 h-24 bg-gray-300 rounded-full"
+                            <img class="flex-shrink-0 w-24 h-24 bg-zinc-300 rounded-full"
                                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
                                 alt="">
                         </blockquote>
@@ -131,13 +131,13 @@
                                         <path
                                             d="M30.7 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2C12.7 83.1 5 72.6 5 61.5c0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S30.7 31.6 30.7 42zM82.4 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2-11.8 0-19.5-10.5-19.5-21.6 0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S82.4 31.6 82.4 42z" />
                                     </svg>
-                                    <p class="mt-2 text-base text-gray-600">Wave saved us hundreds of development hours. Creating a Software as a Service is now easier than ever with Wave.</p>
+                                    <p class="mt-2 text-base text-zinc-600">Wave saved us hundreds of development hours. Creating a Software as a Service is now easier than ever with Wave.</p>
                                 </div>
-                                <h3 class="mt-3 text-base font-medium leading-5 text-gray-800 truncate sm:pl-12">John Doe <span
-                                        class="mt-1 text-sm leading-5 text-gray-500 truncate">- CEO SomeCompany</span></h3>
-                                <p class="mt-1 text-sm leading-5 text-gray-500 truncate"></p>
+                                <h3 class="mt-3 text-base font-medium leading-5 text-zinc-800 truncate sm:pl-12">John Doe <span
+                                        class="mt-1 text-sm leading-5 text-zinc-500 truncate">- CEO SomeCompany</span></h3>
+                                <p class="mt-1 text-sm leading-5 text-zinc-500 truncate"></p>
                             </div>
-                            <img class="flex-shrink-0 w-24 h-24 bg-gray-300 rounded-full"
+                            <img class="flex-shrink-0 w-24 h-24 bg-zinc-300 rounded-full"
                                 src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&aauto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
                                 alt="">
                         </blockquote>
@@ -150,14 +150,14 @@
                                         <path
                                             d="M30.7 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2C12.7 83.1 5 72.6 5 61.5c0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S30.7 31.6 30.7 42zM82.4 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2-11.8 0-19.5-10.5-19.5-21.6 0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S82.4 31.6 82.4 42z" />
                                     </svg>
-                                    <p class="mt-2 text-base text-gray-600">This is the best solution available for creating your own Software as a Service!</p>
+                                    <p class="mt-2 text-base text-zinc-600">This is the best solution available for creating your own Software as a Service!</p>
                                 </div>
 
-                                <h3 class="mt-3 text-base font-medium leading-5 text-gray-800 truncate sm:pl-12">John Smith <span
-                                        class="mt-1 text-sm leading-5 text-gray-500 truncate">- CEO SomeCompany</span></h3>
-                                <p class="mt-1 text-sm leading-5 text-gray-500 truncate"></p>
+                                <h3 class="mt-3 text-base font-medium leading-5 text-zinc-800 truncate sm:pl-12">John Smith <span
+                                        class="mt-1 text-sm leading-5 text-zinc-500 truncate">- CEO SomeCompany</span></h3>
+                                <p class="mt-1 text-sm leading-5 text-zinc-500 truncate"></p>
                             </div>
-                            <img class="flex-shrink-0 w-24 h-24 bg-gray-300 rounded-full"
+                            <img class="flex-shrink-0 w-24 h-24 bg-zinc-300 rounded-full"
                                 src="https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rrb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&aauto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
                                 alt="">
                         </blockquote>
@@ -188,13 +188,13 @@
 
         <div class="relative z-20 px-8 pb-8 mx-auto max-w-7xl xl:px-5">
             <div class="w-full text-left sm:text-center">
-                <h2 class="pt-12 text-4xl font-extrabold text-gray-900 lg:text-5xl">Example Pricing</h2>
-                <p class="my-1 w-full text-base text-left text-gray-900 opacity-75 sm:my-2 sm:text-center sm:text-xl">It's easy to customize the pricing of your Software as a Service</p>
+                <h2 class="pt-12 text-4xl font-extrabold text-zinc-900 lg:text-5xl">Example Pricing</h2>
+                <p class="my-1 w-full text-base text-left text-zinc-900 opacity-75 sm:my-2 sm:text-center sm:text-xl">It's easy to customize the pricing of your Software as a Service</p>
             </div>
 
             @livewire('wave.settings.plans')
 
-            <p class="my-8 w-full text-left text-gray-500 sm:my-10 sm:text-center">All plans are fully configurable in the Admin Area.</p>
+            <p class="my-8 w-full text-left text-zinc-500 sm:my-10 sm:text-center">All plans are fully configurable in the Admin Area.</p>
         </div>
     </div>
     <!-- END OF PRICING SECTION -->

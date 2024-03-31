@@ -1,7 +1,7 @@
 <div class="flex flex-col px-10 py-8">
 	<form wire:submit="add">
 		<div>
-			<label for="key_name" class="block text-sm font-medium leading-5 text-gray-700">Create a new API Key</label>
+			<label for="key_name" class="block text-sm font-medium leading-5 text-zinc-700">Create a new API Key</label>
 			<div class="mt-1 rounded-md shadow-sm">
 				<input wire:model.live="key_name" id="key_name" type="text" name="key_name" placeholder="Key Name" class="w-full form-input">
 			</div>
@@ -13,38 +13,38 @@
 		</div>
 
 	</form>
-	<hr class="my-12 border-gray-200">
+	<hr class="my-12 border-zinc-200">
 	@if(count($keys) > 0)
 
-		<p class="block text-sm font-medium leading-5 text-gray-700">Current API Keys</p>
+		<p class="block text-sm font-medium leading-5 text-zinc-700">Current API Keys</p>
 
-		<div class="mt-2 overflow-hidden border border-gray-150 sm:rounded">
-			<table class="min-w-full divide-y divide-gray-200">
+		<div class="mt-2 overflow-hidden border border-zinc-150 sm:rounded">
+			<table class="min-w-full divide-y divide-zinc-200">
 				<thead>
 					<tr>
-						<th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100">
+						<th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-zinc-500 uppercase bg-zinc-100">
 							Name
 						</th>
-						<th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100">
+						<th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-zinc-500 uppercase bg-zinc-100">
 							Created
 						</th>
-						<th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-100">
+						<th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-zinc-500 uppercase bg-zinc-100">
 							Last Used
 						</th>
-						<th class="px-6 py-3 bg-gray-100"></th>
+						<th class="px-6 py-3 bg-zinc-100"></th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($keys as $apiKey)
 						<!-- Odd row -->
-						<tr class="@if($loop->index%2 == 0){{ 'bg-white' }}@else{{ 'bg-gray-50' }}@endif">
-							<td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+						<tr class="@if($loop->index%2 == 0){{ 'bg-white' }}@else{{ 'bg-zinc-50' }}@endif">
+							<td class="px-6 py-4 text-sm font-medium leading-5 text-zinc-900 whitespace-no-wrap">
 								{{ $apiKey->name }}
 							</td>
-							<td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap">
+							<td class="px-6 py-4 text-sm leading-5 text-zinc-500 whitespace-no-wrap">
 								{{ $apiKey->created_at->format('F j, Y') }}
 							</td>
-							<td class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap">
+							<td class="px-6 py-4 text-sm leading-5 text-zinc-500 whitespace-no-wrap">
 								@if(is_null($apiKey->last_used)){{ 'Never Used' }}@else{{ $apiKey->last_used }}@endif
 							</td>
 							<td class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap">
@@ -95,17 +95,17 @@
 					<span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
 					<div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
 						<div class="flex items-center justify-start mb-4">
-							<h3 class="text-lg font-medium leading-6 text-gray-700">
+							<h3 class="text-lg font-medium leading-6 text-zinc-700">
 								API Key (<span>{{ $readKey->name ?? '' }}</span>)
 							</h3>
 						</div>
 						<div class="flex flex-col justify-between w-full mt-2">
-							<input type="text" value="{{ $readKey->key ?? '' }}" readonly="readonly" onfocus="this.select();" class="px-2 py-1 my-2 font-mono text-gray-700 bg-gray-100 rounded form-input" id="viewKeyValue">
-							<p class="text-sm text-gray-500">This API Key can be used to gain an <code>access_token</code>, which can then be used to interact with the API.</p>
+							<input type="text" value="{{ $readKey->key ?? '' }}" readonly="readonly" onfocus="this.select();" class="px-2 py-1 my-2 font-mono text-zinc-700 bg-zinc-100 rounded form-input" id="viewKeyValue">
+							<p class="text-sm text-zinc-500">This API Key can be used to gain an <code>access_token</code>, which can then be used to interact with the API.</p>
 						</div>
 						<div class="mt-5 sm:mt-6">
 							<span class="flex justify-end w-full rounded-md">
-								<button x-on:click="open = false" type="button" class="inline-flex justify-center px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline sm:text-sm sm:leading-5">
+								<button x-on:click="open = false" type="button" class="inline-flex justify-center px-4 py-2 text-base font-medium leading-6 text-zinc-700 transition duration-150 ease-in-out bg-white border border-zinc-300 rounded-md shadow-sm hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline sm:text-sm sm:leading-5">
 										Close
 								</button>
 							</span>
@@ -130,21 +130,21 @@
 					<span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
 					<div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
 						<div class="flex items-center justify-start mb-4">
-							<h3 class="text-lg font-medium leading-6 text-gray-700">
+							<h3 class="text-lg font-medium leading-6 text-zinc-700">
 								API Key Name ({{ $editKey->name ?? '' }}</span>)
 							</h3>
 						</div>
 						<div class="flex flex-col justify-between w-full mt-2">
 							<form wire:submit="edit">
 								<div>
-									<label for="key_name" class="block text-sm font-medium leading-5 text-gray-700">Change the name of this API Key</label>
+									<label for="key_name" class="block text-sm font-medium leading-5 text-zinc-700">Change the name of this API Key</label>
 									<div class="mt-1 rounded-md shadow-sm">
 										<input wire:model.blur="editKey.name" id="key_name" type="text" name="key_name" placeholder="Key Name" class="w-full form-input">
 									</div>
                                     @error('editKey.name') <span class="block mt-1 text-sm text-red-500">{{ $message }}</span> @enderror
 								</div>
 								<p class="flex justify-end mt-5">
-									<button @click="open = false" type="button" class="inline-flex justify-center px-4 py-2 mr-3 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline sm:text-sm sm:leading-5">Cancel</button>
+									<button @click="open = false" type="button" class="inline-flex justify-center px-4 py-2 mr-3 text-base font-medium leading-6 text-zinc-700 transition duration-150 ease-in-out bg-white border border-zinc-300 rounded-md shadow-sm hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline sm:text-sm sm:leading-5">Cancel</button>
 									<button type="submit" class="inline-flex justify-center px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out border border-transparent rounded-md shadow-sm bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave sm:text-sm sm:leading-5">Update</button>
 								</p>
 							</form>
@@ -176,11 +176,11 @@
 								    </svg>
 								</div>
 								<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-								    <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-headline">
+								    <h3 class="text-lg font-medium leading-6 text-zinc-900" id="modal-headline">
 										Delete this API Key?
 								    </h3>
 								    <div class="mt-2">
-										<p class="text-sm leading-5 text-gray-500">Are you sure you want to delete API Key: <code class="px-2 py-1 text-gray-800 bg-gray-200 rounded">{{ $deleteKey->name ?? '' }}</code></p>
+										<p class="text-sm leading-5 text-zinc-500">Are you sure you want to delete API Key: <code class="px-2 py-1 text-zinc-800 bg-zinc-200 rounded">{{ $deleteKey->name ?? '' }}</code></p>
 								    </div>
 								</div>
 							</div>
@@ -194,7 +194,7 @@
 
 							    </span>
 							    <span class="flex w-full mt-3 rounded-md shadow-sm sm:mt-0 sm:w-auto">
-							        <button @click="open = false;" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5">
+							        <button @click="open = false;" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-zinc-700 transition duration-150 ease-in-out bg-white border border-zinc-300 rounded-md shadow-sm hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5">
 							            Cancel
 							        </button>
 							    </span>
@@ -206,6 +206,6 @@
 			<!-- END Delete API Key -->
 
 	@else
-		<p class="w-full text-sm text-center text-gray-600">No API Keys Created Yet.</p>
+		<p class="w-full text-sm text-center text-zinc-600">No API Keys Created Yet.</p>
 	@endif
 </div>

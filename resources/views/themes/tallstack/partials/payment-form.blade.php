@@ -1,7 +1,7 @@
 <div class="flex flex-col">
-	<label class="block mb-2 text-sm font-medium leading-5 text-gray-700">Cardholders Name</label>
+	<label class="block mb-2 text-sm font-medium leading-5 text-zinc-700">Cardholders Name</label>
 	<input type="text" class="w-full form-input" name="cardholder" id="cardholder-name">
-	<label for="card-element" class="block mt-6 mb-2 text-sm font-medium leading-5 text-gray-700">
+	<label for="card-element" class="block mt-6 mb-2 text-sm font-medium leading-5 text-zinc-700">
 		Credit or debit card
 	</label>
 	<div id="card-element" class="w-full form-input">

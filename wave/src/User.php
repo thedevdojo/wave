@@ -54,6 +54,21 @@ class User extends Authenticatable implements JWTSubject
         'trial_ends_at' => 'datetime',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Listen for the creating event of the model
+        static::creating(function ($user) {
+            // Check if the username attribute is empty
+            if (empty($user->username)) {
+                // Use the email to generate a slugified username
+                // For example, 'john.doe@example.com' becomes 'john-doe'
+                $user->username = Str::slug(explode('@', $user->email)[0], '-');
+            }
+        });
+    }
+
     public function keyValues()
     {
         return $this->morphMany('Wave\KeyValue', 'keyvalue');

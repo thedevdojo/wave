@@ -69,7 +69,7 @@
                     <div class="flex relative flex-col justify-center items-center p-10 w-48 h-full text-center bg-blue-600 rounded-xl">
                         <img src="{{ Storage::url('images/wave-white.png') }}" class="z-20 w-auto h-4 -translate-x-1.5">
                         <h3 class="z-30 mt-1 mt-4 text-xs font-normal text-blue-200">Start building your next great idea.</h3>
-                        <a href="https://devdojo.com/wave" class="block relative items-center px-4 py-2 mt-5 w-full text-sm font-medium leading-5 text-center text-blue-500 bg-white rounded-full border border-transparent shadow-sm transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:border-gray-300 focus:shadow-outline-gray active:bg-gray-100">
+                        <a href="https://devdojo.com/wave" class="block relative items-center px-4 py-2 mt-5 w-full text-sm font-medium leading-5 text-center text-blue-500 bg-white rounded-full border border-transparent shadow-sm transition duration-150 ease-in-out hover:bg-zinc-100 focus:outline-none focus:border-zinc-300 focus:shadow-outline-gray active:bg-zinc-100">
                             Download
                         </a>
                     </div>
@@ -124,7 +124,7 @@
   </div>
 
   <div class="hidden relative z-30 flex-shrink-0 justify-center items-center space-x-3 h-full text-sm md:flex">
-      <a href="{{ route('login') }}" class="px-4 py-2 font-medium text-gray-500 rounded-full hover:bg-zinc-100 whitespace-no-wrap hover:text-blue-600 focus:outline-none focus:text-gray-900">
+      <a href="{{ route('login') }}" class="px-4 py-2 font-medium text-zinc-500 rounded-full hover:bg-zinc-100 whitespace-no-wrap hover:text-blue-600 focus:outline-none focus:text-zinc-900">
           Sign in
       </a>
       <span class="inline-flex rounded-md shadow-sm">

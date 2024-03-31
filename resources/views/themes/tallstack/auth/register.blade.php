@@ -4,10 +4,10 @@
 
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md sm:pt-10">
-        <h2 class="text-3xl font-extrabold leading-9 text-center text-gray-900 sm:mt-6 lg:text-5xl">
+        <h2 class="text-3xl font-extrabold leading-9 text-center text-zinc-900 sm:mt-6 lg:text-5xl">
             Sign up Below
         </h2>
-        <p class="mt-4 text-sm leading-5 text-center text-gray-600 max-w">
+        <p class="mt-4 text-sm leading-5 text-center text-zinc-600 max-w">
             or, you can
             <a href="{{ route('login') }}" class="font-medium transition duration-150 ease-in-out text-blue-600 hover:text-blue-500 focus:outline-none focus:underline">
                 login here
@@ -19,16 +19,16 @@
 
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div class="px-4 py-8 bg-white border shadow border-gray-50 sm:rounded-lg sm:px-10">
+            <div class="px-4 py-8 bg-white border shadow border-zinc-50 sm:rounded-lg sm:px-10">
                 <form role="form" method="POST" action="@if(setting('billing.card_upfront')){{ route('wave.register-subscribe') }}@else{{ route('register') }}@endif">
                     @csrf
                     <!-- If we want the user to purchase before they can create an account -->
 
-                    <div class="pb-3 sm:border-b sm:border-gray-200">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">
+                    <div class="pb-3 sm:border-b sm:border-zinc-200">
+                        <h3 class="text-lg font-medium leading-6 text-zinc-900">
                             Profile
                         </h3>
-                        <p class="max-w-2xl mt-1 text-sm leading-5 text-gray-500">
+                        <p class="max-w-2xl mt-1 text-sm leading-5 text-zinc-500">
                             Information about your account.
                         </p>
                     </div>
@@ -36,7 +36,7 @@
                     @csrf
 
                     <div class="mt-6">
-                        <label for="name" class="block text-sm font-medium leading-5 text-gray-700">
+                        <label for="name" class="block text-sm font-medium leading-5 text-zinc-700">
                             Name
                         </label>
                         <div class="mt-1 rounded-md shadow-sm">
@@ -51,7 +51,7 @@
 
                     @if(setting('auth.username_in_registration') && setting('auth.username_in_registration') == 'yes')
                         <div class="mt-6">
-                            <label for="username" class="block text-sm font-medium leading-5 text-gray-700">
+                            <label for="username" class="block text-sm font-medium leading-5 text-zinc-700">
                                 Username
                             </label>
                             <div class="mt-1 rounded-md shadow-sm">
@@ -66,7 +66,7 @@
                     @endif
 
                     <div class="mt-6">
-                        <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
+                        <label for="email" class="block text-sm font-medium leading-5 text-zinc-700">
                             Email Address
                         </label>
                         <div class="mt-1 rounded-md shadow-sm">
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="mt-6">
-                        <label for="password" class="block text-sm font-medium leading-5 text-gray-700">
+                        <label for="password" class="block text-sm font-medium leading-5 text-zinc-700">
                             Password
                         </label>
                         <div class="mt-1 rounded-md shadow-sm">
@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="mt-6">
-                        <label for="password_confirmation" class="block text-sm font-medium leading-5 text-gray-700">
+                        <label for="password_confirmation" class="block text-sm font-medium leading-5 text-zinc-700">
                             Confirm Password
                         </label>
                         <div class="mt-1 rounded-md shadow-sm">

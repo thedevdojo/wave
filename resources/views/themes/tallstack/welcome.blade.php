@@ -8,22 +8,22 @@
             <p class="py-0 my-0">Thanks for subscribing and welcome aboard.
 
                 @if(Request::get('complete')){{ 'Please finish completing your profile information below.' }} @endif</p>
-            <p class="py-0 my-0">This file can be modified inside of your <code class="px-2 py-1 font-mono text-base font-medium text-gray-600 bg-indigo-100 rounded-md">resources/views/{{ theme_folder('/welcome.blade.php') }}</code> file ✌️</p>
+            <p class="py-0 my-0">This file can be modified inside of your <code class="px-2 py-1 font-mono text-base font-medium text-zinc-600 bg-indigo-100 rounded-md">resources/views/{{ theme_folder('/welcome.blade.php') }}</code> file ✌️</p>
         </div>
 
         @if(Request::get('complete'))
             <div class="flex flex-col justify-center py-10 sm:py-5 sm:px-6 lg:px-8">
                 <div class="mt-8 text-left sm:mx-auto sm:w-full sm:max-w-md">
-                    <div class="px-4 py-8 bg-white border shadow border-gray-50 sm:rounded-lg sm:px-10">
+                    <div class="px-4 py-8 bg-white border shadow border-zinc-50 sm:rounded-lg sm:px-10">
                         <form role="form" method="POST" action="{{ route('wave.register-complete') }}">
                             @csrf
                             <!-- If we want the user to purchase before they can create an account -->
 
-                            <div class="pb-3 sm:border-b sm:border-gray-200">
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">
+                            <div class="pb-3 sm:border-b sm:border-zinc-200">
+                                <h3 class="text-lg font-medium leading-6 text-zinc-900">
                                     Profile
                                 </h3>
-                                <p class="max-w-2xl mt-1 text-sm leading-5 text-gray-500">
+                                <p class="max-w-2xl mt-1 text-sm leading-5 text-zinc-500">
                                     Finish filling out your profile information.
                                 </p>
                             </div>
@@ -31,7 +31,7 @@
                             @csrf
 
                             <div class="mt-6">
-                                <label for="name" class="block text-sm font-medium leading-5 text-gray-700">
+                                <label for="name" class="block text-sm font-medium leading-5 text-zinc-700">
                                     Name
                                 </label>
                                 <div class="mt-1 rounded-md shadow-sm">
@@ -46,7 +46,7 @@
 
                             @if(setting('auth.username_in_registration') && setting('auth.username_in_registration') == 'yes')
                                 <div class="mt-6">
-                                    <label for="username" class="block text-sm font-medium leading-5 text-gray-700">
+                                    <label for="username" class="block text-sm font-medium leading-5 text-zinc-700">
                                         Username
                                     </label>
                                     <div class="mt-1 rounded-md shadow-sm">
@@ -61,7 +61,7 @@
                             @endif
 
                             <div class="mt-6">
-                                <label for="password" class="block text-sm font-medium leading-5 text-gray-700">
+                                <label for="password" class="block text-sm font-medium leading-5 text-zinc-700">
                                     Password
                                 </label>
                                 <div class="mt-1 rounded-md shadow-sm">

@@ -17,11 +17,11 @@
                         <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z"></path></svg>
 					</div>
 					<div class="mt-3 text-center sm:ml-4">
-						<h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-headline">
+						<h3 class="text-lg font-medium leading-6 text-zinc-900" id="modal-headline">
 							Switch Plans Here
 						</h3>
 						<div class="mt-1">
-							<p class="text-sm leading-5 text-gray-500">Are you sure you want to switch to the <span x-text="plan_name"></span> plan?</p>
+							<p class="text-sm leading-5 text-zinc-500">Are you sure you want to switch to the <span x-text="plan_name"></span> plan?</p>
 						</div>
 					</div>
 				</div>
@@ -36,7 +36,7 @@
                         </form>
 					</div>
 					<span class="flex flex-1 w-full mt-3 rounded-md shadow-sm sm:mt-0 sm:w-full">
-						<button @click="$store.plan_modal.close();" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5">
+						<button @click="$store.plan_modal.close();" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-zinc-700 transition duration-150 ease-in-out bg-white border border-zinc-300 rounded-md shadow-sm hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5">
 							No Thanks
 						</button>
 					</span>

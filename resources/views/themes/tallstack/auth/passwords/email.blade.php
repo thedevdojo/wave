@@ -4,10 +4,10 @@
 
 <div class="flex flex-col justify-center py-20 sm:px-6 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 class="mt-6 text-3xl font-extrabold leading-9 text-center text-gray-900 lg:text-5xl">
+            <h2 class="mt-6 text-3xl font-extrabold leading-9 text-center text-zinc-900 lg:text-5xl">
                 Reset Password
             </h2>
-            <p class="mt-4 text-sm leading-5 text-center text-gray-600 max-w">
+            <p class="mt-4 text-sm leading-5 text-center text-zinc-600 max-w">
                 or, return back to
                 <a href="{{ route('login') }}" class="font-medium transition duration-150 ease-in-out text-blue-600 hover:text-blue-500 focus:outline-none focus:underline">
                     login
@@ -23,12 +23,12 @@
                 </div>
             @endif
 
-            <div class="px-4 py-8 bg-white border shadow border-gray-50 sm:rounded-lg sm:px-10">
+            <div class="px-4 py-8 bg-white border shadow border-zinc-50 sm:rounded-lg sm:px-10">
                 <form action="{{ route('password.email') }}" method="POST">
                     @csrf
 
                     <div>
-                        <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
+                        <label for="email" class="block text-sm font-medium leading-5 text-zinc-700">
                             Email Address
                         </label>
                         <div class="mt-3 rounded-md shadow-sm">
