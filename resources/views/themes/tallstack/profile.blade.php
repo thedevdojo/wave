@@ -9,7 +9,7 @@
 			<img src="{{ $user->avatar }}" class="w-24 h-24 rounded-full border-4 border-gray-200">
 			<h2 class="mt-8 text-2xl font-bold">{{ $user->name }}</h2>
 			<p class="my-1 font-medium text-blue-blue">{{ '@' . $user->username }}</p>
-			<div class="px-3 py-1 my-2 text-xs font-medium text-white text-gray-600 bg-gray-200 rounded">{{ $user->role->display_name }}</div>
+			<div class="px-3 py-1 my-2 text-xs font-medium text-white text-gray-600 bg-gray-200 rounded">{{ \Wave\Role::find(auth()->user()->role_id)->name }}</div>
 			<p class="mx-auto mt-3 max-w-lg text-base text-center text-gray-500">{{ $user->profile('about') }}</p>
 		</div>
 
