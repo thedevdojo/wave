@@ -137,11 +137,4 @@ class SettingsController extends Controller
         Storage::disk(config('voyager.storage.disk'))->put($path, file_get_contents($avatar));
         return $path;
     }
-
-    public function invoice(Request $request, $invoiceId) {
-        return $request->user()->downloadInvoice($invoiceId, [
-            'vendor'  => setting('site.title', 'Wave'),
-            'product' => ucfirst(auth()->user()->role->name) . ' Subscription Plan',
-        ]);
-    }
 }

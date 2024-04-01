@@ -60,20 +60,33 @@ Fill out the rest of the info on the plan and click `Save` to create your new pl
 <a name="create-plans-paddle"></a>
 ### Creating Plans in Paddle
 
-To create a new plan in Paddle, login to your dashboard and click **Catalog**->**Subscription Plans**. Click on the **+ New Plan** button at the top right to create a new plan.
+To create a new plan in Paddle, login to your dashboard and click **Catalog**->**Products**. Click on the **New Product** button at the top right to create a new plan.
 
-![paddle-plans-01.png](https://cdn.devdojo.com/images/april2021/paddle-plans-01.png)
+![paddle-plans-01.png](https://imgur.com/PL8mO1n.png)
 
-You'll see a pop-up that will ask for the plan name, icon, and price. Fill out the info for your plan.
+You'll see a pop-up that will ask for the plan name and a description. Fill out the info for your plan.
 
-![paddle-plans-02.png](https://cdn.devdojo.com/images/april2021/paddle-plans-02.png)
+![paddle-plans-02.png](https://imgur.com/J4fKEYe.png)
 
-Scroll down to the bottom and click the **Save Plan** button.
-![paddle-plans-03.png](https://cdn.devdojo.com/images/april2021/paddle-plans-03.png)
+Click the **Save Plan** button on the top right to save your new plan.
 
-After creating your new plan, you'll see the **Plan ID** you need to associate with the Wave Plan you create from the previous step.
+After creating your new plan, you'll need to create a new subscription as part of the plan. Click on the **New Price** button to create a new subscription.
 
-![paddle-plans-04.png](https://cdn.devdojo.com/images/april2021/paddle-plans-04.png)
+![](https://imgur.com/f2ropW0.png)
+
+Fill out the info for your subscription, make sure to select **Recurring** for the billing type and click the **Save** button on the top right to save your new subscription.
+
+![](https://imgur.com/SQPN1YB.png)
+
+Next, get the subscription ID for your new subscription. It starts with `pri_` and is located under the **Subscription ID** column.
+
+![](https://imgur.com/fRxW2yF.png)
+
+Make sure to copy this ID as you will need it to associate the plan with the subscription in Wave.
+
+Note that you should not use the `Product ID` for the plan, but the `Subscription ID` for the subscription.
+
+Next, go back to your Wave dashboard and click on the plan you created. You will see a field called **Plan ID**. Paste the subscription ID you copied from Paddle into this field and click **Save**.
 
 After adding all your plans, we're ready to [test out the billing process](/docs/features/billing#test-billing).
 

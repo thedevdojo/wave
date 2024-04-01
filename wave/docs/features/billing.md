@@ -15,7 +15,7 @@ In order to integrate your application with Paddle you will need to signup for a
 
 After you have created your Paddle Account you'll be able to login and see your dashboard, which should look similar to the following:
 
-![paddle-dashboard.png](https://cdn.devdojo.com/images/april2021/paddle-dashboard.png)
+![paddle-dashboard.png](https://imgur.com/SyNZ0W9.png)
 
 Next, let's add your Paddle API credentials.
 
@@ -24,17 +24,38 @@ Next, let's add your Paddle API credentials.
 
 Inside of your Paddle Dashboard you'll see a button under the **Developer Tools** menu, called **Authentication**, click on that button to get your API Authentication Credentials.
 
-![paddle-authentication.png](https://cdn.devdojo.com/images/april2021/paddle-authentication.png)
+![paddle-authentication.png](https://imgur.com/xdDuVKn.png)
 
-On this page you'll find your **Vendor ID** and your **API Auth Code**. These are the credentials that you will need to add to your `.env` file for `PADDLE_VENDOR_ID` and `PADDLE_VENDOR_AUTH_CODE`:
+Along with the **API Auth Code**, you'll also need to get your **Client Side Token**.
+
+On this page you'll find your **Seller ID** and your **API Auth Code**. These are the credentials that you will need to add to your `.env` file for `PADDLE_VENDOR_ID`, `PADDLE_API_KEY` and `PADDLE_CLIENT_SIDE_TOKEN`:
 
 ```
 PADDLE_VENDOR_ID=9999
-PADDLE_VENDOR_AUTH_CODE=YOUR_REALLY_LONG_API_KEY_HERE
+PADDLE_API_KEY=YOUR_REALLY_API_KEY_HERE
+PADDLE_CLIENT_SIDE_TOKEN=YOUR_CLIENT_SIDE_TOKEN
 PADDLE_ENV=sandbox
 ```
 
 After adding these credentials, your application has been successfully configured with Paddle.
+
+## Default payment link
+
+Wave uses the default Paddle payment link to handle the payment process. You have to set up the default payment link in your Paddle account. To do this, go to your Paddle dashboard and click on **Checkout Settings** scroll down to **Payment Links**.
+
+The default payment link should be set to `http://yourdomain.com/settings/subscription`.
+
+![](https://imgur.com/zboWobt.png)
+
+## Webhooks
+
+Wave uses Paddle webhooks to handle the payment process. You have to set up the webhooks in your Paddle account. To do this, go to your Paddle dashboard and click on **Developer Tools** -> **Notifications**.
+
+![](https://imgur.com/QqJTggu.png)
+
+Make sure to select the `subscription.cancelled` event so that Wave can handle the subscription cancellation process in case a user cancels their subscription or their payment fails.
+
+> **Note**: Wave currently only supports the `subscription.cancelled` event. More events will be supported in the future.
 
 #### Ready to go Live?
 
