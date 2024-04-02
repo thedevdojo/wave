@@ -1,0 +1,26 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+.fi-topbar nav{
+    background:none !important;
+    box-shadow:none !important;
+}
+
+.fi-sidebar-nav{
+    background:#ffffff;
+    border-right: 1px solid #f1f1f5;
+}
+
+.dark .fi-sidebar-nav{
+    background:#18181b;
+    border-right:1px solid #23232b;
+}
+
+.dark .fi-sidebar-header{
+    border-right: 1px solid #23232b;
+}
+
+.fi-sidebar-header{
+    border-right: 1px solid #f1f1f5;
+}
+
+@config 'tailwind.config.js';

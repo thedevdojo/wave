@@ -1,6 +1,11 @@
 {
+  "resources/css/filament/admin/theme.css": {
+    "file": "assets/theme-CPc4vyZR.css",
+    "src": "resources/css/filament/admin/theme.css",
+    "isEntry": true
+  },
   "resources/views/themes/tallstack/assets/css/app.css": {
-    "file": "assets/app-eJaNnZAI.css",
+    "file": "assets/app-DyXO--sP.css",
     "src": "resources/views/themes/tallstack/assets/css/app.css",
     "isEntry": true
   },

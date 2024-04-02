@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PlanResource\Pages;
-use App\Filament\Resources\PlanResource\RelationManagers;
-use Wave\Plan;
+use App\Filament\Resources\SettingResource\Pages;
+use App\Filament\Resources\SettingResource\RelationManagers;
+use Wave\Setting;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,44 +13,37 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PlanResource extends Resource
+class SettingResource extends Resource
 {
-    protected static ?string $model = Plan::class;
+    protected static ?string $model = Setting::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+    protected static ?string $navigationIcon = 'heroicon-o-cog';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('key')
                     ->required()
                     ->maxLength(191),
-                Forms\Components\TextInput::make('slug')
+                Forms\Components\TextInput::make('display_name')
                     ->required()
                     ->maxLength(191),
-                Forms\Components\Textarea::make('description')
+                Forms\Components\Textarea::make('value')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('features')
+                Forms\Components\Textarea::make('details')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('type')
                     ->required()
                     ->maxLength(191),
-                Forms\Components\TextInput::make('plan_id')
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('role_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Toggle::make('default')
-                    ->required(),
-                Forms\Components\TextInput::make('price')
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('trial_days')
+                Forms\Components\TextInput::make('order')
                     ->required()
                     ->numeric()
-                    ->default(0),
+                    ->default(1),
+                Forms\Components\TextInput::make('group')
+                    ->maxLength(191),
             ]);
     }
 
@@ -58,24 +51,17 @@ class PlanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('key')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
+                Tables\Columns\TextColumn::make('display_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('features')
+                Tables\Columns\TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('plan_id')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('role_id')
+                Tables\Columns\TextColumn::make('order')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('default')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('price')
+                Tables\Columns\TextColumn::make('group')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('trial_days')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -108,9 +94,9 @@ class PlanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPlans::route('/'),
-            'create' => Pages\CreatePlan::route('/create'),
-            'edit' => Pages\EditPlan::route('/{record}/edit'),
+            'index' => Pages\ListSettings::route('/'),
+            'create' => Pages\CreateSetting::route('/create'),
+            'edit' => Pages\EditSetting::route('/{record}/edit'),
         ];
     }
 }
