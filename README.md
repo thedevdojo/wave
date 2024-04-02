@@ -1,10 +1,5 @@
 <p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/images/september2023/wave-logo.png" width="200"></a></p>
 
-> If you are looking for a Laravel Starter Kit that uses the Tallstack as well as [Folio](https://laravel.com/docs/folio) and [Volt](https://livewire.laravel.com/docs/volt), you may be interested in checking out [Genesis](https://github.com/thedevdojo/genesis)
-
-<p align="center"><a href="https://github.com/thedevdojo/genesis" target="_blank"><img width="1280" alt="genesis" src="https://github.com/thedevdojo/wave/assets/601261/a5e8aab9-0beb-42d7-be27-12da1ce83699"></a></p>
-
-
 <p align="center"><a href="https://www.producthunt.com/posts/wave-2-0" target="_blank"><img src="https://cdn.devdojo.com/images/april2021/upvote-product-hunt-img.png" height="auto" width="auto"></a></p>
 
 ## Introduction
