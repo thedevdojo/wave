@@ -18,7 +18,7 @@
         "lab404/laravel-impersonate": "^1.7",
         "laravel/framework": "^10.0",
         "laravel/tinker": "^2.7",
-        "livewire/livewire": "^2.4",
+        "livewire/livewire": "^3.0",
         "tcg/voyager": "1.7",
         "tymon/jwt-auth": "@dev"
     },
