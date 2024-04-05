@@ -17,7 +17,7 @@ class PlanResource extends Resource
 {
     protected static ?string $model = Plan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+    protected static ?string $navigationIcon = 'phosphor-credit-card-duotone';
 
     protected static ?int $navigationSort = 1;
 

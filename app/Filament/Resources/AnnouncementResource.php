@@ -17,7 +17,7 @@ class AnnouncementResource extends Resource
 {
     protected static ?string $model = Announcement::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-megaphone';
+    protected static ?string $navigationIcon = 'phosphor-megaphone-duotone';
 
     protected static ?int $navigationSort = 7;
 

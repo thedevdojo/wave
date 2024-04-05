@@ -26,6 +26,4 @@ Auth::routes();
 // Wave routes
 Wave::routes();
 
-Route::get('test', function(){
-    dd(auth()->user()->role);
-});
+Route::view('test', 'theme::test');

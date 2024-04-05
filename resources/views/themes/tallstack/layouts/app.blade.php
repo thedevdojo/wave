@@ -43,8 +43,9 @@
     @endif
 
     <!-- Styles -->
-    @vite(['resources/views/themes/tallstack/assets/css/app.css', 'resources/views/themes/tallstack/assets/js/app.js'])
+    
     @filamentStyles
+    @vite(['resources/views/themes/tallstack/assets/css/app.css', 'resources/views/themes/tallstack/assets/js/app.js'])
     @livewireStyles
 </head>
 <body class="flex flex-col min-h-screen @if(Request::is('/')){{ 'bg-white' }}@else{{ 'bg-zinc-50' }}@endif @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
