@@ -8,6 +8,8 @@
         "php": "^8.1",
         "ext-exif": "*",
         "ext-gd": "*",
+        "bezhansalleh/filament-google-analytics": "^2.0",
+        "codeat3/blade-phosphor-icons": "^2.0",
         "devdojo/app": "0.11.0",
         "devdojo/themes": "0.0.8",
         "filament/filament": "^3.2",
