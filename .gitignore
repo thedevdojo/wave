@@ -24,3 +24,4 @@ yarn-error.log
 .DS_Store
 /wave/vendor/
 /public/wave/docs
+/storage/app/analytics
