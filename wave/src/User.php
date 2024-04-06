@@ -151,6 +151,15 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @return bool
      */
+    public function isAdmin()
+    {
+        // return if the user has a role of admin
+        return $this->hasRole('admin');
+    }
+
+    /**
+     * @return bool
+     */
     public function canBeImpersonated()
     {
         // Any user that is not an admin can be impersonated

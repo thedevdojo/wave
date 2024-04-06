@@ -1,4 +1,4 @@
-<header x-data="{ mobileMenuOpen: false }" class="absolute border-[3px] border-black w-full z-30 @if(Request::is('/')){{ 'bg-white' }}@else{{ 'bg-zinc-50' }}@endif">
+<header x-data="{ mobileMenuOpen: false }" class="absolute w-full z-30 @if(Request::is('/')){{ 'bg-white' }}@else{{ 'bg-zinc-50' }}@endif">
     <div class="px-8 mx-auto max-w-6xl md:px-12 xl:px-20">
         <div class="flex relative z-30 justify-between items-center h-24 md:space-x-6">
             <div class="inline-flex">

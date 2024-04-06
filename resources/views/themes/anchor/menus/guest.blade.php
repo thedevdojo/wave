@@ -124,9 +124,6 @@
   </div>
 
   <div class="hidden relative z-30 flex-shrink-0 justify-center items-center space-x-3 h-full text-sm md:flex">
-      <a href="{{ route('login') }}" class="px-4 py-2 font-medium rounded-full text-zinc-500 hover:bg-zinc-100 whitespace-no-wrap hover:text-blue-600 focus:outline-none focus:text-zinc-900">
-          Sign in
-      </a>
-      <x-button href="{{ route('login') }}" type="a" class="text-sm" size="sm" color="secondary">Login</x-button>
-      <x-button href="{{ route('register') }}" type="a" class="text-sm" size="sm">Register</x-button>
+      <x-button href="{{ route('login') }}" tag="a" class="text-sm" size="sm" color="secondary">Login</x-button>
+      <x-button href="{{ route('register') }}" tag="a" class="text-sm" size="sm">Register</x-button>
   </div>
