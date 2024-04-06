@@ -10,13 +10,13 @@
                 @foreach($themes as $theme)
 
                     <div class="col-span-1">
-                        <img class="relative" src="{{ url('themes' ) }}/{{ $theme->folder }}/{{ $theme->folder }}.jpg">
+                        <img class="relative" src="{{ url('wave/theme/image' ) }}/{{ $theme->folder }}">
                         <div class="flex">
                             <h4>{{ $theme->name }}<span>@if(isset($theme->version)){{ 'version ' . $theme->version }}@endif</span></h4>
                             @if($theme->active)
                                 <span class="btn btn-success pull-right"><i class="voyager-check"></i> Active</span>
                             @else
-                                <a class="btn btn-outline pull-right" href="{{ route('voyager.theme.activate', $theme->folder) }}"><i class="voyager-check"></i> Activate Theme</a>
+                                <a class="btn btn-outline pull-right" href="/theme/activate"><i class="voyager-check"></i> Activate Theme</a>
                             @endif
                             <a href="/admin/themes/{{ $theme->folder }}" class="voyager-params theme-options"></a>
                             <div class="voyager-trash theme-options-trash" data-id="{{ $theme->id }}"></div>

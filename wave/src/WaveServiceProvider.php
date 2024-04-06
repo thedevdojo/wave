@@ -37,6 +37,7 @@ class WaveServiceProvider extends ServiceProvider
     		\Wave\Http\Middleware\Cancelled::class,
     	];
 
+
     	$this->app->router->aliasMiddleware('token_api', \Wave\Http\Middleware\TokenMiddleware::class);
 	    $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\WaveMiddleware::class);
         $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\InstallMiddleware::class);
@@ -44,6 +45,7 @@ class WaveServiceProvider extends ServiceProvider
 	    $this->app->router->middlewareGroup('wave', $waveMiddleware);
 
 
+        
 	}
 
 	public function boot(Router $router, Dispatcher $event){

@@ -69,3 +69,5 @@ Route::group(['middleware' => 'auth'], function(){
 Route::group(['middleware' => 'admin.user'], function(){
     Route::view('admin/do', 'wave::do');
 });
+
+Route::get('wave/theme/image/{theme_name}', '\Wave\Http\Controllers\ThemeImageController@show');

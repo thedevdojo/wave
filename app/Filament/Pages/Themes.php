@@ -37,7 +37,7 @@ class Themes extends Page
 
             foreach($scandirectory as $folder){
                 //dd($theme_folder . '/' . $folder . '/' . $folder . '.json');
-                $json_file = $this->themes_folder . '/' . $folder . '/' . $folder . '.json';
+                $json_file = $this->themes_folder . '/' . $folder . '/theme.json';
                 if(file_exists($json_file)){
                     $themes[$folder] = json_decode(file_get_contents($json_file), true);
                     $themes[$folder]['folder'] = $folder;

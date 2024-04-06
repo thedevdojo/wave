@@ -27,7 +27,7 @@
             }" class="relative z-10 w-auto"
         >
             <div class="relative">
-                <ul class="flex flex-1 justify-center items-center p-1 list-none rounded-md text-zinc-500 group">
+                <ul class="flex flex-1 justify-center items-center p-1 list-none rounded-md text-zinc-900 group">
                     <li class="px-0.5" @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='platform'" @mouseleave="navigationMenuLeave()">
                         <button :class="{ 'text-zinc-900 bg-zinc-100' : navigationMenu=='platform', 'hover:text-zinc-900' : navigationMenu!='platform' }" class="inline-flex justify-center items-center px-4 py-2 w-max h-10 text-sm font-medium rounded-full transition-colors focus:outline-none disabled:opacity-50 disabled:pointer-events-none group">
                             <span>Platform</span>
@@ -124,7 +124,7 @@
   </div>
 
   <div class="hidden relative z-30 flex-shrink-0 justify-center items-center space-x-3 h-full text-sm md:flex">
-      <a href="{{ route('login') }}" class="px-4 py-2 font-medium text-zinc-500 rounded-full hover:bg-zinc-100 whitespace-no-wrap hover:text-blue-600 focus:outline-none focus:text-zinc-900">
+      <a href="{{ route('login') }}" class="px-4 py-2 font-medium rounded-full text-zinc-500 hover:bg-zinc-100 whitespace-no-wrap hover:text-blue-600 focus:outline-none focus:text-zinc-900">
           Sign in
       </a>
       <span class="inline-flex rounded-md shadow-sm">
