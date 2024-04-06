@@ -1,0 +1,19 @@
+.fi-btn.fi-size-md{
+    @apply px-6 py-4 text-lg;
+}
+
+.fi-btn.fi-size-md{
+    @apply px-5 py-3 text-base;
+}
+
+.fi-btn.fi-size-sm{
+    @apply px-4 py-2 text-sm;
+}
+
+.fi-btn.fi-color-primary{
+    @apply inline-flex gap-3 justify-center items-center w-full font-medium text-white bg-gray-900 rounded-none duration-200 md:w-auto hover:bg-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-black !important;
+}
+
+.fi-btn.fi-color-secondary{
+    @apply inline-flex gap-3 justify-center items-center w-full font-medium bg-gray-100 rounded-none duration-200 md:w-auto text-zinc-800 hover:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}

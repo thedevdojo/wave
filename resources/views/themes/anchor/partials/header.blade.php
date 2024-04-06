@@ -1,5 +1,5 @@
-<header x-data="{ mobileMenuOpen: false }" class="absolute border-b-[3px] border-zinc-900 border-t-[3px] w-full z-30 @if(Request::is('/')){{ 'bg-white' }}@else{{ 'bg-zinc-50' }}@endif">
-    <div class="px-8 mx-auto max-w-7xl xl:px-10">
+<header x-data="{ mobileMenuOpen: false }" class="absolute border-[3px] border-black w-full z-30 @if(Request::is('/')){{ 'bg-white' }}@else{{ 'bg-zinc-50' }}@endif">
+    <div class="px-8 mx-auto max-w-6xl md:px-12 xl:px-20">
         <div class="flex relative z-30 justify-between items-center h-24 md:space-x-6">
             <div class="inline-flex">
             <!-- data-replace='{ "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }' -->

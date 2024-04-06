@@ -127,9 +127,6 @@
       <a href="{{ route('login') }}" class="px-4 py-2 font-medium rounded-full text-zinc-500 hover:bg-zinc-100 whitespace-no-wrap hover:text-blue-600 focus:outline-none focus:text-zinc-900">
           Sign in
       </a>
-      <span class="inline-flex rounded-md shadow-sm">
-          <a href="{{ route('register') }}" class="inline-flex justify-center items-center px-4 py-2 font-medium text-white bg-blue-500 rounded-full border border-transparent transition duration-150 ease-in-out whitespace-no-wrap hover:bg-blue-600 focus:outline-none focus:border-indigo-700 focus:shadow-outline-wave active:bg-blue-700">
-              Sign up
-          </a>
-      </span>
+      <x-button href="{{ route('login') }}" type="a" class="text-sm" size="sm" color="secondary">Login</x-button>
+      <x-button href="{{ route('register') }}" type="a" class="text-sm" size="sm">Register</x-button>
   </div>

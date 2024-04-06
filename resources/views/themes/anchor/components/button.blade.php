@@ -1,1 +1,3 @@
-<p>Cool</p>
+<x-filament::button {{ $attributes }}>
+    {{ $slot }}
+</x-filament::button>
