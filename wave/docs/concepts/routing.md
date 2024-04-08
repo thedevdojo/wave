@@ -2,9 +2,10 @@
 
 In this section we'll quickly cover the Wave routes.
 
-- [Wave Web Routes](#web-routes)
-- [Wave API Routes](#api-routes)
-- [Wave Middleware](#wave-middleware)
+- [Routing](#routing)
+		- [Wave Web Routes](#wave-web-routes)
+		- [Wave API Routes](#wave-api-routes)
+		- [Wave Middleware](#wave-middleware)
 
 ---
 
@@ -18,7 +19,7 @@ If you take a look inside of `wave/routes/web.php` you will see all the Wave web
 
 Route::impersonate();
 
-Route::get('/', '\Wave\Http\Controllers\HomeController@index')->name('wave.home');
+Route::get('/', '\Wave\Http\Controllers\HomeController@index')->name('home');
 Route::get('@{username}', '\Wave\Http\Controllers\ProfileController@index')->name('wave.profile');
 
 // Documentation routes

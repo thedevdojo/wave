@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    @include('theme::partials.head')
+    @include('theme::partials.head', ['seo' => ($seo ?? null) ])
 </head>
 <body class="flex flex-col min-h-screen bg-zinc-50 dark:bg-zinc-800 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
 

@@ -22,24 +22,24 @@
 
         @foreach(Wave\Plan::all() as $plan)
             @php $features = explode(',', $plan->features); @endphp
-            <div class="px-0 mx-auto mb-6 w-full max-w-md lg:w-1/3 lg:px-3 lg:mb-0">
-                <div class="flex flex-col mb-10 h-full bg-white rounded-xl border-2 @if($plan->default){{ 'border-zinc-900 scale-105' }}@else{{ 'border-gray-200' }}@endif shadow-sm sm:mb-0">
-                    <div class="px-10 pt-10">
+            <div class="px-0 mx-auto mb-6 w-full max-w-md lg:w-1/3 lg:px-0 lg:mb-0">
+                <div class="flex flex-col mb-10 h-full bg-white rounded-xl border-2  @if($plan->default){{ 'border-zinc-900 scale-105' }}@else{{ 'border-gray-200' }}@endif shadow-sm sm:mb-0">
+                    <div class="px-8 pt-8">
                         <span class="px-4 py-1 text-base font-medium text-white rounded-full bg-zinc-900 text-uppercase" data-primary="indigo-700">
                             {{ $plan->name }}
                         </span>
                     </div>
 
-                    <div class="px-10 mt-5">
+                    <div class="px-8 mt-5">
                         <span class="text-5xl font-bold">${{ $plan->price }}</span>
                         <span class="text-xl font-bold text-gray-500">/mo</span>
                     </div>
 
-                    <div class="px-10 pb-10 mt-3">
-                        <p class="text-lg leading-7 text-gray-500">{{ $plan->description }}</p>
+                    <div class="px-8 pb-10 mt-3">
+                        <p class="text-base leading-7 text-gray-500">{{ $plan->description }}</p>
                     </div>
 
-                    <div class="p-10 mt-auto rounded-b-lg bg-zinc-50">
+                    <div class="p-8 mt-auto rounded-b-lg bg-zinc-50">
                         <ul class="flex flex-col">
                             @foreach($features as $feature)
                                 <li class="mt-1">

@@ -11,10 +11,10 @@
 			<p class="mt-3 text-xl leading-7 text-zinc-500 sm:mt-4">
 				Check out some of our latest blog posts below.
 			</p>
-            <ul class="inline-block flex self-start px-3 py-2 mt-7 w-auto text-xs font-medium text-zinc-600 bg-white rounded-full border border-zinc-100">
+            <ul class="inline-block flex self-start px-3 py-2 mt-7 w-auto text-xs font-medium bg-white rounded-full border text-zinc-600 border-zinc-100">
 				<li class="mr-4 font-bold text-blue-600 uppercase">Categories:</li>
 				@foreach($categories as $cat)
-					<li class="@if(isset($category) && isset($category->slug) && ($category->slug == $cat->slug)){{ 'text-blue-700' }}@endif"><a href="{{ route('wave.blog.category', $cat->slug) }}">{{ $cat->name }}</a></li>
+					<li class="@if(isset($category) && isset($category->slug) && ($category->slug == $cat->slug)){{ 'text-blue-700' }}@endif"><a href="{{ route('blog.category', $cat->slug) }}">{{ $cat->name }}</a></li>
 					@if(!$loop->last)
 						<li class="mx-2">&middot;</li>
 					@endif
@@ -51,8 +51,8 @@
                             </p>
                         </a>
                     </div>
-                    <p class="inline-block relative self-start px-2 py-1 mt-4 text-xs font-medium leading-5 text-zinc-400 uppercase bg-zinc-100 rounded">
-                            <a href="{{ route('wave.blog.category', $post->category->slug) }}" class="text-zinc-700 hover:underline" rel="category">
+                    <p class="inline-block relative self-start px-2 py-1 mt-4 text-xs font-medium leading-5 uppercase rounded text-zinc-400 bg-zinc-100">
+                            <a href="{{ route('blog.category', $post->category->slug) }}" class="text-zinc-700 hover:underline" rel="category">
 								{{ $post->category->name }}
                             </a>
                         </p>

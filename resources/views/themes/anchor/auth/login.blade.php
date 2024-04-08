@@ -1,6 +1,6 @@
-@extends('theme::layouts.app')
-
-@section('content')
+<x-layouts.marketing
+    bodyClass="bg-zinc-50"
+>
 
     <div class="flex flex-col justify-center py-20 sm:px-6 lg:px-8">
         @php $renderedDescription = blade('<x-link :href="route(\'register\')">signup here</x-link>'); @endphp
@@ -54,4 +54,4 @@
         </div>
     </div>
 
-@endsection
+</x-layouts.marketing>

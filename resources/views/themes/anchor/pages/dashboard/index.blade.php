@@ -1,3 +1,9 @@
+<?php
+    use function Laravel\Folio\{middleware, name};
+    name('home');
+    middleware('wave');
+?>
+
 <x-layouts.app>
 
 	<div class="flex flex-col flex-1 items-stretch h-100">

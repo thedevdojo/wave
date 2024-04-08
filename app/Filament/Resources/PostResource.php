@@ -37,7 +37,7 @@ class PostResource extends Resource
                     ->maxLength(191),
                 Forms\Components\Textarea::make('excerpt')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('body')
+                Forms\Components\RichEditor::make('body')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')

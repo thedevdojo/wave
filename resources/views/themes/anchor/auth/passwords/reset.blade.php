@@ -1,83 +1,54 @@
-@extends('theme::layouts.app')
+<x-layouts.marketing
+    bodyClass="bg-zinc-50"
+>
 
-@section('content')
+    <div class="flex flex-col justify-center py-20 sm:px-6 lg:px-8">
+        @php $renderedDescription = blade('<x-link :href="route(\'login\')">login</x-link>'); @endphp
+        <x-marketing.elements.heading
+            title="Setup Your New Password"
+            description="or, return to {!! $renderedDescription !!}"
+        />
 
-<div class="flex flex-col justify-center py-20 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 class="mt-6 text-3xl font-extrabold leading-none text-center text-zinc-900 lg:text-5xl">
-            Setup Your New Password
-        </h2>
-        <p class="mt-4 text-sm leading-5 text-center text-zinc-600 max-w">
-            or, return to
-            <a href="{{ route('login') }}" class="font-medium transition duration-150 ease-in-out text-blue-600 hover:text-blue-500 focus:outline-none focus:underline">
-                login here
-            </a>
-        </p>
-    </div>
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            @if (session('status'))
+                <div class="mb-3 uk-alert-primary">
+                    {{ session('status') }}
+                </div>
+            @endif
+            <div class="px-4 py-8 bg-white border shadow border-zinc-50 sm:rounded-lg sm:px-10">
+                <form action="{{ route('password.request') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="token" value="{{ $token }}">
+                    <div class="mt-6 space-y-2">
+                        <x-label for="email">Email Address</x-label>
+                        <x-input id="email" type="email" name="email" required />
+                        @if ($errors->has('email'))
+                            <div class="mt-1 text-red-500">{{ $errors->first('email') }}</div>
+                        @endif
+                    </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        @if (session('status'))
-            <div class="mb-3 uk-alert-primary">
-                {{ session('status') }}
+                    <div class="mt-6 space-y-2">
+                        <x-label for="password">Password</x-label>
+                        <x-input id="password" type="password" name="password" required />
+                        @if ($errors->has('password'))
+                            <div class="mt-1 text-red-500">{{ $errors->first('password') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="mt-6 space-y-2">
+                        <x-label for="password_confirmation">Confirm Password</x-label>
+                        <x-input id="password_confirmation" type="password" name="password_confirmation" required />
+                        @if ($errors->has('password_confirmation'))
+                            <div class="mt-1 text-red-500">{{ $errors->first('password_confirmation') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="flex flex-col justify-center items-center text-sm leading-5">
+                        <x-button type="submit" class="md:!w-full" size="lg">Reset Password</x-button>
+                    </div>
+                </form>
             </div>
-        @endif
-        <div class="px-4 py-8 bg-white border shadow border-zinc-50 sm:rounded-lg sm:px-10">
-            <form action="{{ route('password.request') }}" method="POST">
-                @csrf
-                <input type="hidden" name="token" value="{{ $token }}">
-                <div class="mt-6">
-                    <label for="email" class="block text-sm font-medium leading-5 text-zinc-700">
-                        Email Address
-                    </label>
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input id="email" type="email" name="email" required class="w-full form-input">
-                    </div>
-                    @if ($errors->has('email'))
-                    <div class="mt-1 text-red-500">
-                        {{ $errors->first('email') }}
-                    </div>
-                    @endif
-                </div>
-
-                <div class="mt-6">
-                    <label for="password" class="block text-sm font-medium leading-5 text-zinc-700">
-                        Password
-                    </label>
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input id="password" type="password" name="password" required class="w-full form-input">
-                    </div>
-                    @if ($errors->has('password'))
-                    <div class="mt-1 text-red-500">
-                        {{ $errors->first('password') }}
-                    </div>
-                    @endif
-                </div>
-
-                <div class="mt-6">
-                    <label for="password_confirmation" class="block text-sm font-medium leading-5 text-zinc-700">
-                        Confirm Password
-                    </label>
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input id="password_confirmation" type="password" name="password_confirmation" required class="w-full form-input">
-                    </div>
-                    @if ($errors->has('password_confirmation'))
-                    <div class="mt-1 text-red-500">
-                        {{ $errors->first('password_confirmation') }}
-                    </div>
-                    @endif
-                </div>
-
-                <div class="flex flex-col items-center justify-center text-sm leading-5">
-                    <span class="block w-full mt-5 rounded-md shadow-sm">
-                        <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
-                            Reset Password
-                        </button>
-                    </span>
-                </div>
-
-            </form>
         </div>
     </div>
-</div>
 
-@endsection
+</x-layouts.marketing>

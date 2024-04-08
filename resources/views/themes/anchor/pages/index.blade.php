@@ -1,7 +1,6 @@
 <?php
     use function Laravel\Folio\{name};
-
-    name('wave.home');
+    name('home');
 ?>
 
 <x-layouts.marketing
@@ -11,11 +10,20 @@
         'image'         => url('/og_image.png'),
         'type'          => 'website'
     ]"
->
-    
-    <x-marketing.sections.hero />
-    <x-marketing.sections.features />
-    <x-marketing.sections.testimonials />
-    <x-marketing.sections.pricing />
+> 
+        
+        <x-marketing.sections.hero />
+        
+        <x-container class="py-24 border-t border-zinc-200">
+            <x-marketing.sections.features />
+        </x-container>
+
+        <x-container class="py-24 border-t border-zinc-200">
+            <x-marketing.sections.testimonials />
+        </x-container>
+        
+        <x-container class="py-24 border-t border-zinc-200">
+            <x-marketing.sections.pricing />
+        </x-container>
 
 </x-layouts.marketing>
