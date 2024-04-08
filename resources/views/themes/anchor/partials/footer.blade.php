@@ -1,6 +1,6 @@
 
 <!-- Section 1 -->
-<footer class="@if(Request::is('/')){{ 'bg-white' }}@else{{ 'bg-zinc-50' }}@endif">
+<footer>
     <div class="px-8 pt-16 mx-auto max-w-6xl lg:px-12 xl:px-16">
         <div class="flex flex-wrap justify-between items-start pb-20">
             <a href="#_" class="flex items-center mt-1 w-auto text-lg font-bold brightness-0 transition-all duration-300 ease-out md:w-1/6 hover:brightness-100">

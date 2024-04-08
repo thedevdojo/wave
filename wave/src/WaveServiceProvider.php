@@ -68,7 +68,7 @@ class WaveServiceProvider extends ServiceProvider
             'danger' => Color::Red,
             'gray' => Color::Zinc,
             'info' => Color::Blue,
-            'primary' => Color::Blue,
+            'primary' => Color::Zinc,
             'success' => Color::Green,
             'warning' => Color::Amber,
         ]);

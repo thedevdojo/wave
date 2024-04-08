@@ -9,7 +9,7 @@
             </h2>
             <p class="mt-4 text-sm leading-5 text-center text-zinc-600 max-w">
                 or, you can
-                <a href="{{ route('register') }}" class="font-medium transition duration-150 ease-in-out text-blue-600 hover:text-blue-500 focus:outline-none focus:underline">
+                <a href="{{ route('register') }}" class="font-medium text-blue-600 transition duration-150 ease-in-out hover:text-blue-500 focus:outline-none focus:underline">
                     signup here
                 </a>
             </p>
@@ -62,16 +62,16 @@
                         @endif
                     </div>
 
-                    <div class="flex items-center justify-between mt-6">
+                    <div class="flex justify-between items-center mt-6">
                         <div class="flex items-center">
-                            <input id="remember" name="remember" type="checkbox" class="text-indigo-600 border-0 border-zinc-300 rounded shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50 rounded-xl" {{ old('remember') ? ' checked' : '' }}>
+                            <input id="remember" name="remember" type="checkbox" class="text-indigo-600 rounded rounded-xl border-0 shadow-sm border-zinc-300 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50" {{ old('remember') ? ' checked' : '' }}>
                             <label for="remember" class="block ml-2 text-sm leading-5 text-zinc-900">
                                 Remember me
                             </label>
                         </div>
 
                         <div class="text-sm leading-5">
-                            <a href="{{ route('password.request') }}" class="font-medium transition duration-150 ease-in-out text-blue-600 hover:text-blue-500 focus:outline-none focus:underline">
+                            <a href="{{ route('password.request') }}" class="font-medium text-blue-600 transition duration-150 ease-in-out hover:text-blue-500 focus:outline-none focus:underline">
                                 Forgot your password?
                             </a>
                         </div>
@@ -79,7 +79,7 @@
 
                     <div class="mt-6">
                         <span class="block w-full rounded-md shadow-sm">
-                            <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
+                            <button type="submit" class="flex justify-center px-4 py-2 w-full text-sm font-medium text-white bg-blue-600 rounded-md border border-transparent transition duration-150 ease-in-out hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
                                 Sign in
                             </button>
                         </span>

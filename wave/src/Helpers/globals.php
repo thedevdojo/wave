@@ -159,3 +159,9 @@ if (!function_exists('setting')) {
         // }
     }
 }
+
+if (!function_exists('blade')) {
+    function blade($string){
+        return \Illuminate\Support\Facades\Blade::render($string);
+    }
+}

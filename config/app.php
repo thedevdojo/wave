@@ -199,6 +199,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FolioServiceProvider::class,
 
         \DevDojo\Themes\ThemesServiceProvider::class,
 

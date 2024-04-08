@@ -25,3 +25,4 @@ yarn-error.log
 /wave/vendor/
 /public/wave/docs
 /storage/app/analytics
+/packages

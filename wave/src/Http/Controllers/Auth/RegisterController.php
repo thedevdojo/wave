@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Wave\Role;
+use Spatie\Permission\Models\Role;
 use Wave\Notifications\VerifyEmail;
 
 class RegisterController extends Controller
@@ -81,7 +81,10 @@ class RegisterController extends Controller
      */
     public function create(array $data)
     {
-        $role = Role::where('guard_name', '=', config('voyager.user.default_role'))->first();
+        $role = Role::where('name', '=', config('wave.user_default_role'))->first();
+        if(!isset($role->id)){
+            throw new \Exception('Cannot find role with a name of ' . config('wave.user_default_role'));
+        }
 
         $verification_code = NULL;
         $verified = 1;

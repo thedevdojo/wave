@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use Filament\Pages\Page;
+use Filament\Notifications\Notification;
 use Wave\Theme;
 
 class Themes extends Page
@@ -21,6 +22,10 @@ class Themes extends Page
         $this->themes_folder = config('themes.themes_folder', resource_path('views/themes'));
 
         $this->installThemes();
+        $this->refreshThemes();
+    }
+
+    private function refreshThemes(){
         $this->themes = Theme::all();
     }
 
@@ -85,25 +90,31 @@ class Themes extends Page
             $this->deactivateThemes();
             $theme->active = 1;
             $theme->save();
-            return redirect()
-                ->route("voyager.theme.index")
-                ->with([
-                        'message'    => "Successfully activated " . $theme->name . " theme.",
-                        'alert-type' => 'success',
-                    ]);
+
+            Notification::make()
+                ->title('Successfully activated ' . $theme_folder . ' theme')
+                ->success()
+                ->send();
+            
         } else {
-            return redirect()
-                ->route("voyager.theme.index")
-                ->with([
-                        'message'    => "Could not find theme " . $theme_folder . ".",
-                        'alert-type' => 'error',
-                    ]);
+            Notification::make()
+                ->title('Could not find theme folder. Please confirm this theme has been installed.')
+                ->danger()
+                ->send();
         }
+
+        $this->refreshThemes();
 
     }
 
-    public function delete(Request $request){
-        $theme = Theme::find($request->id);
+    private function deactivateThemes(){
+        Theme::query()->update(['active' => 0]);
+    }
+
+
+    public function deleteTheme($theme_folder){
+        dd('delete theme folder, but first show a modal confirmation');
+        $theme = Theme::where('folder', '=', $theme_folder)->first();
         if(!isset($theme)){
             return redirect()
                 ->route("voyager.theme.index")

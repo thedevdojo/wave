@@ -1,6 +1,6 @@
-<header x-data="{ mobileMenuOpen: false }" class="absolute w-full z-30 @if(Request::is('/')){{ 'bg-white' }}@else{{ 'bg-zinc-50' }}@endif">
-    <div class="px-8 mx-auto max-w-6xl md:px-12 xl:px-20">
-        <div class="flex relative z-30 justify-between items-center h-24 md:space-x-6">
+<header x-data="{ mobileMenuOpen: false }" class="absolute z-30 w-full">
+    <x-container>
+        <div class="flex relative z-30 justify-between items-center h-24 md:space-x-8">
             <div class="inline-flex">
             <!-- data-replace='{ "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }' -->
                 <a href="{{ route('wave.home') }}" class="flex justify-center items-center space-x-3 text-blue-500 brightness-0 transition-all duration-300 ease-out transform hover:brightness-100 grayscale-100">
@@ -13,19 +13,10 @@
                 </button>
             </div>
 
-            <!-- This is the homepage nav when a user is not logged in -->
-            @if(auth()->guest())
-                @include('theme::menus.guest')
-            @else <!-- Otherwise we want to show the menu for the logged in user -->
-                @include('theme::menus.authenticated')
-            @endif
+            @include('theme::menus.marketing')
 
         </div>
-    </div>
+    </x-container>
 
-    @if(auth()->guest())
-        @include('theme::menus.guest-mobile')
-    @else
-        @include('theme::menus.authenticated-mobile')
-    @endif
+    @include('theme::menus.marketing-mobile')
 </header>

@@ -1,5 +1,5 @@
 @import '/vendor/filament/filament/resources/css/theme.css';
-
+/* 
 .fi-topbar nav{
     background:none !important;
     box-shadow:none !important;
@@ -26,6 +26,10 @@
 .white-listed{
     @apply text-blue-600;
 }
+
+.text-blue-600{
+    color:#3662e3;
+} */
 
 .text-blue-600{
     color:#3662e3;
