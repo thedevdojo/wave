@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AnnouncementResource\Pages;
-use App\Filament\Resources\AnnouncementResource\RelationManagers;
-use Wave\Announcement;
+use App\Filament\Resources\ChangelogResource\Pages;
+use App\Filament\Resources\ChangelogResource\RelationManagers;
+use Wave\Changelog;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class AnnouncementResource extends Resource
+class ChangelogResource extends Resource
 {
-    protected static ?string $model = Announcement::class;
+    protected static ?string $model = Changelog::class;
 
     protected static ?string $navigationIcon = 'phosphor-megaphone-duotone';
 
@@ -77,9 +77,9 @@ class AnnouncementResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAnnouncements::route('/'),
-            'create' => Pages\CreateAnnouncement::route('/create'),
-            'edit' => Pages\EditAnnouncement::route('/{record}/edit'),
+            'index' => Pages\ListChangelogs::route('/'),
+            'create' => Pages\CreateChangelog::route('/create'),
+            'edit' => Pages\EditChangelog::route('/{record}/edit'),
         ];
     }
 }

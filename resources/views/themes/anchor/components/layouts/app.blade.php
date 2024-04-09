@@ -11,7 +11,7 @@
 
     <x-app.sidebar />
 
-    <div class="flex flex-col min-h-screen justify-stretch md:pl-[280px] pl-5 pr-5">
+    <div class="flex flex-col min-h-screen justify-stretch md:pl-64">
         <!-- Page Heading -->
         @if (isset($header))
             <header x-data="{ mobileMenu: false }" class="bg-transparent">
@@ -33,6 +33,10 @@
         {{ $slot }}
     </div>
 
+    @livewire('notifications')
+    @if(!auth()->guest() && auth()->user()->hasChangelogNotifications())
+        @include('theme::partials.changelogs')
+    @endif
     @include('theme::partials.footer-scripts')
     {{ $javascript ?? '' }}
 

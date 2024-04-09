@@ -200,7 +200,3 @@
         </div>
     </div>
 </footer>
-
-@if(!auth()->guest() && auth()->user()->hasAnnouncements())
-    @include('theme::partials.announcements')
-@endif

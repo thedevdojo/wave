@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class AnnouncementsTableSeeder extends Seeder
+class ChangelogsTableSeeder extends Seeder
 {
 
     /**
@@ -16,9 +16,9 @@ class AnnouncementsTableSeeder extends Seeder
     {
 
 
-        \DB::table('announcements')->delete();
+        \DB::table('changelogs')->delete();
 
-        \DB::table('announcements')->insert(array (
+        \DB::table('changelogs')->insert(array (
             0 =>
             array (
                 'id' => 1,
@@ -31,7 +31,7 @@ class AnnouncementsTableSeeder extends Seeder
             'updated_at' => '2018-05-21 00:38:02',
             )));
 
-        \DB::table('announcements')->insert(array (
+        \DB::table('changelogs')->insert(array (
             1 =>
             array (
                 'id' => 2,

@@ -5,12 +5,12 @@
 
 <x-layouts.marketing>
 
-    <div class="px-5 mx-auto mt-10 max-w-4xl lg:px-0">
-        <a href="{{ route('blog') }}" class="inline-flex items-center px-3 py-2 mb-6 font-mono text-xs font-bold rounded-full cursor-pointer text-zinc-900 bg-zinc-200 group">
-            <svg class="mr-2 w-4 h-4 duration-200 ease-out group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            back to the blog
-        </a>
-    </div>
+    <x-elements.back-button
+        class="mx-auto mt-8 max-w-4xl"
+        text="back to the blog"
+        :href="route('blog')"
+    />
+    
     <article id="post-{{ $post->id }}" class="px-5 pb-20 mx-auto max-w-4xl prose prose-xl lg:prose-2xl lg:px-0">
 
         <meta property="name" content="{{ $post->title }}">

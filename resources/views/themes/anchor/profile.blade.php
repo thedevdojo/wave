@@ -1,7 +1,12 @@
-@extends('theme::layouts.app')
+<?php
+	// use a dynamic layout based on whether or not the user is authenticated
+    $layout = ((auth()->guest()) ? 'layouts.marketing' : 'layouts.app');
+?>
 
-
-@section('content')
+<x-dynamic-component 
+	:component="$layout"
+	bodyClass="bg-zinc-50"
+>
 
 	<x-container class="flex space-x-5">
 
@@ -9,7 +14,7 @@
 				<img src="{{ $user->avatar }}" class="w-24 h-24 rounded-full border-4 border-zinc-200">
 				<h2 class="mt-8 text-2xl font-bold">{{ $user->name }}</h2>
 				<p class="my-1 font-medium text-blue-blue">{{ '@' . $user->username }}</p>
-				<div class="px-3 py-1 my-2 text-xs font-medium text-white rounded text-zinc-600 bg-zinc-200">{{ auth()->user()->roles->first()->name }}</div>
+				<div class="px-3 py-1 my-2 text-xs font-medium text-white rounded text-zinc-600 bg-zinc-200">{{ $user->roles->first()->name }}</div>
 				<p class="mx-auto mt-3 max-w-lg text-base text-center text-zinc-500">{{ $user->profile('about') }}</p>
 		</x-card>
 
@@ -20,4 +25,4 @@
 
 	</x-container>
 
-@endsection
+</x-dynamic-component>

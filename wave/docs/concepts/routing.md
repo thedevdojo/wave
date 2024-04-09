@@ -77,8 +77,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::view('checkout/welcome', 'theme::welcome');
 
     Route::post('subscribe', '\Wave\Http\Controllers\SubscriptionController@subscribe')->name('wave.subscribe');
-	Route::view('trial_over', 'theme::trial_over')->name('wave.trial_over');
-	Route::view('cancelled', 'theme::cancelled')->name('wave.cancelled');
+	Route::view('trial_over', 'theme::trial_over')->name('subscription.trial_over');
+	Route::view('cancelled', 'theme::cancelled')->name('subscription.cancelled');
     Route::post('switch-plans', '\Wave\Http\Controllers\SubscriptionController@switchPlans')->name('wave.switch-plans');
 });
 

@@ -7,7 +7,7 @@
         class="fixed top-0 left-0 flex md:translate-x-0 flex-col z-50 justify-between h-screen overflow-x-hidden overflow-auto transition-[width,transform] duration-150 ease-out bg-white border-r shadow-sm dark:bg-zinc-900 items-between w-64 group border-slate-100 dark:border-zinc-800">  
         <div class="flex relative flex-col py-6">
             <div class="flex items-center px-4 space-x-2">
-                <a href="/dashboard" class="flex justify-start items-center px-2.5 w-full h-auto brightness-0 duration-300 ease-out dark:brightness-[5] hover:brightness-100 dark:hover:brightness-100 min-w-16 group-hover:justify-start shrink-0">
+                <a href="/dashboard" wire:navigate class="flex justify-start items-center px-2.5 w-full h-auto brightness-0 duration-300 ease-out dark:brightness-[5] hover:brightness-100 dark:hover:brightness-100 min-w-16 group-hover:justify-start shrink-0">
                     <x-logo-darkmode class="hidden mb-2 w-auto h-4 fill-current dark:block text-zinc-800 dark:text-zinc-200" />
                     <x-logo class="block mb-2 w-auto h-4 fill-current dark:hidden text-zinc-800 dark:text-zinc-200" />
                 </a>
@@ -21,14 +21,14 @@
 
             <div class="flex flex-col justify-start items-center px-4 space-y-1.5 w-full h-full text-slate-600 dark:text-zinc-400">
                 <x-app.sidebar-link href="/dashboard" icon="phosphor-house-bold" :active="Request::is('dashboard')">Dashboard</x-app.sidebar-link>
-                <x-app.sidebar-link href="/learn" icon="phosphor-lightbulb-filament-bold" :active="Request::is('learn')">Learn</x-app.sidebar-link>
+                <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" :active="Request::is('learn')">Learn</x-app.sidebar-link>
                 <x-app.sidebar-dropdown text="Projects" icon="phosphor-stack-bold" id="projects_dropdown" :active="(Request::is('projects'))" :open="(Request::is('project_a') || Request::is('project_b') || Request::is('project_c')) ? '1' : '0'">
-                    <x-app.sidebar-link link="/" icon="phosphor-cube" :active="(Request::is('project_a'))">Project A</x-app.sidebar-link>
-                    <x-app.sidebar-link link="/" icon="phosphor-cube" :active="(Request::is('project_b'))">Project B</x-app.sidebar-link>
-                    <x-app.sidebar-link link="/" icon="phosphor-cube" :active="(Request::is('project_c'))">Project C</x-app.sidebar-link>
+                    <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-cube" :active="(Request::is('project_a'))">Project A</x-app.sidebar-link>
+                    <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-cube" :active="(Request::is('project_b'))">Project B</x-app.sidebar-link>
+                    <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-cube" :active="(Request::is('project_c'))">Project C</x-app.sidebar-link>
                 </x-app.sidebar-dropdown>
-                <x-app.sidebar-link href="/" onclick="event.preventDefault(); toast('Example Button', { position : 'top-right', description: 'Modify this button inside of sidebar.blade.php' })" icon="phosphor-chart-pie-bold" active="false">Analytics</x-app.sidebar-link>
-                <x-app.sidebar-link href="/" onclick="event.preventDefault(); toast('Example Button', { position : 'top-right', description: 'Modify this button inside of sidebar.blade.php' })" icon="phosphor-users-bold" active="false">Users</x-app.sidebar-link>
+                <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-chart-pie-bold" active="false">Analytics</x-app.sidebar-link>
+                <x-app.sidebar-link  onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-users-bold" active="false">Users</x-app.sidebar-link>
             </div>
 
             
@@ -37,9 +37,9 @@
 
         <div class="relative px-2.5 pb-2.5 space-y-1.5 text-zinc-700 dark:text-zinc-400">
             
-            <x-app.sidebar-link href="/" onclick="event.preventDefault(); toast('Example Button', { position : 'top-right', description: 'Modify this button inside of sidebar.blade.php' })" icon="phosphor-book-bookmark-duotone" active="false">Documentation</x-app.sidebar-link>
-            <x-app.sidebar-link href="/" onclick="event.preventDefault(); toast('Example Button', { position : 'top-right', description: 'Modify this button inside of sidebar.blade.php' })" icon="phosphor-lifebuoy-duotone" active="false">Help</x-app.sidebar-link>
-            <x-app.sidebar-link href="/" onclick="event.preventDefault(); toast('Example Button', { position : 'top-right', description: 'Modify this button inside of sidebar.blade.php' })" icon="phosphor-package-duotone" active="false">All Products</x-app.sidebar-link>
+            <x-app.sidebar-link href="" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-book-bookmark-duotone" active="false">Documentation</x-app.sidebar-link>
+            <x-app.sidebar-link href="" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-lifebuoy-duotone" active="false">Help</x-app.sidebar-link>
+            <x-app.sidebar-link :href="route('changelogs')" icon="phosphor-book-open-text" active="false">Changelog</x-app.sidebar-link>
 
             <div class="px-1 py-3">
                 <div class="relative px-4 py-3 space-y-1 w-full bg-white rounded-lg border text-zinc-700 dark:text-zinc-100 dark:bg-zinc-800 border-zinc-100 dark:border-zinc-700">
@@ -79,6 +79,7 @@
                         </div>
                         <div class="my-2 w-full h-px bg-slate-100 dark:bg-zinc-700"></div>
                         <div class="flex relative flex-col p-2 space-y-1">
+                            <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('notifications') }}" icon="phosphor-bell-duotone" active="false">Notifications</x-app.sidebar-link>
                             <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('wave.settings', 'profile') }}" icon="phosphor-gear-duotone" active="false">Edit Profile</x-app.sidebar-link>
                             <form method="POST" action="{{ route('logout') }}" class="w-full">
                                 @csrf

@@ -1,5 +1,5 @@
 @php $announcement = Wave\Announcement::orderBy('created_at', 'DESC')->first() @endphp
-<div id="announcement" class="fixed bottom-0 right-0 z-50 flex items-end justify-center px-4 py-6 transition-all duration-200 ease-out transform translate-y-0 opacity-100 cursor-pointer pointer-events-none hover:-translate-y-1 sm:p-6 sm:items-start sm:justify-end" data-href="{{ route('wave.announcement', $announcement->id) }}">
+<div id="announcement" class="fixed bottom-0 right-0 z-50 flex items-end justify-center px-4 py-6 transition-all duration-200 ease-out transform translate-y-0 opacity-100 cursor-pointer pointer-events-none hover:-translate-y-1 sm:p-6 sm:items-start sm:justify-end" data-href="{{ route('changelog', $announcement->id) }}">
 	<div id="announcement_content" class="relative w-full max-w-sm bg-white border border-zinc-200 rounded-lg shadow-lg pointer-events-auto">
 		<div class="relative p-5">
 			<span id="announcement_close" class="absolute top-0 right-0 inline-flex mt-5 mr-5 text-zinc-400 transition duration-150 ease-in-out cursor-pointer focus:outline-none focus:text-zinc-500">
@@ -9,7 +9,7 @@
 			</span>
 			<h4 class="text-sm font-medium leading-5 text-zinc-900">{{ $announcement->title }}</h4>
 			<p class="mt-2 text-sm leading-5 text-zinc-500">{{ $announcement->description }}</p>
-			<div id="announcement_footer" class="mt-1"><a href="{{ route('wave.announcement', $announcement->id) }}" class="text-sm font-medium leading-5 text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:outline-none focus:underline">Learn More</a></div>
+			<div id="announcement_footer" class="mt-1"><a href="{{ route('changelog', $announcement->id) }}" class="text-sm font-medium leading-5 text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:outline-none focus:underline">Learn More</a></div>
 		</div>
 	</div>
 </div>
@@ -37,7 +37,7 @@
 
 	function markNotificationsRead(endpoint, splitPopReadyState){
 		var HttpRequest = new XMLHttpRequest();
-		HttpRequest.open("POST", "{{ route('wave.announcements.read') }}", true);
+		HttpRequest.open("POST", "{{ route('changelog.read') }}", true);
 		HttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		HttpRequest.send("_token={{ csrf_token() }}");
 	}

@@ -1,6 +1,6 @@
 <x-layouts.app>
 
-	<x-container class="flex">
+	<div class="flex w-full max-w-full">
 
 		<!-- Left Settings Menu -->
 		<div class="mr-6 space-y-5 w-16 md:w-1/4">
@@ -52,7 +52,7 @@
 				@endif
 			</div>
 		</x-card>
-	</x-container>
+	</div>
 
 	<x-slot:javascript>
 

@@ -4,7 +4,7 @@ namespace Wave;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Announcement extends Model
+class Changelog extends Model
 {
 	public function users(){
 		return $this->belongsToMany('Wave\User');

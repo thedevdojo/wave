@@ -13,10 +13,10 @@
                 </button>
             </div>
 
-            @include('theme::menus.app')
+            @include('theme::partials.menus.app')
 
         </div>
     </x-container>
     
-    @include('theme::menus.app-mobile')
+    @include('theme::partials.menus.app-mobile')
 </header>
