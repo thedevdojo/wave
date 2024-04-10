@@ -17,7 +17,7 @@ class ChangelogResource extends Resource
 {
     protected static ?string $model = Changelog::class;
 
-    protected static ?string $navigationIcon = 'phosphor-megaphone-duotone';
+    protected static ?string $navigationIcon = 'phosphor-book-open-text-duotone';
 
     protected static ?int $navigationSort = 7;
 
@@ -31,7 +31,7 @@ class ChangelogResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(191),
-                Forms\Components\Textarea::make('body')
+                Forms\Components\RichEditor::make('body')
                     ->required()
                     ->columnSpanFull(),
             ]);
