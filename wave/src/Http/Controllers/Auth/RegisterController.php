@@ -176,8 +176,9 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         if(setting('billing.card_upfront')){
-            return redirect()->route('wave.pricing');
+            return redirect()->route('pricing');
         }
+        
         return view('theme::auth.register');
     }
 

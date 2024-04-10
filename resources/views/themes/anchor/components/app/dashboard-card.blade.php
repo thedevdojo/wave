@@ -1,4 +1,4 @@
-<a href="{{ $href ?? '' }}" class="flex overflow-hidden relative p-5 w-full bg-white dark:bg-zinc-900 rounded-lg border duration-300 ease-out group border-slate-200 dark:border-zinc-700 hover:scale-[1.01]">
+<a href="{{ $href ?? '' }}" @if($target ?? false) target="_blank" @endif class="flex overflow-hidden relative p-5 w-full bg-white dark:bg-zinc-900 rounded-lg border duration-300 ease-out group border-slate-200 dark:border-zinc-700 hover:scale-[1.01]">
     <span class="flex relative flex-col justify-center items-start pr-0 pb-1 space-y-3 h-full">
         <span class="block text-lg font-bold tracking-tight leading-tight text-slate-700 dark:text-white">{{ $title ?? '' }}</span>
         <span class="block text-sm opacity-60 dark:text-zinc-200">{{ $description ?? '' }}</span>

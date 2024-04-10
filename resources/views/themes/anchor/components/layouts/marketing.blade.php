@@ -8,7 +8,7 @@
     @if(config('wave.demo') && Request::is('/'))
         @include('theme::partials.demo-header')
     @endif
-
+    
     <x-marketing.elements.header />
 
     <main class="overflow-x-hidden flex-grow pt-24">
