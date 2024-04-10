@@ -17,7 +17,7 @@ class Cancelled
     public function handle($request, Closure $next)
     {
         if( auth()->user()->hasRole('cancelled') ){
-            return redirect()->route('wave.cancelled');
+            return redirect()->route('subscription.cancelled');
         }
 
         return $next($request);

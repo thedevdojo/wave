@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function index(){
-        return view('theme::notifications.index');
-    }
-
     public function delete(Request $request, $id){
         $notification = auth()->user()->notifications()->where('id', $id)->first();
         if ($notification){

@@ -17,7 +17,7 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+    protected static ?string $navigationIcon = 'phosphor-pencil-line-duotone';
 
     protected static ?int $navigationSort = 3;
 
@@ -37,7 +37,7 @@ class PostResource extends Resource
                     ->maxLength(191),
                 Forms\Components\Textarea::make('excerpt')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('body')
+                Forms\Components\RichEditor::make('body')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')

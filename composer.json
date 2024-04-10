@@ -11,11 +11,13 @@
         "bezhansalleh/filament-google-analytics": "^2.0",
         "codeat3/blade-phosphor-icons": "^2.0",
         "devdojo/app": "0.11.0",
-        "devdojo/themes": "0.0.8",
+        "devdojo/themes": "*",
         "filament/filament": "^3.2",
+        "gehrisandro/tailwind-merge-laravel": "^1.2",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "lab404/laravel-impersonate": "^1.7.5",
+        "laravel/folio": "^1.1",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.5",
@@ -76,10 +78,15 @@
             "pestphp/pest-plugin": true
         }
     },
-    "repositories": {
-        "hooks": {
-            "type": "composer",
-            "url": "https://larapack.io"
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/devdojo/themes",
+            "options": {
+                "symlink": true
+            }
         }
-    }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

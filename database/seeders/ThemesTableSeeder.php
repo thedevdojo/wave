@@ -22,8 +22,8 @@ class ThemesTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'name' => 'Tallstack Theme',
-                'folder' => 'tallstack',
+                'name' => 'Anchor Theme',
+                'folder' => 'anchor',
                 'active' => 1,
                 'version' => 1.0
             )

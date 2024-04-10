@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Lab404\Impersonate\Models\Impersonate;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Model;
-use Wave\Announcement;
+use Wave\Changelog;
 use Wave\PaddleSubscription;
 use Wave\Plan;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -151,24 +151,33 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @return bool
      */
+    public function isAdmin()
+    {
+        // return if the user has a role of admin
+        return $this->hasRole('admin');
+    }
+
+    /**
+     * @return bool
+     */
     public function canBeImpersonated()
     {
         // Any user that is not an admin can be impersonated
         return !$this->hasRole('admin');
     }
 
-    public function hasAnnouncements()
+    public function hasChangelogNotifications()
     {
-        // Get the latest Announcement
-        $latest_announcement = Announcement::orderBy('created_at', 'DESC')->first();
+        // Get the latest Changelog
+        $latest_changelog = Changelog::orderBy('created_at', 'DESC')->first();
 
-        if (!$latest_announcement) return false;
-        return !$this->announcements->contains($latest_announcement->id);
+        if (!$latest_changelog) return false;
+        return !$this->changelogs->contains($latest_changelog->id);
     }
 
-    public function announcements()
+    public function changelogs()
     {
-        return $this->belongsToMany('Wave\Announcement');
+        return $this->belongsToMany('Wave\Changelog');
     }
 
     public function createApiKey($name)
