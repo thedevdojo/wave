@@ -9,12 +9,13 @@
         @include('theme::partials.demo-header')
     @endif
 
-    @include('theme::partials.header-marketing')
+    <x-marketing.elements.header />
 
     <main class="overflow-x-hidden flex-grow pt-24">
         {{ $slot }}
     </main>
 
+    @livewire('notifications')
     @include('theme::partials.footer')
     @include('theme::partials.footer-scripts')
 

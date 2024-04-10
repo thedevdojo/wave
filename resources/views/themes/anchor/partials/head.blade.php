@@ -43,15 +43,6 @@
     <meta name="description" content="{{ $seo->description }}">
 @endif
 
-<!-- Used to add dark mode right away, adding here prevents any flicker -->
-<script>
-    if (typeof(Storage) !== "undefined") {
-        if(localStorage.getItem('theme') && localStorage.getItem('theme') == 'dark'){
-            document.documentElement.classList.add('dark');
-        }
-    }
-</script>
-
 <!-- Styles -->
 @filamentStyles
 @vite(['resources/views/themes/anchor/assets/css/app.css', 'resources/views/themes/anchor/assets/js/app.js'])

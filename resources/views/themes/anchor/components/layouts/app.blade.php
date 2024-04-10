@@ -2,6 +2,14 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     @include('theme::partials.head', ['seo' => ($seo ?? null) ])
+    <!-- Used to add dark mode right away, adding here prevents any flicker -->
+    <script>
+        if (typeof(Storage) !== "undefined") {
+            if(localStorage.getItem('theme') && localStorage.getItem('theme') == 'dark'){
+                document.documentElement.classList.add('dark');
+            }
+        }
+    </script>
 </head>
 <body class="flex flex-col min-h-screen bg-zinc-50 dark:bg-zinc-800 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
 

@@ -1,7 +1,7 @@
 
 <!-- Section 1 -->
 <footer>
-    <div class="px-8 pt-16 mx-auto max-w-6xl lg:px-12 xl:px-16">
+    <x-container>
         <div class="flex flex-wrap justify-between items-start pb-20">
             <a href="#_" class="flex items-center mt-1 w-auto text-lg font-bold brightness-0 transition-all duration-300 ease-out md:w-1/6 hover:brightness-100">
                 <x-logo class="w-auto h-5"></x-logo>
@@ -198,5 +198,5 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </x-container>
 </footer>
