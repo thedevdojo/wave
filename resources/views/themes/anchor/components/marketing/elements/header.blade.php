@@ -117,7 +117,7 @@
                         </a>
                     </li>
                     <li class="px-6 h-16 border-b border-gray-100 md:px-0 md:border-b-0 md:h-full">
-                        <a href="#_" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 hover:text-gray-900">About</a>
+                        <a href="{{ route('blog') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 hover:text-gray-900">Blog</a>
                     </li>
 
                     <a href="#_" class="block px-5 py-3 text-base font-medium text-center text-white bg-blue-600 md:hidden">View Dashboard</a>

@@ -13,7 +13,7 @@
     ]"
 >
     <x-container>
-        <div class="relative pt-6 mx-auto max-w-7xl">
+        <div class="relative pt-6">
             <x-marketing.elements.heading
                 title="From The Blog"
                 description="Check out some of our latest blog posts below."

@@ -10,7 +10,7 @@
     @endphp
 
     <x-container>
-        <div class="relative pt-6 mx-auto max-w-7xl">
+        <div class="relative pt-6">
             <x-marketing.elements.heading
                 title="{{ $category->name }} Articles"
                 description="Our latest {{ $category->name }} posts below."

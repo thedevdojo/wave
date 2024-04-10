@@ -1,4 +1,4 @@
-<ul class="inline-flex self-start px-3 py-2 mt-7 w-auto text-xs font-medium rounded-full border bg-zinc-100 text-zinc-600 border-zinc-100">
+<ul class="inline-flex self-start px-3 py-2 mt-7 w-auto text-xs font-medium rounded-full border bg-zinc-100 border-zinc-200 text-zinc-600 border-zinc-100">
     <li class="mr-4 font-bold uppercase text-zinc-800">Categories:</li>
     <li class="@if(!isset($category)){{ 'text-zinc-800' }}@endif"><a href="{{ route('blog') }}">View All</a></li>
     <li class="mx-2">&middot;</li>
