@@ -230,10 +230,10 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Return default User Role.
      */
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+    // public function role()
+    // {
+    //     return $this->belongsTo(Role::class);
+    // }
 
     // /**
     //  * Return alternative User Roles.
