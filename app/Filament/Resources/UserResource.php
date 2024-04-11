@@ -27,7 +27,9 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('role_id')
-                    ->numeric(),
+                    ->numeric()
+                    ->required()
+                    ->rule('exists:roles,id'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(191),
@@ -43,7 +45,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-                    ->required()
+                    ->required(fn (string $context): bool => $context === 'create')
                     ->maxLength(191),
                 Forms\Components\Textarea::make('settings')
                     ->columnSpanFull(),
@@ -110,6 +112,9 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Impersonate')
+                    ->url(fn ($record) => route('impersonate', $record))
+                    ->visible(fn ($record) => auth()->user()->id !== $record->id),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

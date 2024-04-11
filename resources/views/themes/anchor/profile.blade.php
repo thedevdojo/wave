@@ -14,7 +14,11 @@
 				<img src="{{ $user->avatar }}" class="w-24 h-24 rounded-full border-4 border-zinc-200">
 				<h2 class="mt-8 text-2xl font-bold">{{ $user->name }}</h2>
 				<p class="my-1 font-medium text-blue-blue">{{ '@' . $user->username }}</p>
-				<div class="px-3 py-1 my-2 text-xs font-medium text-white rounded text-zinc-600 bg-zinc-200">{{ $user->roles->first()->name }}</div>
+				{{-- Todo: display the correct role --}}
+				<div class="px-3 py-1 my-2 text-xs font-medium text-white rounded text-zinc-600 bg-zinc-200">{{ $user->roles }}</div>
+				@if (auth()->check() && auth()->user()->isAdmin())
+					<a href="{{ route('impersonate', $user->id) }}" class="px-3 py-1 my-2 text-xs font-medium text-white rounded text-zinc-600 bg-zinc-200">Impersonate</a>
+				@endif
 				<p class="mx-auto mt-3 max-w-lg text-base text-center text-zinc-500">{{ $user->profile('about') }}</p>
 		</x-card>
 

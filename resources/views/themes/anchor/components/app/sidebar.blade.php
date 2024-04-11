@@ -87,6 +87,9 @@
                                     <span>Log out</span>
                                 </button>
                             </form>
+                            @impersonating
+                            <x-app.sidebar-link href="{{ route('impersonate.leave') }}" icon="phosphor-user-circle-duotone" active="false">Leave impersonation</x-app.sidebar-link>
+                            @endImpersonating
                         </div>
                     </div>
                 </div>
