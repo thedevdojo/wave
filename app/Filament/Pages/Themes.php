@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use Filament\Pages\Page;
 use Filament\Notifications\Notification;
 use Wave\Theme;
+use Illuminate\Support\Facades\File;
 
 class Themes extends Page
 {
@@ -113,32 +114,30 @@ class Themes extends Page
 
 
     public function deleteTheme($theme_folder){
-        dd('delete theme folder, but first show a modal confirmation');
         $theme = Theme::where('folder', '=', $theme_folder)->first();
         if(!isset($theme)){
-            return redirect()
-                ->route("voyager.theme.index")
-                ->with([
-                        'message'    => "Could not find theme to delete",
-                        'alert-type' => 'error',
-                    ]);
+            Notification::make()
+                ->title('Theme not found, please make sure this theme exists in the database.')
+                ->danger()
+                ->send();
         }
 
         $theme_name = $theme->name;
 
+        $theme_location = resource_path('views/themes/' . $theme->folder);
+
         // if the folder exists delete it
-        if(file_exists($this->themes_folder.'/'.$theme->folder)){
-            File::deleteDirectory($this->themes_folder.'/'.$theme->folder, false);
+        if(file_exists($theme_location)){
+            File::deleteDirectory($theme_location, false);
         }
 
         $theme->delete();
 
-        return redirect()
-                ->back()
-                ->with([
-                        'message'    => "Successfully deleted theme " . $theme_name,
-                        'alert-type' => 'success',
-                    ]);
-
+        Notification::make()
+                ->title('Theme successfully deleted')
+                ->success()
+                ->send();
+        
+        $this->refreshThemes();
     }
 }

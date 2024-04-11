@@ -20,7 +20,7 @@
                                 <a href="/admin/themes/options" class="flex justify-center items-center w-8 h-8 rounded-md border border-zinc-200 hover:bg-zinc-200" data-id="{{ $theme->id }}">
                                     <x-phosphor-gear-bold class="w-4 h-4 text-zinc-500" />
                                 </a>
-                                <button wire:click="deleteTheme('{{ $theme->folder }}')" class="flex justify-center items-center w-8 h-8 rounded-md border border-zinc-200 hover:bg-zinc-200">
+                                <button wire:click="deleteTheme('{{ $theme->folder }}')" wire:confirm="Are you sure you want to delete {{ $theme->name }}?" class="flex justify-center items-center w-8 h-8 rounded-md border border-zinc-200 hover:bg-zinc-200">
                                     <x-phosphor-trash-bold class="w-4 h-4 text-red-500" />
                                 </button>
                             </div>

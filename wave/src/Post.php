@@ -17,7 +17,7 @@ class Post extends Model
     }
 
     public function image(){
-    	return $this->image;
+    	return url($this->image);
     }
 
     public function category(){
