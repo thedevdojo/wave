@@ -1,4 +1,4 @@
-<header x-data="{ mobileMenuOpen: false, scrolled: false, topOffset: 20 }"
+<header x-data="{ mobileMenuOpen: false, scrolled: false, showOverlay: false, topOffset: @if(config('wave.demo') && Request::is('/')){{ '50' }}@else{{ '0' }}@endif }"
         x-init="
             window.addEventListener('scroll', function() {
                 if(window.pageYOffset > topOffset){
@@ -7,11 +7,18 @@
                     scrolled = false;
                 }
             })
-        " :class="{ 'border-zinc-100 bg-white/90 backdrop-blur-xl' : scrolled, 'border-transparent bg-transparent' : !scrolled }" class="box-content fixed z-30 w-full h-24 border-b duration-300 ease-out" x-cloak>
+        " :class="{ 'border-zinc-100 bg-white/90 backdrop-blur-xl fixed mt-0' : scrolled, 'border-transparent bg-transparent absolute @if(config('wave.demo') && Request::is('/')){{ "mt-12" }} @endif' : !scrolled }" class="box-content z-30 w-full h-24 border-b" x-cloak>
+    <div 
+        x-show="showOverlay"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        class="absolute inset-0 pt-24 w-full h-screen">
+        <div class="w-screen h-full bg-black/50"></div>
+    </div>
     <x-container>
-        <div class="flex relative z-30 justify-between items-center h-24 md:space-x-8">
+        <div class="flex z-30 justify-between items-center h-24 md:space-x-8">
             <div class="inline-flex relative z-20">
-            <!-- data-replace='{ "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }' -->
                 <a href="{{ route('home') }}" class="flex justify-center items-center space-x-3 text-blue-500 brightness-0 transition-all duration-300 ease-out transform hover:brightness-100 grayscale-100">
                    <x-logo class="w-auto h-5"></x-logo>
                 </a>
@@ -22,14 +29,14 @@
                 </button>
             </div>
 
-            <nav class="relative h-full">
+            <nav class="h-full">
                 <ul id="menu" class="flex hidden flex-1 gap-x-8 justify-center items-center ml-0 w-full h-full border-t border-gray-100 md:flex md:w-auto md:items-center md:border-t-0 md:flex-row">
-                    <li class="flex relative z-30 flex-col items-start h-full border-b border-gray-100 md:border-b-0 group md:flex-row md:items-center">
+                    <li @mouseenter="showOverlay=true" @mouseleave="showOverlay=false" class="flex z-30 flex-col items-start h-full border-b border-gray-100 md:border-b-0 group md:flex-row md:items-center">
                         <a href="#_" class="flex gap-1 items-center px-6 w-full h-16 text-sm font-semibold text-gray-700 transition duration-300 md:h-full md:px-0 md:w-auto hover:text-gray-900">
                             <span class="">Platform</span>
                             <svg class="w-5 h-5 transition-all duration-300 ease-out group-hover:-rotate-180" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
                         </a>
-                        <div class="hidden top-0 left-0 invisible space-y-3 w-full w-screen bg-white border-t border-b border-gray-100 shadow-md opacity-0 transition-all duration-300 ease-out -translate-y-2 md:block group-hover:block group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 md:fixed md:mt-24">
+                        <div class="hidden top-0 left-0 invisible space-y-3 w-screen bg-white border-t border-b border-gray-100 shadow-md opacity-0 transition-transform duration-300 ease-out -translate-y-2 md:mt-24 md:block group-hover:block group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 md:absolute">
                             <ul class="flex flex-col justify-between px-8 mx-auto max-w-6xl md:px-12 md:flex-row">
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold transition duration-300 hover:bg-gray-50 lg:p-7 lg:py-10">
@@ -69,40 +76,40 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="flex relative z-30 flex-col items-start h-full border-b border-gray-100 md:border-b-0 group md:flex-row md:items-center">
+                    <li @mouseenter="showOverlay=true" @mouseleave="showOverlay=false" class="flex z-30 flex-col items-start h-full border-b border-gray-100 md:border-b-0 group md:flex-row md:items-center">
                         <a href="#_" class="flex gap-1 items-center px-6 w-full h-16 text-sm font-semibold text-gray-700 transition duration-300 md:h-full md:px-0 md:w-auto hover:text-gray-900">
                             <span class="">Resources</span>
                             <svg class="w-5 h-5 transition-all duration-300 ease-out group-hover:-rotate-180" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
                         </a>
-                        <div class="hidden top-0 left-0 invisible space-y-3 w-full w-screen bg-white border-t border-b border-gray-100 shadow-sm opacity-0 transition-all duration-300 ease-out -translate-y-2 md:block group-hover:block group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 md:fixed md:mt-24">
+                        <div class="hidden top-0 left-0 invisible space-y-3 w-screen bg-white border-t border-b border-gray-100 shadow-sm opacity-0 transition-all duration-300 ease-out -translate-y-2 md:block group-hover:block group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 md:absolute md:mt-24">
                             <ul class="flex flex-col justify-between px-8 mx-auto max-w-6xl md:flex-row md:px-12">
-                                <div class="flex flex-row gap-5 p-5 w-full border-r border-l border-zinc-100">
-                                    <div class="gap-5 space-y-2 w-auto">
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block px-3.5 py-3 text-sm rounded-xl hover:bg-neutral-100 group">
+                                <div class="flex flex-row w-full border-r border-l divide-x divide-zinc-100 border-zinc-100">
+                                    <div class="w-auto divide-y divide-zinc-100">
+                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-7 text-sm hover:bg-neutral-100 group">
                                             <span class="block mb-1 font-medium text-black">Authentication</span>
                                             <span class="block font-light leading-5 opacity-50">Configure the login, register, and forgot password for your app</span>
                                         </a>
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block px-3.5 py-3 text-sm rounded-xl hover:bg-neutral-100">
+                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-7 hover:bg-neutral-100">
                                             <span class="block mb-1 font-medium text-black">Roles and Permissions</span>
                                             <span class="block leading-5 opacity-50">We utilize the bullet-proof Spatie Permissions package</span>
                                         </a>
                                     </div>
-                                    <div class="gap-5 space-y-2 w-auto">
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block px-3.5 py-3 text-sm rounded-xl hover:bg-neutral-100">
+                                    <div class="w-auto divide-y divide-zinc-100">
+                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-7 text-sm hover:bg-neutral-100">
                                             <span class="block mb-1 font-medium text-black">Posts and Pages</span>
                                             <span class="block font-light leading-5 opacity-50">Easily write blog articles and create pages for your application</span>
                                         </a>
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block px-3.5 py-3 text-sm rounded-xl hover:bg-neutral-100">
+                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-7 text-sm hover:bg-neutral-100">
                                             <span class="block mb-1 font-medium text-black">Themes</span>
                                             <span class="block leading-5 opacity-50">Kick-start your app with a pre-built theme or create your own</span>
                                         </a>
                                     </div>
-                                    <div class="gap-5 space-y-2 w-auto">
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block px-3.5 py-3 text-sm rounded-xl hover:bg-neutral-100">
+                                    <div class="w-auto divide-y divide-zinc-100">
+                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-7 text-sm hover:bg-neutral-100">
                                             <span class="block mb-1 font-medium text-black">Settings and More</span>
                                             <span class="block leading-5 opacity-50">Easily create and update app settings. And so much more</span>
                                         </a>
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block px-3.5 py-3 text-sm rounded-xl hover:bg-neutral-100">
+                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-7 text-sm hover:bg-neutral-100">
                                             <span class="block mb-1 font-medium text-black">Subscriptions</span>
                                             <span class="block leading-5 opacity-50">Integration payments and let users subscribe to a plan</span>
                                         </a>

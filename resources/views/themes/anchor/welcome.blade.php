@@ -2,13 +2,13 @@
 
 @section('content')
 
-	<div class="py-20 mx-auto text-center max-w-7xl">
-        <div class="w-full space-y-2">
+	<div class="py-20 mx-auto max-w-7xl text-center">
+        <div class="space-y-2 w-full">
             <h1 class="mb-5 text-5xl font-medium">Welcome Aboard!</h1>
             <p class="py-0 my-0">Thanks for subscribing and welcome aboard.
 
                 @if(Request::get('complete')){{ 'Please finish completing your profile information below.' }} @endif</p>
-            <p class="py-0 my-0">This file can be modified inside of your <code class="px-2 py-1 font-mono text-base font-medium text-zinc-600 bg-indigo-100 rounded-md">resources/views/{{ theme_folder('/welcome.blade.php') }}</code> file ✌️</p>
+            <p class="py-0 my-0">This file can be modified inside of your <code class="px-2 py-1 font-mono text-base font-medium bg-indigo-100 rounded-md text-zinc-600">resources/views/{{ theme_folder('/welcome.blade.php') }}</code> file ✌️</p>
         </div>
 
         @if(Request::get('complete'))
@@ -23,7 +23,7 @@
                                 <h3 class="text-lg font-medium leading-6 text-zinc-900">
                                     Profile
                                 </h3>
-                                <p class="max-w-2xl mt-1 text-sm leading-5 text-zinc-500">
+                                <p class="mt-1 max-w-2xl text-sm leading-5 text-zinc-500">
                                     Finish filling out your profile information.
                                 </p>
                             </div>
@@ -74,9 +74,9 @@
                                 @endif
                             </div>
 
-                            <div class="flex flex-col items-center justify-center text-sm leading-5">
-                                <span class="block w-full mt-5 rounded-md shadow-sm">
-                                    <button type="submit" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
+                            <div class="flex flex-col justify-center items-center text-sm leading-5">
+                                <span class="block mt-5 w-full rounded-md shadow-sm">
+                                    <button type="submit" class="flex justify-center px-4 py-2 w-full text-sm font-medium text-white bg-blue-600 rounded-md border border-transparent transition duration-150 ease-in-out hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
                                         Submit
                                     </button>
                                 </span>
@@ -88,8 +88,8 @@
 
 
         @else
-            <div class="items-center justify-center w-full mt-12 text-center">
-                <a href="{{ route('wave.dashboard') }}" class="inline-block w-auto px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
+            <div class="justify-center items-center mt-12 w-full text-center">
+                <a href="{{ route('wave.dashboard') }}" class="inline-block px-4 py-2 w-auto text-sm font-medium text-white bg-blue-600 rounded-md border border-transparent transition duration-150 ease-in-out hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">
                     Go to my Dashboard
                 </a>
             </div>

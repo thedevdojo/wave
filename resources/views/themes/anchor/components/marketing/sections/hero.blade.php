@@ -1,4 +1,4 @@
-<section class="flex relative justify-center items-center -mt-24 w-full h-screen min-h-screen bg-white">
+<section class="flex relative justify-center items-center @if(config('wave.demo') && Request::is('/')){{ 'translate-y-12' }}@endif -mt-24 w-full h-screen min-h-screen bg-white">
     <div class="px-8 mx-auto max-w-6xl md:px-12 lg:px-20">
         <div class="grid grid-cols-1 gap-6 items-center lg:grid-cols-2 lg:gap-24">
             <div class="md:order-first">
