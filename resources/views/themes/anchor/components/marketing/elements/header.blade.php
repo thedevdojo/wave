@@ -39,35 +39,35 @@
                         <div class="hidden top-0 left-0 invisible space-y-3 w-screen bg-white border-t border-b border-gray-100 shadow-md opacity-0 transition-transform duration-300 ease-out -translate-y-2 md:mt-24 md:block group-hover:block group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 md:absolute">
                             <ul class="flex flex-col justify-between px-8 mx-auto max-w-6xl md:px-12 md:flex-row">
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
-                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold transition duration-300 hover:bg-gray-50 lg:p-7 lg:py-10">
+                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/anchor.png" class="w-12 h-auto" alt="feature 1 icon" />
                                         <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature One</span>
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Highlight your main feature here</span>
                                     </a>
                                 </li>
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
-                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold transition duration-300 hover:bg-gray-50 lg:p-7 lg:py-10">
+                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/turtle.png" class="w-12 h-auto" alt="feature 2 icon" />
                                         <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Two</span>
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Brief description of another feature</span>
                                     </a>
                                 </li>
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
-                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold transition duration-300 hover:bg-gray-50 lg:p-7 lg:py-10">
+                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/compass.png" class="w-12 h-auto" alt="feature 3 icon" />
                                         <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Three</span>
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Describe another one of your features here</span>
                                     </a>
                                 </li>
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
-                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold transition duration-300 hover:bg-gray-50 lg:p-7 lg:py-10">
+                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/lighthouse.png" class="w-12 h-auto" alt="feature 4 icon" />
                                         <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Four</span>
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Add a fourth feature or even a resource here</span>
                                     </a>
                                 </li>
                                 <li class="w-full border-r border-l border-gray-100 md:w-1/5">
-                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold transition duration-300 hover:bg-gray-50 lg:p-7 lg:py-10">
+                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block p-6 h-full text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/chest.png" class="w-12 h-auto" alt="feature 5 icon" />
                                         <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Five</span>
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Add another feature highlight or link to a page</span>
