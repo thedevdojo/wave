@@ -11,6 +11,7 @@
         "bezhansalleh/filament-google-analytics": "^2.0",
         "codeat3/blade-phosphor-icons": "^2.0",
         "devdojo/app": "0.11.0",
+        "devdojo/auth": "dev-updateUserModel",
         "devdojo/themes": "*",
         "filament/filament": "^3.2",
         "gehrisandro/tailwind-merge-laravel": "^1.2",

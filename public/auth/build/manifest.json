@@ -1,0 +1,13 @@
+{
+  "resources/css/auth.css": {
+    "file": "assets/styles.css",
+    "src": "resources/css/auth.css",
+    "isEntry": true
+  },
+  "resources/js/auth.js": {
+    "file": "assets/scripts.js",
+    "name": "scripts",
+    "src": "resources/js/auth.js",
+    "isEntry": true
+  }
+}

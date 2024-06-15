@@ -19,7 +19,7 @@
     <x-container>
         <div class="flex z-30 justify-between items-center h-24 md:space-x-8">
             <div class="inline-flex relative z-20">
-                <a href="{{ route('home') }}" class="flex justify-center items-center space-x-3 text-blue-500 brightness-0 transition-all duration-300 ease-out transform hover:brightness-100 grayscale-100">
+                <a href="{{ route('home') }}" class="flex justify-center items-center space-x-3 text-blue-500">
                    <x-logo class="w-auto h-5"></x-logo>
                 </a>
             </div>

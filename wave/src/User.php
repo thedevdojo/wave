@@ -3,6 +3,7 @@
 namespace Wave;
 
 use Carbon\Carbon;
+use Devdojo\Auth\Models\User as AuthUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -12,10 +13,9 @@ use Illuminate\Database\Eloquent\Model;
 use Wave\Changelog;
 use Wave\PaddleSubscription;
 use Wave\Plan;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements JWTSubject
+class User extends AuthUser implements JWTSubject
 {
     use Notifiable, Impersonate, HasRoles;
 
@@ -53,21 +53,6 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'trial_ends_at' => 'datetime',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        // Listen for the creating event of the model
-        static::creating(function ($user) {
-            // Check if the username attribute is empty
-            if (empty($user->username)) {
-                // Use the email to generate a slugified username
-                // For example, 'john.doe@example.com' becomes 'john-doe'
-                $user->username = Str::slug(explode('@', $user->email)[0], '-');
-            }
-        });
-    }
 
     public function keyValues()
     {
