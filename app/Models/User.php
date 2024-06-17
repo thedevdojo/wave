@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Support\Str;
 use Wave\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable  implements FilamentUser
 {
     use Notifiable;
 
@@ -54,6 +56,15 @@ class User extends Authenticatable
                 $user->username = $username;
             }
         });
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() === 'admin' && auth()->user()->hasRole('admin')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

@@ -15,7 +15,6 @@
         <x-card class="p-10">
 
             <x-elements.back-button
-                class="-translate-y-2"
                 text="View All Changelogs"
                 :href="route('changelogs')"
             />

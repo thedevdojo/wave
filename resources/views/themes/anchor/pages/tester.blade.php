@@ -11,6 +11,10 @@
     ]"
 > 
         
-       asdf
+       @hasrole('admin')
+    I admin
+@else
+    I not
+@endhasrole
 
 </x-layouts.marketing>

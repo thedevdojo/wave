@@ -23,7 +23,7 @@
         })
     "
     x-on:click="toggle()"
-    class="flex items-center px-1 py-2 text-xs rounded-md cursor-pointer select-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
+    class="flex items-center px-1 py-2 text-xs rounded-md cursor-pointer select-none hover:bg-zinc-100 dark:hover:bg-zinc-800"
 >
 
     <input type="hidden" name="toggleDarkMode" :value="theme">
@@ -46,10 +46,10 @@
 
     <label
         :id="$id('toggle-label')"
-        :class="{ 'text-gray-600' : theme == 'light', 'text-gray-300' : theme == 'dark' }"
+        :class="{ 'text-gray-600' : theme == 'light' || theme == null, 'text-gray-300' : theme == 'dark'  }"
         class="flex-shrink-0 ml-1.5 font-medium cursor-pointer"
     >
-        <span x-show="(theme == 'light')">Dark Mode</span>
+        <span x-show="(theme == 'light' || theme == null)">Dark Mode</span>
         <span x-show="(theme == 'dark')">Light Mode</span>
     </label>
 

@@ -4,7 +4,7 @@
     
     {{-- Sidebar --}} 
     <div :class="{ '-translate-x-full': !mobileOpen }"
-        class="fixed top-0 left-0 flex md:translate-x-0 flex-col z-50 justify-between h-screen overflow-x-hidden overflow-auto transition-[width,transform] duration-150 ease-out bg-white border-r shadow-sm dark:bg-zinc-900 items-between w-64 group border-slate-100 dark:border-zinc-800">  
+        class="fixed top-0 left-0 flex md:translate-x-0 flex-col z-50 justify-between h-screen overflow-x-hidden overflow-auto transition-[width,transform] duration-150 ease-out bg-white border-r shadow-sm dark:bg-zinc-900 items-between w-64 group border-slate-100 dark:border-zinc-800 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">  
         <div class="flex relative flex-col py-6">
             <div class="flex items-center px-4 space-x-2">
                 <a href="/dashboard" wire:navigate class="flex justify-start items-center px-2.5 w-full h-auto brightness-0 duration-300 ease-out dark:brightness-[5] hover:brightness-100 dark:hover:brightness-100 min-w-16 group-hover:justify-start shrink-0">
@@ -36,24 +36,18 @@
 
         <div class="relative px-2.5 pb-2.5 space-y-1.5 text-zinc-700 dark:text-zinc-400">
             
-            <x-app.sidebar-link href="" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-book-bookmark-duotone" active="false">Documentation</x-app.sidebar-link>
-            <x-app.sidebar-link href="" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-lifebuoy-duotone" active="false">Help</x-app.sidebar-link>
+            <x-app.sidebar-link href="https://wave.devdojo.com/docs" target="_blank" icon="phosphor-book-bookmark-duotone" active="false">Documentation</x-app.sidebar-link>
+            <x-app.sidebar-link href="https://devdojo.com/questions" target="_blank" icon="phosphor-chat-duotone" active="false">Questions</x-app.sidebar-link>
             <x-app.sidebar-link :href="route('changelogs')" icon="phosphor-book-open-text-duotone" active="false">Changelog</x-app.sidebar-link>
 
-            <div class="px-1 py-3">
-                <div class="relative px-4 py-3 space-y-1 w-full bg-white rounded-lg border text-zinc-700 dark:text-zinc-100 dark:bg-zinc-800 border-zinc-100 dark:border-zinc-700">
-                    <button class="absolute top-0 right-0 mt-3.5 mr-3.5 w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400">
-                        <x-phosphor-x-bold class="w-full h-full" />
+            <div x-show="sidebarTip" x-data="{ sidebarTip: $persist(true) }" class="px-1 py-3" x-collapse x-cloak>
+                <div class="relative px-4 py-3 space-y-1 w-full rounded-lg border bg-zinc-50 text-zinc-700 dark:text-zinc-100 dark:bg-zinc-800 border-zinc-200/60 dark:border-zinc-700">
+                    <button @click="sidebarTip=false" class="absolute top-0 right-0 z-50 p-1.5 mt-2.5 mr-2.5 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-zinc-100 hover:dark:bg-zinc-700 hover:dark:text-zinc-300 text-zinc-500 dark:text-zinc-400">
+                        <x-phosphor-x-bold class="w-3 h-3" />
                     </button>
-                    <h5 class="text-sm font-bold">Progress</h5>
-                    <p class="block pb-3 text-xs opacity-80">You've completed 90% of setup</p>
-                    <div class="overflow-hidden relative w-full h-2 rounded-full bg-zinc-300 dark:bg-zinc-600">
-                        <div class="bg-blue-500 h-full w-[90%] absolute left-0 top-0"></div>
-                    </div>
-                    <div class="flex justify-start items-center pt-3 space-x-2 font-medium">
-                        <span class="text-xs cursor-pointer text-zinc-500 dark:text-zinc-300 hover:underline">Dismiss</span>
-                        <span class="ml-auto text-xs text-blue-500 cursor-pointer dark:text-blue-400 hover:underline">Complete</span>
-                    </div>
+                    <h5 class="pb-1 text-sm font-bold -translate-y-0.5">Edit This Section</h5>
+                    <p class="block pb-1 text-xs opacity-80 text-balance">You can edit any aspect of your user dashboard. This section can be found inside your theme component/app/sidebar file.</p>
+                    
                 </div>
             </div>
 
@@ -79,7 +73,8 @@
                         <div class="my-2 w-full h-px bg-slate-100 dark:bg-zinc-700"></div>
                         <div class="flex relative flex-col p-2 space-y-1">
                             <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('notifications') }}" icon="phosphor-bell-duotone" active="false">Notifications</x-app.sidebar-link>
-                            <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('wave.settings', 'profile') }}" icon="phosphor-gear-duotone" active="false">Edit Profile</x-app.sidebar-link>
+                            <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ '/@' . auth()->user()->username }}" icon="phosphor-planet-duotone" active="false">Public Profile</x-app.sidebar-link>
+                            <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('wave.settings', 'profile') }}" icon="phosphor-gear-duotone" active="false">Settings</x-app.sidebar-link>
                             <form method="POST" action="{{ route('logout') }}" class="w-full">
                                 @csrf
                                 <button onclick="event.preventDefault(); this.closest('form').submit();" class="relative w-full flex cursor-pointer hover:text-zinc-700 dark:hover:text-zinc-100 select-none hover:bg-zinc-200 dark:hover:bg-zinc-700/60 items-center rounded-md p-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
