@@ -47,6 +47,7 @@
     @endif
     @include('theme::partials.footer-scripts')
     {{ $javascript ?? '' }}
+    
 
 </body>
 </html>

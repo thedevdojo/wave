@@ -28,14 +28,14 @@
 			</div>
 
 			<div class="mt-5">
-				<label for="about" class="block text-sm font-medium leading-5 text-zinc-700">About</label>
+				<label x-data for="about" class="block text-sm font-medium leading-5 text-zinc-700">About</label>
 				<div class="mt-1 rounded-md">
 					{!! profile_field('text_area', 'about') !!}
 				</div>
 			</div>
 
 			<div class="flex justify-end w-full">
-				<button class="flex justify-center self-end px-4 py-2 mt-5 w-auto text-sm font-medium text-white rounded-md border border-transparent transition duration-150 ease-in-out bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700" dusk="update-profile-button">Save</button>
+				<button class="flex justify-center self-end px-4 py-2 mt-5 w-auto text-sm font-medium text-white bg-blue-600 rounded-md border border-transparent transition duration-150 ease-in-out hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700" dusk="update-profile-button">Save</button>
 			</div>
 		</div>
 	</div>
@@ -46,7 +46,8 @@
 
 </form>
 
-<div id="uploadModal" x-data x-init="$watch('$store.uploadModal.open', value => {
+
+{{-- <div id="uploadModal" x-data x-init="$watch('$store.uploadModal.open', value => {
       if (value === true) { document.body.classList.add('overflow-hidden') }
       else { document.body.classList.remove('overflow-hidden'); clearInputField(); }
     });" x-show="$store.uploadModal.open" class="overflow-y-auto fixed inset-0 z-10 z-30">
@@ -66,7 +67,7 @@
                     <div class="mt-2">
 						<div id="upload-crop-container" class="flex relative justify-center items-center mt-5 h-56">
 							<div id="uploadLoading" class="flex justify-center items-center w-full h-full">
-								<svg class="mr-3 -ml-1 w-5 h-5 text-zinc-400 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+								<svg class="mr-3 -ml-1 w-5 h-5 animate-spin text-zinc-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
 									<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
 									<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
 								</svg>
@@ -78,10 +79,10 @@
             </div>
             <div class="mt-5 sm:mt-6">
                 <span class="flex w-full rounded-md shadow-sm">
-					<button @click="$store.uploadModal.open = false;" class="inline-flex justify-center px-4 py-2 mr-2 w-full text-base font-medium leading-6 text-zinc-700 bg-white rounded-md border border-transparent border-zinc-300 shadow-sm transition duration-150 ease-in-out hover:text-zinc-500 active:text-zinc-800 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5" type="button">Cancel</button>
-            		<button @click="$store.uploadModal.open = false; window.applyImageCrop()" class="inline-flex justify-center px-4 py-2 ml-2 w-full text-base font-medium leading-6 text-white rounded-md border border-transparent shadow-sm transition duration-150 ease-in-out bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave sm:text-sm sm:leading-5" id="apply-crop" type="button">Apply</button>
+					<button @click="$store.uploadModal.open = false;" class="inline-flex justify-center px-4 py-2 mr-2 w-full text-base font-medium leading-6 bg-white rounded-md border border-transparent shadow-sm transition duration-150 ease-in-out text-zinc-700 border-zinc-300 hover:text-zinc-500 active:text-zinc-800 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5" type="button">Cancel</button>
+            		<button @click="$store.uploadModal.open = false; window.applyImageCrop()" class="inline-flex justify-center px-4 py-2 ml-2 w-full text-base font-medium leading-6 text-white bg-blue-600 rounded-md border border-transparent shadow-sm transition duration-150 ease-in-out hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave sm:text-sm sm:leading-5" id="apply-crop" type="button">Apply</button>
                 </span>
             </div>
         </div>
     </div>
-</div>
+</div> --}}
