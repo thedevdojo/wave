@@ -23,6 +23,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.5",
         "livewire/livewire": "^3.0",
+        "ralphjsmit/livewire-urls": "^1.4",
         "spatie/laravel-permission": "^6.4",
         "tymon/jwt-auth": "@dev"
     },
