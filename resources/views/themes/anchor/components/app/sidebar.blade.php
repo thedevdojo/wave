@@ -1,4 +1,4 @@
-<div x-data="{ mobileOpen: false }"  @open-sidebar.window="mobileOpen = true" class="relative w-screen md:w-auto" x-cloak>
+<div x-data="{ mobileOpen: false }"  @open-sidebar.window="mobileOpen = true" class="relative z-10 w-screen md:w-auto" x-cloak>
     {{-- Backdrop for mobile --}}
     <div x-show="mobileOpen" @click="mobileOpen=false" class="fixed top-0 right-0 z-50 w-screen h-screen duration-300 ease-out bg-black/20 dark:bg-white/10"></div>
     
