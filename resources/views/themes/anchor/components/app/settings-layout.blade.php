@@ -17,9 +17,9 @@
                 
 
                 <div class="px-2.5 pt-3.5 pb-1.5 text-xs font-semibold leading-6 text-zinc-500">Billing</div>
-                <x-settings-sidebar-link :href="route('settings')" icon="phosphor-storefront-duotone">Plans</x-settings-sidebar-link>
-                <x-settings-sidebar-link :href="route('settings')" icon="phosphor-credit-card-duotone">Subscription</x-settings-sidebar-link>
-                <x-settings-sidebar-link :href="route('settings')" icon="phosphor-invoice-duotone">Invoices</x-settings-sidebar-link>
+                <x-settings-sidebar-link :href="route('settings.plans')" icon="phosphor-storefront-duotone">Plans</x-settings-sidebar-link>
+                <x-settings-sidebar-link :href="route('settings.subscriptions')" icon="phosphor-credit-card-duotone">Subscription</x-settings-sidebar-link>
+                <x-settings-sidebar-link :href="route('settings.invoices')" icon="phosphor-invoice-duotone">Invoices</x-settings-sidebar-link>
             </nav>
         </aside>
 

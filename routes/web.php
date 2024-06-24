@@ -18,3 +18,9 @@ use Wave\Facades\Wave;
 Wave::routes();
 
 Route::view('test', 'theme::test');
+
+use Illuminate\Support\Facades\Storage;
+
+Route::get('testing', function(){
+    dd(Storage::url('asdf'));
+});

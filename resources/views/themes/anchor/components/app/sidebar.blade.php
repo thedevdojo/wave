@@ -58,7 +58,8 @@
                 x-cloak
             >
                 <button @click="dropdownOpen=!dropdownOpen" class="flex p-2 w-full text-[13px] hover:bg-zinc-100 rounded-md justify-start items-center w-full hover:text-black dark:hover:text-zinc-100 dark:hover:bg-zinc-700/60 space-x-1.5 overflow-hidden group-hover:autoflow-auto items">
-                    <x-phosphor-user-circle-duotone class="flex-shrink-0 w-5 h-5" />
+                    {{-- <x-phosphor-user-circle-duotone class="flex-shrink-0 w-5 h-5" /> --}}
+                    <img x-data="{ src: '', refreshAvatarSrc(){ this.src='{{ auth()->user()->avatar() }}' + '?' + new Date().getTime() } }" x-init="refreshAvatarSrc()" @refresh-avatar.window="refreshAvatarSrc()" :src="src" class="w-5 h-5 rounded-full" alt="{{ auth()->user()->name }}" x-cloak />
                     <span class="flex-shrink-0 ease-out duration-50">{{ Auth::user()->name }}</span>
                     <svg class="absolute right-0 w-4 h-4 ease-out rotate-180 -translate-x-2 fill-current group-hover:delay-150 duration-0 group-hover:duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                 </button>
@@ -83,7 +84,7 @@
                                 </button>
                             </form>
                             @impersonating
-                            <x-app.sidebar-link href="{{ route('impersonate.leave') }}" icon="phosphor-user-circle-duotone" active="false">Leave impersonation</x-app.sidebar-link>
+                                <x-app.sidebar-link href="{{ route('impersonate.leave') }}" icon="phosphor-user-circle-duotone" active="false">Leave impersonation</x-app.sidebar-link>
                             @endImpersonating
                         </div>
                     </div>

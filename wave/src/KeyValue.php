@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class KeyValue extends Model
 {
-	protected $table = 'wave_key_values';
+	protected $table = 'key_values';
 
  	public $timestamps = false;
 

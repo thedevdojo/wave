@@ -513,7 +513,7 @@ VALUES
 	(22,'2017_07_05_210000_add_policyname_to_data_types_table',2),
 	(23,'2017_08_05_000000_add_group_to_settings_table',2),
 	(24,'2018_04_15_143034_add_username_to_users_table',3),
-	(27,'2018_04_22_020900_create_wave_key_values_table',4),
+	(27,'2018_04_22_020900_create_key_values_table',4),
 	(28,'2018_05_20_204156_create_announcements_table',5),
 	(29,'2018_05_20_205346_create_announcement_user_table',5),
 	(30,'2018_05_23_234956_create_notifications_table',6);
@@ -1255,12 +1255,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table wave_key_values
+# Dump of table key_values
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `wave_key_values`;
+DROP TABLE IF EXISTS `key_values`;
 
-CREATE TABLE `wave_key_values` (
+CREATE TABLE `key_values` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `keyvalue_id` int(10) unsigned NOT NULL,
@@ -1268,19 +1268,19 @@ CREATE TABLE `wave_key_values` (
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `wave_key_values_keyvalue_id_keyvalue_type_key_unique` (`keyvalue_id`,`keyvalue_type`,`key`)
+  UNIQUE KEY `key_values_keyvalue_id_keyvalue_type_key_unique` (`keyvalue_id`,`keyvalue_type`,`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `wave_key_values` WRITE;
-/*!40000 ALTER TABLE `wave_key_values` DISABLE KEYS */;
+LOCK TABLES `key_values` WRITE;
+/*!40000 ALTER TABLE `key_values` DISABLE KEYS */;
 
-INSERT INTO `wave_key_values` (`id`, `type`, `keyvalue_id`, `keyvalue_type`, `key`, `value`)
+INSERT INTO `key_values` (`id`, `type`, `keyvalue_id`, `keyvalue_type`, `key`, `value`)
 VALUES
 	(10,'text_area',1,'users','about','Hello my name is Tony, I like to create cool web applications and I enjoy doing other stuff like going to the movies, hanging out at the beach, and spending time with my family.'),
 	(11,'image',1,'users','cover_image','themes/April2018/uQPiLPWGTZp7JVjmB9oB.jpg'),
 	(12,'text_area',73,'users','about','I live in SpringField and I like to drink duff beer. I have a cool family. I work at the power plant and go to Moes on a daily basis.');
 
-/*!40000 ALTER TABLE `wave_key_values` ENABLE KEYS */;
+/*!40000 ALTER TABLE `key_values` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

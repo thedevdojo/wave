@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wave_key_values', function (Blueprint $table) {
+        Schema::create('key_values', function (Blueprint $table) {
             $table->increments('id'); // Auto-incrementing UNSIGNED INTEGER (primary key)
             $table->string('type', 191); // VARCHAR equivalent column for the type
             $table->unsignedInteger('keyvalue_id'); // UNSIGNED INTEGER for the key-value relationship ID
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps(); // Adds created_at and updated_at columns
 
             // Unique constraint to ensure uniqueness across the combination of keyvalue_id, keyvalue_type, and key
-            $table->unique(['keyvalue_id', 'keyvalue_type', 'key'], 'wave_key_values_keyvalue_type_key_unique');
+            $table->unique(['keyvalue_id', 'keyvalue_type', 'key'], 'key_values_keyvalue_type_key_unique');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wave_key_values');
+        Schema::dropIfExists('key_values');
     }
 };
