@@ -21,6 +21,11 @@ Route::view('test', 'theme::test');
 
 use Illuminate\Support\Facades\Storage;
 
-Route::get('testing', function(){
-    dd(Storage::url('asdf'));
+Route::get('prostuff', function(){
+    $user = auth()->user();
+    $user->setKeyValue('cool', 'beans');
+    //dd($user->keyValues);
+
+    // $keyValuesQuery = $user->keyValues();
+    // dd($keyValuesQuery->toSql(), $keyValuesQuery->getBindings());
 });

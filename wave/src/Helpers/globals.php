@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 if (!class_exists(KeyValueConvertible::class)) {
     class KeyValueConvertible
     {
@@ -125,43 +127,26 @@ if (!function_exists('setting')) {
         $value = ($default == null) ? '' : $default;
 
         return $value;
-        
-        // $globalCache = config('voyager.settings.cache', false);
-
-        // if ($globalCache && Cache::tags('settings')->has($key)) {
-        //     return Cache::tags('settings')->get($key);
-        // }
-
-        // if ($this->setting_cache === null) {
-        //     if ($globalCache) {
-        //         // A key is requested that is not in the cache
-        //         // this is a good opportunity to update all keys
-        //         // albeit not strictly necessary
-        //         Cache::tags('settings')->flush();
-        //     }
-
-        //     foreach (self::model('Setting')->orderBy('order')->get() as $setting) {
-        //         $keys = explode('.', $setting->key);
-        //         @$this->setting_cache[$keys[0]][$keys[1]] = $setting->value;
-
-        //         if ($globalCache) {
-        //             Cache::tags('settings')->forever($setting->key, $setting->value);
-        //         }
-        //     }
-        // }
-
-        // $parts = explode('.', $key);
-
-        // if (count($parts) == 2) {
-        //     return @$this->setting_cache[$parts[0]][$parts[1]] ?: $default;
-        // } else {
-        //     return @$this->setting_cache[$parts[0]] ?: $default;
-        // }
     }
 }
 
 if (!function_exists('blade')) {
     function blade($string){
         return \Illuminate\Support\Facades\Blade::render($string);
+    }
+}
+
+if (!function_exists('getMorphAlias')) {
+    /**
+     * Get the morph alias for a given class.
+     *
+     * @param string $class
+     * @return string|null
+     */
+    function getMorphAlias($class)
+    {
+        $morphMap = Relation::morphMap();
+        $alias = array_search($class, $morphMap);
+        return $alias ?: null;
     }
 }

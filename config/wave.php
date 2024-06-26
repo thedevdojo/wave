@@ -3,7 +3,11 @@
 return [
 
 	'profile_fields' => [
-		'about'
+		'about' => [
+			'label' => 'About',
+			'field' => 'textarea',
+			'validation' => 'required'
+		]
 	],
 
 	'api' => [

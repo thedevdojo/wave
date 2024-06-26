@@ -82,6 +82,11 @@ class WaveServiceProvider extends ServiceProvider
                 return false;
             }
         });
+
+        Relation::morphMap([
+            'user' => config('auth.providers.model'),
+            // Add other mappings as needed
+        ]);
 	}
 
 	protected function loadHelpers()

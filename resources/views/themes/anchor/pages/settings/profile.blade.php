@@ -1,6 +1,5 @@
 <?php
     use Filament\Forms\Components\TextInput;
-	use Filament\Forms\Components\Textarea;
     use Livewire\Volt\Component;
     use function Laravel\Folio\{name};
     use Filament\Forms\Concerns\InteractsWithForms;
@@ -24,18 +23,12 @@
 	{
         use InteractsWithForms;
         
-        // variables for (b)rowing keys
-        public $keys = [];
-        
         public ?array $data = [];
-
 		public ?string $avatar = null;
 
 		public function mount(): void
         {
             $this->form->fill();
-			$this->data['name'] = auth()->user()->name;
-			$this->data['email'] = auth()->user()->email;
         }
 
        public function form(Form $form): Form
@@ -44,13 +37,15 @@
                 ->schema([
                     TextInput::make('name')
                         ->label('Name')
-                        ->required(),
+                        ->required()
+						->rules('required|string')
+						->default(auth()->user()->name),
 					TextInput::make('email')
                         ->label('Email Address')
-                        ->required(),
-					Textarea::make('about')
-                        ->label('About')
                         ->required()
+						->rules('sometimes|required|email|unique:users,email,' . auth()->user()->id)
+						->default(auth()->user()->email),
+					...($this->dynamicProfileFields())
                 ])
                 ->statePath('data');
         }
@@ -90,6 +85,59 @@
 			auth()->user()->name = $state['name'];
 			auth()->user()->email = $state['email'];
 			auth()->user()->save();
+
+			//dd($state);
+
+			foreach(config('profile.fields') as $key => $field){
+				if(isset($state[$key])){
+					$value = $state[$key];
+					if (is_array($state[$key])) {
+						$value = json_encode($state[$key]);
+					}
+					auth()->user()->setKeyValue($key, $value, $field['type']);
+				}
+			}
+
+		}
+
+		private function dynamicProfileFields(){
+			$dynamicFields = [];
+			foreach(config('profile.fields') as $key => $field){
+				$fieldType = '\Filament\Forms\Components\\' . $field['type'];
+				$newField = $fieldType::make($key);
+				
+				if(isset($field['label'])){
+					$newField->label($field['label']);
+				}
+
+				if(isset($field['options'])){
+					$newField->options( $field['options'] );
+				}
+
+				if(isset($field['suggestions'])){
+					$newField->suggestions( $field['suggestions'] );
+				}
+
+				if(isset($field['rules'])){
+					$newField->rules( $field['rules'] );
+				}
+
+				$keyValue = auth()->user()->keyValues->where('key', $key)->first();
+				
+				$value = $keyValue->value ?? '';
+				if (!empty($value)) {
+					if (json_decode($value, true) !== null) {
+						$value = json_decode($value, true);
+					}
+				}
+
+				$newField->default($value);
+				// add validation
+
+				$dynamicFields[] = $newField;
+			}
+
+			return $dynamicFields;
 		}
 
 	}
@@ -174,7 +222,7 @@
 			}
 		"
 		class="relative">
-			<form wire:submit="save" class="w-full max-w-lg">
+			<form wire:submit="save" class="w-full">
 				<div class="flex relative flex-col px-10 mt-5">
 					<div class="relative flex-shrink-0 w-32 h-32 cursor-pointer group">
 						<img id="preview" src="{{ auth()->user()->avatar() . '?' . time() }}" class="w-32 h-32 rounded-full">

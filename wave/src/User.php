@@ -54,16 +54,6 @@ class User extends AuthUser implements JWTSubject
         'trial_ends_at' => 'datetime',
     ];
 
-    public function keyValues()
-    {
-        return $this->morphMany('Wave\KeyValue', 'keyvalue');
-    }
-
-    public function keyValue($key)
-    {
-        return $this->morphMany('Wave\KeyValue', 'keyvalue')->where('key', '=', $key)->first();
-    }
-
     public function profile($key)
     {
         $keyValue = $this->keyValue($key);
