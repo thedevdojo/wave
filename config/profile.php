@@ -48,6 +48,5 @@ return [
             'type' => 'MarkdownEditor',
             'rules' => 'required'
         ],
-        
 	],
 ];

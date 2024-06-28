@@ -1,27 +1,19 @@
 <?php
-    use Filament\Forms\Components\TextInput;
-    use Livewire\Volt\Component;
+
     use function Laravel\Folio\{name};
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
     use Filament\Forms\Form;
     use Filament\Notifications\Notification;
-    use Filament\Tables;
-    use Filament\Tables\Table;
-    use Filament\Tables\Actions\Action;
-    use Filament\Tables\Columns\TextColumn;
-    use Filament\Tables\Actions\DeleteAction;
-    use Filament\Tables\Actions\EditAction;
-    use Filament\Tables\Actions\ViewAction;
-
-    use Illuminate\Support\Str;
+	use Livewire\Volt\Component;
+	use Wave\Traits\HasDynamicFields;
     use Wave\ApiKey;
     
     name('settings.profile');
 
 	new class extends Component implements HasForms
 	{
-        use InteractsWithForms;
+        use InteractsWithForms, HasDynamicFields;
         
         public ?array $data = [];
 		public ?string $avatar = null;
@@ -35,17 +27,17 @@
         {
             return $form
                 ->schema([
-                    TextInput::make('name')
+                    \Filament\Forms\Components\TextInput::make('name')
                         ->label('Name')
                         ->required()
 						->rules('required|string')
 						->default(auth()->user()->name),
-					TextInput::make('email')
+					\Filament\Forms\Components\TextInput::make('email')
                         ->label('Email Address')
                         ->required()
 						->rules('sometimes|required|email|unique:users,email,' . auth()->user()->id)
 						->default(auth()->user()->email),
-					...($this->dynamicProfileFields())
+					...($this->dynamicFields())
                 ])
                 ->statePath('data');
         }
@@ -85,59 +77,8 @@
 			auth()->user()->name = $state['name'];
 			auth()->user()->email = $state['email'];
 			auth()->user()->save();
-
-			//dd($state);
-
-			foreach(config('profile.fields') as $key => $field){
-				if(isset($state[$key])){
-					$value = $state[$key];
-					if (is_array($state[$key])) {
-						$value = json_encode($state[$key]);
-					}
-					auth()->user()->setKeyValue($key, $value, $field['type']);
-				}
-			}
-
-		}
-
-		private function dynamicProfileFields(){
-			$dynamicFields = [];
-			foreach(config('profile.fields') as $key => $field){
-				$fieldType = '\Filament\Forms\Components\\' . $field['type'];
-				$newField = $fieldType::make($key);
-				
-				if(isset($field['label'])){
-					$newField->label($field['label']);
-				}
-
-				if(isset($field['options'])){
-					$newField->options( $field['options'] );
-				}
-
-				if(isset($field['suggestions'])){
-					$newField->suggestions( $field['suggestions'] );
-				}
-
-				if(isset($field['rules'])){
-					$newField->rules( $field['rules'] );
-				}
-
-				$keyValue = auth()->user()->keyValues->where('key', $key)->first();
-				
-				$value = $keyValue->value ?? '';
-				if (!empty($value)) {
-					if (json_decode($value, true) !== null) {
-						$value = json_decode($value, true);
-					}
-				}
-
-				$newField->default($value);
-				// add validation
-
-				$dynamicFields[] = $newField;
-			}
-
-			return $dynamicFields;
+			$fieldsToSave = config('profile.fields');
+			$this->saveDynamicFields($fieldsToSave);
 		}
 
 	}

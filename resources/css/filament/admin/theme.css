@@ -35,4 +35,17 @@
     color:#3662e3;
 }
 
+.fi-topbar > nav, .fi-sidebar-header{
+    box-shadow: none !important;
+    border-bottom:1px solid #eeeeff;
+}
+
+.fi-url-admin-forms .fi-main{
+    @apply px-0 max-w-full h-full bg-zinc-100;
+}
+
+.forms-page > section{
+    @apply py-0 my-0;
+}
+
 @config 'tailwind.config.js';
