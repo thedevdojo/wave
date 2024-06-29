@@ -4,9 +4,9 @@ namespace Wave;
 
 use Illuminate\Database\Eloquent\Model;
 
-class KeyValue extends Model
+class ProfileKeyValue extends Model
 {
-    protected $table = 'key_values';
+    protected $table = 'profile_key_values';
 
     public $timestamps = false;
 
@@ -18,7 +18,7 @@ class KeyValue extends Model
         'value',
     ];
 
-    public function keyvalue()
+    public function profileKeyValue()
     {
         return $this->morphTo();
     }

@@ -4,7 +4,7 @@
     
     {{-- Sidebar --}} 
     <div :class="{ '-translate-x-full': !mobileOpen }"
-        class="fixed top-0 left-0 flex md:translate-x-0 flex-col z-50 justify-between h-screen overflow-x-hidden overflow-auto transition-[width,transform] duration-150 ease-out bg-white border-r shadow-sm dark:bg-zinc-900 items-between w-64 group border-slate-100 dark:border-zinc-800 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">  
+        class="fixed top-0 left-0 flex -translate-x-full lg:translate-x-0 flex-col z-50 justify-between h-screen overflow-x-hidden overflow-auto transition-[width,transform] duration-150 ease-out bg-white border-r shadow-sm dark:bg-zinc-900 items-between w-64 group border-slate-100 dark:border-zinc-800 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">  
         <div class="flex relative flex-col py-6">
             <div class="flex items-center px-4 space-x-2">
                 <a href="/dashboard" wire:navigate class="flex justify-start items-center px-2.5 w-full h-auto brightness-0 duration-300 ease-out dark:brightness-[5] hover:brightness-100 dark:hover:brightness-100 min-w-16 group-hover:justify-start shrink-0">

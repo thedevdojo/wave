@@ -2,12 +2,24 @@
 
 namespace Wave\Traits;
 
+use Illuminate\Support\Str;
+
 trait HasDynamicFields
 {
-    private function dynamicFields(){
+    private function dynamicFields($fields){
         $dynamicFields = [];
-        foreach(config('profile.fields') as $key => $field){
-            $fieldType = '\Filament\Forms\Components\\' . $field['type'];
+        foreach($fields as $field){
+
+            $key = Str::slug($field['label']);
+
+            if(!class_exists($field['type'])){
+                $fieldType = '\Filament\Forms\Components\\' . $field['type'];
+            } else {
+                $fieldType = $field['type'];
+            }
+
+            
+
             $newField = $fieldType::make($key);
             
             if(isset($field['label'])){
@@ -26,7 +38,7 @@ trait HasDynamicFields
                 $newField->rules( $field['rules'] );
             }
 
-            $keyValue = auth()->user()->keyValues->where('key', $key)->first();
+            $keyValue = auth()->user()->profileKeyValues->where('key', $key)->first();
             
             $value = $keyValue->value ?? '';
             if (!empty($value)) {
@@ -46,13 +58,15 @@ trait HasDynamicFields
 
     private function saveDynamicFields($fields){
         $state = $this->form->getState();
-        foreach($fields as $key => $field){
+        foreach($fields as $field){
+            $key = Str::slug($field['label']);
+
             if(isset($state[$key])){
                 $value = $state[$key];
                 if (is_array($state[$key])) {
                     $value = json_encode($state[$key]);
                 }
-                auth()->user()->setKeyValue($key, $value, $field['type']);
+                auth()->user()->setProfileKeyValue($key, $value, $field['type']);
             }
         }
     }

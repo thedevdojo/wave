@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Wave\ApiKey;
-use Wave\KeyValue;
+use Wave\ProfileKeyValue;
 
 class SettingsController extends \App\Http\Controllers\Controller
 {

@@ -85,6 +85,7 @@ class WaveServiceProvider extends ServiceProvider
 
         Relation::morphMap([
             'user' => config('auth.providers.model'),
+            'form' => \App\Models\Forms::class
             // Add other mappings as needed
         ]);
 	}

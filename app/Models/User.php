@@ -7,11 +7,11 @@ use Filament\Panel;
 use Illuminate\Support\Str;
 use Wave\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Wave\Traits\HasKeyValues;
+use Wave\Traits\HasProfileKeyValues;
 
 class User extends Authenticatable  implements FilamentUser
 {
-    use Notifiable, HasKeyValues;
+    use Notifiable, HasProfileKeyValues;
 
     /**
      * The attributes that are mass assignable.

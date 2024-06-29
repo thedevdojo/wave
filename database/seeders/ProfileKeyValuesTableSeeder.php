@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class KeyValuesTableSeeder extends Seeder
+class ProfileKeyValuesTableSeeder extends Seeder
 {
 
     /**
@@ -16,9 +16,9 @@ class KeyValuesTableSeeder extends Seeder
     {
 
 
-        \DB::table('key_values')->delete();
+        \DB::table('profile_key_values')->delete();
 
-        \DB::table('key_values')->insert(array (
+        \DB::table('profile_key_values')->insert(array (
             0 =>
             array (
                 'id' => 10,

@@ -56,7 +56,7 @@ class User extends AuthUser implements JWTSubject
 
     public function profile($key)
     {
-        $keyValue = $this->keyValue($key);
+        $keyValue = $this->profileKeyValue($key);
         return isset($keyValue->value) ? $keyValue->value : '';
     }
 

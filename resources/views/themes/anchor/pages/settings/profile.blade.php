@@ -37,7 +37,7 @@
                         ->required()
 						->rules('sometimes|required|email|unique:users,email,' . auth()->user()->id)
 						->default(auth()->user()->email),
-					...($this->dynamicFields())
+					...($this->dynamicFields( config('profile.fields') ))
                 ])
                 ->statePath('data');
         }

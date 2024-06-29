@@ -11,7 +11,7 @@
         }
     </script>
 </head>
-<body class="flex flex-col min-h-screen bg-zinc-50 dark:bg-zinc-950 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
+<body class="flex flex-col min-h-screen lg:px-0 px-10 bg-zinc-50 dark:bg-zinc-950 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
 
     @if(config('wave.demo') && Request::is('/'))
         @include('theme::partials.demo-header')
@@ -19,7 +19,7 @@
 
     <x-app.sidebar />
 
-    <div class="flex flex-col min-h-screen justify-stretch md:pl-64">
+    <div class="flex flex-col pl-0 min-h-screen justify-stretch lg:pl-64">
         <!-- Page Heading -->
         @if (isset($header))
             <header x-data="{ mobileMenu: false }" class="bg-transparent">
