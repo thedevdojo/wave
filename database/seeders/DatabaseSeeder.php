@@ -29,8 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PlansTableSeeder::class);
         $this->call(PostsTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
-        $this->call(TranslationsTableSeeder::class);
-        $this->call(WaveKeyValuesTableSeeder::class);
+        $this->call(ProfileKeyValuesTableSeeder::class);
         $this->call(ThemesTableSeeder::class);
         fixPostgresSequence();
     }

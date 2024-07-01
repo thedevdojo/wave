@@ -11,6 +11,7 @@
         "bezhansalleh/filament-google-analytics": "^2.0",
         "codeat3/blade-phosphor-icons": "^2.0",
         "devdojo/app": "0.11.0",
+        "devdojo/auth": "dev-updateUserModel",
         "devdojo/themes": "*",
         "filament/filament": "^3.2",
         "gehrisandro/tailwind-merge-laravel": "^1.2",
@@ -22,6 +23,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.5",
         "livewire/livewire": "^3.0",
+        "ralphjsmit/livewire-urls": "^1.4",
         "spatie/laravel-permission": "^6.4",
         "tymon/jwt-auth": "@dev"
     },

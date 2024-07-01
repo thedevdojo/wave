@@ -11,19 +11,21 @@
 |
 */
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Wave\Facades\Wave;
-
-// Authentication routes
-Auth::routes();
-
-// Voyager Admin routes
-// Route::group(['prefix' => 'admin'], function () {
-//     Voyager::routes();
-// });
 
 // Wave routes
 Wave::routes();
 
 Route::view('test', 'theme::test');
+
+use Illuminate\Support\Facades\Storage;
+
+Route::get('prostuff', function(){
+    $user = auth()->user();
+    $user->setKeyValue('cool', 'beans');
+    //dd($user->keyValues);
+
+    // $keyValuesQuery = $user->keyValues();
+    // dd($keyValuesQuery->toSql(), $keyValuesQuery->getBindings());
+});

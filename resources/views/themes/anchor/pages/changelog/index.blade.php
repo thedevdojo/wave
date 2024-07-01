@@ -21,7 +21,7 @@
                 description="This is your application changelog where users can visit to stay in the loop about your latest updates and improvements."
             />
 
-            <div class="mt-10 max-w-full prose prose-sm">
+            <div class="mt-8 max-w-full prose prose-sm">
                 <div class="space-y-5">
                     @foreach($logs as $changelog)
                         <div class="flex items-start space-x-5">

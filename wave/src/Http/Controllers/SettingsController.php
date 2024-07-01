@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Wave\ApiKey;
-use Wave\KeyValue;
+use Wave\ProfileKeyValue;
 
 class SettingsController extends \App\Http\Controllers\Controller
 {
@@ -42,7 +42,7 @@ class SettingsController extends \App\Http\Controllers\Controller
 
         foreach(config('wave.profile_fields') as $key){
             if(isset($request->{$key})){
-                $type = $key . '_type__wave_keyvalue';
+                $type = $key . '_type__keyvalue';
                 if($request->{$type} == 'checkbox'){
                     if(!isset($request->{$key})){
                         $request->request->add([$key => null]);
@@ -131,9 +131,5 @@ class SettingsController extends \App\Http\Controllers\Controller
         return back()->with(['message' => 'Successfully Deleted API Key', 'message_type' => 'success']);
     }
 
-    private function saveAvatar($avatar, $filename){
-        $path = 'avatars/' . $filename . '.png';
-        Storage::disk(config('voyager.storage.disk'))->put($path, file_get_contents($avatar));
-        return $path;
-    }
+    
 }

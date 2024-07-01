@@ -5,7 +5,7 @@
                 <h1 class="text-6xl font-bold tracking-tighter text-gray-900 text-balance">
                     Ship In Days, <br>Not Months
                 </h1>
-                <p class="pr-0 mt-5 text-xl font-normal font-medium text-gray-500">
+                <p class="pr-0 mt-5 text-xl font-normal text-gray-500">
                     Wave will save you hundreds of hours and allow you to rapidly ship your next great product.
                 </p>
                 <div class="flex flex-col gap-2 items-center mx-auto mt-8 md:flex-row">
@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="block order-first mt-12 w-full lg:mt-0">
-                <img alt="Wave Character" class="relative w-full" src="/wave/img/character.png">
+                <img alt="Wave Character" class="relative w-full" src="/wave/img/character.png" style="max-width:450px;">
             </div>
         </div>
         <dl class="grid grid-cols-1 mt-20 divide-x divide-zinc-200 lg:grid-cols-3 text-balance">

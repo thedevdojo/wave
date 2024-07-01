@@ -1,0 +1,60 @@
+name: Authentication Tests
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, xml, ctype, iconv, mysql
+
+    - name: Cache Composer Packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.composer/cache
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-git
+
+    - name: Install Dependencies
+      run: composer install --no-progress --prefer-dist
+
+    - name: Remove current tests and symlink to DevDojo Auth
+      run: |
+        rm -rf tests
+        ln -s vendor/devdojo/auth/tests tests
+
+    - name: Create sqlite file
+      run: touch database/database.sqlite
+
+    - name: List out .env
+      run: cat .env
+
+    - name: Updating values in the .env
+      run: |
+        sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/' .env
+        sed -i 's/^DB_DATABASE=laravel/#DB_DATABASE=laravel/' .env
+
+    - name: Run the migrations
+      run: php artisan migrate
+
+    - name: Run the Auth Migrations
+      run: php artisan migrate --path=vendor/devdojo/auth/database/migrations 
+
+    - name: Install PestPHP
+      run: composer require pestphp/pest --dev --with-all-dependencies
+
+    - name: Run Tests
+      run: ./vendor/bin/pest
+

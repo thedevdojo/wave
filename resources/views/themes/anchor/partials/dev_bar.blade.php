@@ -18,7 +18,7 @@
             document.removeEventListener('keydown', escapeKeyCloseDevBar);
         }})"
     id="wave_dev_bar"
-    class="fixed bottom-0 left-0 z-40 w-full h-screen transition-all duration-150 ease-out transform"
+    class="fixed bottom-0 left-0 z-[999] w-full h-screen transition-all duration-150 ease-out transform"
     x-data="{ open: false, url: '', active: '' }"
     :class="{ 'translate-y-full': !open, 'translate-y-0': open }"
     x-on:keydown.escape="open = false"
@@ -59,7 +59,7 @@
 
 
         <div class="overflow-hidden relative w-full h-full bg-white">
-            <iframe class="pt-14 w-full h-full" :src="url"></iframe>
+            <iframe class="pt-10 w-full h-full" :src="url"></iframe>
         </div>
     </div>
 </div>

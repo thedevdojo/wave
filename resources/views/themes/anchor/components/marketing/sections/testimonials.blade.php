@@ -13,7 +13,7 @@
                             </p>
                         </blockquote>
                         <figcaption class="flex flex-col justify-between mt-6">
-                            <img alt="#_" src="https://pbs.twimg.com/profile_images/1677042510839857154/Kq4tpySA_400x400.jpg" class="object-cover rounded-full grayscale size-14">
+                            <img alt="#_" src="https://cdn.devdojo.com/images/june2024/adam.jpeg" class="object-cover rounded-full grayscale size-14">
                             <div class="mt-4">
                                 <div class="font-medium text-gray-900">Adam Wathan</div>
                                 <div class="mt-1 text-sm text-gray-500">
@@ -31,7 +31,7 @@
                             </p>
                         </blockquote>
                         <figcaption class="flex flex-col justify-between mt-6">
-                            <img alt="#_" src="https://pbs.twimg.com/profile_images/1748020965995335681/WTNy9HSl_400x400.jpg" class="object-cover rounded-full grayscale size-14">
+                            <img alt="#_" src="https://cdn.devdojo.com/images/june2024/caleb.jpeg" class="object-cover rounded-full grayscale size-14">
                             <div class="mt-4">
                                 <div class="font-medium text-gray-900">Caleb Porzio</div>
                                 <div class="mt-1 text-sm text-gray-500">
@@ -49,7 +49,7 @@
                             </p>
                         </blockquote>
                         <figcaption class="flex flex-col justify-between mt-6">
-                            <img alt="#_" src="https://pbs.twimg.com/profile_images/1694737709166899200/EQkjv0gi_400x400.jpg" class="object-cover rounded-full grayscale size-14">
+                            <img alt="#_" src="https://cdn.devdojo.com/images/june2024/taylor.jpeg" class="object-cover rounded-full grayscale size-14">
                             <div class="mt-4">
                                 <div class="font-medium text-gray-900">Taylor Otwell</div>
                                 <div class="mt-1 text-sm text-gray-500">

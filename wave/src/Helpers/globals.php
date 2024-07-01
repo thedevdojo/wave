@@ -1,7 +1,9 @@
 <?php
 
-if (!class_exists(WaveKeyValueConvertible::class)) {
-    class WaveKeyValueConvertible
+use Illuminate\Database\Eloquent\Relations\Relation;
+
+if (!class_exists(KeyValueConvertible::class)) {
+    class KeyValueConvertible
     {
         public function toObject() {
 
@@ -16,8 +18,8 @@ if (!class_exists(WaveKeyValueConvertible::class)) {
     }
 }
 
-if (!class_exists(WaveKeyValueHelper::class)) {
-    class WaveKeyValueHelper extends WaveKeyValueConvertible
+if (!class_exists(KeyValueHelper::class)) {
+    class KeyValueHelper extends KeyValueConvertible
     {
         public $required = false;
         public $field;
@@ -27,7 +29,7 @@ if (!class_exists(WaveKeyValueHelper::class)) {
         public $options = [];
 
         public static function create($type, $field, $details, $display_name, $required = 0, $options = []) {
-            $result = new WaveKeyValueHelper();
+            $result = new KeyValueHelper();
             $result->type = $type;
             $result->field = $field;
             $result->details = $details;
@@ -44,8 +46,8 @@ if (!class_exists(WaveKeyValueHelper::class)) {
     }
 }
 
-if (!class_exists(WaveKeyValueTypeHelper::class)) {
-    class WaveKeyValueTypeHelper extends WaveKeyValueConvertible
+if (!class_exists(KeyValueTypeHelper::class)) {
+    class KeyValueTypeHelper extends KeyValueConvertible
     {
         protected $id = 0;
         protected $key = null;
@@ -57,7 +59,7 @@ if (!class_exists(WaveKeyValueTypeHelper::class)) {
 
         public static function create($key, $content) {
 
-            $result = new WaveKeyValueTypeHelper();
+            $result = new KeyValueTypeHelper();
             $result->setKey($key, $content);
 
             return $result;
@@ -68,14 +70,14 @@ if (!class_exists(WaveKeyValueTypeHelper::class)) {
 }
 
 
-if (!function_exists('wave_key_value')){
+if (!function_exists('key_value')){
 
-	function wave_key_value($type, $key, $content = '', $details = '', $placeholder = '', $required = 0){
+	function key_value($type, $key, $content = '', $details = '', $placeholder = '', $required = 0){
 
 
-        $row = WaveKeyValueHelper::create($type, $key, $details, $placeholder, $required);
-        $dataTypeContent = WaveKeyValueTypeHelper::create($key, $content);
-		$type = '<input type="hidden" value="' . $type . '" name="' . $key . '_type__wave_keyvalue">';
+        $row = KeyValueHelper::create($type, $key, $details, $placeholder, $required);
+        $dataTypeContent = KeyValueTypeHelper::create($key, $content);
+		$type = '<input type="hidden" value="' . $type . '" name="' . $key . '_type__keyvalue">';
 
         return 'use filament form builder here';
         //return app('voyager')->formField($row, '', $dataTypeContent->toObject()) . $details . $type;
@@ -90,9 +92,9 @@ if (!function_exists('profile_field')){
 
 		$value = auth()->user()->profile($key);
 		if($value){
-			return wave_key_value($type, $key, $value);
+			return key_value($type, $key, $value);
 		} else {
-			return wave_key_value($type, $key);
+			return key_value($type, $key);
 		}
 
 	}
@@ -125,43 +127,26 @@ if (!function_exists('setting')) {
         $value = ($default == null) ? '' : $default;
 
         return $value;
-        
-        // $globalCache = config('voyager.settings.cache', false);
-
-        // if ($globalCache && Cache::tags('settings')->has($key)) {
-        //     return Cache::tags('settings')->get($key);
-        // }
-
-        // if ($this->setting_cache === null) {
-        //     if ($globalCache) {
-        //         // A key is requested that is not in the cache
-        //         // this is a good opportunity to update all keys
-        //         // albeit not strictly necessary
-        //         Cache::tags('settings')->flush();
-        //     }
-
-        //     foreach (self::model('Setting')->orderBy('order')->get() as $setting) {
-        //         $keys = explode('.', $setting->key);
-        //         @$this->setting_cache[$keys[0]][$keys[1]] = $setting->value;
-
-        //         if ($globalCache) {
-        //             Cache::tags('settings')->forever($setting->key, $setting->value);
-        //         }
-        //     }
-        // }
-
-        // $parts = explode('.', $key);
-
-        // if (count($parts) == 2) {
-        //     return @$this->setting_cache[$parts[0]][$parts[1]] ?: $default;
-        // } else {
-        //     return @$this->setting_cache[$parts[0]] ?: $default;
-        // }
     }
 }
 
 if (!function_exists('blade')) {
     function blade($string){
         return \Illuminate\Support\Facades\Blade::render($string);
+    }
+}
+
+if (!function_exists('getMorphAlias')) {
+    /**
+     * Get the morph alias for a given class.
+     *
+     * @param string $class
+     * @return string|null
+     */
+    function getMorphAlias($class)
+    {
+        $morphMap = Relation::morphMap();
+        $alias = array_search($class, $morphMap);
+        return $alias ?: null;
     }
 }

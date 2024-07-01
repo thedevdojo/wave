@@ -2,18 +2,20 @@
 
 namespace Wave;
 
+use Wave\TokenGuard;
+use Livewire\Livewire;
+use Illuminate\Routing\Router;
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Facades\Gate;
+use Wave\Facades\Wave as WaveFacade;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
+use Intervention\Image\ImageManagerStatic;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Routing\Router;
-use Illuminate\Support\ServiceProvider;
-use Wave\Facades\Wave as WaveFacade;
-use Wave\TokenGuard;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Blade;
-use Livewire\Livewire;
 
 class WaveServiceProvider extends ServiceProvider
 {
@@ -44,7 +46,6 @@ class WaveServiceProvider extends ServiceProvider
 
 	    $this->app->router->middlewareGroup('wave', $waveMiddleware);
 
-
         
 	}
 
@@ -68,9 +69,24 @@ class WaveServiceProvider extends ServiceProvider
             'danger' => Color::Red,
             'gray' => Color::Zinc,
             'info' => Color::Blue,
-            'primary' => Color::Zinc,
+            'primary' => Color::Blue,
             'success' => Color::Green,
             'warning' => Color::Amber,
+        ]);
+
+        Validator::extend('imageable', function ($attribute, $value, $params, $validator) {
+            try {
+                ImageManagerStatic::make($value);
+                return true;
+            } catch (\Exception $e) {
+                return false;
+            }
+        });
+
+        Relation::morphMap([
+            'user' => config('auth.providers.model'),
+            'form' => \App\Models\Forms::class
+            // Add other mappings as needed
         ]);
 	}
 

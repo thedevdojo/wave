@@ -4,7 +4,6 @@
         <x-app.heading
                 title="Learn More"
                 description="Welcome to Wave, if you want to learn more about Wave be sure to check out the references below."
-                size="lg"
                 :border="false"
             />
 
