@@ -233,7 +233,7 @@
                     <div class="flex justify-start items-stretch space-x-10 w-full h-full">
                         
                         <files class="flex w-full h-100">
-                            <div class="overflow-scroll p-1 w-full h-full h-100">
+                            <div class="overflow-hidden p-1 w-full h-full h-100">
                                 <ul 
                                     :class="{ 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5' : activeFileDrawer, 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6' : !activeFileDrawer }"
                                     class="grid gap-x-4 gap-y-8 sm:gap-x-6 xl:gap-x-8">

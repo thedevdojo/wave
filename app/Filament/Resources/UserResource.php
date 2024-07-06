@@ -20,7 +20,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'phosphor-users-duotone';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -112,6 +112,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('Impersonate')
                     ->url(fn ($record) => route('impersonate', $record))
                     ->visible(fn ($record) => auth()->user()->id !== $record->id),
