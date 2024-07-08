@@ -14,7 +14,7 @@ class AddUsernameBillingToUsers extends Migration {
 	{
 		Schema::table('users', function(Blueprint $table)
 		{
-			$table->string('username')->unique();
+			$table->string('username')->unique()->nullable();
 			$table->string('stripe_id')->nullable();
 			$table->string('card_brand')->nullable();
 			$table->string('card_last_four')->nullable();
