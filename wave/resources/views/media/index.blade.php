@@ -5,6 +5,9 @@
     use Livewire\WithFileUploads;
     name('media');
 
+    use Illuminate\Support\Facades\File;
+    use Livewire\Attributes\Url;
+
     use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -23,6 +26,8 @@ use Filament\Actions\DeleteAction;
         
         public $upload;
         public $uploadFile;
+
+        #[Url]
         public $folder = '/';
         public $storageURL = '';
         public $files;
@@ -30,8 +35,13 @@ use Filament\Actions\DeleteAction;
         public $breadcrumbs;
         public $folderName;
 
+        public $search;
+        public $searchResults = null;
+
         public $selectedFile;
         public $destinationFolder;
+
+        public $fileOrFolderCopied = null;
 
         public function mount($disk = 'public'){
             $this->record = App\Models\User::first();
@@ -113,11 +123,13 @@ use Filament\Actions\DeleteAction;
             foreach ($storageItems as $item) {
                     if ($item['type'] == 'dir') {
                         $files[] = (object)[
+                            'id' => uniqid(),
                             'name'          => $item['basename'] ?? basename($item['path']),
+                            'original_name' => $item['basename'] ?? basename($item['path']),
                             'type'          => 'folder',
                             'path'          => $this->storage($this->disk)->url($item['path']),
                             'relative_path' => $item['path'],
-                            'items'         => '',
+                            'items'         => count($this->storage($this->disk)->files($item['path'])),
                             'last_modified' => '',
                         ];
                     } else {
@@ -135,12 +147,13 @@ use Filament\Actions\DeleteAction;
                         }
                         $files[] = (object)[
                             'name'          => $item['basename'] ?? basename($item['path']),
+                            'original_name' => $item['basename'] ?? basename($item['path']),
                             'filename'      => $item['filename'] ?? basename($item['path'], '.'.pathinfo($item['path'])['extension']),
                             'type'          => $item['mimetype'] ?? $mime,
                             'url'          => $this->storage($this->disk)->url($item['path']),
                             'relative_path' => $item['path'],
                             'size'          => $this->formatSize(($item['size'] ?? $item->fileSize())),
-                            'last_modified' => $item['timestamp'] ?? $item->lastModified(),
+                            'last_modified' => $item['timestamp'] ?? \Carbon\Carbon::parse($item->lastModified())->diffForHumans(),
                             'thumbnails'    => [],
                         ];
                     }
@@ -166,6 +179,7 @@ use Filament\Actions\DeleteAction;
             } else {
                 $this->folder = '/' . $path;
             }
+            $this->selectedFile=null;
             $this->loadFilesInCurrentFolder();
             $this->breadcrumbsRefresh();
         }
@@ -312,7 +326,7 @@ use Filament\Actions\DeleteAction;
         // start delete functionality
         public function deleteAction(): Action
         {
-            $file_or_folder = ($this->selectedFile && $this->selectedFile['type'] === 'folder') ? 'folder' : 'file';
+            $file_or_folder = $this->fileOrFolder();
 
             return Action::make('delete')
             ->label('Delete ' . $file_or_folder)
@@ -374,6 +388,256 @@ use Filament\Actions\DeleteAction;
             }
         }
 
+        public function duplicate(){
+
+            $source = $this->storage($this->disk)->path($this->selectedFile['relative_path']);
+
+            $destination = $this->getUniqueDestination($source);
+
+            try {
+                if (File::isDirectory($source)) {
+                    File::copyDirectory($source, $destination);
+                } else {
+                    File::copy($source, $destination);
+                }
+            } catch (\Exception $e) {
+                Notification::make()
+                ->title($e->getMessage())
+                ->danger()
+                ->send();
+                return;
+            }
+
+            $file_or_folder = $this->fileOrFolder();
+            Notification::make()
+                ->title('Successfully duplicated ' . $file_or_folder)
+                ->success()
+                ->send();
+
+            $this->refresh();
+        }
+
+        protected function getUniqueDestination($source)
+        {
+            $directory = dirname($source);
+            $name = pathinfo($source, PATHINFO_FILENAME);
+            $extension = pathinfo($source, PATHINFO_EXTENSION);
+
+            $counter = 2;
+            $destination = $source;
+
+            while (File::exists($destination)) {
+                if ($extension) {
+                    $destination = $directory . '/' . $name . " ($counter)." . $extension;
+                } else {
+                    $destination = $directory . '/' . $name . " ($counter)";
+                }
+                $counter++;
+            }
+
+            return $destination;
+        }
+
+        private function fileOrFolder(){
+            return ($this->selectedFile && $this->selectedFile['type'] === 'folder') ? 'folder' : 'file';
+        }
+
+        public function copy(){
+            $this->fileOrFolderCopied = $this->selectedFile['relative_path'];
+        }
+
+        public function paste(){
+            if (!$this->fileOrFolderCopied) {
+                Notification::make()
+                    ->title('No file or folder selected for copying')
+                    ->warning()
+                    ->send();
+                return;
+            }
+
+            $source = $this->storage($this->disk)->path($this->fileOrFolderCopied);
+            $destination = $this->generateUniqueCopyPath($source);
+
+            try {
+                if (File::isDirectory($source)) {
+                    File::copyDirectory($source, $destination);
+                } else {
+                    File::copy($source, $destination);
+                }
+
+                Notification::make()
+                    ->title('Successfully pasted ' . (File::isDirectory($source) ? 'folder' : 'file'))
+                    ->success()
+                    ->send();
+
+                $this->refresh(); // Refresh the file list
+            } catch (\Exception $e) {
+                Notification::make()
+                    ->title('Error while pasting: ' . $e->getMessage())
+                    ->danger()
+                    ->send();
+            }
+        }
+
+        private function generateUniqueCopyPath($source)
+        {
+            $sourceDirectory = dirname($source);
+            $destinationDirectory = $this->storage($this->disk)->path($this->folder);
+
+            // If the selected file is a folder, add it to the destination
+            if ($this->selectedFile && $this->selectedFile['type'] == 'folder') {
+                $destinationDirectory = $this->stripDoubleSlashesFromString($destinationDirectory . '/' . $this->selectedFile['name']);
+            }
+
+            $filename = pathinfo($source, PATHINFO_FILENAME);
+            $extension = pathinfo($source, PATHINFO_EXTENSION);
+
+            // If the source and destination directories are the same, start with "copy"
+            if ($sourceDirectory === $destinationDirectory) {
+                $newFilename = $filename . ' copy';
+            } else {
+                $newFilename = $filename;
+            }
+
+            $counter = 2;
+
+            while (true) {
+                $destination = $this->stripDoubleSlashesFromString($destinationDirectory . '/' . $newFilename . ($extension ? '.' . $extension : ''));
+                
+                if (!File::exists($destination)) {
+                    return $destination;
+                }
+
+                // If we've reached this point, the file exists in the destination folder
+                // So we need to append "copy" if it hasn't been done yet, or increment the counter
+                if ($newFilename === $filename) {
+                    $newFilename = $filename . ' copy';
+                } else {
+                    $newFilename = $filename . ' copy ' . $counter;
+                    $counter++;
+                }
+            }
+        }
+
+        public function rename(){
+            $this->renameFile($this->selectedFile['original_name'], $this->selectedFile['name']);
+            $this->loadFilesInCurrentFolder();
+        }
+
+        public function renameFile(string $currentPath, string $newName)
+        {
+            // Construct the full current path
+            $fullCurrentPath = $this->stripDoubleSlashesFromString($this->folder . '/' . $currentPath);
+            
+            // Get the directory of the current file
+            $directory = dirname($fullCurrentPath);
+            
+            // Get the current file's information
+            $currentFileInfo = pathinfo($fullCurrentPath);
+            $currentExtension = $currentFileInfo['extension'] ?? '';
+            
+            // Check if the new name already contains the extension
+            $newFileInfo = pathinfo($newName);
+            $newExtension = $newFileInfo['extension'] ?? '';
+            
+            // Determine the final new name
+            if ($newExtension && strtolower($newExtension) === strtolower($currentExtension)) {
+                // If the new name already has the correct extension, use it as is
+                $finalNewName = $newName;
+            } else {
+                // If not, append the current extension
+                $finalNewName = $newFileInfo['filename'] . ($currentExtension ? '.' . $currentExtension : '');
+            }
+            
+            // Construct the new full path
+            $newPath = $this->stripDoubleSlashesFromString($directory . '/' . $finalNewName);
+
+            // Check if the new filename already exists
+            if ($this->storage($this->disk)->exists($newPath) && $newPath != $fullCurrentPath) {
+                Notification::make()
+                    ->title('A file or folder with this name already exists')
+                    ->danger()
+                    ->send();
+
+                return false;
+            }
+
+            // Attempt to rename the file
+            try {
+                $this->storage($this->disk)->move($fullCurrentPath, $newPath);
+
+                $this->refresh();
+                $selectedFileName = $this->selectedFile['name'];
+                $this->js('window.dispatchEvent(new CustomEvent("set-active-file", { detail: { name: "' . $selectedFileName . '" }}))');
+                return $newPath;
+            } catch (\Exception $e) {
+                Notification::make()
+                    ->title('An error occurred while renaming the file: ' . $e->getMessage())
+                    ->danger()
+                    ->send();
+
+                return false;
+            }
+        }
+
+        public function moveSelectedFileIntoFolder($folder){
+            $relative_path_to_folder = $folder['relative_path'];
+            $sourcePath = $this->stripDoubleSlashesFromString($this->folder . '/' . $this->selectedFile['name']);
+            $destinationPath = $this->stripDoubleSlashesFromString($relative_path_to_folder . '/' . $this->selectedFile['name']);
+
+            if (Storage::disk($this->disk)->exists($sourcePath)) {
+                Storage::disk($this->disk)->move($sourcePath, $destinationPath);
+                $this->selectedFile = null; // Clear the selected file
+                $this->refresh(); // Refresh the file list
+            } else {
+                Notification::make()
+                    ->title('Failed to move file')
+                    ->danger()
+                    ->send();
+            }
+        }
+
+        public function searchStorageForFile()
+        {
+            $search = $this->search;
+            $minMatchLength = 2;
+            $results = [];
+            $search = strtolower($search); // Convert search term to lowercase for case-insensitive matching
+
+            // Get all files in the storage directory and subdirectories
+            $allFiles = Storage::allFiles();
+
+            foreach ($allFiles as $file) {
+                $fileName = strtolower(basename($file)); // Get the filename and convert to lowercase
+                
+                // Check if the filename contains a sequence of characters from the search term
+                if (strlen($search) >= $minMatchLength && stripos($fileName, $search) !== false) {
+                    
+                    $results[] = [
+                        
+                        'filename' => basename($file),
+                        'type' => Storage::mimeType($file) == 'dir' ? 'folder' : Storage::mimeType($file),
+                        'url' => $this->storage($this->disk)->url($file),
+                        'relative_path' => $file,
+                        'size' => $this->formatSize(Storage::size($file)),
+                        'last_modified' => \Carbon\Carbon::parse(Storage::lastModified($file))->diffForHumans(),
+                        'match_score' => similar_text($search, $fileName) / strlen($search) * 100,
+                    ];
+                }
+            }
+
+            // Sort results by match score (highest first)
+            usort($results, function($a, $b) {
+                return $b['match_score'] <=> $a['match_score'];
+            });
+
+            if (count($results) > 10) {
+                $results = array_slice($results, 0, 10);
+            }
+
+            $this->searchResults = $results;
+        }
+
     }
 ?>
 <x-filament-panels::page>
@@ -383,10 +647,15 @@ use Filament\Actions\DeleteAction;
                 <p class="hidden" wire:click="isRootDirectory">test</p>
                 <div x-data="{ 
                         active: @entangle('selectedFile'),
+                        search: @entangle('search'),
+                        searchResults: @entangle('searchResults'),
                         clientSideActive: false,
                         files: @entangle('files'), 
                         storageURL: @entangle('storageURL'),
                         activeFileDrawer: true,
+                        fileOrFolderCopied: @entangle('fileOrFolderCopied'),
+                        view: $persist('grid').as('media-view'),
+                        searchFocused: false,
                         isActiveFile(file) {
                             if(!this.active){
                                 return false;
@@ -432,6 +701,11 @@ use Filament\Actions\DeleteAction;
                                 window.dispatchEvent(new CustomEvent('close-file-modal'));
                             }
                         },
+                        renameActive(){
+                            if(this.active){
+                                document.getElementById('active-file').dispatchEvent(new CustomEvent('rename'));
+                            }
+                        },
                         handleFileDoubleClick(file){
                             if(file.type == 'folder'){
                                 this.goToActiveDirectory();
@@ -441,6 +715,16 @@ use Filament\Actions\DeleteAction;
                         },
                         goToActiveDirectory(){
                             $wire.goToDirectory(this.active.relative_path)
+                        },
+                        setActiveFileBasedOnName(name){
+                            let that = this;
+                            setTimeout(function(){
+                                that.files.forEach(file => {
+                                    if (file.name === name) {
+                                        that.active = file;
+                                    }
+                                });
+                            }, 1);
                         },
                         isUploading: false, 
                         progress: 0
@@ -454,7 +738,12 @@ use Filament\Actions\DeleteAction;
                             }
                         })
                     "
+                    @set-active-file.window="setActiveFileBasedOnName($event.detail.name)"
                     @go-to-active-directory.window="goToActiveDirectory()"
+                    @duplicate.window="$wire.duplicate()"
+                    @copy.window="$wire.copy()"
+                    @paste.window="$wire.paste()"
+                    @rename-active.window="renameActive()"
                     x-on:keydown.window="handleKeydown"
                     @trigger-delete-action.window="$wire.triggerDeleteAction"
                     class="flex flex-col justify-start items-center w-full h-full bg-white">
@@ -464,7 +753,7 @@ use Filament\Actions\DeleteAction;
                         @include('wave::media.views.breadcrumbs')
                     </div>
 
-                    <div class="flex justify-start items-stretch w-full h-full bg-white">
+                    <div class="flex justify-start items-start w-full h-full bg-white">
                         @include('wave::media.views.files')
                         @include('wave::media.views.active-file')
                     </div>

@@ -4,10 +4,10 @@
             <div class="relative" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                 <button class="flex relative items-center px-4 py-2 text-xs font-medium text-white bg-black hover:bg-gray-900">
                     <label class="absolute inset-0 w-full h-full cursor-pointer">
-                        <input type="file" wire:model="upload" class="hidden absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <input type="file" wire:model="upload" id="upload-button" class="hidden absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                     </label>
-                    <svg class="mr-1 w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M12.0005 11.7495L12.0005 20.2495M12.0005 11.7495L15.2505 15.2495M12.0005 11.7495L8.75049 15.2495" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.25 15.25C2.96461 14.2882 2.75 13.1762 2.75 12C2.75 9.94957 4.20204 8.23828 6.13392 7.83831C7.01365 5.45184 9.30808 3.75 12 3.75C15.3711 3.75 18.1189 6.41898 18.2454 9.75913C19.9257 9.8846 21.25 11.2876 21.25 13C21.25 14.0407 20.5 15 19.75 15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
-                    <span>Upload</span>
+                    <svg class="w-4 h-4 md:mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M12.0005 11.7495L12.0005 20.2495M12.0005 11.7495L15.2505 15.2495M12.0005 11.7495L8.75049 15.2495" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.25 15.25C2.96461 14.2882 2.75 13.1762 2.75 12C2.75 9.94957 4.20204 8.23828 6.13392 7.83831C7.01365 5.45184 9.30808 3.75 12 3.75C15.3711 3.75 18.1189 6.41898 18.2454 9.75913C19.9257 9.8846 21.25 11.2876 21.25 13C21.25 14.0407 20.5 15 19.75 15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                    <span class="hidden md:inline">Upload</span>
                 </button>
             </div>
             @include('wave::media.views.header.add-folder')
@@ -18,17 +18,7 @@
         </button>
 
         <div class="flex-1">
-            <div class="flex items-center px-6 md:mx-auto md:max-w-3xl lg:mx-0 lg:max-w-none xl:px-0">
-                <div class="w-full">
-                    <label for="search" class="sr-only">Search</label>
-                    <div class="relative">
-                        <div class="flex absolute inset-y-0 left-0 items-center pl-2.5 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"></path></svg>
-                        </div>
-                        <input id="search" name="search" class="block py-1.5 pr-3 pl-8 w-full text-sm placeholder-gray-500 bg-white rounded-md border-0 ring-1 ring-gray-200 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300 sm:text-sm" placeholder="Search" type="search">
-                    </div>
-                </div>
-            </div>
+            @include('wave::media.views.header.search')
         </div>
 
         <div class="flex overflow-hidden flex-shrink-0 rounded divide-x divide-gray-200 ring-1 ring-gray-200">
@@ -38,10 +28,10 @@
         </div>
 
         <div class="flex overflow-hidden flex-shrink-0 rounded divide-x divide-gray-200 ring-1 ring-gray-200">
-            <button class="flex items-center px-4 py-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-100">
+            <button x-on:click="view='list'" :class="{ 'bg-gray-100' : view == 'list', 'bg-white hover:bg-gray-100' : view != 'list' }" class="flex items-center px-4 py-2 text-xs font-medium text-gray-700">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M3.75 5h1.5m-1.5 7h1.5m-1.5 7h1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.75 5h11.5M8.75 19h11.5m-11.5-7h11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
             </button>
-            <button class="bg-white hover:bg-gray-100 px-4 font-medium text-xs py-2 text-gray0=-700 flex items-center">
+            <button x-on:click="view='grid'" :class="{ 'bg-gray-100' : view == 'grid', 'bg-white hover:bg-gray-100' : view != 'grid' }" class="px-4 font-medium text-xs py-2 text-gray0=-700 flex items-center">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M3.75 5.326c0-.87.705-1.576 1.575-1.576h3.349c.87 0 1.576.705 1.576 1.576v3.348c0 .87-.706 1.576-1.576 1.576h-3.35c-.87 0-1.575-.705-1.575-1.576V5.326z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.75 15.326c0-.87.705-1.576 1.575-1.576h3.349c.87 0 1.576.706 1.576 1.576v3.348c0 .87-.706 1.576-1.576 1.576h-3.35c-.87 0-1.575-.706-1.575-1.576v-3.348z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M13.75 5.326c0-.87.705-1.576 1.575-1.576h3.349c.87 0 1.576.705 1.576 1.576v3.348c0 .87-.706 1.576-1.576 1.576h-3.35c-.87 0-1.575-.705-1.575-1.576V5.326z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M13.75 15.326c0-.87.705-1.576 1.575-1.576h3.349c.87 0 1.576.706 1.576 1.576v3.348c0 .87-.706 1.576-1.576 1.576h-3.35c-.87 0-1.575-.706-1.575-1.576v-3.348z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
             </button>
         </div>

@@ -76,11 +76,15 @@
                         </div>
                     </template>
                 </div>
-                <div class="flex-shrink-0 px-4 pt-5 pb-4 mt-4 w-full h-auto">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title" x-text="file ? file.name : ''"></h3>
+                <div class="flex-shrink-0 px-4 pb-4 mt-4 w-full h-auto text-sm">
+                    <h3 class="mb-3 text-base font-bold leading-6 text-gray-900" id="modal-title" x-text="file ? file.name : ''"></h3>
+                    
                     <p><strong>Type:</strong> <span x-text="file ? file.type : ''"></span></p>
-                    <p><strong>Size:</strong> <span x-text="file ? file.size : ''"></span></p>
-                    <p><strong>Last Modified:</strong> <span x-text="file ? file.last_modified : ''"></span></p>
+                    <p x-show="file && file.type == 'folder'"><strong>File count:</strong> <span x-text="file ? file.items : ''"></span></p>
+                    <p x-show="file && file.type != 'folder'"><strong>Filesize:</strong> <span x-text="file ? file.size : ''"></span></p>
+                    <p x-show="file && file.type != 'folder'"><strong>Full URL:</strong> <a :href="file ? file.url : ''" target="_blank" class="text-blue-600 underline hover:text-blue-500">open in new tab</a></p>
+                    <p x-show="file && file.type != 'folder'"><strong>Last Modified:</strong> <span x-text="file ? file.last_modified : ''"></span></p>
+
                 </div>
             </div>
         </div>
