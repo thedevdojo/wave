@@ -1,0 +1,5 @@
+<button 
+    wire:click="triggerDeleteAction" class="flex items-center px-4 py-2 text-xs font-medium text-red-500 bg-white hover:bg-gray-100">
+    <svg class="mr-1 w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M12 21.25c5.244 0 5.75-.128 6.25-6.25.242-2.966.428-4.986.381-6.36A.374.374 0 0 1 19 8.25a1.25 1.25 0 1 0 0-2.5h-3.548c-.9-.029-2.034 0-3.452 0-1.418 0-2.552-.029-3.452 0H5a1.25 1.25 0 1 0 0 2.5c.21 0 .376.179.369.39-.047 1.374.139 3.394.381 6.36.5 6.122 1.006 6.25 6.25 6.25z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7.085 5.75l1.094-1.97a2 2 0 0 1 1.748-1.03h4.146a2 2 0 0 1 1.748 1.03l1.094 1.97" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.75 8.75v8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14.25 8.75v8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+    <span class="hidden xl:inline">Delete</span>
+</button>
