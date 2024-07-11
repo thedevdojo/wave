@@ -23,9 +23,42 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
+use Filament\Facades\Filament;
+use Filament\Navigation\NavigationBuilder;
+use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
+
+use App\Filament\Resources\UserResource;
+use App\Filament\Resources\RoleResource;
+use App\Filament\Resources\PlanResource;
+
 class AdminPanelProvider extends PanelProvider
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    public function boot(): void
+    {
+        // Filament::serving(function () {
+        //     Filament::registerNavigationGroups([
+        //         NavigationGroup::make()
+        //             ->label('Roles & Permissions')
+        //             ->icon('phosphor-shield-star-duotone')
+        //             ->collapsed(),
+        //     ]);
+        // });
+
+        // Filament::navigation(function (NavigationBuilder $builder): NavigationBuilder {
+        //     return $builder
+        //         ->groups([
+        //             NavigationGroup::make('Website')
+        //                 ->items([
+        //                     ...UserResource::getNavigationItems(),
+        //                     ...RoleResource::getNavigationItems(),
+        //                     ...PlanResource::getNavigationItems(),
+        //                 ]),
+        //         ]);
+        // });
+    }
 
     public static function getNavigationIcon(): ?string
     {
@@ -44,9 +77,24 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            // ->navigation(function (NavigationBuilder $builder){
+            //     return $builder
+            //     ->items([
+            //         ...UserResource::getNavigationItems(),
+            //     ])
+            //     ->groups([
+            //         NavigationGroup::make('Roles & Permissions')
+            //             ->icon('phosphor-shield-star-duotone')
+            //             ->items([
+            //                 ...RoleResource::getNavigationItems(),
+            //                 ...PlanResource::getNavigationItems(),
+            //             ])->collapsed(),
+            //     ]);
+            // })
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->sidebarCollapsibleOnDesktop()
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

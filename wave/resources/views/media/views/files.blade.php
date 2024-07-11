@@ -81,8 +81,9 @@
     <template x-for="file in files" :key="file.relative_path">
         <div 
             :class="{ 
-                'flex odd:bg-zinc-50 px-4' : view == 'list', 
-                'bg-indigo-600 odd:bg-indigo-600 text-white' : view == 'list' && isActiveFile(file),
+                'bg-indigo-600 text-white' : view == 'list' && isActiveFile(file),
+                'flex px-4' : view == 'list',
+                'odd:bg-zinc-50' : view == 'list' && !isActiveFile(file),
                 'rounded-lg' : view == 'grid' }"
             class="relative z-10 group" 
             draggable="true" 

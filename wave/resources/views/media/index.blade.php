@@ -644,7 +644,6 @@ use Filament\Actions\DeleteAction;
     @volt('media')
         <div class="flex overflow-hidden relative justify-start items-start w-full h-full bg-white rounded-xl border shadow-sm border-zinc-200/50">
             <div class="w-full h-full">
-                <p class="hidden" wire:click="isRootDirectory">test</p>
                 <div x-data="{ 
                         active: @entangle('selectedFile'),
                         search: @entangle('search'),

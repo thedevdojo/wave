@@ -17,8 +17,6 @@ use Wave\Facades\Wave;
 // Wave routes
 Wave::routes();
 
-Route::view('test', 'theme::test');
-
 use Illuminate\Support\Facades\Storage;
 
 Route::get('prostuff', function(){

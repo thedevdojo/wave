@@ -48,3 +48,4 @@ Route::group(['middleware' => 'auth'], function(){
 });
 
 Route::get('wave/theme/image/{theme_name}', '\Wave\Http\Controllers\ThemeImageController@show');
+Route::redirect('/admin/login', '/auth/login');
