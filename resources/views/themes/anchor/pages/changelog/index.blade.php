@@ -29,7 +29,7 @@
                         </div>
                         <div class="relative">
                             <a href="{{ route('changelog', ['changelog' => $changelog->id]) }}" class="text-xl no-underline hover:underline" wire:navigate>{{ $changelog->title }}</a>
-                            <div class="mx-auto mt-5 max-w-4xl max-w-full prose-sm prose text-zinc-600">
+                            <div class="mx-auto mt-5 prose-sm prose text-zinc-600">
                                 {!! $changelog->body !!}
                             </div>
                             @if(!$loop->last)

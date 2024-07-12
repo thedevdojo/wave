@@ -19,7 +19,7 @@
                 :href="route('changelogs')"
             />
 
-            <article id="changelog-{{ $changelog->id }}" class="px-5 pb-20 mx-auto max-w-4xl lg:px-0">
+            <article id="changelog-{{ $changelog->id }}" class="px-5 mx-auto max-w-4xl lg:px-0">
 
                 <meta property="name" content="{{ $changelog->title }}">
                 <meta property="author" typeof="Person" content="admin">
@@ -32,7 +32,7 @@
                 />
                 
                 <p class="mt-5 text-xs font-medium tracking-wider text-zinc-800">Posted on <time datetime="{{ Carbon\Carbon::parse($changelog->created_at)->toIso8601String() }}" class="ml-1">{{ Carbon\Carbon::parse($changelog->created_at)->toFormattedDateString() }}</time></p>
-                <div class="mx-auto mt-5 max-w-4xl max-w-full prose-base text-zinc-600">
+                <div class="mx-auto mt-5 max-w-full prose prose-base text-zinc-600">
                     {!! $changelog->body !!}
                 </div>
 

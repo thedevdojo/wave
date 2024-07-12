@@ -8,7 +8,7 @@
 				</svg>
 			</span>
 			<h4 class="text-sm font-medium leading-5 text-zinc-900 dark:text-white">{{ $changeLogNotification->title }}</h4>
-			<p class="mt-2 text-sm leading-5 text-zinc-500">{{ $changeLogNotification->description }}</p>
+			<p class="mt-2 text-sm tracking-wide leading-5 text-zinc-500">{{ $changeLogNotification->description }}</p>
 			<div id="changelog_footer" class="mt-1"><a href="{{ route('changelog', ['changelog' => $changeLogNotification->id]) }}" class="text-sm font-medium leading-5 text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-500 focus:outline-none focus:underline">Learn More</a></div>
 		</div>
 	</div>

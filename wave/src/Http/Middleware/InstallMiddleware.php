@@ -14,15 +14,24 @@ class InstallMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(\Illuminate\Http\Request $request, Closure $next)
     {
+        // if we are not on the install route
+        if($request->path() != 'install'){
 
-        // If there are no users in the database we need to run the install script
-        if(User::first() === null){
-            if( $request->route()->getName() != 'wave.install' ){
+            try {
+                $user = User::first();
+            } catch (\Illuminate\Database\QueryException $e) {
+                
+                return redirect()->route('wave.install');
+                
+            }
+
+            if(User::first() === null){
                 return redirect()->route('wave.install');
             }
         }
+
         return $next($request);
     }
 }

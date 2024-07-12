@@ -1,6 +1,6 @@
 <!-- Loop Through Posts Here -->
 @foreach($posts as $post)
-    <article id="post-{{ $post->id }}" class="overflow-hidden relative col-span-2 p-4 bg-white rounded-2xl border shadow-sm cursor-pointer border-zinc-100 dark:bg-black sm:col-span-1" onClick="window.location='{{ $post->link() }}'">
+    <article id="post-{{ $post->id }}" class="overflow-hidden relative col-span-2 p-4 bg-white rounded-2xl border cursor-pointer border-zinc-200 border-zinc-100 dark:bg-black sm:col-span-1" onClick="window.location='{{ $post->link() }}'">
         <meta property="name" content="{{ $post->title }}">
         <meta property="author" typeof="Person" content="admin">
         <meta property="dateModified" content="{{ Carbon\Carbon::parse($post->updated_at)->toIso8601String() }}">

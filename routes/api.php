@@ -19,3 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Wave::api();
+
+// Posts Example API Route
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('/posts', '\App\Http\Controllers\Api\ApiController@posts');
+});

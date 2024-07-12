@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use TCG\Voyager\Models\Role;
+use Spatie\Permission\Models\Role;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiKey;
 use App\Models\User;
@@ -110,7 +110,7 @@ class AuthController extends Controller
         ]);
 
         // Get the Default role of a user
-        $role = Role::where('name', config('voyager.user.default_role'))->first();
+        $role = Role::where('name', config('wave.user_default_role'))->first();
 
         $user = User::create([
             'name' => $request->name,

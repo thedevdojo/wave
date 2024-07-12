@@ -65,3 +65,9 @@ svg {
     padding:.5rem 2.5rem .5rem .75rem;
     background-repeat: no-repeat;
 }
+
+.prose {
+  blockquote{
+    @apply py-3 border-l-4 bg-zinc-100 border-zinc-300;
+  }
+}
