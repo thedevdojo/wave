@@ -4,17 +4,16 @@
     
     {{-- Sidebar --}} 
     <div :class="{ '-translate-x-full': !mobileOpen }"
-        class="fixed top-0 left-0 flex -translate-x-full lg:translate-x-0 flex-col z-50 justify-between h-screen overflow-x-hidden overflow-auto transition-[width,transform] duration-150 ease-out bg-white border-r shadow-sm dark:bg-zinc-900 items-between w-64 group border-slate-100 dark:border-zinc-800 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">  
+        class="fixed top-0 left-0 flex -translate-x-full lg:translate-x-0 flex-col z-50 justify-between h-screen overflow-x-hidden overflow-auto transition-[width,transform] duration-150 ease-out bg-gray-50 shadow-sm dark:bg-zinc-900 items-between w-64 group @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">  
         <div class="flex relative flex-col py-6">
-            <div class="flex items-center px-4 space-x-2">
-                <a href="/dashboard" wire:navigate class="flex justify-start items-center px-2.5 w-full h-auto brightness-0 duration-300 ease-out dark:brightness-[5] hover:brightness-100 dark:hover:brightness-100 min-w-16 group-hover:justify-start shrink-0">
-                    <x-logo-darkmode class="hidden mb-2 w-auto h-4 fill-current dark:block text-zinc-800 dark:text-zinc-200" />
-                    <x-logo class="block mb-2 w-auto h-4 fill-current dark:hidden text-zinc-800 dark:text-zinc-200" />
+            <div class="flex items-center px-5 space-x-2">
+                <a href="/dashboard" wire:navigate class="flex justify-center items-center pb-2 pl-0.5 space-x-1 font-bold text-zinc-900">
+                    <x-logo class="w-auto h-7" />
                 </a>
             </div>
             <div class="flex items-center px-4 py-5">
-                <div class="relative w-full rounded-md shadow-sm">
-                    <x-phosphor-magnifying-glass class="absolute left-0 top-1/2 ml-2 w-5 h-5 text-gray-400 -translate-y-1/2" />
+                <div class="flex relative items-center w-full h-full rounded-md shadow-sm">
+                    <x-phosphor-magnifying-glass class="absolute left-0 ml-2 w-5 h-5 text-gray-400 -translate-y-px" />
                     <input type="text" class="py-[7px] pl-8 w-full text-sm rounded-md border duration-50 dark:bg-zinc-950 ease border-zinc-200 dark:border-zinc-700/70 dark:ring-zinc-700/70 focus:ring dark:text-zinc-200 dark:focus:ring-zinc-700/70 dark:focus:border-zinc-700 focus:ring-zinc-200 focus:border-zinc-300 dark:placeholder-zinc-400" placeholder="Search">
                 </div>
             </div>
@@ -67,6 +66,9 @@
                     class="absolute bottom-0 left-0 z-50 mb-12 w-full sm:mt-12 sm:origin-bottom sm:w-full" x-cloak>
                     <div class="pt-0 mt-1 bg-white text-zinc-600 dark:text-white/70 dark:bg-zinc-900 dark:shadow-xl sm:space-y-0.5 sm:border sm:shadow-md sm:rounded-md border-zinc-200/70 dark:border-white/10">
                         <div class="px-[18px] h-11 flex items-center text-[13px] font-bold">{{ auth()->user()->email }}</div>
+                        @if(auth()->user()->subscriber())
+                            You subscribed
+                        @endif
                         <div class="my-2 w-full h-px bg-slate-100 dark:bg-zinc-700"></div>
                         <div class="relative px-2 py-1">
                             <x-app.light-dark-toggle></x-app.light-dark-toggle>

@@ -4,7 +4,7 @@ namespace Wave\Http\Controllers;
 
 use Illuminate\Http\Request;
 use TCG\Voyager\Models\Role;
-use Wave\PaddleSubscription;
+use Wave\Subscription;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Wave\Http\Middleware\VerifyWebhook;
@@ -58,7 +58,7 @@ class WebhookController extends Controller
             return;
         }
     
-        $subscription = PaddleSubscription::where('subscription_id', $subscriptionId)->first();
+        $subscription = Subscription::where('subscription_id', $subscriptionId)->first();
     
         if (!$subscription) {
             Log::warning("Subscription not found: {$subscriptionId}");

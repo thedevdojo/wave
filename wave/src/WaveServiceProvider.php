@@ -16,6 +16,8 @@ use Intervention\Image\ImageManagerStatic;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Laravel\Folio\Folio;
+use Illuminate\Support\Facades\File;
 
 class WaveServiceProvider extends ServiceProvider
 {
@@ -88,6 +90,9 @@ class WaveServiceProvider extends ServiceProvider
             'form' => \App\Models\Forms::class
             // Add other mappings as needed
         ]);
+
+        $this->registerWaveFolioDirectory();
+        $this->registerWaveComponentDirectory();
 	}
 
 	protected function loadHelpers()
@@ -191,10 +196,20 @@ class WaveServiceProvider extends ServiceProvider
         Blade::directive('endrole', function () {
             return "<?php } ?>";
         });
+    }
 
+    protected function registerWaveFolioDirectory(){
+        if (File::exists(base_path('wave/resources/views/pages'))) {
+            Folio::path(base_path('wave/resources/views/pages'))->middleware([
+                '*' => [
+                    //
+                ],
+            ]);
+        }
+    }
 
-
-
+    protected function registerWaveComponentDirectory(){
+        Blade::anonymousComponentPath(base_path('wave/resources/views/components'));
     }
 
     private function loadLivewireComponents(){

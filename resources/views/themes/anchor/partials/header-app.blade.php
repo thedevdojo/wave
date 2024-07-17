@@ -4,7 +4,7 @@
             <div class="inline-flex">
             <!-- data-replace='{ "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }' -->
                 <a href="{{ route('home') }}" class="flex justify-center items-center space-x-3 text-blue-500 brightness-0 transition-all duration-300 ease-out transform hover:brightness-100 grayscale-100">
-                   <x-logo class="w-auto h-5"></x-logo>
+                   <x-logo class="w-auto h-7"></x-logo>
                 </a>
             </div>
             <div class="flex flex-grow justify-end -my-2 -mr-2 md:hidden">

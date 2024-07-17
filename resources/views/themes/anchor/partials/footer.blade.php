@@ -4,7 +4,7 @@
     <x-container>
         <div class="flex flex-wrap justify-between items-start pb-20">
             <a href="#_" class="flex items-center mt-1 w-auto text-lg font-bold brightness-0 transition-all duration-300 ease-out md:w-1/6 hover:brightness-100">
-                <x-logo class="w-auto h-5"></x-logo>
+                <x-logo class="flex-shrink-0 w-auto h-8"></x-logo>
             </a>
             <div class="grid grid-cols-2 gap-y-16 pt-2 mt-20 w-full sm:grid-cols-4 lg:gap-x-8 md:w-5/6 md:mt-0 md:pr-6">
                 <div class="md:justify-self-end">

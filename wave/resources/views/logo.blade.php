@@ -1,1 +1,1 @@
-<x-logo class="mt-0.5 w-auto h-5"></x-logo>
+<p><strong>Admin</strong></p>

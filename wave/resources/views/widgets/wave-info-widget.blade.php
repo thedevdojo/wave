@@ -7,7 +7,7 @@
                     rel="noopener noreferrer"
                     target="_blank"
                 >
-                   <x-logo class="w-auto h-4"></x-logo>
+                   <x-logo class="w-auto h-6"></x-logo>
                 </a>
 
                 <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">

@@ -11,7 +11,7 @@
         }
     </script>
 </head>
-<body class="flex flex-col min-h-screen lg:px-0 px-10 bg-zinc-50 dark:bg-zinc-950 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
+<body class="flex flex-col min-h-screen lg:px-0 px-10 bg-white dark:bg-zinc-950 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
 
     @if(config('wave.demo') && Request::is('/'))
         @include('theme::partials.demo-header')

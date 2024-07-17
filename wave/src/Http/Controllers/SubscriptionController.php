@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use TCG\Voyager\Models\Role;
-use Wave\PaddleSubscription;
+use Wave\Subscription;
 use Carbon\Carbon;
 use Wave\Plan;
 use Wave\User;
@@ -43,7 +43,7 @@ class SubscriptionController extends Controller
         $subscription_id = auth()->user()->latestSubscription->subscription_id;
 
         // Ensure the provided subscription ID matches the user's subscription ID
-        $localSubscription = PaddleSubscription::where('subscription_id', $subscription_id)->first();
+        $localSubscription = Subscription::where('subscription_id', $subscription_id)->first();
     
         if (!$localSubscription || auth()->user()->latestSubscription->subscription_id != $subscription_id) {
             return back()->with(['message' => 'Invalid subscription ID.', 'message_type' => 'danger']);
@@ -149,7 +149,7 @@ class SubscriptionController extends Controller
                 $user->save();
     
                 // Create or update subscription details
-                $subscriptionRecord = PaddleSubscription::create([
+                $subscriptionRecord = Subscription::create([
                     'subscription_id' => $transaction->subscription_id,
                     'plan_id' => $transaction->items[0]->price->product_id,
                     'user_id' => $user->id,

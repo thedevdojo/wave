@@ -2,8 +2,8 @@
     <div class="px-8 mx-auto max-w-6xl md:px-12 lg:px-20">
         <div class="grid grid-cols-1 gap-6 items-center lg:grid-cols-2 lg:gap-24">
             <div class="md:order-first">
-                <h1 class="text-6xl font-bold tracking-tighter text-gray-900 text-balance">
-                    Ship In Days, <br>Not Months
+                <h1 class="text-7xl font-medium tracking-tighter text-gray-900 text-balance">
+                    Ship In Days, Not Months
                 </h1>
                 <p class="pr-0 mt-5 text-xl font-normal text-gray-500">
                     Wave will save you hundreds of hours and allow you to rapidly ship your next great product.

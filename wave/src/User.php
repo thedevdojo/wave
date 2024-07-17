@@ -11,11 +11,12 @@ use Lab404\Impersonate\Models\Impersonate;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Model;
 use Wave\Changelog;
-use Wave\PaddleSubscription;
+use Wave\Subscription;
 use Wave\Plan;
 use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\HasAvatar;
 
-class User extends AuthUser implements JWTSubject
+class User extends AuthUser implements JWTSubject, HasAvatar
 {
     use Notifiable, Impersonate, HasRoles;
 
@@ -104,13 +105,13 @@ class User extends AuthUser implements JWTSubject
 
     public function subscription()
     {
-        return $this->hasOne(PaddleSubscription::class);
+        return $this->hasOne(Subscription::class);
     }
 
 
     public function latestSubscription()
     {
-        return $this->hasOne(PaddleSubscription::class)->latest();
+        return $this->hasOne(Subscription::class)->latest();
     }
 
 
@@ -197,6 +198,11 @@ class User extends AuthUser implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar();
     }
 
 
