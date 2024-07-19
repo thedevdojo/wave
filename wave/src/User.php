@@ -55,12 +55,6 @@ class User extends AuthUser implements JWTSubject, HasAvatar
         'trial_ends_at' => 'datetime',
     ];
 
-    public function profile($key)
-    {
-        $keyValue = $this->profileKeyValue($key);
-        return isset($keyValue->value) ? $keyValue->value : '';
-    }
-
     public function onTrial()
     {
         if (is_null($this->trial_ends_at)) {

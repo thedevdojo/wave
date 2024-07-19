@@ -68,6 +68,12 @@ class User extends Authenticatable  implements FilamentUser
         return false;
     }
 
+    public function profile($key)
+    {
+        $keyValue = $this->profileKeyValue($key);
+        return isset($keyValue->value) ? $keyValue->value : '';
+    }
+
     /**
      * The attributes that should be cast.
      *
