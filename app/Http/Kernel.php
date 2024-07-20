@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \RalphJSmit\Livewire\Urls\Middleware\LivewireUrlsMiddleware::class,
+            \App\Http\Middleware\WaveCornerTab::class
         ],
 
         'api' => [

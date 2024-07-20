@@ -7,7 +7,7 @@
                     scrolled = false;
                 }
             })
-        " :class="{ 'border-zinc-100 bg-white/90 backdrop-blur-xl fixed mt-0' : scrolled, 'border-transparent bg-transparent absolute @if(config('wave.demo') && Request::is('/')){{ "mt-12" }} @endif' : !scrolled }" class="box-content z-30 w-full h-24 border-b" x-cloak>
+        " :class="{ 'border-zinc-100 bg-white/90 backdrop-blur-xl fixed mt-0' : scrolled, 'border-transparent bg-transparent absolute' : !scrolled }" class="box-content z-30 w-full h-24 border-b" x-cloak>
     <div 
         x-show="showOverlay"
         x-transition:enter="transition ease-out duration-300"

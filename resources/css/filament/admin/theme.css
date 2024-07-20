@@ -37,7 +37,7 @@
 
 .fi-topbar > nav, .fi-sidebar-header{
     box-shadow: none !important;
-    border-bottom:1px solid #eeeeff;
+    @apply border-b border-gray-200/60 dark:border-gray-800;
 }
 
 /* .fi-url-admin-forms .fi-main{

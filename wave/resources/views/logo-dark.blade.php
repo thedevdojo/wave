@@ -1,1 +1,0 @@
-<x-logo-darkmode class="mt-0.5 w-auto h-5"></x-logo-darkmode>

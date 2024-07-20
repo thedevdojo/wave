@@ -67,14 +67,14 @@ class WaveServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(realpath(__DIR__.'/../database/migrations'));
         $this->loadBladeDirectives();
 
-        FilamentColor::register([
-            'danger' => Color::Red,
-            'gray' => Color::Zinc,
-            'info' => Color::Blue,
-            'primary' => Color::Blue,
-            'success' => Color::Green,
-            'warning' => Color::Amber,
-        ]);
+        // FilamentColor::register([
+        //     'danger' => Color::Red,
+        //     'gray' => Color::Zinc,
+        //     'info' => Color::Blue,
+        //     'primary' => Color::Blue,
+        //     'success' => Color::Green,
+        //     'warning' => Color::Amber,
+        // ]);
 
         Validator::extend('imageable', function ($attribute, $value, $params, $validator) {
             try {

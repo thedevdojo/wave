@@ -131,12 +131,13 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                \App\Http\Middleware\WaveCornerTab::class
             ])
             ->authMiddleware([
                 Authenticate::class
             ])
-            ->brandLogo(fn () => view('wave::logo'))
-            ->darkModeBrandLogo(fn () => view('wave::logo-dark'));
+            ->brandLogo(fn () => view('wave::admin.logo'))
+            ->darkModeBrandLogo(fn () => view('wave::admin.logo-dark'));
     }
 
     // This function will render if user has account crenditals file 
