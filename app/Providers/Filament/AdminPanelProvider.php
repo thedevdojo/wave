@@ -131,7 +131,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \App\Http\Middleware\WaveEditTab::class
+                // \App\Http\Middleware\WaveEditTab::class
             ])
             ->authMiddleware([
                 Authenticate::class

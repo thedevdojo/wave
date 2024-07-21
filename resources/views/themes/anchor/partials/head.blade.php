@@ -43,8 +43,6 @@
     <meta name="description" content="{{ $seo->description }}">
 @endif
 
-
-<!-- Styles -->
 @filamentStyles
 @vite(['resources/views/themes/anchor/assets/css/app.css', 'resources/views/themes/anchor/assets/js/app.js'])
 @livewireStyles

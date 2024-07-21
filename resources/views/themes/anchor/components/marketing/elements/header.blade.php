@@ -1,13 +1,27 @@
-<header x-data="{ mobileMenuOpen: false, scrolled: false, showOverlay: false, topOffset: @if(config('wave.demo') && Request::is('/')){{ '50' }}@else{{ '0' }}@endif }"
-        x-init="
-            window.addEventListener('scroll', function() {
-                if(window.pageYOffset > topOffset){
-                    scrolled = true;
-                } else {
-                    scrolled = false;
-                }
-            })
-        " :class="{ 'border-zinc-100 bg-white/90 backdrop-blur-xl fixed mt-0' : scrolled, 'border-transparent bg-transparent absolute' : !scrolled }" class="box-content z-30 w-full h-24 border-b" x-cloak>
+<header 
+    x-data="{ 
+        mobileMenuOpen: false, 
+        scrolled: false, 
+        showOverlay: false, 
+        topOffset: '5',
+        evaluateScrollPosition(){
+            if(window.pageYOffset > this.topOffset){
+                this.scrolled = true;
+            } else {
+                this.scrolled = false;
+            }
+        } 
+    }"
+    x-init="
+        evaluateScrollPosition();
+        window.addEventListener('scroll', function() {
+            evaluateScrollPosition(); 
+        })
+    " 
+    :class="{ 'border-zinc-100 bg-white/90 backdrop-blur-xl fixed' : scrolled, 'border-transparent bg-transparent absolute translate-y-0' : !scrolled }" 
+    class="box-content z-30 w-full h-24 border-b" 
+    x-cloak
+>
     <div 
         x-show="showOverlay"
         x-transition:enter="transition ease-out duration-300"
@@ -20,7 +34,7 @@
         <div class="flex z-30 justify-between items-center h-24 md:space-x-8">
             <div class="inline-flex relative z-20">
                 <a href="{{ route('home') }}" class="flex justify-center items-center space-x-3 font-bold text-zinc-900">
-                   <x-logo class="w-auto h-8"></x-logo>
+                   <x-logo class="w-auto h-9"></x-logo>
                 </a>
             </div>
             <div class="flex flex-grow justify-end -my-2 -mr-2 md:hidden">
