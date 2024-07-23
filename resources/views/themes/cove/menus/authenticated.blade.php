@@ -79,7 +79,7 @@
                 class="absolute top-0 right-0 mt-20 w-56 rounded-xl transform origin-top-right" x-cloak>
 
                 <div class="bg-white rounded-xl border shadow-md border-zinc-100" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                    <a href="{{ route('wave.profile', auth()->user()->username) }}" class="block px-4 py-3 text-zinc-700 hover:text-zinc-800">
+                    <a href="/profile" class="block px-4 py-3 text-zinc-700 hover:text-zinc-800">
 
                         <span class="block text-sm font-medium leading-tight truncate">
                             {{ auth()->user()->name }}
@@ -103,8 +103,8 @@
                         @if( !auth()->guest() && auth()->user()->can('browse_admin') )
                             <a href="{{ route('voyager.dashboard') }}" class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900"><i class="fa fa-bolt"></i> Admin</a>
                         @endif
-                        <a href="{{ route('wave.profile', auth()->user()->username) }}" class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">My Profile</a>
-                        <a href="{{ route('wave.settings') }}" class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">Settings</a>
+                        <a href="" class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">My Profile</a>
+                        <a href="" class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">Settings</a>
 
                     </div>
                     <div class="border-t border-zinc-100"></div>

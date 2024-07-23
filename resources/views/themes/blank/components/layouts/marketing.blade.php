@@ -5,16 +5,17 @@
 </head>
 <body class="flex flex-col min-h-screen overflow-x-hidden @if($bodyClass ?? false){{ $bodyClass }}@endif">
 
-    <x-marketing.elements.header />
+    <x-marketing.header />
 
-    <main class="overflow-x-hidden flex-grow pt-24">
+    <main class="w-full h-full">
         {{ $slot }}
     </main>
 
     @livewire('notifications')
-    @include('theme::partials.footer')
-    @include('theme::partials.footer-scripts')
-
+    @filamentScripts
+    @livewireScripts
+    @waveCheckout
+    
     {{ $javascript ?? '' }}
 
 </body>

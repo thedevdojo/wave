@@ -4,10 +4,10 @@
             <div class="pt-6 pb-6 space-y-6">
                 <div class="flex justify-between items-center px-8 mt-1">
                     <div>
-                        <x-logo class="w-auto h-5"></x-logo>
+                        <x-logo class="w-auto h-8"></x-logo>
                     </div>
                     <div class="-mr-2">
-                        <button @click="mobileMenuOpen = false" type="button" class="inline-flex justify-center items-center p-2 text-zinc-400 rounded-full transition duration-150 ease-in-out hover:text-zinc-500 hover:bg-zinc-100 focus:outline-none focus:bg-zinc-100 focus:text-zinc-500">
+                        <button @click="mobileMenuOpen = false" type="button" class="inline-flex justify-center items-center p-2 rounded-full transition duration-150 ease-in-out text-zinc-400 hover:text-zinc-500 hover:bg-zinc-100 focus:outline-none focus:bg-zinc-100 focus:text-zinc-500">
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
@@ -57,16 +57,16 @@
             </div>
             <div class="px-8 py-6 space-y-6">
                 <div class="grid grid-cols-2 px-1 pb-4 row-gap-4 col-gap-8">
-                    <a href="/#pricing" class="text-base font-medium leading-6 text-zinc-900 transition duration-150 ease-in-out hover:text-zinc-700">
+                    <a href="/#pricing" class="text-base font-medium leading-6 transition duration-150 ease-in-out text-zinc-900 hover:text-zinc-700">
                         Pricing
                     </a>
-                    <a href="#" class="text-base font-medium leading-6 text-zinc-900 transition duration-150 ease-in-out hover:text-zinc-700">
+                    <a href="#" class="text-base font-medium leading-6 transition duration-150 ease-in-out text-zinc-900 hover:text-zinc-700">
                         Docs
                     </a>
-                    <a href="#" class="text-base font-medium leading-6 text-zinc-900 transition duration-150 ease-in-out hover:text-zinc-700">
+                    <a href="#" class="text-base font-medium leading-6 transition duration-150 ease-in-out text-zinc-900 hover:text-zinc-700">
                         Blog
                     </a>
-                    <a href="#" class="text-base font-medium leading-6 text-zinc-900 transition duration-150 ease-in-out hover:text-zinc-700">
+                    <a href="#" class="text-base font-medium leading-6 transition duration-150 ease-in-out text-zinc-900 hover:text-zinc-700">
                         Videos
                     </a>
                 </div>

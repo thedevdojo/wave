@@ -1,10 +1,10 @@
 
 <!-- Section 1 -->
 <footer class="@if(Request::is('/')){{ 'bg-white' }}@else{{ 'bg-zinc-50' }}@endif">
-    <div class="px-8 pt-16 mx-auto max-w-7xl lg:px-12 xl:px-16">
+    <div class="px-8 pt-16 mx-auto max-w-7xl lg:px-12 xl:px-5">
         <div class="flex flex-wrap justify-between items-start pb-20">
             <a href="#_" class="flex items-center mt-1 w-auto text-lg font-bold md:w-1/6">
-                <x-logo class="w-auto h-5"></x-logo>
+                <x-logo class="w-auto h-8"></x-logo>
             </a>
             <div class="grid grid-cols-2 gap-y-16 pt-2 mt-20 w-full sm:grid-cols-4 lg:gap-x-8 md:w-5/6 md:mt-0 md:pr-6">
                 <div class="md:justify-self-end">

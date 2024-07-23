@@ -66,9 +66,6 @@
                     class="absolute bottom-0 left-0 z-50 mb-12 w-full sm:mt-12 sm:origin-bottom sm:w-full" x-cloak>
                     <div class="pt-0 mt-1 bg-white text-zinc-600 dark:text-white/70 dark:bg-zinc-900 dark:shadow-xl sm:space-y-0.5 sm:border sm:shadow-md sm:rounded-md border-zinc-200/70 dark:border-white/10">
                         <div class="px-[18px] h-11 flex items-center text-[13px] font-bold">{{ auth()->user()->email }}</div>
-                        @if(auth()->user()->subscriber())
-                            You subscribed
-                        @endif
                         <div class="my-2 w-full h-px bg-slate-100 dark:bg-zinc-700"></div>
                         <div class="relative px-2 py-1">
                             <x-app.light-dark-toggle></x-app.light-dark-toggle>

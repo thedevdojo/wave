@@ -1,0 +1,16 @@
+@import './component-styles.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak]{
+  display:none;
+}
+
+.fi-input-wrp {
+    @apply rounded-none;
+}
+
+.fi-no-notification{
+    @apply rounded-none border border-black;
+}

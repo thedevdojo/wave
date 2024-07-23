@@ -5,9 +5,9 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/views/themes/anchor/assets/css/app.css',
-                'resources/views/themes/anchor/assets/js/app.js',
-                'resources/css/filament/admin/theme.css',
+                'resources/views/themes/cove/assets/css/app.css',
+                'resources/views/themes/cove/assets/js/app.js',
+                // 'resources/css/filament/admin/theme.css',
             ],
             //refresh: true,
         }),
