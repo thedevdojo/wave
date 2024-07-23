@@ -37,7 +37,7 @@
                             <div class="rounded-xl border shadow-md border-zinc-100">
                                 <div class="overflow-hidden rounded-xl shadow-xs">
                                     <div class="grid relative z-20 gap-6 px-5 py-6 bg-white sm:p-8 sm:gap-8">
-                                        <a href="{{ url('docs') }}" class="block px-5 py-3 -m-3 space-y-1 rounded-xl transition duration-150 ease-in-out hover:border-blue-500 hover:border-l-2 hover:bg-zinc-100">
+                                        <a href="{{ url('docs') }}" class="block px-5 py-3 -m-3 space-y-1 rounded-xl transition duration-150 ease-in-out hover:bg-zinc-100">
                                             <p class="text-base font-medium leading-6 text-zinc-900">
                                                 Documentation
                                             </p>

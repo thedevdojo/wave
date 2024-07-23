@@ -3,7 +3,7 @@
 <head>
     @include('theme::partials.head', ['seo' => ($seo ?? null) ])
 </head>
-<body class="flex min-h-screen overflow-x-hidden @if($bodyClass ?? false){{ $bodyClass }}@endif">
+<body class="flex min-h-screen overflow-x-hidden  bg-gray-100 min-h-sreen @if($bodyClass ?? false){{ $bodyClass }}@endif">
 
     <x-app.sidebar />
 

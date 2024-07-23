@@ -10,10 +10,12 @@
 
 <x-dynamic-component 
 	:component="$layout"
+	bodyClass="bg-zinc-50"
 >
 
     
     <x-app.container>
+        <x-back-button text="Back to Dashboard" href="/dashboard"></x-back-button>
         <x-card class="p-10">
             <x-app.heading
                 title="Changelog"

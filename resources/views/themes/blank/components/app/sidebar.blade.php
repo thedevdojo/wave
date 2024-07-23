@@ -1,6 +1,8 @@
 <aside class="flex fixed flex-col flex-shrink-0 justify-between w-64 h-screen bg-white border-r border-black">
     <div class="flex flex-col items-start p-7">
-        <x-logo class="mb-6 w-auto h-7"></x-logo>
+        <a href="/dashboard">
+            <x-logo class="mb-6 w-auto h-7"></x-logo>
+        </a>
         <nav class="flex flex-col -mx-1 space-y-2 w-full">
             <x-app.sidebar-link href="/dashboard" active="true">Menu Item 1</x-app.sidebar-link>
             <x-app.sidebar-link onclick="sidebarLinkDemo(event)">Menu Item 2</x-app.sidebar-link>
@@ -14,6 +16,10 @@
         </nav>
     </div>
     <div class="relative px-6 py-4">
+        <div class="relative pb-4 -mx-1 space-y-1">
+            <x-app.sidebar-link target="_blank" href="https://devdojo.com/wave/docs">Documentation</x-app.sidebar-link>
+            <x-app.sidebar-link href="/changelog">Changelog</x-app.sidebar-link>
+        </div>
         <div x-data="{ dropdownOpen: false }"
             :class="{ 'block z-50 w-full p-4 bg-white dark:bg-gray-900 dark:border-gray-800' : open, 'hidden': ! open }"
             class="relative flex-shrink-0 sm:p-0 sm:flex sm:w-auto sm:bg-transparent sm:items-center"
@@ -28,7 +34,7 @@
             <div wire:ignore x-show="dropdownOpen" @mouse.leave="dropdownOpen=false" @click.away="dropdownOpen=false" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 sm:scale-95" x-transition:enter-end="transform opacity-100 sm:scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 sm:scale-100" x-transition:leave-end="transform opacity-0 sm:scale-95" 
                 class="absolute bottom-0 left-0 z-50 mb-12 w-full sm:mt-12 sm:origin-bottom sm:w-full" x-cloak>
                 <div class="pt-0 mt-1 text-gray-600 bg-white border-black sm:space-y-0.5 sm:border">
-                    <div class="px-5 py-4 flex items-center text-[13px] font-bold">{{ auth()->user()->email }}</div>
+                    <div class="py-4 px-5 text-[13px] font-bold text-ellipsis overflow-hidden whitespace-nowrap">{{ auth()->user()->email }}</div>
                     <div class="my-2 w-full h-px bg-slate-100 dark:bg-gray-700"></div>
                     <div class="flex relative flex-col p-2 space-y-1">
                         <x-app.sidebar-link href="/notifications">Notifications</x-app.sidebar-link>

@@ -9,10 +9,10 @@
                 </div>
                 <div class="hidden w-auto lg:block">
                     <ul class="flex items-center mr-16">
+                        <li class="mr-9 font-medium hover:text-gray-700"><a href="/">Home</a></li>
+                        <li class="mr-9 font-medium hover:text-gray-700"><a href="/blog">Blog</a></li>
                         <li class="mr-9 font-medium hover:text-gray-700"><a href="#">Features</a></li>
-                        <li class="mr-9 font-medium hover:text-gray-700"><a href="#">Solutions</a></li>
-                        <li class="mr-9 font-medium hover:text-gray-700"><a href="#">Resources</a></li>
-                        <li class="font-medium hover:text-gray-700"><a href="#">Pricing</a></li>
+                        <li class="font-medium hover:text-gray-700"><a href="/pricing">Pricing</a></li>
                     </ul>
                 </div>
             </div>
