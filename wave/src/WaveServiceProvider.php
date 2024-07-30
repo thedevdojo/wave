@@ -85,6 +85,12 @@ class WaveServiceProvider extends ServiceProvider
             }
         });
 
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \Wave\Console\Commands\CancelExpiredSubscriptions::class,
+            ]);
+        }
+
         Relation::morphMap([
             'user' => config('auth.providers.model'),
             'form' => \App\Models\Forms::class
@@ -132,13 +138,19 @@ class WaveServiceProvider extends ServiceProvider
             return "<?php if (!auth()->guest() && auth()->user()->subscriber()) { ?>";
         });
 
-        Blade::directive('notsubscriber', function () {
-            return "<?php } else { ?>";
-        });
-
         Blade::directive('endsubscriber', function () {
             return "<?php } ?>";
         });
+
+        Blade::directive('notsubscriber', function () {
+            return "<?php if (!auth()->guest() && !auth()->user()->subscriber()) { ?>";
+        });
+
+        Blade::directive('endnotsubscriber', function () {
+            return "<?php } ?>";
+        });
+
+        
 
 
         // Trial Directives

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('role_id')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('avatar')->default('users/default.png');

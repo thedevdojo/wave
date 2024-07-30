@@ -16,8 +16,11 @@ return new class extends Migration
             $table->morphs('billable');
             $table->unsignedBigInteger('plan_id');
             $table->string('vendor_slug');
+            $table->string('vendor_product_id')->nullable();
+            $table->string('vendor_customer_id')->nullable();
             $table->string('vendor_subscription_id')->nullable();
             $table->string('status');
+            $table->enum('cycle', ['month', 'year', 'onetime'])->default('month');
             $table->integer('seats')->default(1);
             $table->timestamp('trial_ends_at')->nullable();
             $table->timestamp('ends_at')->nullable();

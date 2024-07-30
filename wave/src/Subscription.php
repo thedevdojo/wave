@@ -12,16 +12,22 @@ class Subscription extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'subscription_id',
+        'billable_type',
+        'billable_id',
         'plan_id',
-        'user_id',
+        'vendor_slug',
+        'vendor_product_id',
+        'vendor_customer_id',
+        'vendor_subscription_id',
+        'cycle',
         'status',
-        'next_bill_date',
-        'update_url',
-        'cancel_url',
-        'cancelled_at',
+        'seats',
+        'trial_ends_at',
+        'ends_at',
         'last_payment_at',
         'next_payment_at',
+        'cancel_url',
+        'update_url'
     ];
 
     /**
@@ -34,4 +40,5 @@ class Subscription extends Model
         'last_payment_at' => 'datetime',
         'next_payment_at' => 'datetime',
     ];
+
 }

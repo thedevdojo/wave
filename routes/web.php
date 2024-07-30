@@ -19,7 +19,7 @@ Wave::routes();
 
 use Illuminate\Support\Facades\Storage;
 
-Route::get('prostuff', function(){
+Route::get('prostuff', function () {
     $user = auth()->user();
     $user->setKeyValue('cool', 'beans');
     //dd($user->keyValues);

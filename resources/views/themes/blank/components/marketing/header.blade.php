@@ -3,7 +3,7 @@
         <div class="w-auto">
             <div class="flex flex-wrap items-center">
                 <div class="mr-14 w-auto">
-                    <a href="#">
+                    <a href="/">
                         <x-logo class="h-8"></x-logo>
                     </a>
                 </div>

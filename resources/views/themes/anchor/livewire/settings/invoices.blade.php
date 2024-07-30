@@ -9,16 +9,16 @@
 
             @if(isset($invoices->success) && $invoices->success == true)
 
-                <table class="min-w-full overflow-hidden divide-y divide-zinc-200 rounded-lg">
+                <table class="overflow-hidden min-w-full rounded-lg divide-y divide-zinc-200">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-zinc-500 uppercase bg-zinc-100">
+                            <th class="px-6 py-3 text-xs font-medium tracking-wider leading-4 text-left uppercase text-zinc-500 bg-zinc-100">
                                 Date of Invoice
                             </th>
-                            <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-right text-zinc-500 uppercase bg-zinc-100">
+                            <th class="px-6 py-3 text-xs font-medium tracking-wider leading-4 text-right uppercase text-zinc-500 bg-zinc-100">
                                 Price
                             </th>
-                            <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-right text-zinc-500 uppercase bg-zinc-100">
+                            <th class="px-6 py-3 text-xs font-medium tracking-wider leading-4 text-right uppercase text-zinc-500 bg-zinc-100">
                                 Receipt Link
                             </th>
                         </tr>
@@ -49,7 +49,7 @@
 
         @notsubscriber
             <p class="text-zinc-600">When you subscribe to a plan, this is where you will be able to download your invoices.</p>
-            <a href="{{ route('wave.settings', 'plans') }}" class="inline-flex self-start justify-center w-auto px-4 py-2 mt-5 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">View Plans</a>
+            <a href="{{ route('wave.settings', 'plans') }}" class="inline-flex justify-center self-start px-4 py-2 mt-5 w-auto text-sm font-medium text-white bg-blue-600 rounded-md border border-transparent transition duration-150 ease-in-out hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave active:bg-blue-700">View Plans</a>
         @endsubscriber
 
     </div>

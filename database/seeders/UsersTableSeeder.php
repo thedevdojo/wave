@@ -22,7 +22,6 @@ class UsersTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'role_id' => 1,
                 'name' => 'Wave Admin',
                 'email' => 'admin@admin.com',
                 'username' => 'admin',

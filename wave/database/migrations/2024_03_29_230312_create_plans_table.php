@@ -13,14 +13,18 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->increments('id'); // Auto-incrementing UNSIGNED INTEGER (primary key)
-            $table->string('name', 191); // VARCHAR equivalent column
-            $table->string('slug', 191)->unique(); // VARCHAR equivalent column with a unique constraint
+            $table->string('name'); // VARCHAR equivalent column
+            $table->string('slug')->unique(); // VARCHAR equivalent column with a unique constraint
             $table->text('description')->nullable(); // TEXT column, nullable for the description
-            $table->string('features', 191); // VARCHAR equivalent column for features
-            $table->string('plan_id', 191)->default(''); // VARCHAR equivalent column with a default value
+            $table->string('features'); // VARCHAR equivalent column for features
+            $table->string('monthly_price_id')->nullable();
+            $table->string('yearly_price_id')->nullable();
+            $table->string('onetime_price_id')->nullable();
             $table->unsignedBigInteger('role_id'); // UNSIGNED BIGINT for the foreign key
             $table->boolean('default')->default(0); // TINYINT equivalent column for a boolean, with a default value
-            $table->string('price', 191); // VARCHAR equivalent column for the price
+            $table->string('monthly_price')->nullable(); // VARCHAR equivalent column for the price
+            $table->string('yearly_price')->nullable(); // VARCHAR equivalent column for the price
+            $table->string('onetime_price')->nullable(); // VARCHAR equivalent column for the price
             $table->integer('trial_days')->default(0); // INTEGER column with a default value
             $table->timestamps(); // Adds created_at and updated_at columns
 

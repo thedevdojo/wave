@@ -85,12 +85,16 @@ class Themes extends Page
 
     public function activate($theme_folder){
 
+        
+
         $theme = Theme::where('folder', '=', $theme_folder)->first();
 
         if(isset($theme->id)){
             $this->deactivateThemes();
             $theme->active = 1;
             $theme->save();
+
+            $this->writeThemeJson($theme_folder);
 
             Notification::make()
                 ->title('Successfully activated ' . $theme_folder . ' theme')
@@ -106,6 +110,12 @@ class Themes extends Page
 
         $this->refreshThemes();
 
+    }
+
+    private function writeThemeJson($themeName){
+        $themeJsonPath = base_path('theme.json');
+        $themeJsonContent = json_encode(['name' => $themeName], JSON_PRETTY_PRINT);
+        File::put($themeJsonPath, $themeJsonContent);
     }
 
     private function deactivateThemes(){

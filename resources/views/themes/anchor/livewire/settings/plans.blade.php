@@ -54,25 +54,9 @@
                         </ul>
 
                         <div class="mt-8">
-                            @subscribed($plan->slug)
-                                <div class="inline-flex justify-center items-center px-4 py-3 w-full text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 rounded-md border border-transparent transition duration-150 ease-in-out cursor-pointer hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25" disabled>
-                                    You're subscribed to this plan
-                                </div>
-                            @notsubscribed
-                                @subscriber
-                                    <div onclick="switchPlans('{{ $plan->plan_id }}', '{{ $plan->name }}')" class="inline-flex justify-center items-center px-4 py-3 w-full text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 rounded-md border border-transparent transition duration-150 ease-in-out cursor-pointer hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25">
-                                        Switch Plans
-                                    </div>
-                                @notsubscriber
-                                    <x-button class="w-full">
-                                        Get Started
-                                    </x-button>
-                                    {{-- <div data-plan="{{ $plan->plan_id }}" class="inline-flex justify-center items-center px-4 py-3 w-full text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 rounded-md border border-transparent transition duration-150 ease-in-out cursor-pointer hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25">
-                                        
-                                    </div> --}}
-                                @endsubscriber
-                            @endsubscribed
-
+                            <x-button class="w-full">
+                                Get Started
+                            </x-button>
                         </div>
                     </div>
                 </div>

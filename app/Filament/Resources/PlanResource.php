@@ -36,8 +36,11 @@ class PlanResource extends Resource
                 Forms\Components\TextInput::make('features')
                     ->required()
                     ->maxLength(191),
-                Forms\Components\TextInput::make('plan_id')
-                    ->required()
+                Forms\Components\TextInput::make('monthly_price_id')
+                    ->maxLength(191),
+                Forms\Components\TextInput::make('yearly_price_id')
+                    ->maxLength(191),
+                Forms\Components\TextInput::make('onetime_price_id')
                     ->maxLength(191),
                 Forms\Components\TextInput::make('role_id')
                     ->required()
@@ -64,18 +67,11 @@ class PlanResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('features')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('plan_id')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('role_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('default')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('price')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('trial_days')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

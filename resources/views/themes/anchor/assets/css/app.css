@@ -71,3 +71,9 @@ svg {
     @apply py-3 border-l-4 bg-zinc-100 border-zinc-300;
   }
 }
+
+html, body{
+  p{
+    @apply text-sm text-gray-500 dark:text-gray-400;
+  }
+}

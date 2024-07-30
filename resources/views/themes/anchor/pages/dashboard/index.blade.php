@@ -7,7 +7,7 @@
 <x-layouts.app>
 	<x-app.container x-data class="space-y-6" x-cloak>
         
-		<x-app.alert id="dashboard_alert">This is the user dashboard where users will manage settings and access features. <a href="/docs" target="_blank" class="underline">View the docs</a> to learn more.</x-app.alert>
+		<x-app.alert id="dashboard_alert">This is the user dashboard where users will manage settings and access features. <a href="https://devdojo.com/wave/docs" target="_blank" class="underline">View the docs</a> to learn more.</x-app.alert>
 
         <x-app.heading
                 title="Dashboard"
@@ -52,5 +52,9 @@
 				image="/wave/img/globe.png"
 			/>
 		</div>
+		@subscriber
+			<x-app.subscriber-message />
+		@endsubscriber
+
     </x-app.container>
 </x-layouts.app>

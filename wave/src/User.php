@@ -66,48 +66,65 @@ class User extends AuthUser implements JWTSubject, HasAvatar
         return true;
     }
 
-    public function subscribed($plan)
+    
+
+    public function subscriptions()
     {
-
-        $plan = Plan::where('slug', $plan)->first();
-
-        // if the user is an admin they automatically have access to the default plan
-        if (isset($plan->default) && $plan->default && $this->hasRole('admin')) return true;
-
-        if (isset($plan->slug) && $this->hasRole($plan->slug)) {
-            return true;
-        }
-
-        return false;
+        return $this->hasMany(Subscription::class, 'billable_id')->where('billable_type', 'user');
     }
 
     public function subscriber()
     {
-
-        if ($this->hasRole('admin')) return true;
-
-        $roles = $this->roles->pluck('id')->push($this->role_id)->unique();
-        $plans = Plan::whereIn('role_id', $roles)->count();
-
-        // If the user has a role that belongs to a plan
-        if ($plans) {
-            return true;
-        }
-
-        return false;
+        return $this->subscriptions()->where('status', 'active')->exists();
     }
 
-    public function subscription()
+    public function subscribedToPlan($planSlug)
     {
-        return $this->hasOne(Subscription::class);
+        $plan = Plan::where('slug', $planSlug)->first();
+        if (!$plan) {
+            return false;
+        }
+        return $this->subscriptions()->where('plan_id', $plan->id)->where('status', 'active')->exists();
     }
 
+    public function plan(){
+        $latest_subscription = $this->latestSubscription();
+        return Plan::find($latest_subscription->plan_id);
+    }
+
+    public function planInterval(){
+        $latest_subscription = $this->latestSubscription();
+        return ($latest_subscription->cycle == 'month') ? 'Monthly' : 'Yearly'; 
+    }
 
     public function latestSubscription()
     {
-        return $this->hasOne(Subscription::class)->latest();
+        return $this->subscriptions()->where('status', 'active')->orderBy('created_at', 'desc')->first();
     }
 
+    public function invoices(){
+        $user_invoices = [];
+        $stripe = new \Stripe\StripeClient(config('devdojo.billing.keys.stripe.secret_key'));
+        $subscriptions = $this->subscriptions()->get();
+        
+        foreach($subscriptions as $subscription){
+            $invoices = $stripe->invoices->all([
+                'customer' => $subscription->vendor_customer_id,
+                'limit' => 100
+            ]);
+
+            foreach($invoices as $invoice){
+                array_push($user_invoices, (object)[
+                    'id' => $invoice->id,
+                    'created' => \Carbon\Carbon::parse($invoice->created)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
+                    'total' => number_format(($invoice->total /100), 2, '.', ' '),
+                    'download' => $invoice->invoice_pdf
+                ]);
+            }
+        }
+
+        return $user_invoices;
+    }
 
     /**
      * @return bool

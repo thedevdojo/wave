@@ -11,6 +11,8 @@
         {{ $slot }}
     </main>
 
+    <x-marketing.footer />
+
     @livewire('notifications')
     @filamentScripts
     @livewireScripts

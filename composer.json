@@ -25,6 +25,7 @@
         "livewire/livewire": "^3.0",
         "ralphjsmit/livewire-urls": "^1.4",
         "spatie/laravel-permission": "^6.4",
+        "stripe/stripe-php": "^15.3",
         "tymon/jwt-auth": "@dev"
     },
     "require-dev": {

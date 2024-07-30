@@ -8,16 +8,19 @@ use Illuminate\Support\Str;
 
 class Plan extends Model
 {
+    protected $guarded = [];
+
     public static function boot()
     {
         parent::boot();
 
-        self::creating(function($model){
+        self::creating(function ($model) {
             $model->slug = Str::lower(Str::slug($model->name));
         });
     }
 
-    public function role() {
+    public function role()
+    {
         return $this->belongsTo(Role::class);
     }
 }

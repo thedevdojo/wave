@@ -35,7 +35,7 @@
 
         <div class="relative px-2.5 pb-2.5 space-y-1.5 text-zinc-700 dark:text-zinc-400">
             
-            <x-app.sidebar-link href="https://wave.devdojo.com/docs" target="_blank" icon="phosphor-book-bookmark-duotone" active="false">Documentation</x-app.sidebar-link>
+            <x-app.sidebar-link href="https://devdojo.com/wave/docs" target="_blank" icon="phosphor-book-bookmark-duotone" active="false">Documentation</x-app.sidebar-link>
             <x-app.sidebar-link href="https://devdojo.com/questions" target="_blank" icon="phosphor-chat-duotone" active="false">Questions</x-app.sidebar-link>
             <x-app.sidebar-link :href="route('changelogs')" icon="phosphor-book-open-text-duotone" active="false">Changelog</x-app.sidebar-link>
 
@@ -74,7 +74,15 @@
                         <div class="flex relative flex-col p-2 space-y-1">
                             <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('notifications') }}" icon="phosphor-bell-duotone" active="false">Notifications</x-app.sidebar-link>
                             <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ '/profile/' . auth()->user()->username }}" icon="phosphor-planet-duotone" active="false">Public Profile</x-app.sidebar-link>
+                            {{-- @subscriber
+                                <x-app.sidebar-link href="{{ '/profile/' . auth()->user()->username }}" icon="phosphor-credit-card">Manage Subscription</x-app.sidebar-link>
+                            @endsubscriber --}}
+                            
+                            
                             <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('settings.profile') }}" icon="phosphor-gear-duotone" active="false">Settings</x-app.sidebar-link>
+                            @notsubscriber
+                                <x-app.sidebar-link href="/billing/checkout" icon="phosphor-sparkle-duotone">Upgrade</x-app.sidebar-link>
+                            @endnotsubscriber
                             @if(auth()->user()->isAdmin())
                                 <x-app.sidebar-link :hideUntilGroupHover="false" :ajax="false" href="/admin" icon="phosphor-crown-duotone" active="false">View Admin</x-app.sidebar-link>
                             @endif

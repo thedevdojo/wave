@@ -21,11 +21,11 @@ Route::get('p/{page}', '\Wave\Http\Controllers\PageController@page');
 Route::post('paddle/webhook', '\Wave\Http\Controllers\WebhookController');
 Route::post('checkout', '\Wave\Http\Controllers\SubscriptionController@checkout')->name('checkout');
 
-Route::group(['middleware' => 'auth'], function(){
-	Route::redirect('settings', 'settings/profile')->name('settings');
+Route::group(['middleware' => 'auth'], function () {
+    Route::redirect('settings', 'settings/profile')->name('settings');
 
-	Route::post('notification/read/{id}', '\Wave\Http\Controllers\NotificationController@delete')->name('wave.notification.read');
-	Route::post('changelog/read', '\Wave\Http\Controllers\ChangelogController@read')->name('changelog.read');
+    Route::post('notification/read/{id}', '\Wave\Http\Controllers\NotificationController@delete')->name('wave.notification.read');
+    Route::post('changelog/read', '\Wave\Http\Controllers\ChangelogController@read')->name('changelog.read');
 
     /********** Checkout/Billing Routes ***********/
     Route::post('cancel', '\Wave\Http\Controllers\SubscriptionController@cancel')->name('wave.cancel');
@@ -38,4 +38,11 @@ Route::group(['middleware' => 'auth'], function(){
 Route::get('wave/theme/image/{theme_name}', '\Wave\Http\Controllers\ThemeImageController@show');
 Route::redirect('/admin/login', '/auth/login');
 
+Route::post('webhook/stripe', '\Wave\Http\Controllers\Billing\Webhooks\StripeWebhook@handler');
+Route::get('stripe-customer-portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_customer_portal');
+
 Route::get('reset', \Wave\Actions\Reset::class);
+
+Route::get('keys', function(){
+    dd( config('devdojo.billing.keys.stripe.webhook_secret') );
+});

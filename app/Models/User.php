@@ -5,11 +5,11 @@ namespace App\Models;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Support\Str;
-use Wave\User as Authenticatable;
+use Wave\User as WaveUser;
 use Illuminate\Notifications\Notifiable;
 use Wave\Traits\HasProfileKeyValues;
 
-class User extends Authenticatable  implements FilamentUser
+class User extends WaveUser  implements FilamentUser
 {
     use Notifiable, HasProfileKeyValues;
 
