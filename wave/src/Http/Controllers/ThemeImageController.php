@@ -10,7 +10,7 @@ class ThemeImageController extends Controller
 {
     public function show($theme_name)
     {
-        $path = resource_path('views/themes/' . $theme_name . '/theme.jpg');
+        $path = config('themes.folder') . '/' . $theme_name . '/theme.jpg';
 
         if (!File::exists($path)) {
             abort(404);

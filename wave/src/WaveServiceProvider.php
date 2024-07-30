@@ -229,51 +229,51 @@ class WaveServiceProvider extends ServiceProvider
         Livewire::component('billing.checkout', \Wave\Http\Livewire\Billing\Checkout::class);
     }
 
-    private function excludeInactiveThemes(){
+    // private function excludeInactiveThemes(){
 
-        $theme = Theme::where('active', 1)->latest()->first();
-        $activeTheme = $theme->folder;
+    //     $theme = Theme::where('active', 1)->latest()->first();
+    //     $activeTheme = $theme->folder;
 
-        $viewFinder = $this->app['view']->getFinder();
+    //     $viewFinder = $this->app['view']->getFinder();
         
-        // Get the default view paths
-        $paths = $viewFinder->getPaths();
+    //     // Get the default view paths
+    //     $paths = $viewFinder->getPaths();
         
-        // Remove the default resources/views path
-        $defaultViewPath = resource_path('views');
-        if (($key = array_search($defaultViewPath, $paths)) !== false) {
-            unset($paths[$key]);
-        }
+    //     // Remove the default resources/views path
+    //     $defaultViewPath = resource_path('views');
+    //     if (($key = array_search($defaultViewPath, $paths)) !== false) {
+    //         unset($paths[$key]);
+    //     }
 
-        // Get all subfolders inside resources/views
-        $subfolders = File::directories($defaultViewPath);
+    //     // Get all subfolders inside resources/views
+    //     $subfolders = File::directories($defaultViewPath);
 
-        foreach ($subfolders as $folder) {
-            $folderName = basename($folder);
+    //     foreach ($subfolders as $folder) {
+    //         $folderName = basename($folder);
             
-            // Check if it's the themes folder
-            if ($folderName === 'themes') {
-                $themeFolders = File::directories($folder);
+    //         // Check if it's the themes folder
+    //         if ($folderName === 'themes') {
+    //             $themeFolders = File::directories($folder);
 
-                foreach ($themeFolders as $themeFolder) {
-                    $themeName = basename($themeFolder);
+    //             foreach ($themeFolders as $themeFolder) {
+    //                 $themeName = basename($themeFolder);
 
-                    // Only add the active theme folder
-                    if ($themeName === $activeTheme) {
-                        $paths[] = $themeFolder;
-                    }
-                }
-            } else {
-                // Add other folders inside resources/views
-                $paths[] = $folder;
-            }
-        }
+    //                 // Only add the active theme folder
+    //                 if ($themeName === $activeTheme) {
+    //                     $paths[] = $themeFolder;
+    //                 }
+    //             }
+    //         } else {
+    //             // Add other folders inside resources/views
+    //             $paths[] = $folder;
+    //         }
+    //     }
 
-        // Set the new view paths
-        $viewFinder->setPaths($paths);
+    //     // Set the new view paths
+    //     $viewFinder->setPaths($paths);
 
-        // because we are changing the resources/views path we need to dynamically register the resources/views/components Blade path
-        Blade::anonymousComponentPath(base_path('resources/views/components'));
-    }
+    //     // because we are changing the resources/views path we need to dynamically register the resources/views/components Blade path
+    //     Blade::anonymousComponentPath(base_path('resources/views/components'));
+    // }
 
 }

@@ -1,9 +1,7 @@
 <?php
 
 return [
-
-	'themes_folder' => resource_path('views/themes'),
+	'folder' => resource_path('views/themes'),
 	'publish_assets' => false,
 	'create_tables' => false
-
 ];
