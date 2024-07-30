@@ -81,7 +81,7 @@
                             
                             <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('settings.profile') }}" icon="phosphor-gear-duotone" active="false">Settings</x-app.sidebar-link>
                             @notsubscriber
-                                <x-app.sidebar-link href="/billing/checkout" icon="phosphor-sparkle-duotone">Upgrade</x-app.sidebar-link>
+                                <x-app.sidebar-link href="/settings/subscriptions" icon="phosphor-sparkle-duotone">Upgrade</x-app.sidebar-link>
                             @endnotsubscriber
                             @if(auth()->user()->isAdmin())
                                 <x-app.sidebar-link :hideUntilGroupHover="false" :ajax="false" href="/admin" icon="phosphor-crown-duotone" active="false">View Admin</x-app.sidebar-link>

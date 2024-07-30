@@ -33,9 +33,13 @@
                 @endsubscriber
 
                 @notsubscriber
-                    <x-app.alert id="dashboard_alert">No Active Subscription. <a href="/billing/checkout" class="underline">Click here to subscribe</a>.</x-app.alert>
-                    <p class="mt-3">We could not find a current active subscription plan for this account.</p>
+                    <div class="mb-4">
+                        <x-app.alert id="no_subscriptions" :dismissable="false" type="info">No active subscriptions found. Please select a plan below.</x-app.alert>
+                    </div>
+                    <livewire:billing.checkout />
                 @endnotsubscriber
+
+                
 
             </x-app.settings-layout>
         </div>

@@ -89,6 +89,7 @@ class WaveServiceProvider extends ServiceProvider
             $this->commands([
                 \Wave\Console\Commands\CancelExpiredSubscriptions::class,
             ]);
+            //$this->excludeInactiveThemes();
         }
 
         Relation::morphMap([
@@ -225,11 +226,54 @@ class WaveServiceProvider extends ServiceProvider
     }
 
     private function loadLivewireComponents(){
-        Livewire::component('wave.settings.security', \Wave\Http\Livewire\Settings\Security::class);
-        Livewire::component('wave.settings.api', \Wave\Http\Livewire\Settings\Api::class);
-        Livewire::component('wave.settings.plans', \Wave\Http\Livewire\Settings\Plans::class);
-        Livewire::component('wave.settings.subscription', \Wave\Http\Livewire\Settings\Subscription::class);
-        Livewire::component('wave.settings.invoices', \Wave\Http\Livewire\Settings\Invoices::class);
+        Livewire::component('billing.checkout', \Wave\Http\Livewire\Billing\Checkout::class);
+    }
+
+    private function excludeInactiveThemes(){
+
+        $theme = Theme::where('active', 1)->latest()->first();
+        $activeTheme = $theme->folder;
+
+        $viewFinder = $this->app['view']->getFinder();
+        
+        // Get the default view paths
+        $paths = $viewFinder->getPaths();
+        
+        // Remove the default resources/views path
+        $defaultViewPath = resource_path('views');
+        if (($key = array_search($defaultViewPath, $paths)) !== false) {
+            unset($paths[$key]);
+        }
+
+        // Get all subfolders inside resources/views
+        $subfolders = File::directories($defaultViewPath);
+
+        foreach ($subfolders as $folder) {
+            $folderName = basename($folder);
+            
+            // Check if it's the themes folder
+            if ($folderName === 'themes') {
+                $themeFolders = File::directories($folder);
+
+                foreach ($themeFolders as $themeFolder) {
+                    $themeName = basename($themeFolder);
+
+                    // Only add the active theme folder
+                    if ($themeName === $activeTheme) {
+                        $paths[] = $themeFolder;
+                    }
+                }
+            } else {
+                // Add other folders inside resources/views
+                $paths[] = $folder;
+            }
+        }
+
+        // Set the new view paths
+        $viewFinder->setPaths($paths);
+
+        // because we are changing the resources/views path we need to dynamically register the resources/views/components Blade path
+        Blade::anonymousComponentPath(base_path('resources/views/components'));
     }
 
 }
