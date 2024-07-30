@@ -35,7 +35,7 @@ class Checkout extends Component
             ],
             'mode' => 'subscription',
             'success_url' => url('subscription/welcome'),
-            'cancel_url' => url('billing/checkout'),
+            'cancel_url' => url('settings/subscription'),
         ]);
 
         return redirect($checkout_session->url);

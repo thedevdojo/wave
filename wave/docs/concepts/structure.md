@@ -2,8 +2,9 @@
 
 In this section of the documentaion we will briefly discuss the file structure of Wave so that way you can better familiarize yourself with how Wave functions.
 
-- [Root Folder Structure](#root-structure)
-- [Wave Folder Structure](#wave-structure)
+- [File Structure](#file-structure)
+    - [Root Folder Structure](#root-folder-structure)
+    - [Wave Folder Structure](#wave-folder-structure)
 
 ---
 
@@ -30,7 +31,7 @@ This folder contains database files such as migrations and seeds.
 This public folder contains many of the applications public assets such as images, stylesheets, and scripts.
 
 - **resources** -
-This folder contains the views inside of our application and it also contains our theme files located inside of `resources/views/themes` folder.
+This folder contains the views inside of our application and it also contains our theme files located inside of `resources/themes` folder.
 
 - **routes** -
 This folder will contain all the routes files for our application.

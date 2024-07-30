@@ -11,8 +11,8 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                `resources/views/themes/${activeTheme}/assets/css/app.css`,
-                `resources/views/themes/${activeTheme}/assets/js/app.js`,
+                `resources/themes/${activeTheme}/assets/css/app.css`,
+                `resources/themes/${activeTheme}/assets/js/app.js`,
                 'resources/css/filament/admin/theme.css',
             ],
             refresh: true,

@@ -2,17 +2,18 @@
 
 In this section we'll teach you how to create a new theme, reference a theme view, and add theme options for your particular theme.
 
-- [Create a Theme](#create-theme)
-- [Theme Views](#theme-views)
-- [Theme Options](#theme-options)
-- [Theme Assets](#theme-assets)
+- [Themes](#themes)
+  - [Create a Theme](#create-a-theme)
+  - [Theme Views](#theme-views)
+  - [Theme Options](#theme-options)
+  - [Theme Assets](#theme-assets)
 
 ---
 
 <a name="create-theme"></a>
 ## Create a Theme
 
-In order to create a theme, you will need to create a new folder inside of `resources/views/themes`. Let's call this folder `sample-theme`. Then inside of this folder we need a matching filename called `sample-theme.json`:
+In order to create a theme, you will need to create a new folder inside of `resources/themes`. Let's call this folder `sample-theme`. Then inside of this folder we need a matching filename called `sample-theme.json`:
 
 ```json
 {
@@ -30,7 +31,7 @@ Now, if you visit `/admin/themes`, you'll see this new theme available to activa
 
 After activating a theme you can render any view `file.blade.php` or `file.php` by calling `theme::file`.
 
-For instance, if we created a new file inside our sample theme at `resources/views/themes/sample-theme/home.blade.php` we could then return the view in a controller like so:
+For instance, if we created a new file inside our sample theme at `resources/themes/sample-theme/home.blade.php` we could then return the view in a controller like so:
 
 ```php
 public function home(){
@@ -49,7 +50,7 @@ Route::view('/', 'theme::home');
 
 Every theme can include options such as logo, color scheme, etc... You can choose to program any amount of options into your theme.
 
-In order to create an *options* page for your theme you need to create a new file inside your theme folder called `options.blade.php`. As an example take a look at the Tailwind theme options located at `resources/views/themes/tailwind/options.blade.php`, you will see a snippet similar to:
+In order to create an *options* page for your theme you need to create a new file inside your theme folder called `options.blade.php`. As an example take a look at the Tailwind theme options located at `resources/themes/tailwind/options.blade.php`, you will see a snippet similar to:
 
 ```php
 <div id="branding" class="tab-pane fade in active">

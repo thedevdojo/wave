@@ -20,7 +20,7 @@ class Themes extends Page
     protected static string $view = 'filament.pages.themes';
 
     public function mount(){
-        $this->themes_folder = config('themes.folder', resource_path('views/themes'));
+        $this->themes_folder = config('themes.folder', resource_path('themes'));
 
         $this->installThemes();
         $this->refreshThemes();

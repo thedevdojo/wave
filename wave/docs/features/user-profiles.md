@@ -4,10 +4,11 @@ When building your SAAS application you may want your users to provide more info
 
 ---
 
-- [User Profile Page](#profile-page)
-- [User Profile Settings](#profile-settings)
-- [Custom Profile Fields](#custom-profile-fields)
-- [Profile Field Types](#profile-field-types)
+- [User Profiles](#user-profiles)
+    - [User Profile Page](#user-profile-page)
+    - [User Profile Settings](#user-profile-settings)
+    - [Custom Profile Fields](#custom-profile-fields)
+    - [Profile Field Types](#profile-field-types)
 
 <a name="profile-page"></a>
 ### User Profile Page
@@ -48,7 +49,7 @@ Custom profile fields allow you to add new fields in your user settings page. In
 echo profile_field('text_area', 'about')
 ```
 
-> {primary} This line of code can be found in each theme, which is located at: `resources/views/themes/{theme_name}/settings/partials/profile.blade.php`.
+> {primary} This line of code can be found in each theme, which is located at: `resources/themes/{theme_name}/settings/partials/profile.blade.php`.
 
 The `profile_field($type, $key)` function takes 2 arguments. The **type** of field, and the **key**.
 

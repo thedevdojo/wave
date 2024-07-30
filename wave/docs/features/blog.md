@@ -4,20 +4,21 @@ In order to grow your SAAS you will need a blog to write about relevant content.
 
 In this section you will learn about the blogging platform that comes along with Wave.
 
-- [Your Blog](#your-blog)
-- [Posts Admin](#posts-admin)
-- [Posts Categories](#posts-categories)
+- [Blog](#blog)
+    - [Your Blog](#your-blog)
+    - [Posts Admin](#posts-admin)
+    - [Post Categories](#post-categories)
 
 ---
 
 <a name="your-blog"></a>
 ### Your Blog
 
-After installing Wave, you will also have a blog located at the `/blog` route. You can modify or edit this theme file located at `resources/views/themes/{theme_folder}/blog/index.blade.php`
+After installing Wave, you will also have a blog located at the `/blog` route. You can modify or edit this theme file located at `resources/themes/{theme_folder}/blog/index.blade.php`
 
 ![blog 1](https://cdn.devdojo.com/images/april2021/blog-1.png)
 
-You can also view a single post by clicking the thumbnail or title of the post. You can modify or edit the theme post view at `resources/views/themes/{theme_folder}/blog/post.blade.php`
+You can also view a single post by clicking the thumbnail or title of the post. You can modify or edit the theme post view at `resources/themes/{theme_folder}/blog/post.blade.php`
 
 ![blog 2](https://cdn.devdojo.com/images/april2021/blog-2.png)
 

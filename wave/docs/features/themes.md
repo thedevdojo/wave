@@ -6,7 +6,7 @@ In this section you will learn where the themes are located and how to activate 
 
 ## Theme Location
 
-Every theme is located inside of the `resources/views/themes` folder. When you install Wave there will only be 1 theme available, the `tailwind` theme. If you <a href="https://devdojo.com/wave#pro" target="_blank">Upgrade to a Pro account</a>, you will gain access to the Wave Pro repo, which currently has another theme available, the `tallstack` theme. Each theme is responsible for managing their own assets. In each theme you will find a `package.json` which contains the front-end dependencies to run webpack and build each one.
+Every theme is located inside of the `resources/themes` folder. When you install Wave there will only be 1 theme available, the `tailwind` theme. If you <a href="https://devdojo.com/wave#pro" target="_blank">Upgrade to a Pro account</a>, you will gain access to the Wave Pro repo, which currently has another theme available, the `tallstack` theme. Each theme is responsible for managing their own assets. In each theme you will find a `package.json` which contains the front-end dependencies to run webpack and build each one.
 
 ## Theme Assets
 
