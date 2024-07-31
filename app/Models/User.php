@@ -57,6 +57,14 @@ class User extends WaveUser  implements FilamentUser
                 $user->username = $username;
             }
         });
+
+        // Listen for the created event of the model
+        static::created(function ($user) {
+            // Remove all roles
+            $user->syncRoles([]);
+            // Assign the default role
+            $user->assignRole('registered');
+        });
     }
 
     public function canAccessPanel(Panel $panel): bool

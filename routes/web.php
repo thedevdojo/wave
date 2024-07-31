@@ -27,3 +27,8 @@ Route::get('prostuff', function () {
     // $keyValuesQuery = $user->keyValues();
     // dd($keyValuesQuery->toSql(), $keyValuesQuery->getBindings());
 });
+
+
+Route::get('add_role', function(){
+    auth()->user()->assignRole('registered');
+});

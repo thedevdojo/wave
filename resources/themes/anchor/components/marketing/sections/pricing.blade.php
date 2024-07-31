@@ -39,7 +39,7 @@
 
         <div class="flex flex-wrap">
 
-            @foreach(Wave\Plan::all() as $plan)
+            @foreach(Wave\Plan::where('active', 1)->get() as $plan)
                 @php $features = explode(',', $plan->features); @endphp
                 <div class="px-0 mx-auto mb-6 w-full max-w-md lg:w-1/3 lg:px-0 lg:mb-0">
                     <div class="flex flex-col mb-10 h-full bg-white rounded-xl border-2  @if($plan->default){{ 'border-gray-900 scale-105' }}@else{{ 'border-gray-200' }}@endif shadow-sm sm:mb-0">

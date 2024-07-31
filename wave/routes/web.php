@@ -36,13 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('wave/theme/image/{theme_name}', '\Wave\Http\Controllers\ThemeImageController@show');
-Route::redirect('/admin/login', '/auth/login');
+Route::redirect('admin/login', '/auth/login');
 
 Route::post('webhook/stripe', '\Wave\Http\Controllers\Billing\Webhooks\StripeWebhook@handler');
-Route::get('stripe-customer-portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_customer_portal');
+Route::get('stripe/portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_customer_portal')->name('stripe.portal');
 
 Route::get('reset', \Wave\Actions\Reset::class);
-
-Route::get('keys', function(){
-    dd( config('devdojo.billing.keys.stripe.webhook_secret') );
-});

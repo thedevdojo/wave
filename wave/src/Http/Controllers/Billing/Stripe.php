@@ -26,7 +26,7 @@ class Stripe extends Controller
 
         $billingPortal = $stripe->billingPortal->sessions->create([
             'customer' => $latest_active_subscription->vendor_customer_id,
-            'return_url' => url('settings/subscriptions'),
+            'return_url' => route('settings.subscription'),
         ]);
         
         return redirect($billingPortal->url);

@@ -23,7 +23,7 @@ return [
 	'show_docs' => env('WAVE_DOCS', true),
     'demo' => env('WAVE_DEMO', false),
     'dev_bar' => env('WAVE_BAR', false),
-	'user_default_role' => 'free',
+	'default_user_role' => 'registered',
 
     'paddle' => [
         'vendor' => env('PADDLE_VENDOR_ID', ''),

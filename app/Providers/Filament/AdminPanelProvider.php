@@ -76,7 +76,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
             // ->navigation(function (NavigationBuilder $builder){
             //     return $builder
             //     ->items([

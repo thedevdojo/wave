@@ -10,6 +10,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Section;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -25,35 +27,62 @@ class PlanResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('features')
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('monthly_price_id')
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('yearly_price_id')
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('onetime_price_id')
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('role_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Toggle::make('default')
+                Section::make('Plan Details')
+                    ->description('Below are the basic details for each plan including name, description, and features')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(191)
+                            ->columnSpan(2),
+                        Forms\Components\Textarea::make('description')
+                            ->columnSpan([
+                                'default' => 2,
+                                'lg' => 1,
+                            ]),
+                        Forms\Components\Textarea::make('features')
+                        ->name('Features (separated by commas)')
+                        ->required()
+                        ->maxLength(191)
+                        ->columnSpan([
+                            'default' => 2,
+                            'lg' => 1,
+                        ]),
+                    ])->columns(2),
+                Section::make('Plan Pricing')
+                    ->description('Add the pricing details for your plans below')
+                    ->schema([ 
+                        Forms\Components\TextInput::make('monthly_price_id')
+                            ->label('Monthly Price ID')
+                            ->hint('Stripe/Paddle ID')
+                            ->maxLength(191),
+                        Forms\Components\TextInput::make('monthly_price')
+                            ->maxLength(191),
+                        Forms\Components\TextInput::make('yearly_price_id')
+                            ->label('Yearly Price ID')
+                            ->hint('Stripe/Paddle ID')
+                            ->maxLength(191),
+                        Forms\Components\TextInput::make('yearly_price')
+                            ->maxLength(191),
+                        Forms\Components\TextInput::make('onetime_price_id')
+                            ->label('One-time Price ID')
+                            ->hint('Stripe/Paddle ID')
+                            ->maxLength(191),
+                        Forms\Components\TextInput::make('onetime_price')
+                            ->maxLength(191),
+                    ])->columns(2),
+                Section::make('Plan Status')
+                    ->description('Make the plan default or active/inactive')
+                    ->schema([
+                        Forms\Components\Toggle::make('active')
+                            ->required(),
+                        Forms\Components\Toggle::make('default')
+                            ->required()
+                    ])->columns(2),
+                Forms\Components\Select::make('role_id')
+                    ->label('Role')
+                    ->options(Role::all()->pluck('name', 'id'))
+                    ->searchable()
                     ->required(),
-                Forms\Components\TextInput::make('price')
-                    ->required()
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('trial_days')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
             ]);
     }
 
@@ -63,15 +92,11 @@ class PlanResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('features')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('role_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('price')
-                    ->searchable(),
+                Tables\Columns\BooleanColumn::make('active')
+                    ->sortable(),    
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

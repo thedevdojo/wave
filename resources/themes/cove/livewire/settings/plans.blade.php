@@ -64,22 +64,9 @@
                     </div>
 
                     <div class="relative p-4 pt-0">
-
-                        @subscribed($plan->slug)
-                            <div class="inline-flex justify-center items-center px-4 py-4 w-full text-base font-semibold text-blue-600 rounded-lg border border-transparent transition duration-150 ease-in-out cursor-default bg-zinc-200 focus:outline-none disabled:opacity-25" disabled>
-                                You're subscribed to this plan
-                            </div>
-                        @notsubscribed
-                            @subscriber
-                                <div onclick="switchPlans('{{ $plan->plan_id }}', '{{ $plan->name }}')" class="inline-flex items-center justify-center w-full rounded-lg px-4 py-4 text-base font-semibold text-white transition duration-150 ease-in-out @if($plan->default){{ ' bg-gradient-to-r from-blue-600 to-indigo-500 hover:from-blue-500 hover:to-indigo-400' }}@else{{ 'bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-900 focus:border-zinc-900 focus:shadow-outline-gray' }}@endif border border-transparent cursor-pointer focus:outline-none disabled:opacity-25">
-                                    Switch Plans
-                                </div>
-                            @notsubscriber
-                                <div data-plan="{{ $plan->plan_id }}" class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold rounded-lg text-white transition duration-150 ease-in-out @if($plan->default){{ ' bg-gradient-to-r from-blue-600 to-indigo-500 hover:from-blue-500 hover:to-indigo-400' }}@else{{ 'bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-900 focus:border-zinc-900 focus:shadow-outline-gray' }}@endif border border-transparent cursor-pointer checkout focus:outline-none disabled:opacity-25">
-                                    Get Started
-                                </div>
-                            @endsubscriber
-                        @endsubscribed
+                        <div data-plan="{{ $plan->plan_id }}" class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold rounded-lg text-white transition duration-150 ease-in-out @if($plan->default){{ ' bg-gradient-to-r from-blue-600 to-indigo-500 hover:from-blue-500 hover:to-indigo-400' }}@else{{ 'bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-900 focus:border-zinc-900 focus:shadow-outline-gray' }}@endif border border-transparent cursor-pointer checkout focus:outline-none disabled:opacity-25">
+                            Get Started
+                        </div>
                     </div>
 
                 </div>

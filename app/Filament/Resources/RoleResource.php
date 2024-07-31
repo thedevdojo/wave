@@ -31,6 +31,10 @@ class RoleResource extends Resource
                 Forms\Components\TextInput::make('guard_name')
                     ->required()
                     ->maxLength(191),
+                Forms\Components\TextInput::make('description')
+                    ->required()
+                    ->maxLength(191)
+                    ->columnSpanFull(),
             ]);
     }
 
