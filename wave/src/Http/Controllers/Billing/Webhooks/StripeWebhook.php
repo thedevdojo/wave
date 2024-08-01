@@ -22,7 +22,7 @@ class StripeWebhook extends Controller
             $event = \Stripe\Webhook::constructEvent(
                 $payload,
                 $sig_header,
-                config('devdojo.billing.keys.stripe.webhook_secret')
+                config('wave.stripe.webhook_secret')
             );
         } catch(\UnexpectedValueException $e) {
             // Invalid payload
@@ -33,6 +33,8 @@ class StripeWebhook extends Controller
             http_response_code(400);
             exit();
         }
+
+        // dump($event);
 
         if($event->type == 'checkout.session.completed'
             || $event->type == 'checkout.session.async_payment_succeeded') {
@@ -49,6 +51,7 @@ class StripeWebhook extends Controller
                 $subscriptionCycle = $stripeSubscription->plan->interval;
                 $plan_price_column = ($subscriptionCycle == 'year') ? 'yearly_price_id' : 'monthly_price_id';
                 $updatedPlan = Plan::where($plan_price_column, $stripeSubscription->plan->id)->first();
+
 
                 $subscription->cycle = $subscriptionCycle;
                 $subscription->plan_id = $updatedPlan->id;
@@ -67,15 +70,15 @@ class StripeWebhook extends Controller
 
     public function fulfill_checkout($session_id, $event): void
     {
-        $stripe = \Stripe\Stripe::setApiKey( config('devdojo.billing.keys.stripe.secret_key') );
+        $stripe = \Stripe\Stripe::setApiKey( config('wave.stripe.secret_key') );
 
         // Make this function safe to run multiple times,
         // even concurrently, with the same session ID
         $cacheKey = 'stripe_checkout_session_' . $session_id;
         if (Cache::has($cacheKey)) {
-            dump('we hit the cache key');
             return; // Session ID already processed, exit early
         }
+
         Cache::put($cacheKey, true, now()->addHours(24)); // Store session ID in cache for 24 hours
 
         // Retrieve the Checkout Session from the API with line_items expanded
@@ -87,7 +90,6 @@ class StripeWebhook extends Controller
 
             $existingSubscription = Subscription::where('vendor_subscription_id', $checkout_session->subscription)->first();
             if ($existingSubscription) {
-                dump('we hit the existing sub');
                 // This is a failsafe to make sure this method doesn't get called multiple times, if existing subscription, return
                 return;
             }
@@ -96,6 +98,10 @@ class StripeWebhook extends Controller
             $billable_type = $checkout_session->metadata->billable_type;
             $plan_id = $checkout_session->metadata->plan_id;
             $billing_cycle = $checkout_session->metadata->billing_cycle;
+
+            $plan = Plan::find($plan_id);
+            auth()->user()->syncRoles([]);
+            auth()->user()->assignRole($plan->role->name);
 
             Subscription::create([
                 'billable_type' => $billable_type,

@@ -104,7 +104,7 @@ class User extends AuthUser implements JWTSubject, HasAvatar
 
     public function invoices(){
         $user_invoices = [];
-        $stripe = new \Stripe\StripeClient(config('devdojo.billing.keys.stripe.secret_key'));
+        $stripe = new \Stripe\StripeClient(config('wave.stripe.secret_key'));
         $subscriptions = $this->subscriptions()->get();
         
         foreach($subscriptions as $subscription){

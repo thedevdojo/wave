@@ -28,6 +28,12 @@ class CancelExpiredSubscriptions extends Command
         foreach ($subscriptions as $subscription) {
             $subscription->status = 'cancelled';
             $subscription->save();
+
+            dump($subscription->user);
+            // set the user back to the default role
+            $subscription->user->syncRoles([]);
+            $subscription->user->assignRole( config('wave.default_user_role', 'registered') );
+
             $this->info('Subscription ID ' . $subscription->id . ' has been cancelled.');
         }
 

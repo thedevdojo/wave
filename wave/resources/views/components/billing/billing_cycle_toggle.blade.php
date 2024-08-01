@@ -1,4 +1,4 @@
-<div x-show="billing_cycle_available=='both'"
+<div wire:ignore x-show="billing_cycle_available=='both'"
     x-init="
         setTimeout(function(){ 
             toggleRepositionMarker($refs.monthly); 

@@ -39,7 +39,14 @@
                             <span>You are currently subscribed to the {{ auth()->user()->plan()->name }} {{ auth()->user()->planInterval() }} Plan.</span>
                         </x-app.alert>
                         <p class="my-4">Manage your subscription by clicking below. Edit this page from the following file:  <x-code-inline>resources/views/{{ $theme->folder }}/pages/settings/subscription.blade.php</x-code-inline></p>
-                        <x-button :href="route('stripe.portal')" tag="a">Manage Subscription</x-button>
+                        @if(config('wave.billing_provider') == 'paddle')
+                            <x-button tag="a" color="info" href="{{ auth()->user()->latestSubscription()->update_url }}">Update</x-button>
+                            <x-button tag="a" color="danger" href="{{ auth()->user()->latestSubscription()->cancel_url }}">Cancel</x-button>
+
+                        @else
+                            <x-button :href="route('stripe.portal')" tag="a">Manage Subscription</x-button>
+                        @endif
+
                     @endsubscriber
 
                     @notsubscriber
@@ -50,6 +57,10 @@
                             </x-app.alert>
                         </div>
                         <livewire:billing.checkout />
+                        <p class="flex items-center mt-3 mb-4">
+                            <x-phosphor-shield-check-duotone class="mr-1 w-4 h-4" />
+                            <span class="mr-1">Billing is securely managed via </span><strong>{{ ucfirst(config('wave.billing_provider')) }} Payment Platform</strong>.
+                        </p>
                     @endnotsubscriber
                 @endrole
             </x-app.settings-layout>

@@ -17,10 +17,6 @@ Route::view('install', 'wave::install')->name('wave.install');
 /***** Pages *****/
 Route::get('p/{page}', '\Wave\Http\Controllers\PageController@page');
 
-/***** Billing Routes *****/
-Route::post('paddle/webhook', '\Wave\Http\Controllers\WebhookController');
-Route::post('checkout', '\Wave\Http\Controllers\SubscriptionController@checkout')->name('checkout');
-
 Route::group(['middleware' => 'auth'], function () {
     Route::redirect('settings', 'settings/profile')->name('settings');
 
@@ -38,7 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('wave/theme/image/{theme_name}', '\Wave\Http\Controllers\ThemeImageController@show');
 Route::redirect('admin/login', '/auth/login');
 
+Route::get('reset', \Wave\Actions\Reset::class);
+
+/***** Billing Routes *****/
+Route::post('webhook/paddle', '\Wave\Http\Controllers\Billing\Webhooks\PaddleWebhook@handler')->middleware('paddle-webhook-signature');
 Route::post('webhook/stripe', '\Wave\Http\Controllers\Billing\Webhooks\StripeWebhook@handler');
 Route::get('stripe/portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_customer_portal')->name('stripe.portal');
-
-Route::get('reset', \Wave\Actions\Reset::class);

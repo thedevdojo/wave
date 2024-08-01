@@ -39,14 +39,14 @@ class PlanResource extends Resource
                                 'default' => 2,
                                 'lg' => 1,
                             ]),
-                        Forms\Components\Textarea::make('features')
-                        ->name('Features (separated by commas)')
-                        ->required()
-                        ->maxLength(191)
-                        ->columnSpan([
-                            'default' => 2,
-                            'lg' => 1,
-                        ]),
+                        Forms\Components\TagsInput::make('features')
+                            ->reorderable()
+                            ->separator(',')
+                            ->placeholder('New feature')
+                            ->columnSpan([
+                                'default' => 2,
+                                'lg' => 1,
+                            ]),
                     ])->columns(2),
                 Section::make('Plan Pricing')
                     ->description('Add the pricing details for your plans below')
@@ -78,11 +78,15 @@ class PlanResource extends Resource
                         Forms\Components\Toggle::make('default')
                             ->required()
                     ])->columns(2),
-                Forms\Components\Select::make('role_id')
-                    ->label('Role')
-                    ->options(Role::all()->pluck('name', 'id'))
-                    ->searchable()
-                    ->required(),
+                Section::make('Associated Role')
+                    ->description('When the user subscribes to this plan, what role should they be assigned?')
+                    ->schema([
+                        Forms\Components\Select::make('role_id')
+                            ->label('Role')
+                            ->options(Role::all()->pluck('name', 'id'))
+                            ->searchable()
+                            ->required(),
+                ])
             ]);
     }
 

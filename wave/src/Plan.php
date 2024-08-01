@@ -3,7 +3,7 @@
 namespace Wave;
 
 use Illuminate\Database\Eloquent\Model;
-use TCG\Voyager\Models\Role;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
 
 class Plan extends Model

@@ -32,3 +32,9 @@ Route::get('prostuff', function () {
 Route::get('add_role', function(){
     auth()->user()->assignRole('registered');
 });
+
+Route::get('get_role', function(){
+    $plan = \Wave\Plan::first();
+    dd($plan->role->name);
+    auth()->user()->assignRole('registered');
+});

@@ -42,6 +42,7 @@ class WaveServiceProvider extends ServiceProvider
     	];
 
 
+        $this->app->router->aliasMiddleware('paddle-webhook-signature', \Wave\Http\Middleware\VerifyPaddleWebhookSignature::class);
     	$this->app->router->aliasMiddleware('token_api', \Wave\Http\Middleware\TokenMiddleware::class);
 	    $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\WaveMiddleware::class);
         $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\InstallMiddleware::class);
@@ -71,7 +72,7 @@ class WaveServiceProvider extends ServiceProvider
             'danger' => Color::Red,
             'gray' => Color::Zinc,
             'info' => Color::Blue,
-            'primary' => config('style.primary_color'),
+            'primary' => config('wave.primary_color'),
             'success' => Color::Green,
             'warning' => Color::Amber,
         ]);
@@ -118,13 +119,25 @@ class WaveServiceProvider extends ServiceProvider
 
     protected function loadBladeDirectives(){
 
+        Blade::directive('admin', function ($plan) {
+            return "<?php if (!auth()->guest() && auth()->user()->isAdmin()) { ?>";
+        });
+
+        Blade::directive('elsenotadmin', function () {
+            return "<?php } else { ?>";
+        });
+
+        Blade::directive('endadmin', function ($plan) {
+            return "<?php } ?>";
+        });
+
         // Subscription Directives
 
         Blade::directive('subscribed', function ($plan) {
             return "<?php if (!auth()->guest() && auth()->user()->subscribed($plan)) { ?>";
         });
 
-        Blade::directive('notsubscribed', function () {
+        Blade::directive('elsenotsubscribed', function () {
             return "<?php } else { ?>";
         });
 
@@ -139,14 +152,23 @@ class WaveServiceProvider extends ServiceProvider
             return "<?php if (!auth()->guest() && auth()->user()->subscriber()) { ?>";
         });
 
+        Blade::directive('elsenotsubscriber', function () {
+            return "<?php } else { ?>";
+        });
+
         Blade::directive('endsubscriber', function () {
             return "<?php } ?>";
         });
+
 
         Blade::directive('notsubscriber', function () {
             return "<?php if (!auth()->guest() && !auth()->user()->subscriber()) { ?>";
         });
 
+        Blade::directive('elsesubscriber', function () {
+            return "<?php } else { ?>";
+        });
+        
         Blade::directive('endnotsubscriber', function () {
             return "<?php } ?>";
         });

@@ -15,7 +15,7 @@ class Stripe extends Controller
         $latest_active_subscription = auth()->user()->latestSubscription();
         // Set your secret key. Remember to switch to your live secret key in production.
         // See your keys here: https://dashboard.stripe.com/apikeys
-        $stripe = new \Stripe\StripeClient( config('devdojo.billing.keys.stripe.secret_key') );
+        $stripe = new \Stripe\StripeClient( config('wave.stripe.secret_key') );
 
         $stripe->billingPortal->configurations->create([
             'business_profile' => [

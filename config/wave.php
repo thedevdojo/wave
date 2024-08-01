@@ -19,19 +19,28 @@ return [
 		'min_password_length' => 5,
 	],
 
+	'primary_color' => '#000000',
+
 	'user_model' => \App\Models\User::class,
 	'show_docs' => env('WAVE_DOCS', true),
     'demo' => env('WAVE_DEMO', false),
     'dev_bar' => env('WAVE_BAR', false),
 	'default_user_role' => 'registered',
 
+	'billing_provider' => env('BILLING_PROVIDER', 'stripe'),
+
     'paddle' => [
         'vendor' => env('PADDLE_VENDOR_ID', ''),
-        'auth_code' => env('PADDLE_API_KEY', ''),
 		'api_key' => env('PADDLE_API_KEY', ''),
-		'client_side_token' => env('PADDLE_CLIENT_SIDE_TOKEN', ''),
         'env' => env('PADDLE_ENV', 'sandbox'),
         'public_key' => env('PADDLE_PUBLIC_KEY', ''),
-    ]
+		'webhook_secret' => env('PADDLE_WEBHOOK_SECRET', '')
+	],
+
+	'stripe' => [
+        'publishable_key' => env('STRIPE_PUBLISHABLE_KEY'),
+        'secret_key' => env('STRIPE_SECRET_KEY'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET')
+    ],
 
 ];

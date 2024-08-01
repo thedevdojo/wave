@@ -1,6 +1,5 @@
 <div class="relative w-full bg-white rounded-md border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
     <div class="p-5">
-    <h2 class="block text-lg font-bold tracking-tight leading-tight text-slate-700 dark:text-white">Thanks for subscribing to a plan!</h2>
     <p class="mt-2">Did you know that you can use custom blade directives to check if a user is a subscriber, like the following:</p>
     </div>
     <pre class="p-5 font-mono text-xs text-gray-600 bg-gray-50 border-t border-b dark:bg-black dark:text-gray-100 dark:border-gray-800 border-gray-200/80"><code>&#64;subscriber

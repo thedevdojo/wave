@@ -17,6 +17,7 @@ class Subscription extends Model
         'plan_id',
         'vendor_slug',
         'vendor_product_id',
+        'vendor_transaction_id',
         'vendor_customer_id',
         'vendor_subscription_id',
         'cycle',
@@ -40,5 +41,13 @@ class Subscription extends Model
         'last_payment_at' => 'datetime',
         'next_payment_at' => 'datetime',
     ];
+
+    /**
+     * The user that owns the subscription.
+     */
+    public function user()
+    {
+        return $this->belongsTo(config('wave.user_model', 'App\Models\User'), 'billable_id');
+    }
 
 }

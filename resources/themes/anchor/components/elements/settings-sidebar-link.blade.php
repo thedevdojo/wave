@@ -1,5 +1,5 @@
 <a href="{{ $href }}" class="@if($href == RalphJSmit\Livewire\Urls\Facades\Url::current()){{ 'bg-zinc-100 dark:bg-zinc-700/70 text-zinc-900 dark:text-zinc-200 font-semibold' }}@else{{ 'hover:bg-zinc-100 hover:dark:bg-zinc-700/70 hover:dark:text-zinc-200 text-zinc-600 dark:text-zinc-400 font-medium' }}@endif flex justify-start items-center px-4 py-1.5 text-sm whitespace-nowrap group rounded-md transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 relative">
-    <span class="absolute left-0 block w-1 -translate-x-1.5 transition-all duration-300 ease-out rounded-full bg-blue-500 top-1/2 -translate-y-1/2 @if($href == RalphJSmit\Livewire\Urls\Facades\Url::current()){{ 'h-5/6' }}@endif "></span>
+    <span class="absolute left-0 block w-1 -translate-x-1.5 transition-all duration-300 ease-out rounded-full top-1/2 -translate-y-1/2 @if($href == RalphJSmit\Livewire\Urls\Facades\Url::current()){{ 'h-5/6' }}@endif " style="background:{{ config('wave.primary_color') }}"></span>
     <x-dynamic-component :component="$icon" class="flex-shrink-0 mr-1 -ml-1.5 w-4 h-4" />
     <span class="hidden truncate md:inline-block">{{ $slot }}</span>
 </a>

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('plan_id');
             $table->string('vendor_slug');
             $table->string('vendor_product_id')->nullable();
+            $table->string('vendor_transaction_id')->nullable();
             $table->string('vendor_customer_id')->nullable();
             $table->string('vendor_subscription_id')->nullable();
             $table->string('status');

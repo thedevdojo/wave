@@ -22,7 +22,7 @@
                         <div class="flex flex-col mb-10 h-full bg-white rounded-xl ease-out duration-300 border-2 border-gray-200 shadow-sm sm:mb-0 group-hover:border-{{ config('devdojo.billing.style.color') }}-500">
                             <div class="p-6 lg:p-8">
                                 <div class="relative">
-                                    <span class="text-lg md:text-xl font-semibold rounded-full text-uppercase text-{{ config('devdojo.billing.style.color') }}-600">
+                                    <span lass="text-lg md:text-xl font-semibold rounded-full text-uppercase text-{{ config('devdojo.billing.style.color') }}-600">
                                         {{ $plan->name }} Plan
                                         {{ $billing_cycle_selected }}
                                     </span>
@@ -52,9 +52,21 @@
                             <div class="px-6 py-5 mt-auto bg-gray-50 rounded-b-xl">
                                 <div class="flex justify-end items-center w-full">
                                     <div class="relative w-full md:w-auto">
-                                        <x-billing.button wire:click="redirectToPaymentProvider('{{ $plan->id }}')" wire:target="redirectToPaymentProvider" rounded="md" color="{{ config('devdojo.billing.style.color') }}">
-                                            Subscribe to this Plan
-                                        </x-billing.button>
+                                        @if(config('wave.billing_provider') == 'stripe')
+                                            <x-billing.button wire:click="redirectToPaymentProvider('{{ $plan->id }}')" wire:target="redirectToPaymentProvider" rounded="md" color="{{ config('devdojo.billing.style.color') }}">
+                                                Subscribe to this Plan
+                                            </x-billing.button>
+                                        @else
+                                            <x-billing.button 
+                                                x-on:click="
+                                                    if(billing_cycle_selected == 'month'){ openCheckout('{{ $plan->monthly_price_id }}'); }
+                                                    if(billing_cycle_selected == 'year'){ openCheckout('{{ $plan->yearly_price_id }}'); }
+                                                " 
+                                                rounded="md" color="{{ config('devdojo.billing.style.color') }}"
+                                            >
+                                                Subscribe to this Plan
+                                            </x-billing.button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -64,4 +76,82 @@
             </div>
         </div>
     </div>
+    @if(config('wave.billing_provider') == 'paddle')
+        <script>
+            window.paddle_public_key = '{{ config("wave.paddle.public_key") }}';
+
+            window.injectPaddleCDN = function(){
+                const script = document.createElement('script');
+                script.src = 'https://cdn.paddle.com/paddle/v2/paddle.js';
+                document.head.appendChild(script);
+            }
+
+            window.whenPaddleIsReady = function(callback){
+                let paddleCheckInterval = setInterval(function() {
+                    if (typeof Paddle !== 'undefined') {
+                        clearInterval(paddleCheckInterval);
+                        callback();
+                    }
+                }, 200);
+            }
+
+            window.initialize = function(){
+                Paddle.Initialize({
+                    token: paddle_public_key,
+                    checkout: {
+                        settings: {
+                            displayMode: "overlay",
+                            frameStyle: "width: 100%; min-width: 312px; background-color: transparent; border: none;",
+                            locale: "en",
+                            allowLogout: false
+                        }
+                    },
+                    eventCallback: function(data) {
+                        if (data.name == "checkout.completed") {
+                            checkoutComplete(data.data);
+                        }
+                    }
+                });
+
+                if("{{ config('wave.paddle.env') }}" == 'sandbox') {
+                    Paddle.Environment.set('sandbox');
+                }
+            }
+
+            window.checkoutComplete = function(data) {
+                window.Livewire.dispatch('confirmPaddleCheckout', { transactionId: data.transaction_id });
+            }
+
+            window.openCheckout = function(priceId) {
+                if(paddle_public_key){
+                    Paddle.Checkout.open({
+                        items: [{
+                            priceId: priceId,
+                            quantity: 1
+                        }],
+                        customer: {
+                            email: '{{ auth()->user()->email }}'
+                        },
+                        successCallback: "checkoutComplete",
+                    });
+                } else {
+                    alert('Paddle API keys and tokens must be set');
+                }
+            }
+
+            document.addEventListener('livewire:navigated', () => {
+                injectPaddleCDN();
+                whenPaddleIsReady(function(){
+                    initialize();
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                injectPaddleCDN();
+                whenPaddleIsReady(function(){
+                    initialize();
+                });
+            });
+        </script>
+    @endif
 </section>
