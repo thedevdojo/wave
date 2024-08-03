@@ -38,3 +38,8 @@ Route::get('get_role', function(){
     dd($plan->role->name);
     auth()->user()->assignRole('registered');
 });
+
+Route::get('switchPlans', function(){
+    $subscription = \Wave\Subscription::find(30);
+    $subscription->user->switchPlans('basic');
+});

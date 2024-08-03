@@ -25,8 +25,6 @@ return new class extends Migration
             $table->integer('seats')->default(1);
             $table->timestamp('trial_ends_at')->nullable();
             $table->timestamp('ends_at')->nullable();
-            $table->text('cancel_url')->nullable();
-            $table->text('update_url')->nullable();
             $table->timestamps();
 
             $table->index(['billable_id', 'billable_type', 'plan_id']);

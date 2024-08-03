@@ -2,13 +2,14 @@
 
 namespace Wave\Http\Livewire\Billing;
 
-use Livewire\Component;
 use Wave\Plan;
+use Wave\Subscription;
+use Livewire\Component;
 use Stripe\StripeClient;
 use Livewire\Attributes\On;
-use Wave\Subscription;
-use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
+use Filament\Notifications\Notification;
+use Wave\Actions\Billing\Paddle\AddSubscriptionIdFromTransaction;
 
 class Checkout extends Component
 {
@@ -19,18 +20,47 @@ class Checkout extends Component
 
     public $paddle_url;
 
+    public $change = false;
+
+    public $userSubscription = null;
+    public $userPlan = null;
+
     public function mount()
     {
         $this->billing_provider = config('wave.billing_provider', 'stripe');
         $this->paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
         $this->updateCycleBasedOnPlans();
+
+        if($this->change){
+            // if we are changing the user plan as opposecd to checking out the first time.
+            $this->userSubscription = auth()->user()->subscription;
+            $this->userPlan = auth()->user()->subscription->plan;
+        }
     }
 
-    public function redirectToPaymentProvider(Plan $plan)
+    public function redirectToStripeCheckout(Plan $plan)
     {
-        $redirect_url = ($this->billing_provider == 'paddle') ? $this->getPaymentRedirectFromPaddle($plan) : $this->getPaymentRedirectFromStripe($plan);
+        $stripe = new StripeClient(config('wave.stripe.secret_key'));
 
-        return redirect($redirect_url);
+        $price_id = $this->billing_cycle_selected == 'month' ? $plan->monthly_price_id : $plan->yearly_price_id ?? null;
+
+        $checkout_session = $stripe->checkout->sessions->create([
+            'line_items' => [[
+                'price' => $price_id,
+                'quantity' => 1
+            ]],
+            'metadata' => [
+                'billable_type' => 'user',
+                'billable_id' => auth()->user()->id,
+                'plan_id' => $plan->id,
+                'billing_cycle' => $this->billing_cycle_selected
+            ],
+            'mode' => 'subscription',
+            'success_url' => url('subscription/welcome'),
+            'cancel_url' => url('settings/subscription'),
+        ]);
+
+        return redirect($checkout_session->url);
     }
 
     public function updateCycleBasedOnPlans()
@@ -55,12 +85,22 @@ class Checkout extends Component
         }
     }
 
-    private function getPaymentRedirectFromPaddle(Plan $plan){
-
+    #[On('savePaddleSubscription')]
+    public function savePaddleSubscription($transactionId){
+        $subscription = app(AddSubscriptionIdFromTransaction::class)($transactionId);
+        if(!is_null($subscription)){
+            return redirect('/subscription/welcome');
+        }
+       
+        $this->js('closeLoader()');
+        Notification::make()
+            ->title('Unable to obtain subscription information from payment provider.')
+            ->danger()
+            ->send(); 
     }
-
-    #[On('confirmPaddleCheckout')] 
-    public function confirmPaddleCheckout($transactionId){
+    
+    #[On('verifyPaddleTransaction')] 
+    public function verifyPaddleTransaction($transactionId){
 
         $transaction = null;
 
@@ -93,14 +133,8 @@ class Checkout extends Component
                 return;
             }
 
-            // Update user role based on plan
-            //$user->role_id = $plan->role_id;
-            // $user->save();
-
             auth()->user()->syncRoles([]);
             auth()->user()->assignRole($plan->role->name);
-
-            dump($transaction);
 
             Subscription::create([
                 'billable_type' => 'user',
@@ -115,7 +149,7 @@ class Checkout extends Component
                 'seats' => 1
             ]);
 
-            return redirect('/subscription/welcome');
+            $this->js('savePaddleSubscription("' . $transactionId . '")');
            
         } else {
             $this->js('Paddle.Checkout.close()');
@@ -129,29 +163,34 @@ class Checkout extends Component
          
     }
 
-    private function getPaymentRedirectFromStripe(Plan $plan){
-        $stripe = new StripeClient(config('wave.stripe.secret_key'));
+    public function switchPlan(Plan $plan){
+        $subscription = auth()->user()->subscription;
 
-        $price_id = $this->billing_cycle_selected == 'month' ? $plan->monthly_price_id : $plan->yearly_price_id ?? null;
+        $price_id = ($this->billing_cycle_selected == 'month') ? $plan->monthly_price_id : $plan->yearly_price_id ?? null; 
 
-        $checkout_session = $stripe->checkout->sessions->create([
-            'line_items' => [[
-                'price' => $price_id,
-                'quantity' => 1
-            ]],
-            'metadata' => [
-                'billable_type' => 'user',
-                'billable_id' => auth()->user()->id,
-                'plan_id' => $plan->id,
-                'billing_cycle' => $this->billing_cycle_selected
-            ],
-            'mode' => 'subscription',
-            'success_url' => url('subscription/welcome'),
-            'cancel_url' => url('settings/subscription'),
-        ]);
+        $response = Http::withToken( config('wave.paddle.api_key') )->patch(
+            $this->paddle_url . '/subscriptions/' . $subscription->vendor_subscription_id,
+            [
+                'items' => [
+                    [
+                        'price_id' => $price_id,
+                        'quantity' => 1
+                    ]
+                ],
+                'proration_billing_mode' => 'prorated_immediately'
+            ]
+        );
 
-        return $checkout_session->url;
+        if ($response->successful()) {
+            $subscription->plan_id = $plan->id;
+            $subscription->cycle = $this->billing_cycle_selected;
+            $subscription->save();
+            $subscription->user->switchPlans($plan);
+            return redirect('/settings/subscription')->with(['update' => true]);
+        }
     }
+
+    
     public function render()
     {
         return view('wave::livewire.billing.checkout', [

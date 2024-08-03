@@ -249,6 +249,7 @@ class WaveServiceProvider extends ServiceProvider
 
     private function loadLivewireComponents(){
         Livewire::component('billing.checkout', \Wave\Http\Livewire\Billing\Checkout::class);
+        Livewire::component('billing.update', \Wave\Http\Livewire\Billing\Update::class);
     }
 
     // private function excludeInactiveThemes(){

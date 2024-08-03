@@ -230,7 +230,7 @@ class SubscriptionController extends Controller
                     ])->save();
     
                     // Update the subscription with the updated plan in the local database
-                    $request->user()->subscription()->update([
+                    $request->user()->subscription->update([
                         'plan_id' => $request->plan_id
                     ]);
     

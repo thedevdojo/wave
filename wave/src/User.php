@@ -2,19 +2,20 @@
 
 namespace Wave;
 
+use Wave\Plan;
 use Carbon\Carbon;
-use Devdojo\Auth\Models\User as AuthUser;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Lab404\Impersonate\Models\Impersonate;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Database\Eloquent\Model;
 use Wave\Changelog;
 use Wave\Subscription;
-use Wave\Plan;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Filament\Models\Contracts\HasAvatar;
+use Illuminate\Notifications\Notifiable;
+use Devdojo\Auth\Models\User as AuthUser;
+use Lab404\Impersonate\Models\Impersonate;
 
 class User extends AuthUser implements JWTSubject, HasAvatar
 {
@@ -102,23 +103,46 @@ class User extends AuthUser implements JWTSubject, HasAvatar
         return $this->subscriptions()->where('status', 'active')->orderBy('created_at', 'desc')->first();
     }
 
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderBy('created_at', 'desc');
+    }
+
+    public function switchPlans(Plan $plan){
+        $this->syncRoles([]);
+        dump('assigned role: ' . $plan->role->name);
+        $this->assignRole( $plan->role->name );
+    }
+
     public function invoices(){
         $user_invoices = [];
-        $stripe = new \Stripe\StripeClient(config('wave.stripe.secret_key'));
-        $subscriptions = $this->subscriptions()->get();
-        
-        foreach($subscriptions as $subscription){
-            $invoices = $stripe->invoices->all([
-                'customer' => $subscription->vendor_customer_id,
-                'limit' => 100
-            ]);
+        if(config('wave.billing_provider') == 'stripe'){
+            $stripe = new \Stripe\StripeClient(config('wave.stripe.secret_key'));
+            $subscriptions = $this->subscriptions()->get();        
+            foreach($subscriptions as $subscription){
+                $invoices = $stripe->invoices->all([ 'customer' => $subscription->vendor_customer_id, 'limit' => 100 ]);
 
-            foreach($invoices as $invoice){
+                foreach($invoices as $invoice){
+                    array_push($user_invoices, (object)[
+                        'id' => $invoice->id,
+                        'created' => \Carbon\Carbon::parse($invoice->created)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
+                        'total' => number_format(($invoice->total /100), 2, '.', ' '),
+                        'download' => $invoice->invoice_pdf
+                    ]);
+                }
+            }
+        } else { 
+            $paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
+            $response = Http::withToken(config('wave.paddle.api_key'))->get($paddle_url . '/transactions', [
+                'subscription_id' => $this->subscription->vendor_subscription_id
+            ]);
+            $responseJson = json_decode($response->body());
+            foreach($responseJson->data as $invoice){
                 array_push($user_invoices, (object)[
                     'id' => $invoice->id,
-                    'created' => \Carbon\Carbon::parse($invoice->created)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
-                    'total' => number_format(($invoice->total /100), 2, '.', ' '),
-                    'download' => $invoice->invoice_pdf
+                    'created' => \Carbon\Carbon::parse($invoice->created_at)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
+                    'total' => number_format(($invoice->details->totals->subtotal /100), 2, '.', ' '),
+                    'download' => '/settings/invoices/' . $invoice->id
                 ]);
             }
         }
@@ -175,15 +199,6 @@ class User extends AuthUser implements JWTSubject, HasAvatar
     public function apiKeys()
     {
         return $this->hasMany('Wave\ApiKey')->orderBy('created_at', 'DESC');
-    }
-
-    public function daysLeftOnTrial()
-    {
-        if ($this->trial_ends_at && $this->trial_ends_at >= now()) {
-            $trial_ends = Carbon::parse($this->trial_ends_at)->addDay();
-            return $trial_ends->diffInDays(now());
-        }
-        return 0;
     }
 
     public function avatar()

@@ -13,6 +13,8 @@ class User extends WaveUser  implements FilamentUser
 {
     use Notifiable, HasProfileKeyValues;
 
+    public $guard_name = 'web';
+
     /**
      * The attributes that are mass assignable.
      *

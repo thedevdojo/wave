@@ -34,18 +34,19 @@
                     </x-app.alert>
                 @notrole
                     @subscriber
-                        <x-app.alert id="no_subscriptions" :dismissable="false" type="success">
-                            <x-phosphor-seal-check-duotone class="flex-shrink-0 mr-1.5 -ml-1.5 w-6 h-6" /> 
-                            <span>You are currently subscribed to the {{ auth()->user()->plan()->name }} {{ auth()->user()->planInterval() }} Plan.</span>
-                        </x-app.alert>
-                        <p class="my-4">Manage your subscription by clicking below. Edit this page from the following file:  <x-code-inline>resources/views/{{ $theme->folder }}/pages/settings/subscription.blade.php</x-code-inline></p>
-                        @if(config('wave.billing_provider') == 'paddle')
-                            <x-button tag="a" color="info" href="{{ auth()->user()->latestSubscription()->update_url }}">Update</x-button>
-                            <x-button tag="a" color="danger" href="{{ auth()->user()->latestSubscription()->cancel_url }}">Cancel</x-button>
-
-                        @else
-                            <x-button :href="route('stripe.portal')" tag="a">Manage Subscription</x-button>
-                        @endif
+                        
+                        <div class="relative w-full h-auto">                            
+                            <x-app.alert id="no_subscriptions" :dismissable="false" type="success">
+                                <x-phosphor-seal-check-duotone class="flex-shrink-0 mr-1.5 -ml-1.5 w-6 h-6" /> 
+                                <span>You are currently subscribed to the {{ auth()->user()->plan()->name }} {{ auth()->user()->planInterval() }} Plan.</span>
+                            </x-app.alert>
+                            <p class="my-4">Manage your subscription by clicking below. Edit this page from the following file:  <x-code-inline>resources/views/{{ $theme->folder }}/pages/settings/subscription.blade.php</x-code-inline></p>
+                            @if (session('update'))
+                                <div class="my-4 text-sm text-green-600">Successfully updated your subscription</div>
+                            @endif
+                            <livewire:billing.update />
+                        </div>
+                       
 
                     @endsubscriber
 

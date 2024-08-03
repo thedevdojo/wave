@@ -34,14 +34,15 @@ class StripeWebhook extends Controller
             exit();
         }
 
-        // dump($event);
+        dump($event->type);
 
         if($event->type == 'checkout.session.completed'
             || $event->type == 'checkout.session.async_payment_succeeded') {
             $this->fulfill_checkout($event->data->object->id, $event);
         }
 
-        // This is when the user has updated information from the customer portal.
+        // This event occurs when someone updates information in their customer portal.
+        // This could be cancelling a subscription or it could be changing their plan.
         if($event->type == 'customer.subscription.updated'){
             $stripeSubscription = $event->data->object;
                     
@@ -52,16 +53,30 @@ class StripeWebhook extends Controller
                 $plan_price_column = ($subscriptionCycle == 'year') ? 'yearly_price_id' : 'monthly_price_id';
                 $updatedPlan = Plan::where($plan_price_column, $stripeSubscription->plan->id)->first();
 
+                // TODO: Test that this works
+                $subscription->user->switchPlans($updatedPlan);
 
                 $subscription->cycle = $subscriptionCycle;
                 $subscription->plan_id = $updatedPlan->id;
 
                 // this would be true if the user decides to cancel their subscription
-                if($stripeSubscription->cancel_at_period_end){
+                if(is_null($stripeSubscription->cancel_at)){
+                    $subscription->ends_at = NULL;
+                } else {
                     $subscription->ends_at = \Carbon\Carbon::createFromTimestamp($stripeSubscription->cancel_at)->toDateTimeString();
                 }
 
                 $subscription->save();
+            }
+        }
+
+        // Status docs here: https://docs.stripe.com/api/events/types#event_types-customer.subscription.deleted       
+        if($event->type == 'customer.subscription.deleted'){
+            $stripeSubscription = $event->data->object;
+                    
+            $subscription = Subscription::where('vendor_subscription_id', $stripeSubscription->id)->first();
+            if(isset($subscription)){
+                $subscription->cancel();
             }
         }
 
@@ -99,9 +114,11 @@ class StripeWebhook extends Controller
             $plan_id = $checkout_session->metadata->plan_id;
             $billing_cycle = $checkout_session->metadata->billing_cycle;
 
+            $user = \App\Models\User::find($billable_id);
+
             $plan = Plan::find($plan_id);
-            auth()->user()->syncRoles([]);
-            auth()->user()->assignRole($plan->role->name);
+            $user->syncRoles([]);
+            $user->assignRole($plan->role->name);
 
             Subscription::create([
                 'billable_type' => $billable_type,

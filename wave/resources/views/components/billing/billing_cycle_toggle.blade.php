@@ -7,7 +7,9 @@
                 $refs.marker.classList.add('duration-300', 'ease-out');
             }, 10); 
         }, 1);
-    " class="relative mb-5 w-40"
+    "
+    @reposition-interval-marker.window="toggleRepositionMarker($refs.monthly);"
+    class="relative mb-5 w-40"
     x-cloak>
     <div x-ref="toggleButtons" class="inline-grid relative grid-cols-2 justify-center items-center p-1 w-full h-10 bg-white rounded-full ring-1 ring-gray-200 shadow-sm select-none">
         <button x-ref="monthly" @click="toggleButtonClicked($el, 'month');" type="button"

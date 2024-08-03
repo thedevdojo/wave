@@ -50,4 +50,20 @@ class Subscription extends Model
         return $this->belongsTo(config('wave.user_model', 'App\Models\User'), 'billable_id');
     }
 
+    public function cancel(){
+        $this->status = 'cancelled';
+        $this->save();
+
+        $this->user->syncRoles([]);
+        $this->user->assignRole( config('wave.default_user_role', 'registered') );
+    }
+
+    /**
+     * The plan that belongs to the subscription.
+     */
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class, 'plan_id');
+    }
+
 }

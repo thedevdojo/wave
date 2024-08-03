@@ -19,6 +19,10 @@ Route::get('p/{page}', '\Wave\Http\Controllers\PageController@page');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::redirect('settings', 'settings/profile')->name('settings');
+    
+    if(config("wave.billing_provider") == 'paddle'){
+        Route::get('settings/invoices/{invoice}', '\Wave\Http\Controllers\SubscriptionController@invoice')->name('wave.paddle.invoice');
+    }
 
     Route::post('notification/read/{id}', '\Wave\Http\Controllers\NotificationController@delete')->name('wave.notification.read');
     Route::post('changelog/read', '\Wave\Http\Controllers\ChangelogController@read')->name('changelog.read');
@@ -40,3 +44,11 @@ Route::get('reset', \Wave\Actions\Reset::class);
 Route::post('webhook/paddle', '\Wave\Http\Controllers\Billing\Webhooks\PaddleWebhook@handler')->middleware('paddle-webhook-signature');
 Route::post('webhook/stripe', '\Wave\Http\Controllers\Billing\Webhooks\StripeWebhook@handler');
 Route::get('stripe/portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_customer_portal')->name('stripe.portal');
+
+Route::get('work', function(){
+    
+    $user = \App\Models\User::find(34);
+
+    $user->syncRoles([]);
+    $user->assignRole('basic');
+});
