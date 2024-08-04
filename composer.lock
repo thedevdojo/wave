@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbc495024d1a630564cbdf54a582861f",
+    "content-hash": "21514040a1bef18b062f3edbef01ba31",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -947,11 +947,17 @@
         },
         {
             "name": "devdojo/themes",
-            "version": "dev-updatingThemes",
+            "version": "0.0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thedevdojo/themes.git",
+                "reference": "7735128b718d3f787d1c4ca88776a9dd9a7ce6fc"
+            },
             "dist": {
-                "type": "path",
-                "url": "./packages/devdojo/themes",
-                "reference": "7fdb0a59351f8ae837ccc3c497065ad28f0f16d4"
+                "type": "zip",
+                "url": "https://api.github.com/repos/thedevdojo/themes/zipball/7735128b718d3f787d1c4ca88776a9dd9a7ce6fc",
+                "reference": "7735128b718d3f787d1c4ca88776a9dd9a7ce6fc",
+                "shasum": ""
             },
             "type": "library",
             "extra": {
@@ -966,11 +972,13 @@
                     "DevDojo\\Themes\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "description": "This is a themes package for Laravel",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/thedevdojo/themes/issues",
+                "source": "https://github.com/thedevdojo/themes/tree/0.0.11"
+            },
+            "time": "2024-08-04T22:28:52+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

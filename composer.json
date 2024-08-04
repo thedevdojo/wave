@@ -12,7 +12,7 @@
         "codeat3/blade-phosphor-icons": "^2.0",
         "devdojo/app": "0.11.0",
         "devdojo/auth": "dev-main",
-        "devdojo/themes": "*",
+        "devdojo/themes": "0.0.11",
         "filament/filament": "^3.2",
         "gehrisandro/tailwind-merge-laravel": "^1.2",
         "guzzlehttp/guzzle": "^7.2",
@@ -81,15 +81,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "./packages/devdojo/themes",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
