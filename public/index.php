@@ -22,6 +22,20 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 
 /*
 |--------------------------------------------------------------------------
+| Check For Autoload File and Run Composer Install If Necessary
+|--------------------------------------------------------------------------
+|
+| We need to make sure the autoload file is present. If it's not, we will
+| run a script to install Composer dependencies automatically.
+|
+*/
+
+if (file_exists(__DIR__ . '/install/index.php')) {
+    require __DIR__ . '/install/index.php';
+}
+
+/*
+|--------------------------------------------------------------------------
 | Register The Auto Loader
 |--------------------------------------------------------------------------
 |
