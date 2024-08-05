@@ -30,8 +30,8 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 |
 */
 
-if (file_exists(__DIR__ . '/install/index.php')) {
-    require __DIR__ . '/install/index.php';
+if (file_exists(__DIR__ . '/composer/install.php')) {
+    require __DIR__ . '/composer/install.php';
 }
 
 /*
