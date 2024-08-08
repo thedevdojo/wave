@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21514040a1bef18b062f3edbef01ba31",
+    "content-hash": "60518ed4e57e0c08be6f9cca70882714",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -803,16 +803,16 @@
         },
         {
             "name": "devdojo/auth",
-            "version": "dev-main",
+            "version": "dev-magickExclude",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thedevdojo/auth.git",
-                "reference": "95456875abffc7d0904a1d22f022af6a6dc8961a"
+                "reference": "736e112d46ae44ece7f7303fbc4857126961ba0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thedevdojo/auth/zipball/95456875abffc7d0904a1d22f022af6a6dc8961a",
-                "reference": "95456875abffc7d0904a1d22f022af6a6dc8961a",
+                "url": "https://api.github.com/repos/thedevdojo/auth/zipball/736e112d46ae44ece7f7303fbc4857126961ba0f",
+                "reference": "736e112d46ae44ece7f7303fbc4857126961ba0f",
                 "shasum": ""
             },
             "require": {
@@ -820,7 +820,6 @@
                 "calebporzio/sushi": "^2.5",
                 "codeat3/blade-phosphor-icons": "^2.0",
                 "devdojo/config-writer": "^0.0.7",
-                "ext-imagick": "^3.4",
                 "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
                 "laravel/folio": "^1.0",
                 "laravel/socialite": "^5.0",
@@ -840,7 +839,6 @@
                 "phpstan/phpstan": "^1.11",
                 "protonemedia/laravel-dusk-fakes": "^1.6"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -877,9 +875,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thedevdojo/auth/issues",
-                "source": "https://github.com/thedevdojo/auth/tree/1.0.4"
+                "source": "https://github.com/thedevdojo/auth/tree/magickExclude"
             },
-            "time": "2024-07-12T15:12:53+00:00"
+            "time": "2024-08-07T22:03:00+00:00"
         },
         {
             "name": "devdojo/config-writer",
