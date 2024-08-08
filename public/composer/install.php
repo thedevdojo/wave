@@ -1,15 +1,4 @@
 <?php
-// Function to get the application URL
-function redirectIfNotHomepage() {
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-    $domainName = $_SERVER['HTTP_HOST'];
-    $urlPath = $_SERVER['REQUEST_URI'];
-    if ($urlPath !== '/') {
-        header('Location: ' . $protocol . $domainName);
-        exit;
-    }
-    return $protocol . $domainName;
-}
 
 // Define the correct project root path directly
 $projectRoot = dirname(getcwd());
@@ -23,7 +12,7 @@ $autoload_exists = false;
 
 $os = null;
 
-function copyEnv(){
+function copyEnv($projectRoot){
     $envFile = $projectRoot . '/.env';
     $envExample = $projectRoot . '/.env.example'; 
 
@@ -31,6 +20,17 @@ function copyEnv(){
     if (!file_exists($envFile)) {
         copy($envExample, $envFile);
     }
+}
+
+function redirectIfNotHomepage() {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $domainName = $_SERVER['HTTP_HOST'];
+    $urlPath = $_SERVER['REQUEST_URI'];
+    if ($urlPath !== '/') {
+        header('Location: ' . $protocol . $domainName);
+        exit;
+    }
+    return $protocol . $domainName;
 }
 
 function getOperatingSystem() {
@@ -56,8 +56,7 @@ if (!file_exists($autoloadPath)) {
 
     redirectIfNotHomepage();
     $os = getOperatingSystem();
-
-    copyEnv();
+    copyEnv($projectRoot);
 
     // Change to the project root directory
     if (!chdir($projectRoot)) {
