@@ -10,7 +10,7 @@
         'image'         => url('/og_image.png'),
         'type'          => 'website'
     ]"
-> 
+>
         
         <x-marketing.sections.hero />
         

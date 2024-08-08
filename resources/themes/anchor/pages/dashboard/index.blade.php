@@ -53,7 +53,7 @@
 			/>
 		</div>
 
-		<div class="block relative py-6"><hr /></div>
+		<div class="block relative py-6"><hr class="border-gray-100 dark:border-gray-800" /></div>
 
 		@subscriber
 			<p>You are a subscribed user with the <strong>{{ auth()->user()->roles()->first()->name }}</strong> role. Learn <a href="https://devdojo.com/wave/docs/features/roles-permissions" target="_blank" class="underline">more about roles</a> here.</p>
