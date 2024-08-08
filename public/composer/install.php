@@ -23,6 +23,16 @@ $autoload_exists = false;
 
 $os = null;
 
+function copyEnv(){
+    $envFile = $projectRoot . '/.env';
+    $envExample = $projectRoot . '/.env.example'; 
+
+    // Check if the .env file exists, if not, copy .env.example to .env
+    if (!file_exists($envFile)) {
+        copy($envExample, $envFile);
+    }
+}
+
 function getOperatingSystem() {
     $os = PHP_OS;
     
@@ -46,6 +56,8 @@ if (!file_exists($autoloadPath)) {
 
     redirectIfNotHomepage();
     $os = getOperatingSystem();
+
+    copyEnv();
 
     // Change to the project root directory
     if (!chdir($projectRoot)) {

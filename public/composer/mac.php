@@ -69,14 +69,6 @@
 
             sleep(3);
 
-            $envFile = $projectRoot . '/.env';
-            $envExample = $projectRoot . '/.env.example'; 
-
-            // Check if the .env file exists, if not, copy .env.example to .env
-            if (!file_exists($envFile)) {
-                copy($envExample, $envFile);
-            }
-
             // Check for errors
             if (isset($returnVar) && $returnVar !== 0) {
                 http_response_code(500);
