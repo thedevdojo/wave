@@ -1,15 +1,8 @@
-<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/images/september2023/wave-logo.png" width="200"></a></p>
+<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/images/august2024/wave.png" width="200"></a></p>
 
-> If you are looking for a Laravel Starter Kit that uses the Tallstack as well as [Folio](https://laravel.com/docs/folio) and [Volt](https://livewire.laravel.com/docs/volt), you may be interested in checking out [Genesis](https://github.com/thedevdojo/genesis)
+Wave is a SaaS Boilerplate that will help you build your next great idea in record time. Wave is built on top of the Popular <a href="https://laravel.com">Laravel Framework</a>, and it will make building your SaaS application fun and easier than ever before.
 
-<p align="center"><a href="https://github.com/thedevdojo/genesis" target="_blank"><img width="1280" alt="genesis" src="https://github.com/thedevdojo/wave/assets/601261/a5e8aab9-0beb-42d7-be27-12da1ce83699"></a></p>
-
-
-<p align="center"><a href="https://www.producthunt.com/posts/wave-2-0" target="_blank"><img src="https://cdn.devdojo.com/images/april2021/upvote-product-hunt-img.png" height="auto" width="auto"></a></p>
-
-## Introduction
-
-[Wave](https://devdojo.com/wave) is a Software as a Service Starter Kit that can help you build your next great idea 💰. Wave is built with [Laravel](https://laravel.com), [Voyager](https://voyager.devdojo.com), [TailwindCSS](https://tailwindcss.com), and a few other awesome technologies. Here are some of the awesome features ✨:
+Here are some of the features included with Wave:
 
  - [Authentication](https://wave.devdojo.com/docs/features/authentication)
  - [User Profiles](https://wave.devdojo.com/docs/features/user-profiles)
