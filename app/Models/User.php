@@ -65,7 +65,7 @@ class User extends WaveUser  implements FilamentUser
             // Remove all roles
             $user->syncRoles([]);
             // Assign the default role
-            $user->assignRole('registered');
+            $user->assignRole( config('wave.default_user_role', 'registered') );
         });
     }
 

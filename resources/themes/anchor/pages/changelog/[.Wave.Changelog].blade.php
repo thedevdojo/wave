@@ -12,7 +12,6 @@
 >
     
     <x-app.container>
-        @dd(get_defined_vars())
         <x-card class="p-10">
 
             <x-elements.back-button

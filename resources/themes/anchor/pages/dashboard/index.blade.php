@@ -1,7 +1,7 @@
 <?php
     use function Laravel\Folio\{middleware, name};
     name('dashboard');
-    middleware('wave');
+    middleware('subscribed');
 ?>
 
 <x-layouts.app>

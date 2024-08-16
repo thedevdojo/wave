@@ -70,42 +70,15 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('role_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('avatar')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ImageColumn::make('avatar')
+                    ->circular()
+                    ->defaultImageUrl(url('storage/users/default.png')),
                 Tables\Columns\TextColumn::make('username')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('stripe_id')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('card_brand')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('card_last_four')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('trial_ends_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('verification_code')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('verified')
-                    ->numeric()
-                    ->sortable(),
+                    ->searchable()
             ])
             ->filters([
                 //

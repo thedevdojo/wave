@@ -4,12 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
+use App\Models\User;
 use Wave\Post;
+use Wave\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -25,32 +29,44 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('author_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('category_id')
-                    ->numeric(),
                 Forms\Components\TextInput::make('title')
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
                     ->required()
                     ->maxLength(191),
-                Forms\Components\TextInput::make('seo_title')
-                    ->maxLength(191),
-                Forms\Components\Textarea::make('excerpt')
-                    ->columnSpanFull(),
-                Forms\Components\RichEditor::make('body')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(191),
+                Forms\Components\RichEditor::make('body')
+                    ->required()
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('excerpt')
+                    ->columnSpanFull(),
+                Forms\Components\FileUpload::make('image')
+                    ->image(),
+                Forms\Components\TextInput::make('seo_title')
+                    ->maxLength(191),
+                Forms\Components\Select::make('author_id')
+                    ->label('Author')
+                    ->options(User::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
+                Forms\Components\Select::make('category_id')
+                    ->label('Category')
+                    ->options(Category::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
                 Forms\Components\Textarea::make('meta_description')
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('meta_keywords')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
+                Forms\Components\Select::make('status')
+                    ->required()
+                    ->options([
+                        'DRAFT' => 'Draft',
+                        'PUBLISHED' => 'Published',
+                        'ARCHIVED' => 'Archived',
+                    ]),
                 Forms\Components\Toggle::make('featured')
                     ->required(),
             ]);
@@ -60,19 +76,15 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('author_id')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('category_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('category.name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('seo_title')
-                    ->searchable(),
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\IconColumn::make('featured')
                     ->boolean(),

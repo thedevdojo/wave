@@ -25,18 +25,20 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('parent_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('order')
-                    ->required()
-                    ->numeric()
-                    ->default(1),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(191),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(191),
+                Forms\Components\Select::make('parent_id')
+                    ->label('Parent Category')
+                    ->options(Category::all()->pluck('name', 'id'))
+                    ->searchable(),
+                Forms\Components\TextInput::make('order')
+                    ->required()
+                    ->numeric()
+                    ->default(1),
             ]);
     }
 
@@ -44,12 +46,6 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('parent_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('order')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')

@@ -49,7 +49,7 @@ class TestNotification extends Notification
     {
         return [
             'icon' => '/storage/users/default.png',
-            'body' => 'This is an example notification, you would want to update the link below to redirect the user to the correct place',
+            'body' => 'This is an example, when the user clicks this notification it will go to the link.',
             'link' => '/dashboard',
             'user' => [
                 'name' => 'John Doe'

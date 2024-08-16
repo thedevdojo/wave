@@ -1,8 +1,8 @@
 # Blog
 
-In order to grow your SAAS you will need a blog to write about relevant content. This will help your business grow and get free organic traffic.
+An easy way to get traffic to your SaaS is to have a blog. When you write about relevant content related to your SaaS you will widen your net of getting new users to signup for on your app.
 
-In this section you will learn about the blogging platform that comes along with Wave.
+In this section you will learn about the blogging feature that comes along with Wave.
 
 - [Blog](#blog)
     - [Your Blog](#your-blog)
@@ -11,7 +11,6 @@ In this section you will learn about the blogging platform that comes along with
 
 ---
 
-<a name="your-blog"></a>
 ### Your Blog
 
 After installing Wave, you will also have a blog located at the `/blog` route. You can modify or edit this theme file located at `resources/themes/{theme_folder}/blog/index.blade.php`
