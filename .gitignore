@@ -28,3 +28,4 @@ yarn-error.log
 /storage/app/analytics
 /packages
 storage/app/livewire-tmp
+resources/themes/.gitignore
