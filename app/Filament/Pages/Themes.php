@@ -27,7 +27,13 @@ class Themes extends Page
     }
 
     private function refreshThemes(){
-        $this->themes = Theme::all();
+        $all_themes = Theme::all();
+        $this->themes = [];
+        foreach($all_themes as $theme){
+            if (file_exists(resource_path('themes/' . $theme->folder))) {
+                array_push($this->themes, $theme);
+            }
+        }
     }
 
     private function getThemesFromFolder(){
@@ -107,6 +113,10 @@ class Themes extends Page
                 ->danger()
                 ->send();
         }
+
+        \Artisan::call('config:clear');
+        \Artisan::call('view:clear');
+        \Artisan::call('route:clear');
 
         $this->refreshThemes();
 
