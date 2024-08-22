@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
+    protected $guarded = [];
+
 	public function link(){
     	return url('p/' . $this->slug);
     }
