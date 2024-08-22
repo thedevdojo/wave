@@ -13,6 +13,10 @@ class Page extends Model
     }
 
     public function image(){
-    	$this->image;
+    	return url($this->image);
+    }
+
+    public function author(){
+    	return $this->belongsTo(User::class, 'author_id');
     }
 }
