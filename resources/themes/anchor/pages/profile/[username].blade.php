@@ -35,9 +35,9 @@
             <div class="flex @guest pb-20 pt-10 @endguest space-x-5 h-full">
                 <x-card class="flex flex-col justify-center items-center p-10 w-full lg:w-1/3">
                         <img src="{{ $this->user->avatar() }}" class="w-24 h-24 rounded-full border-4 border-zinc-200">
-                        <h2 class="mt-8 text-2xl font-bold">{{ $this->user->name }}</h2>
+                        <h2 class="mt-8 text-2xl font-bold dark:text-zinc-100">{{ $this->user->name }}</h2>
                         <p class="my-1 font-medium text-blue-blue">{{ '@' . $this->user->username }}</p>
-        
+
                         @if (auth()->check() && auth()->user()->isAdmin())
                             <a href="{{ route('impersonate', $this->user->id) }}" class="px-3 py-1 my-2 text-xs font-medium text-white rounded text-zinc-600 bg-zinc-200">Impersonate</a>
                         @endif
