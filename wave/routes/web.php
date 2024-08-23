@@ -14,12 +14,9 @@ Route::post('register/complete', '\Wave\Http\Controllers\Auth\RegisterController
 
 Route::view('install', 'wave::install')->name('wave.install');
 
-/***** Pages *****/
-Route::get('p/{page}', '\Wave\Http\Controllers\PageController@page');
-
 Route::group(['middleware' => 'auth'], function () {
     Route::redirect('settings', 'settings/profile')->name('settings');
-    
+
     if(config("wave.billing_provider") == 'paddle'){
         Route::get('settings/invoices/{invoice}', '\Wave\Http\Controllers\SubscriptionController@invoice')->name('wave.paddle.invoice');
     }
