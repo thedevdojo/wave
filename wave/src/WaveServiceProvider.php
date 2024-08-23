@@ -48,6 +48,8 @@ class WaveServiceProvider extends ServiceProvider
 		    'users' => config('wave.user_model')
 		]);
 
+        $this->registerFilamentComponentsFriendlyNames();
+
 		if(!config('wave.show_docs')){
 			Gate::define('viewLarecipe', function($user, $documentation) {
 	            	return true;
@@ -222,6 +224,13 @@ class WaveServiceProvider extends ServiceProvider
         Blade::directive('endrole', function () {
             return "<?php } ?>";
         });
+    }
+
+    protected function registerFilamentComponentsFriendlyNames(){
+        Blade::component('filament::components.avatar', 'avatar');
+        Blade::component('filament::components.dropdown.index', 'dropdown');
+		Blade::component('filament::components.dropdown.list.index', 'dropdown.list');
+		Blade::component('filament::components.dropdown.list.item', 'dropdown.list.item');
     }
 
     protected function registerWaveFolioDirectory(){

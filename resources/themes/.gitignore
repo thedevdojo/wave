@@ -1,0 +1,8 @@
+# Ignore everything
+*
+
+# Do not ignore the .gitignore file
+!.gitignore
+
+# Do not ignore the "anchor" folder and its contents
+!anchor/

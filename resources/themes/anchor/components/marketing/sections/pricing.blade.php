@@ -37,11 +37,11 @@
             </div>  
         </div>
 
-        <div class="flex flex-wrap">
+        <div class="flex flex-wrap space-x-5">
 
             @foreach(Wave\Plan::where('active', 1)->get() as $plan)
                 @php $features = explode(',', $plan->features); @endphp
-                <div class="px-0 mx-auto mb-6 w-full max-w-md lg:w-1/3 lg:px-0 lg:mb-0">
+                <div class="flex-1 px-0 mx-auto mb-6 w-full max-w-md lg:mb-0">
                     <div class="flex flex-col mb-10 h-full bg-white rounded-xl border-2  @if($plan->default){{ 'border-gray-900 scale-105' }}@else{{ 'border-gray-200' }}@endif shadow-sm sm:mb-0">
                         <div class="px-8 pt-8">
                             <span class="px-4 py-1 text-base font-medium text-white bg-gray-900 rounded-full text-uppercase" data-primary="indigo-700">

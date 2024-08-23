@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="py-20 mx-auto max-w-7xl text-center">
+	<div class="py-20 mx-auto max-w-7xl text-center text-pink-500 bg-[#4545DD]">
         <div class="space-y-2 w-full">
             <h1 class="mb-5 text-5xl font-medium">Welcome Aboard!</h1>
             <p class="py-0 my-0">Thanks for subscribing and welcome aboard.
