@@ -116,6 +116,11 @@ class User extends AuthUser implements JWTSubject, HasAvatar
 
     public function invoices(){
         $user_invoices = [];
+
+        if(is_null($this->subscription)){
+            return null;
+        }
+
         if(config('wave.billing_provider') == 'stripe'){
             $stripe = new \Stripe\StripeClient(config('wave.stripe.secret_key'));
             $subscriptions = $this->subscriptions()->get();        

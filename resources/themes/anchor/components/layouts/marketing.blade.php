@@ -7,14 +7,13 @@
 
     <x-marketing.elements.header />
 
-    <main class="overflow-x-hidden flex-grow pt-24">
+    <main class="overflow-x-hidden flex-grow">
         {{ $slot }}
     </main>
 
     @livewire('notifications')
     @include('theme::partials.footer')
     @include('theme::partials.footer-scripts')
-
     {{ $javascript ?? '' }}
 
 </body>

@@ -1,7 +1,7 @@
 <?php
     use function Laravel\Folio\{middleware, name};
+	middleware('auth');
     name('dashboard');
-    middleware('subscribed');
 ?>
 
 <x-layouts.app>
@@ -15,7 +15,7 @@
                 :border="false"
             />
 
-        <div class="flex space-x-5 w-full">
+        <div class="flex w-full space-x-5">
             <x-app.dashboard-card
 				href="/docs"
 				target="_blank"
@@ -34,7 +34,7 @@
 			/>
         </div>
 
-		<div class="flex space-x-5 w-full">
+		<div class="flex w-full space-x-5">
 			<x-app.dashboard-card
 				href="https://github.com/thedevdojo/wave"
 				target="_blank"
@@ -53,7 +53,7 @@
 			/>
 		</div>
 
-		<div class="block relative py-6"><hr class="border-gray-100 dark:border-gray-800" /></div>
+		<div class="relative block py-6"><hr class="border-gray-100 dark:border-gray-800" /></div>
 
 		@subscriber
 			<p>You are a subscribed user with the <strong>{{ auth()->user()->roles()->first()->name }}</strong> role. Learn <a href="https://devdojo.com/wave/docs/features/roles-permissions" target="_blank" class="underline">more about roles</a> here.</p>

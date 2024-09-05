@@ -2,14 +2,14 @@
     
     use Filament\Forms\Components\TextInput;
     use Livewire\Volt\Component;
-    use function Laravel\Folio\{middleware,name};
+    use function Laravel\Folio\{middleware, name};
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
     use Filament\Forms\Form;
     use Filament\Notifications\Notification;
     
-    name('settings.subscription');
     middleware('auth');
+    name('settings.subscription');
 
 	new class extends Component
 	{
@@ -59,7 +59,7 @@
                         </div>
                         <livewire:billing.checkout />
                         <p class="flex items-center mt-3 mb-4">
-                            <x-phosphor-shield-check-duotone class="mr-1 w-4 h-4" />
+                            <x-phosphor-shield-check-duotone class="w-4 h-4 mr-1" />
                             <span class="mr-1">Billing is securely managed via </span><strong>{{ ucfirst(config('wave.billing_provider')) }} Payment Platform</strong>.
                         </p>
                     @endnotsubscriber

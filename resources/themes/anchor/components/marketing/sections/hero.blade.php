@@ -1,26 +1,24 @@
-<section class="flex relative top-0 justify-center items-center -mt-24 w-full h-screen min-h-screen">
-    <div class="flex flex-col justify-between mx-auto w-full h-full">
-        {{-- This is the div that will sit at the top taking up the place of the absolute header --}}
-        <div class="flex-shrink-0 h-20"></div>
-        <div class="grid grid-cols-1 gap-6 items-center px-8 mx-auto max-w-6xl md:px-12 lg:px-[84px] lg:grid-cols-2 lg:gap-24">
-            <div class="md:order-first">
-                <h1 class="text-7xl font-bold tracking-tighter text-gray-900 text-balance">
-                    Your<br>Headline<br> <span >Goes Here</span>
+<section class="flex relative top-0 flex-col justify-center items-center -mt-24 w-full lg:h-screen min-h-screen">
+    
+        <div class="flex-1 gap-6 items-center text-left px-8 md:px-12 xl:px-20 pt-32 lg:pt-20 mx-auto w-full max-w-2xl lg:max-w-6xl justify-between flex lg:flex-row flex-col w-full">
+            <div class="w-full lg:w-1/2">
+                <h1 class="text-7xl md:text-8xl lg:text-7xl text-left sm:text-center lg:text-left font-bold tracking-tighter text-gray-900 text-balance">
+                    Your <br class="lg:block sm:hidden">Headline<br class="lg:block sm:hidden"> <span >Goes Here</span>
                 </h1>
-                <p class="mt-5 max-w-sm text-2xl font-normal text-gray-500">
+                <p class="mt-5 sm:max-w-md mx-auto lg:ml-0 lg:max-w-sm text-left sm:text-center lg:text-left text-2xl font-normal text-gray-500">
                     Customize this to highlight your product’s unique selling points.
                 </p>
-                <div class="flex flex-col gap-2 items-center mx-auto mt-8 md:flex-row">
-                    <x-button size="lg">Primary Button</x-button>
-                    <x-button size="lg" color="secondary">Secondary Button</x-button>
+                <div class="flex flex-col gap-2 items-center lg:justify-start justify-center mx-auto md:ml-0 mt-8 md:flex-row">
+                    <x-button size="lg" class="w-full lg:w-auto">Primary Button</x-button>
+                    <x-button size="lg" color="secondary" class="w-full lg:w-auto">Secondary Button</x-button>
                 </div>
             </div>
-            <div class="block order-first mt-12 w-full lg:mt-0">
-                <img alt="Wave Character" class="relative w-full scale-125" src="/wave/img/character.png" style="max-width:450px;">
+            <div class="flex items-center justify-center mt-12 w-full lg:w-1/2 lg:mt-0">
+                <img alt="Wave Character" class="relative w-full lg:scale-125" src="/wave/img/character.png" style="max-width:450px;">
             </div>
         </div>
-        <div class="py-12 w-full bg-gray-100">
-            <div class="grid grid-cols-1 px-8 mx-auto max-w-6xl divide-x md:px-12 lg:px-20 divide-zinc-200 lg:grid-cols-3 text-balance">
+        <div class="flex-shrink-0 h-[150px] flex items-center w-full bg-gray-100">
+            <div class="grid grid-cols-1 h-auto px-8 mx-auto max-w-6xl divide-x md:px-12 lg:px-20 divide-zinc-200 lg:grid-cols-3 text-balance">
                 <div class="">
                     <h3 class="flex items-center font-medium text-gray-900">
                         Key Feature
@@ -43,5 +41,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </section>

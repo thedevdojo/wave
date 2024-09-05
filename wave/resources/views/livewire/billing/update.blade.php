@@ -31,7 +31,7 @@
             
             <x-filament::modal width="lg" id="update-plan-modal" slide-over>
                 <x-slot name="trigger">
-                        <x-button x-on:click="setTimeout(function(){ window.dispatchEvent(new CustomEvent('reposition-interval-marker')); }, 10);" color="primary">Change My Plan</x-button>
+                        <x-button x-on:click="setTimeout(function(){ window.dispatchEvent(new CustomEvent('reposition-interval-marker')); }, 10);" color="primary" class="flex-shrink-0">Change My Plan</x-button>
                 </x-slot>
                 <div class="flex relative flex-col justify-center items-center">
                     <livewire:billing.checkout :change="true" />
@@ -39,10 +39,10 @@
                 {{-- Modal content --}}
             </x-filament::modal>
 
-            <x-button color="primary" href="{{ $update_url }}" tag="a">Update Payment Details</x-button>
+            <x-button color="primary" href="{{ $update_url }}" tag="a" class="flex-shrink-0">Update Payment Details</x-button>
 
             @if($cancellation_scheduled)
-                <p class="mt-3 text-red-600">Your subscription will be canceled on {{ \Carbon\Carbon::parse($subscription_ends_at)->format('F jS, Y') }}. To re-activate it, please <button wire:click="cancelImmediately" wire:confirm="This will cancel your subscription immediately, are you sure?" class="underline">cancel immediately</button> and place a new order.
+                <p class="block flex-1 text-red-600">Your subscription will be canceled on {{ \Carbon\Carbon::parse($subscription_ends_at)->format('F jS, Y') }}. To re-activate it, please <button wire:click="cancelImmediately" wire:confirm="This will cancel your subscription immediately, are you sure?" class="underline">cancel immediately</button> and place a new order.
             @else
                 <x-filament::modal width="lg" id="cancel-modal">
                     <x-slot name="trigger">

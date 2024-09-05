@@ -1,7 +1,7 @@
 <?php
     use Filament\Forms\Components\TextInput;
     use Livewire\Volt\Component;
-    use function Laravel\Folio\{name};
+    use function Laravel\Folio\{middleware, name};
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
     use Filament\Forms\Form;
@@ -17,6 +17,7 @@
     use Illuminate\Support\Str;
     use Wave\ApiKey;
     
+    middleware('auth');
     name('settings.api');
 
 	new class extends Component implements HasForms, Tables\Contracts\HasTable
@@ -110,7 +111,7 @@
                 <div class="flex flex-col">
                     <form wire:submit="add" class="w-full max-w-lg">
                         {{ $this->form }}
-                        <div class="pt-6 w-full text-right">
+                        <div class="w-full pt-6 text-right">
                             <x-button type="submit">Create New Key</x-button>
                         </div>
                     </form>

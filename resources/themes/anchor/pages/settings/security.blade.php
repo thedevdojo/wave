@@ -1,12 +1,13 @@
 <?php
     use Filament\Forms\Components\TextInput;
     use Livewire\Volt\Component;
-    use function Laravel\Folio\{name};
+    use function Laravel\Folio\{middleware, name};
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
     use Filament\Forms\Form;
     use Filament\Notifications\Notification;
     
+    middleware('auth');
     name('settings.security');
 
 	new class extends Component implements HasForms
@@ -77,7 +78,7 @@
             >
                 <form wire:submit="save" class="w-full max-w-lg">
                     {{ $this->form }}
-                    <div class="pt-6 w-full text-right">
+                    <div class="w-full pt-6 text-right">
                         <x-button type="submit">Save</x-button>
                     </div>
                 </form>

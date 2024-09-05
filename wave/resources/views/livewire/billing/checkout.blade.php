@@ -18,7 +18,7 @@
         @loader-hide.window="fullScreenLoader = false"
         @loader-message.window="fullScreenLoaderMessage = event.detail.message" 
         class="flex justify-center items-start w-full h-full rounded-xl">
-        <div class="flex flex-col flex-wrap mx-auto w-full lg:max-w-3xl">
+        <div class="flex flex-col flex-wrap mx-auto w-full lg:max-w-4xl">
             <x-billing.billing_cycle_toggle></x-billing.billing_cycle_toggle>
 
             <div class="space-y-5 h-full">

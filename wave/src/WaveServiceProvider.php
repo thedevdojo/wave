@@ -227,7 +227,7 @@ class WaveServiceProvider extends ServiceProvider
     }
 
     protected function registerFilamentComponentsFriendlyNames(){
-        Blade::component('filament::components.avatar', 'avatar');
+        // Blade::component('filament::components.avatar', 'avatar');
         Blade::component('filament::components.dropdown.index', 'dropdown');
 		Blade::component('filament::components.dropdown.list.index', 'dropdown.list');
 		Blade::component('filament::components.dropdown.list.item', 'dropdown.list.item');

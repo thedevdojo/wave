@@ -29,6 +29,7 @@ class Update extends Component
         $this->subscription = auth()->user()->subscription;
         
         if(config('wave.billing_provider') == 'paddle' && auth()->user()->subscriber()){
+            $subscription = $this->subscription;
 
             if(is_null($this->subscription->vendor_subscription_id)){
                 // If we did not obtain the user subscription id, try to get it again.
@@ -41,9 +42,7 @@ class Update extends Component
 
             $this->paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
             
-            
             if(isset($subscription->id)){
-            
                 try {
                     $response = Http::withToken( config('wave.paddle.api_key') )->get($this->paddle_url . '/subscriptions/' . $subscription->vendor_subscription_id, []);
                     $paddle_subscription = json_decode($response->body());
@@ -72,8 +71,6 @@ class Update extends Component
         $response = Http::withToken( config('wave.paddle.api_key') )->post($this->paddle_url . '/subscriptions/' . $subscription->vendor_subscription_id . '/cancel', [
             'reason' => 'Customer requested cancellation'
         ]);
-
-        dump($response->body());
 
         if($response->successful()){
             $this->cancellation_scheduled = true;
