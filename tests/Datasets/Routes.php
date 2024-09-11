@@ -3,13 +3,12 @@
 dataset('routes', function () {
     return [
         '/auth/login',
-        '/@admin',
+        '/profile/admin',
         '/blog',
-        '/blog/category-1',
-        '/blog/category-1/best-ways-to-market-your-application',
+        '/blog/marketing',
+        '/blog/marketing/best-ways-to-market-your-application',
         '/docs/welcome',
-        '/login',
-        '/password/reset',
+        '/auth/login',
         '/pricing',
         '/p/about',
     ];
