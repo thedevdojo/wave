@@ -2,7 +2,7 @@
 
 dataset('routes', function () {
     return [
-        '/admin/login',
+        '/auth/login',
         '/@admin',
         '/blog',
         '/blog/category-1',
