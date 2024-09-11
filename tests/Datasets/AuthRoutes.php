@@ -22,7 +22,6 @@ dataset('authroutes', function () {
         '/admin/posts',
         '/admin/posts/create',
         '/admin/posts/5/edit',
-        '/admin/profile',
         '/admin/roles',
         '/admin/roles/create',
         '/admin/roles/1/edit',
@@ -36,7 +35,6 @@ dataset('authroutes', function () {
         '/settings/profile',
         '/settings/security',
         '/settings/api',
-        '/settings/plans',
         '/settings/subscription',
         '/settings/invoices'
     ];
