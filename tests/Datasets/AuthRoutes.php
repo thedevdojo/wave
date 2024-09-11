@@ -4,7 +4,6 @@ dataset('authroutes', function () {
     return [
         '/',
         '/admin',
-        '/@admin',
         '/blog',
         '/blog/category-1',
         '/blog/category-1/best-ways-to-market-your-application',
