@@ -129,4 +129,4 @@ databases:
   name: wave-db
   num_nodes: 1
   size: db-s-dev-database
-  version: "12"
+  version: "16"
