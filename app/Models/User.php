@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 use Illuminate\Support\Str;
 use Wave\User as WaveUser;
 use Illuminate\Notifications\Notifiable;
 use Wave\Traits\HasProfileKeyValues;
 
-class User extends WaveUser  implements FilamentUser
+class User extends WaveUser
 {
     use Notifiable, HasProfileKeyValues;
 
@@ -68,28 +66,4 @@ class User extends WaveUser  implements FilamentUser
             $user->assignRole( config('wave.default_user_role', 'registered') );
         });
     }
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        if ($panel->getId() === 'admin' && auth()->user()->hasRole('admin')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function profile($key)
-    {
-        $keyValue = $this->profileKeyValue($key);
-        return isset($keyValue->value) ? $keyValue->value : '';
-    }
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'trial_ends_at' => 'datetime',
-    ];
 }

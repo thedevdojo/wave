@@ -6,6 +6,8 @@ use Wave\Plan;
 use Carbon\Carbon;
 use Wave\Changelog;
 use Wave\Subscription;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Traits\HasRoles;
@@ -17,7 +19,7 @@ use Illuminate\Notifications\Notifiable;
 use Devdojo\Auth\Models\User as AuthUser;
 use Lab404\Impersonate\Models\Impersonate;
 
-class User extends AuthUser implements JWTSubject, HasAvatar
+class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
 {
     use Notifiable, Impersonate, HasRoles;
 
@@ -236,6 +238,20 @@ class User extends AuthUser implements JWTSubject, HasAvatar
         return $this->avatar();
     }
 
+    public function profile($key)
+    {
+        $keyValue = $this->profileKeyValue($key);
+        return isset($keyValue->value) ? $keyValue->value : '';
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if ($panel->getId() === 'admin' && auth()->user()->hasRole('admin')) {
+            return true;
+        }
+
+        return false;
+    }
 
     /*** PUT ALL THESE below into a trait */
 
