@@ -41,5 +41,9 @@
             </div>
         </div>
 
+        <div class="px-4 py-3 mt-5 text-sm text-gray-600 border border-gray-200 rounded-md bg-gray-50 dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-700">
+            Looking for more themes? <a href="https://devdojo.com/wave/themes" target="_blank" class="text-blue-500 underline">Click here</a> to view all the available themes for Wave.
+        </div>
+
     </x-filament::section>
 </x-filament-panels::page>
