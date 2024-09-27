@@ -6,7 +6,7 @@
                 <x-empty-state description="No themes found in your theme folder" />
             @endif
 
-            <div class="grid grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 gap-5 lg:grid-cols-3 md:grid-cols-2">
                 @foreach($themes as $theme)
 
                     <div class="overflow-hidden border rounded-md border-neutral-200 dark:border-neutral-700">

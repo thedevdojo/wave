@@ -10,7 +10,7 @@
         <div class="px-1 py-1">
             <div class="flex gap-x-4 items-center my-3 text-xs">
                 <time datetime="2020-03-16" class="text-gray-500">{{ $post->updated_at->format('M d, Y') }}</time>
-                <a href="#" class="relative z-10 px-3 py-1.5 font-medium text-gray-600 bg-gray-50 rounded-full hover:bg-gray-100">{{ $post->category->name }}</a>
+                <a href="/blog/{{ $post->category->slug }}" class="relative z-10 px-3 py-1.5 font-medium text-gray-600 bg-gray-50 rounded-full hover:bg-gray-100">{{ $post->category->name }}</a>
               </div>
             <h2 class="text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                 <a href="{{ $post->link() }}">
