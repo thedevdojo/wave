@@ -1,5 +1,5 @@
 <div x-data="{ {{ $id }}: {{ $open ?? false }} }"
-    :class="{ 'bg-zinc-200/70 dark:bg-zinc-800 dark:ring-zinc-800 ease-out duration-300 ring-2 ring-zinc-200/70 rounded-lg' : {{ $id }} == true }"
+    :class="{ 'bg-zinc-200/70 dark:bg-zinc-800 dark:ring-zinc-800 ease-out duration-300 ring-2 ring-zinc-200/50 rounded-lg' : {{ $id }} == true }"
     class="relative w-full select-none">
     <div
         @click="{{ $id }}=!{{ $id }}"

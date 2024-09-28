@@ -6,7 +6,7 @@
     <div :class="{ '-translate-x-full': !sidebarOpen }"
         class="fixed top-0 left-0 flex -translate-x-full lg:translate-x-0 flex-col pt-4 pb-2.5 z-50 justify-between h-screen overflow-x-hidden overflow-auto transition-[width,transform] duration-150 ease-out bg-zinc-50 dark:bg-zinc-900 items-between w-64 group @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">  
         <div class="flex relative flex-col">
-            <button x-on:click="sidebarOpen=false" class="h-10 ml-4 w-10 flex items-center text-zinc-400 hover:text-zinc-800 justify-center flex-shrink-0 hover:bg-gray-200/70 rounded-md">
+            <button x-on:click="sidebarOpen=false" class="h-10 ml-4 w-10 flex lg:hidden items-center text-zinc-400 hover:text-zinc-800 justify-center flex-shrink-0 hover:bg-gray-200/70 rounded-md">
                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
             </button>
 
