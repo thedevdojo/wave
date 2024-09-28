@@ -5,17 +5,17 @@
 ?>
 
 <x-layouts.app>
-	<x-app.container x-data class="space-y-6" x-cloak>
+	<x-app.container x-data class="lg:space-y-6" x-cloak>
         
-		<x-app.alert id="dashboard_alert">This is the user dashboard where users can manage settings and access features. <a href="https://devdojo.com/wave/docs" target="_blank" class="mx-1 underline">View the docs</a> to learn more.</x-app.alert>
+		<x-app.alert id="dashboard_alert" class="lg:flex hidden">This is the user dashboard where users can manage settings and access features. <a href="https://devdojo.com/wave/docs" target="_blank" class="mx-1 underline">View the docs</a> to learn more.</x-app.alert>
 
         <x-app.heading
                 title="Dashboard"
-                description="Welcome to an example applicaction dashboard. Find more resources below."
+                description="Welcomde to an example application dashboard. Find more resources below."
                 :border="false"
             />
 
-        <div class="flex w-full space-x-5">
+        <div class="flex md:flex-row flex-col w-full lg:mt-0 mt-6 md:space-y-0 space-y-5 md:space-x-5">
             <x-app.dashboard-card
 				href="/docs"
 				target="_blank"
@@ -34,7 +34,7 @@
 			/>
         </div>
 
-		<div class="flex w-full space-x-5">
+		<div class="flex md:flex-row flex-col w-full md:space-y-0 space-y-5 md:mb-0 mt-5 md:space-x-5">
 			<x-app.dashboard-card
 				href="https://github.com/thedevdojo/wave"
 				target="_blank"
@@ -53,19 +53,19 @@
 			/>
 		</div>
 
-		<div class="relative block py-6"><hr class="border-gray-100 dark:border-gray-800" /></div>
-
-		@subscriber
-			<p>You are a subscribed user with the <strong>{{ auth()->user()->roles()->first()->name }}</strong> role. Learn <a href="https://devdojo.com/wave/docs/features/roles-permissions" target="_blank" class="underline">more about roles</a> here.</p>
-			<x-app.message-for-subscriber />
-		@elsenotsubscriber
-			<p>This current logged in user has a <strong>{{ auth()->user()->roles()->first()->name }}</strong> role. To upgrade, <a href="{{ route('settings.subscription') }}" class="underline">subscribe to a plan</a>. Learn <a href="https://devdojo.com/wave/docs/features/roles-permissions" target="_blank" class="underline">more about roles</a> here.</p>
-		@endsubscriber
-		
-		@admin
-			<x-app.message-for-admin />
-		@elsenotadmin
+		<div class="space-y-5 mt-5">
+			@subscriber
+				<p>You are a subscribed user with the <strong>{{ auth()->user()->roles()->first()->name }}</strong> role. Learn <a href="https://devdojo.com/wave/docs/features/roles-permissions" target="_blank" class="underline">more about roles</a> here.</p>
+				<x-app.message-for-subscriber />
+			@elsenotsubscriber
+				<p>This current logged in user has a <strong>{{ auth()->user()->roles()->first()->name }}</strong> role. To upgrade, <a href="{{ route('settings.subscription') }}" class="underline">subscribe to a plan</a>. Learn <a href="https://devdojo.com/wave/docs/features/roles-permissions" target="_blank" class="underline">more about roles</a> here.</p>
+			@endsubscriber
 			
-		@endadmin
+			@admin
+				<x-app.message-for-admin />
+			@elsenotadmin
+				
+			@endadmin
+		</div>
     </x-app.container>
 </x-layouts.app>

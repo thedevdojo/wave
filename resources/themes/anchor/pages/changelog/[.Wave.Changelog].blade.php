@@ -12,14 +12,14 @@
 >
     
     <x-app.container>
-        <x-card class="p-10">
+        <x-card class="lg:p-10">
 
             <x-elements.back-button
                 text="View Full Changelog"
                 :href="route('changelogs')"
             />
 
-            <article id="changelog-{{ $changelog->id }}" class="px-5 mx-auto max-w-4xl lg:px-0">
+            <article id="changelog-{{ $changelog->id }}" class="lg:px-5 mx-auto max-w-4xl lg:px-0">
 
                 <meta property="name" content="{{ $changelog->title }}">
                 <meta property="author" typeof="Person" content="admin">

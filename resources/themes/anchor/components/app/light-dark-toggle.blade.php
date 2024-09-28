@@ -34,7 +34,7 @@
         role="switch"
         :aria-checked="theme == 'dark'"
         :aria-labelledby="$id('toggle-label')"
-        :class="(theme == 'dark') ? 'bg-gray-700' : 'bg-slate-300'"
+        :class="(theme == 'dark') ? 'bg-zinc-700' : 'bg-slate-300'"
         class="inline-flex relative flex-shrink-0 py-1 ml-1 w-7 rounded-full transition focus:ring-0"
     >
         <span
@@ -46,7 +46,7 @@
 
     <label
         :id="$id('toggle-label')"
-        :class="{ 'text-gray-600' : theme == 'light' || theme == null, 'text-gray-300' : theme == 'dark'  }"
+        :class="{ 'text-zinc-600' : theme == 'light' || theme == null, 'text-zinc-300' : theme == 'dark'  }"
         class="flex-shrink-0 ml-1.5 font-medium cursor-pointer"
     >
         <span x-show="(theme == 'light' || theme == null)">Dark Mode</span>

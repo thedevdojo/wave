@@ -30,7 +30,7 @@
 <x-layouts.app>
 	@volt('notifications')
 		<x-app.container>
-			<x-card class="p-10">
+			<x-card class="lg:p-10">
 
 				<x-elements.back-button
 					text="Back to Dashboard"

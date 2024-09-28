@@ -162,9 +162,9 @@
 				});
 			}
 		"
-		class="relative">
+		class="relative w-full">
 			<form wire:submit="save" class="w-full">
-				<div class="relative flex flex-col px-10 mt-5">
+				<div class="relative flex flex-col lg:px-10 mt-5">
 					<div class="relative flex-shrink-0 w-32 h-32 cursor-pointer group">
 						<img id="preview" src="{{ auth()->user()->avatar() . '?' . time() }}" class="w-32 h-32 rounded-full">
 						

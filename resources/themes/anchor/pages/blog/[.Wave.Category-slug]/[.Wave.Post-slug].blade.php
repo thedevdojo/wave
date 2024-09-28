@@ -6,7 +6,7 @@
 <x-layouts.marketing>
 
     <x-elements.back-button
-        class="mx-auto mt-8 max-w-4xl"
+        class="mx-auto mt-4 md:mt-8 max-w-4xl"
         text="back to the blog"
         :href="route('blog')"
     />
