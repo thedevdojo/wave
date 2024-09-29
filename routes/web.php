@@ -16,7 +16,3 @@ use Wave\Facades\Wave;
 
 // Wave routes
 Wave::routes();
-
-if (!Schema::hasTable('pages')) {
-    Route::view('/', 'wave::welcome');
-}

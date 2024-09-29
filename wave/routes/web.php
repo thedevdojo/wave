@@ -43,15 +43,17 @@ Route::post('webhook/stripe', '\Wave\Http\Controllers\Billing\Webhooks\StripeWeb
 Route::get('stripe/portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_customer_portal')->name('stripe.portal');
 Route::redirect('billing', 'settings/subscription')->name('billing');
 
-if (!App\Models\User::first()) {
-    /***** Dynamic Page Routes *****/
-    foreach (Wave\Page::all() as $page) {
-        Route::view($page->slug, 'theme::page', ['page' => $page])->name($page->slug);
+// Try catch needed in order to run through the installer
+try {
+    if (!App\Models\User::first()) {
+        /***** Dynamic Page Routes *****/
+        foreach (Wave\Page::all() as $page) {
+            Route::view($page->slug, 'theme::page', ['page' => $page])->name($page->slug);
+        }
     }
-}
 
-
-// If we do not have any users in the db we have not installed the script and we need to create a dummy homepage. This will redirect to install page.
-if (!App\Models\User::first()) {
-    Route::view('/', 'wave::welcome');
-}
+    // If we do not have any users in the db we have not installed the script and we need to create a dummy homepage. This will redirect to install page.
+    if (!App\Models\User::first()) {
+        Route::view('/', 'wave::welcome');
+    }
+} catch (\Illuminate\Database\QueryException $e) {}
