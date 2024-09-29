@@ -49,3 +49,9 @@ if (Schema::hasTable('pages')) {
         Route::view($page->slug, 'theme::page', ['page' => $page])->name($page->slug);
     }
 }
+
+
+// If we do not have any users in the db we have not installed the script and we need to create a dummy homepage. This will redirect to install page.
+if (!App\Models\User::first()) {
+    Route::view('/', 'wave::welcome');
+}

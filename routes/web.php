@@ -17,29 +17,6 @@ use Wave\Facades\Wave;
 // Wave routes
 Wave::routes();
 
-use Illuminate\Support\Facades\Storage;
-
-Route::get('prostuff', function () {
-    $user = auth()->user();
-    $user->setKeyValue('cool', 'beans');
-    //dd($user->keyValues);
-
-    // $keyValuesQuery = $user->keyValues();
-    // dd($keyValuesQuery->toSql(), $keyValuesQuery->getBindings());
-});
-
-
-Route::get('add_role', function(){
-    auth()->user()->assignRole('registered');
-});
-
-Route::get('get_role', function(){
-    $plan = \Wave\Plan::first();
-    dd($plan->role->name);
-    auth()->user()->assignRole('registered');
-});
-
-Route::get('switchPlans', function(){
-    $subscription = \Wave\Subscription::find(30);
-    $subscription->user->switchPlans('basic');
-});
+if (!Schema::hasTable('pages')) {
+    Route::view('/', 'wave::welcome');
+}
