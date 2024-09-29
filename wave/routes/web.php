@@ -43,7 +43,9 @@ Route::post('webhook/stripe', '\Wave\Http\Controllers\Billing\Webhooks\StripeWeb
 Route::get('stripe/portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_customer_portal')->name('stripe.portal');
 Route::redirect('billing', 'settings/subscription')->name('billing');
 
-/***** Dynamic Page Routes *****/
-foreach (Wave\Page::all() as $page) {
-    Route::view($page->slug, 'theme::page', ['page' => $page])->name($page->slug);
+if (Schema::hasTable('pages')) {
+    /***** Dynamic Page Routes *****/
+    foreach (Wave\Page::all() as $page) {
+        Route::view($page->slug, 'theme::page', ['page' => $page])->name($page->slug);
+    }
 }
