@@ -1,25 +1,37 @@
-@extends('theme::layouts.app')
+<x-layouts.marketing>
 
-@section('content')
+    <x-elements.back-button
+        class="max-w-3xl mx-auto mt-4 md:mt-8"
+        text="Return Back Home"
+        :href="route('home')"
+    />
+    
+    <article id="post-{{ $page->id }}" class="max-w-3xl px-5 mx-auto mb-32 prose prose-lg lg:prose-xl lg:px-0">
 
+        <meta property="name" content="{{ $page->title }}">
+        <meta property="author" typeof="Person" content="admin">
+        <meta property="dateModified" content="{{ Carbon\Carbon::parse($page->updated_at)->toIso8601String() }}">
+        <meta property="datePublished" content="{{ Carbon\Carbon::parse($page->created_at)->toIso8601String() }}">
 
-    <div class="py-20 mx-auto max-w-7xl">
-        <article id="page-{{ $page->id }}" class="max-w-4xl px-5 mx-auto prose prose-xl lg:prose-2xl lg:px-0">
+        <div class="max-w-4xl mx-auto mt-6">
 
-            <meta property="name" content="{{ $page->title }}">
-            <meta property="author" typeof="Person" content="admin">
-            <meta property="dateModified" content="{{ Carbon\Carbon::parse($page->updated_at)->toIso8601String() }}">
-            <meta class="uk-margin-remove-adjacent" property="datePublished" content="{{ Carbon\Carbon::parse($page->created_at)->toIso8601String() }}">
+            <h1 class="flex flex-col leading-none">
+                <span>{{ $page->title }}</span>
+                {{-- <span class="mt-0 mt-10 text-base font-normal">Written on <time datetime="{{ Carbon\Carbon::parse($page->created_at)->toIso8601String() }}">{{ Carbon\Carbon::parse($page->created_at)->toFormattedDateString() }}</time>. Posted in <a href="{{ route('blog.category', $page->category->slug) }}" rel="category">{{ $page->category->name }}</a>.</span> --}}
+            </h1>
 
-            <h1>{{ $page->title }}</h1>
+        </div>
 
-            @if(!is_null($page->image))
-                <img width="1200" height="640" src="{{ $page->image() }}" alt="{{ $page->title }}" srcset="{{ $page->image() }}">
-            @endif
+        @if($page->image)
+        <div class="relative">
+            <img class="w-full h-auto rounded-lg" src="{{ $page->image() }}" alt="{{ $page->title }}" srcset="{{ $page->image() }}">
+        </div>
+        @endif
 
+        <div class="max-w-4xl mx-auto">
             {!! $page->body !!}
+        </div>
 
-        </article>
-    </div>
+    </article>
 
-@endsection
+</x-layouts.marketing>

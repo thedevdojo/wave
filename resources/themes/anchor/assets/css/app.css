@@ -55,7 +55,7 @@ svg {
 /****** Form Input CLASSES **********/
 
 .form-input, .form-textarea, .form-select {
-    @apply px-3 py-2 text-base leading-normal bg-white rounded-md border transition duration-150 ease-in-out appearance-none border-zinc-400 focus:outline-none focus:ring focus:ring-opacity-30 focus:ring-blue-500 focus:border-blue-400;
+    @apply px-3 py-2 text-base leading-normal transition duration-150 ease-in-out bg-white border rounded-md appearance-none border-zinc-400 focus:outline-none focus:ring focus:ring-opacity-30 focus:ring-blue-500 focus:border-blue-400;
 }
 
 .form-select{
@@ -74,7 +74,7 @@ svg {
 
 html, body{
   p{
-    @apply text-sm text-gray-500 dark:text-gray-400;
+    @apply text-gray-500 dark:text-gray-400;
   }
 }
 
