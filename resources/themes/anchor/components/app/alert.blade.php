@@ -34,14 +34,14 @@
     ]) }}
     x-collapse
     x-cloak
-> 
+>
     @if($dismissable)
         <button @click="alert_{{ $id }}=false" class="absolute right-0 top-0 z-50 p-1.5 mr-3 rounded-full opacity-70 mt-3.5 cursor-pointer hover:opacity-100 hover:bg-zinc-200 hover:dark:bg-zinc-700 hover:dark:text-zinc-300 text-zinc-500 dark:text-zinc-400"><x-phosphor-x-bold class="w-3.5 h-3.5" /></button>
     @endif
     @if($title ?? false)
         <div class="flex items-start space-x-2">
             <x-icon name="{{ $alertIcon }}" class="w-5 h-5 -translate-y-0.5" />
-            <h5 class="mb-1 font-medium tracking-tight leading-none">{{ $title }}</h5>
+            <h5 class="mb-1 font-medium leading-none tracking-tight">{{ $title }}</h5>
         </div>
     @endif
     <div class="@if($title ?? false){{ 'pl-7' }}@endif text-sm leading-6">{{ $slot }}</div>
