@@ -45,7 +45,7 @@ Route::redirect('billing', 'settings/subscription')->name('billing');
 
 // Try catch needed in order to run through the installer
 try {
-    if (!App\Models\User::first()) {
+    if (App\Models\User::first()) {
         /***** Dynamic Page Routes *****/
         foreach (Wave\Page::all() as $page) {
             Route::view($page->slug, 'theme::page', ['page' => $page])->name($page->slug);
