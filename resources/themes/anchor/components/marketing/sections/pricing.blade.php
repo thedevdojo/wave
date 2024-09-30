@@ -5,7 +5,7 @@
         description="Set sail and discover the riches of our value-packed plans, meticulously designed to offer you the very best features for less on your SaaS expedition. " 
     />
 
-    <div x-data="{ on: false, billing: 'Monthly', basic: {'Monthly' : '19', 'Yearly' : '180'}, pro: {'Monthly' : '49', 'Yearly' : '450' },
+    <div x-data="{ on: false, billing: '{{ get_default_billing_cycle() }}',
             toggleRepositionMarker(toggleButton){
                 this.$refs.marker.style.width=toggleButton.offsetWidth + 'px';
                 this.$refs.marker.style.height=toggleButton.offsetHeight + 'px';
@@ -21,30 +21,35 @@
                     }, 10); 
                 }, 1);
         "
-        class="mx-auto mb-2 mt-12 md:my-12 w-full max-w-6xl" x-cloak>
+        class="w-full max-w-6xl mx-auto mt-12 mb-2 md:my-12" x-cloak>
 
-        <div class="flex relative justify-start md:justify-center items-center pb-5 -translate-y-2">
-            <div class="inline-flex relative justify-center items-center p-1 md:mx-auto w-auto text-center rounded-full border-2 border-zinc-900 -translate-y-3">
-                <div x-ref="monthly" x-on:click="billing='Monthly'; toggleRepositionMarker($el)" :class="{ 'text-white': billing == 'Monthly' }" class="relative z-20 px-3.5 py-1 text-sm font-medium leading-6 text-zinc-900 rounded-full duration-300 ease-out cursor-pointer">
-                    Monthly
-                </div>
-                <div x-ref="yearly" x-on:click="billing='Yearly'; toggleRepositionMarker($el)" :class="{ 'text-white': billing == 'Yearly' }" class="relative z-20 px-3.5 py-1 text-sm font-medium leading-6 text-zinc-900 rounded-full duration-300 ease-out cursor-pointer">
-                    Yearly
-                </div>
-                <div x-ref="marker" class="absolute left-0 z-10 w-1/2 h-full opacity-0" x-cloak>
-                    <div class="w-full h-full bg-zinc-900 rounded-full shadow-sm"></div>
-                </div>
-            </div>  
-        </div>
+        @if(has_monthly_yearly_toggle())
+            <div class="relative flex items-center justify-start pb-5 -translate-y-2 md:justify-center">
+                <div class="relative inline-flex items-center justify-center w-auto p-1 text-center -translate-y-3 border-2 rounded-full md:mx-auto border-zinc-900">
+                    <div x-ref="monthly" x-on:click="billing='Monthly'; toggleRepositionMarker($el)" :class="{ 'text-white': billing == 'Monthly', 'text-zinc-900' : billing != 'Monthly' }" class="relative z-20 px-3.5 py-1 text-sm font-medium leading-6 rounded-full duration-300 ease-out cursor-pointer">
+                        Monthly
+                    </div>
+                    <div x-ref="yearly" x-on:click="billing='Yearly'; toggleRepositionMarker($el)" :class="{ 'text-white': billing == 'Yearly', 'text-zinc-900' : billing != 'Yearly' }" class="relative z-20 px-3.5 py-1 text-sm font-medium leading-6 rounded-full duration-300 ease-out cursor-pointer">
+                        Yearly
+                    </div>
+                    <div x-ref="marker" class="absolute left-0 z-10 w-1/2 h-full opacity-0" x-cloak>
+                        <div class="w-full h-full rounded-full shadow-sm bg-zinc-900"></div>
+                    </div>
+                </div>  
+            </div>
+        @endif
 
-        <div class="flex-col flex lg:flex-row flex-wrap lg:space-x-5">
+        <div class="flex flex-col flex-wrap lg:flex-row lg:space-x-5">
 
             @foreach(Wave\Plan::where('active', 1)->get() as $plan)
                 @php $features = explode(',', $plan->features); @endphp
-                <div class="flex-1 px-0 mx-auto mb-6 w-full md:max-w-md lg:mb-0">
-                    <div class="flex flex-col md:mb-10 h-full bg-white rounded-xl border-2  @if($plan->default){{ 'border-zinc-900 lg:scale-105' }}@else{{ 'border-zinc-200' }}@endif shadow-sm sm:mb-0">
+                <div
+                    {{--  Say that you have a monthly plan that doesn't have a yearly plan, in that case we will hide the place that doesn't have a price_id --}}
+                    x-show="(billing == 'Monthly' && '{{ $plan->monthly_price_id }}' != '') || (billing == 'Yearly' && '{{ $plan->yearly_price_id }}' != '')" 
+                    class="flex-1 w-full px-0 mx-auto mb-6 md:max-w-lg lg:mb-0" x-cloak>
+                    <div class="flex flex-col lg:mb-10 h-full bg-white rounded-xl border-2  @if($plan->default){{ 'border-zinc-900 lg:scale-105' }}@else{{ 'border-zinc-200' }}@endif shadow-sm sm:mb-0">
                         <div class="px-8 pt-8">
-                            <span class="px-4 py-1 text-base font-medium text-white bg-zinc-900 rounded-full text-uppercase" data-primary="indigo-700">
+                            <span class="px-4 py-1 text-base font-medium text-white rounded-full bg-zinc-900 text-uppercase" data-primary="indigo-700">
                                 {{ $plan->name }}
                             </span>
                         </div>
@@ -63,7 +68,7 @@
                                 @foreach($features as $feature)
                                     <li class="mt-1">
                                         <span class="flex items-center text-green-500">
-                                            <svg class="mr-3 w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"></path></svg>
+                                            <svg class="w-4 h-4 mr-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"></path></svg>
                                             <span class="text-zinc-700">
                                                 {{ $feature }}
                                             </span>
@@ -84,5 +89,5 @@
         </div>
     </div>
 
-    <p class="mb-8 mt-0 w-full text-zinc-500 sm:my-10 text-center">All plans are fully configurable in the Admin Area.</p>
+    <p class="w-full mt-0 mb-8 text-center text-zinc-500 sm:my-10">All plans are fully configurable in the Admin Area.</p>
 </section>

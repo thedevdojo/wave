@@ -8,7 +8,6 @@
 
             <div class="grid grid-cols-1 gap-5 xl:grid-cols-3 md:grid-cols-2">
                 @foreach($themes as $theme)
-
                     <div class="overflow-hidden border rounded-md border-neutral-200 dark:border-neutral-700">
                         <img class="relative" src="{{ url('wave/theme/image' ) }}/{{ $theme->folder }}">
                         <div class="flex items-center justify-between flex-shrink-0 w-full p-4 border-t border-neutral-200 dark:border-neutral-700">
@@ -17,7 +16,7 @@
                                 <p class="text-xs text-zinc-500">@if(isset($theme->version)){{ 'version ' . $theme->version }}@endif</p>
                             </div>
                             <div class="relative flex items-center space-x-1">
-                                <button wire:click="deleteTheme('{{ $theme->folder }}')" wire:confirm="Are you sure you want to delete {{ $theme->name }}?" class="flex items-center justify-center w-8 h-8 border rounded-md border-zinc-200 hover:bg-zinc-200">
+                                <button wire:click="deleteTheme('{{ $theme->folder }}')" wire:confirm="Are you sure you want to delete {{ $theme->name }}?" class="flex items-center justify-center w-8 h-8 border rounded-md border-zinc-200 dark:border-zinc-700 dark:hover:bg-zinc-800 hover:bg-zinc-200">
                                     <x-phosphor-trash-bold class="w-4 h-4 text-red-500" />
                                 </button>
                             </div>

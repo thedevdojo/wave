@@ -53,8 +53,10 @@
                     @notsubscriber
                         <div class="mb-4">
                             <x-app.alert id="no_subscriptions" :dismissable="false" type="info">
-                                <x-phosphor-shopping-bag-open-duotone class="flex-shrink-0 mr-1.5 -ml-1.5 w-6 h-6" />
-                                <span>No active subscriptions found. Please select a plan below.</span>
+                                <div class="flex items-center space-x-1.5">
+                                    <x-phosphor-shopping-bag-open-duotone class="flex-shrink-0 mr-1.5 -ml-1.5 w-6 h-6" />
+                                    <span>No active subscriptions found. Please select a plan below.</span>
+                                </div>
                             </x-app.alert>
                         </div>
                         <livewire:billing.checkout />

@@ -82,6 +82,7 @@ class Checkout extends Component
             $this->billing_cycle_available = 'month';
         } elseif ($hasYearly) {
             $this->billing_cycle_available = 'year';
+            $this->billing_cycle_selected = 'year';
         }
     }
 
