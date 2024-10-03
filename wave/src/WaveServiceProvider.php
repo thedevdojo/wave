@@ -5,6 +5,8 @@ namespace Wave;
 use Wave\TokenGuard;
 use Livewire\Livewire;
 use Illuminate\Routing\Router;
+use Illuminate\Foundation\Vite as BaseVite;
+use Wave\Overrides\Vite;
 use Filament\Support\Colors\Color;
 use Illuminate\Support\Facades\Gate;
 use Wave\Facades\Wave as WaveFacade;
@@ -40,6 +42,14 @@ class WaveServiceProvider extends ServiceProvider
         $this->app->router->aliasMiddleware('token_api', \Wave\Http\Middleware\TokenMiddleware::class);
         $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\InstallMiddleware::class);
 
+        if(config('wave.demo')){
+            $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\ThemeDemoMiddleware::class);
+            // Overwrite the Vite asset helper so we can use the demo folder as opposed to the build folder
+            $this->app->singleton(BaseVite::class, function ($app) {
+                // Replace the default Vite instance with the custom one
+                return new Vite();
+            });
+        }
         
 	}
 

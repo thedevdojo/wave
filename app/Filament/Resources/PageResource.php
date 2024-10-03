@@ -65,12 +65,8 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('author.name')
-                    ->searchable()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status'),

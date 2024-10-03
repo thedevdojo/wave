@@ -16,6 +16,7 @@ yarn-error.log
 
 # Wave ignores.
 /public/.well-known
+/public/demo
 /.vagrant
 /wave-pro
 Homestead.json
