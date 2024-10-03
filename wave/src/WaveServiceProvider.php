@@ -45,10 +45,10 @@ class WaveServiceProvider extends ServiceProvider
         if(config('wave.demo')){
             $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\ThemeDemoMiddleware::class);
             // Overwrite the Vite asset helper so we can use the demo folder as opposed to the build folder
-            // $this->app->singleton(BaseVite::class, function ($app) {
-            //     // Replace the default Vite instance with the custom one
-            //     return new Vite();
-            // });
+            $this->app->singleton(BaseVite::class, function ($app) {
+                // Replace the default Vite instance with the custom one
+                return new Vite();
+            });
         }
         
 	}
