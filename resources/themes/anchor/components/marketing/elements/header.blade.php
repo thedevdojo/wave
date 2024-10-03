@@ -155,6 +155,18 @@
                     <li class="flex-shrink-0 h-16 border-b border-gray-100 md:border-b-0 md:h-full">
                         <a href="{{ route('blog') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">Blog</a>
                     </li>
+
+                    @guest
+                        <li class="relative z-30 flex flex-col items-center justify-center flex-shrink-0 w-full h-auto pt-3 space-y-3 text-sm md:hidden px-7">
+                            <x-button href="{{ route('login') }}" tag="a" class="w-full text-sm" color="secondary">Login</x-button>
+                            <x-button href="{{ route('register') }}" tag="a" class="w-full text-sm">Sign Up</x-button>
+                        </li>
+                    @else
+                        <li class="flex items-center justify-center w-full pt-3 md:hidden px-7">
+                            <x-button href="{{ route('login') }}" tag="a" class="w-full text-sm">View Dashboard</x-button>
+                        </li>
+                    @endguest
+
                 </ul>
             </nav>
             
@@ -164,7 +176,7 @@
                     <x-button href="{{ route('register') }}" tag="a" class="text-sm">Sign Up</x-button>
                 </div>
             @else
-                <x-button href="{{ route('login') }}" tag="a" class="text-sm" class="relative z-20 flex-shrink-0 ml-2">View Dashboard</x-button>
+                <x-button href="{{ route('login') }}" tag="a" class="text-sm" class="relative z-20 flex-shrink-0 hidden ml-2 md:block">View Dashboard</x-button>
             @endguest
 
         </div>
