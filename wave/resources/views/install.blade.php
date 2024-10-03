@@ -40,7 +40,9 @@
         @else
 
             @php
-                \Illuminate\Support\Facades\File::put(database_path('database.sqlite'), '');
+                if (!\Illuminate\Support\Facades\File::exists(database_path('database.sqlite'))) {
+                    \Illuminate\Support\Facades\File::put(database_path('database.sqlite'), '');
+                }
                 \Illuminate\Support\Facades\Artisan::call('migrate', [
                     '--force' => true
                     ]);

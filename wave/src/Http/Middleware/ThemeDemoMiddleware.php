@@ -16,7 +16,7 @@ class ThemeDemoMiddleware
     public function handle($request, Closure $next)
     {
         if(isset($request->theme)){
-            return redirect()->back()->withCookie(cookie('theme', $request->theme, 60, null, null, false, false));
+            return redirect('/')->withCookie(cookie('theme', $request->theme, 60, null, null, false, false));
         }
 
         return $next($request);
