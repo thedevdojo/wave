@@ -4,22 +4,23 @@ namespace Wave;
 
 use Wave\TokenGuard;
 use Livewire\Livewire;
-use Illuminate\Routing\Router;
-use Illuminate\Foundation\Vite as BaseVite;
+use Laravel\Folio\Folio;
 use Wave\Overrides\Vite;
+use Illuminate\Routing\Router;
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Wave\Facades\Wave as WaveFacade;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Foundation\Vite as BaseVite;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Laravel\Folio\Folio;
-use Illuminate\Support\Facades\File;
 
 class WaveServiceProvider extends ServiceProvider
 {
@@ -50,10 +51,10 @@ class WaveServiceProvider extends ServiceProvider
                 return new Vite();
             });
         }
-        
 	}
 
 	public function boot(Router $router, Dispatcher $event){
+
 		Relation::morphMap([
 		    'users' => config('wave.user_model')
 		]);
@@ -70,6 +71,7 @@ class WaveServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'wave');
         $this->loadMigrationsFrom(realpath(__DIR__.'/../database/migrations'));
         $this->loadBladeDirectives();
+        $this->setDefaultThemeColors();
 
         FilamentColor::register([
             'danger' => Color::Red,
@@ -262,51 +264,24 @@ class WaveServiceProvider extends ServiceProvider
         Livewire::component('billing.update', \Wave\Http\Livewire\Billing\Update::class);
     }
 
-    // private function excludeInactiveThemes(){
+    protected function setDefaultThemeColors(){
+        if(config('wave.demo')){
+            $theme = $this->getActiveTheme();
 
-    //     $theme = Theme::where('active', 1)->latest()->first();
-    //     $activeTheme = $theme->folder;
+            $default_theme_color = match($theme->folder){
+                'anchor' => '#000000',
+                'blank' => '#090909',
+                'cove' => '#0069ff',
+                'drift' => '#000000',
+                'fusion' => '#0069ff'
+            };
 
-    //     $viewFinder = $this->app['view']->getFinder();
-        
-    //     // Get the default view paths
-    //     $paths = $viewFinder->getPaths();
-        
-    //     // Remove the default resources/views path
-    //     $defaultViewPath = resource_path('views');
-    //     if (($key = array_search($defaultViewPath, $paths)) !== false) {
-    //         unset($paths[$key]);
-    //     }
+            Config::set('wave.primary_color', $default_theme_color);
+        }
+    }
 
-    //     // Get all subfolders inside resources/views
-    //     $subfolders = File::directories($defaultViewPath);
-
-    //     foreach ($subfolders as $folder) {
-    //         $folderName = basename($folder);
-            
-    //         // Check if it's the themes folder
-    //         if ($folderName === 'themes') {
-    //             $themeFolders = File::directories($folder);
-
-    //             foreach ($themeFolders as $themeFolder) {
-    //                 $themeName = basename($themeFolder);
-
-    //                 // Only add the active theme folder
-    //                 if ($themeName === $activeTheme) {
-    //                     $paths[] = $themeFolder;
-    //                 }
-    //             }
-    //         } else {
-    //             // Add other folders inside resources/views
-    //             $paths[] = $folder;
-    //         }
-    //     }
-
-    //     // Set the new view paths
-    //     $viewFinder->setPaths($paths);
-
-    //     // because we are changing the resources/views path we need to dynamically register the resources/views/components Blade path
-    //     Blade::anonymousComponentPath(base_path('resources/views/components'));
-    // }
+    protected function getActiveTheme(){
+        return \Wave\Theme::where('active', 1)->first();
+    }
 
 }

@@ -20,7 +20,6 @@ export default {
         './resources/views/components/**/*.blade.php',
         './resources/views/components/blade.php',
         './wave/resources/views/**/*.blade.php',
-        './app/Http/Middleware/WaveEditTab.php',
         './resources/themes/' + activeTheme + '/**/*.blade.php'
     ],
 

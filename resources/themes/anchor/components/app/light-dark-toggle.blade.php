@@ -12,7 +12,12 @@
         }
     }"
     x-init="
-        theme = localStorage.getItem('theme');
+        if(localStorage.getItem('theme')){
+            theme = localStorage.getItem('theme');
+        }
+        if(theme=='system'){
+            theme =  'light';
+        }
         if(document.documentElement.classList.contains('dark')){ theme='dark'; }
         $watch('theme', function(value){
             if(value == 'dark'){
@@ -35,11 +40,11 @@
         :aria-checked="theme == 'dark'"
         :aria-labelledby="$id('toggle-label')"
         :class="(theme == 'dark') ? 'bg-zinc-700' : 'bg-slate-300'"
-        class="inline-flex relative flex-shrink-0 py-1 ml-1 w-7 rounded-full transition focus:ring-0"
+        class="relative inline-flex flex-shrink-0 py-1 ml-1 transition rounded-full w-7 focus:ring-0"
     >
         <span
             :class="(theme == 'dark') ? 'translate-x-[13px]' : 'translate-x-1'"
-            class="w-3 h-3 bg-white rounded-full shadow-md transition focus:outline-none"
+            class="w-3 h-3 transition bg-white rounded-full shadow-md focus:outline-none"
             aria-hidden="true"
         ></span>
     </button>
