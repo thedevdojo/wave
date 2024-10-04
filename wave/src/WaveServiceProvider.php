@@ -269,22 +269,24 @@ class WaveServiceProvider extends ServiceProvider
         if(config('wave.demo')){
             $theme = $this->getActiveTheme();
 
-            if(Cookie::get('theme')){
-                $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
-                if(isset($theme_cookied->id)){
-                    $theme = $theme_cookied;
+            if(isset($theme->id)){
+                if(Cookie::get('theme')){
+                    $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+                    if(isset($theme_cookied->id)){
+                        $theme = $theme_cookied;
+                    }
                 }
+
+                $default_theme_color = match($theme->folder){
+                    'anchor' => '#000000',
+                    'blank' => '#090909',
+                    'cove' => '#0069ff',
+                    'drift' => '#000000',
+                    'fusion' => '#0069ff'
+                };
+
+                Config::set('wave.primary_color', $default_theme_color);
             }
-
-            $default_theme_color = match($theme->folder){
-                'anchor' => '#000000',
-                'blank' => '#090909',
-                'cove' => '#0069ff',
-                'drift' => '#000000',
-                'fusion' => '#0069ff'
-            };
-
-            Config::set('wave.primary_color', $default_theme_color);
         }
     }
 
