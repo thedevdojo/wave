@@ -1,4 +1,10 @@
-<div x-data="{ sidebarOpen: false }"  @open-sidebar.window="sidebarOpen = true" class="relative z-50 w-screen md:w-auto" x-cloak>
+<div x-data="{ sidebarOpen: false }"  @open-sidebar.window="sidebarOpen = true"
+    x-init="
+        $watch('sidebarOpen', function(value){
+            if(value){ document.body.classList.add('overflow-hidden'); } else { document.body.classList.remove('overflow-hidden'); }
+        });
+    "
+    class="relative z-50 w-screen md:w-auto" x-cloak>
     {{-- Backdrop for mobile --}}
     <div x-show="sidebarOpen" @click="sidebarOpen=false" class="fixed top-0 right-0 z-50 w-screen h-screen duration-300 ease-out bg-black/20 dark:bg-white/10"></div>
     
