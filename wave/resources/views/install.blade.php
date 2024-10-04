@@ -1,5 +1,15 @@
 @if(app()->isLocal())
 
+    @php
+        try {
+            $user = \App\Models\User::first();
+            header('Location: /');
+            exit;
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Continue with the installation process
+        }
+    @endphp
+
     <!DOCTYPE html>
     <html lang="en">
     <head>
