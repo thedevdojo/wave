@@ -14,6 +14,7 @@ use Wave\Facades\Wave as WaveFacade;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic;
@@ -267,6 +268,13 @@ class WaveServiceProvider extends ServiceProvider
     protected function setDefaultThemeColors(){
         if(config('wave.demo')){
             $theme = $this->getActiveTheme();
+
+            if(Cookie::get('theme')){
+                $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+                if(isset($theme_cookied->id)){
+                    $theme = $theme_cookied;
+                }
+            }
 
             $default_theme_color = match($theme->folder){
                 'anchor' => '#000000',
