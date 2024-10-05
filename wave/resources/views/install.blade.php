@@ -1,15 +1,5 @@
 @if(app()->isLocal())
 
-    @php
-        try {
-            $user = \App\Models\User::first();
-            header('Location: /');
-            exit;
-        } catch (\Illuminate\Database\QueryException $e) {
-            // Continue with the installation process
-        }
-    @endphp
-
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -50,6 +40,15 @@
         @else
 
             @php
+
+                try {
+                    $user = \App\Models\User::first();
+                    header('Location: /');
+                    exit;
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // Continue with the installation process
+                }
+
                 if (!\Illuminate\Support\Facades\File::exists(database_path('database.sqlite'))) {
                     \Illuminate\Support\Facades\File::put(database_path('database.sqlite'), '');
                 }
