@@ -8,6 +8,7 @@ use Laravel\Folio\Folio;
 use Wave\Overrides\Vite;
 use Illuminate\Routing\Router;
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Wave\Facades\Wave as WaveFacade;
@@ -42,7 +43,10 @@ class WaveServiceProvider extends ServiceProvider
         $this->app->router->aliasMiddleware('paddle-webhook-signature', \Wave\Http\Middleware\VerifyPaddleWebhookSignature::class);
     	$this->app->router->aliasMiddleware('subscribed', \Wave\Http\Middleware\Subscribed::class);
         $this->app->router->aliasMiddleware('token_api', \Wave\Http\Middleware\TokenMiddleware::class);
-        $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\InstallMiddleware::class);
+        
+        if(!$this->hasDBConnection()){
+            $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\InstallMiddleware::class);
+        }
 
         if(config('wave.demo')){
             $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\ThemeDemoMiddleware::class);
@@ -292,6 +296,23 @@ class WaveServiceProvider extends ServiceProvider
 
     protected function getActiveTheme(){
         return \Wave\Theme::where('active', 1)->first();
+    }
+
+    protected function hasDBConnection(){
+        $hasDatabaseConnection = true;
+
+        try {
+            DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            $hasDatabaseConnection = false;
+        }
+
+        if (!$hasDatabaseConnection) {
+            // Code to execute if there is no database connection
+            echo "Database connection failed!";
+        }
+
+        return $hasDatabaseConnection;
     }
 
 }
