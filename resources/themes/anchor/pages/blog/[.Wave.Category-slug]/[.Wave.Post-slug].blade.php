@@ -4,14 +4,14 @@
 ?>
 
 <x-layouts.marketing>
-
-    <x-elements.back-button
-        class="max-w-4xl mx-auto mt-4 md:mt-8"
-        text="back to the blog"
-        :href="route('blog')"
-    />
     
     <article id="post-{{ $post->id }}" class="max-w-4xl px-5 pb-20 mx-auto prose prose-md dark:prose-invert lg:prose-lg lg:px-0">
+
+        <x-elements.back-button
+            class="max-w-4xl mx-auto mt-4 md:mt-8"
+            text="back to the blog"
+            :href="route('blog')"
+        />
 
         <meta property="name" content="{{ $post->title }}">
         <meta property="author" typeof="Person" content="admin">
