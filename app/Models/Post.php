@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -17,7 +18,7 @@ class Post extends Model
     }
 
     public function image(){
-    	return $this->image;
+    	return Storage::url($this->image);
     }
 
     public function category(){
