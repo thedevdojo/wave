@@ -3,11 +3,11 @@
 <head>
     @include('theme::partials.head', ['seo' => ($seo ?? null) ])
 </head>
-<body class="flex flex-col min-h-screen overflow-x-hidden @if($bodyClass ?? false){{ $bodyClass }}@endif">
+<body x-data class="flex flex-col min-h-screen overflow-x-hidden @if($bodyClass ?? false){{ $bodyClass }}@endif" x-cloak>
 
     <x-marketing.elements.header />
 
-    <main class="overflow-x-hidden flex-grow">
+    <main class="flex-grow overflow-x-hidden">
         {{ $slot }}
     </main>
 
