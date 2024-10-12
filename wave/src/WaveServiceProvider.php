@@ -23,6 +23,7 @@ use Filament\Support\Facades\FilamentColor;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Vite as BaseVite;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Wave\Plugins\PluginServiceProvider;
 
 class WaveServiceProvider extends ServiceProvider
 {
@@ -56,6 +57,9 @@ class WaveServiceProvider extends ServiceProvider
                 return new Vite();
             });
         }
+
+        // Register the PluginServiceProvider
+        $this->app->register(PluginServiceProvider::class);
 	}
 
 	public function boot(Router $router, Dispatcher $event){
@@ -99,6 +103,7 @@ class WaveServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 \Wave\Console\Commands\CancelExpiredSubscriptions::class,
+                \Wave\Console\Commands\CreatePluginCommand::class,
             ]);
             //$this->excludeInactiveThemes();
         }

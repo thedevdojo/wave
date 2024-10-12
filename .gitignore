@@ -30,3 +30,12 @@ yarn-error.log
 /packages
 storage/app/livewire-tmp
 resources/themes/.gitignore
+/resources/plugins/*
+!/resources/plugins/installed.json
+/storage/app/public/livewire-tmp
+
+# Ignore everything inside the resources/plugins folder
+resources/plugins/*
+
+# But do not ignore the resources/plugins folder itself
+!resources/plugins/

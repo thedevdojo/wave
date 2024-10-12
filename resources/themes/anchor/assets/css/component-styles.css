@@ -16,9 +16,13 @@
 
 
 .fi-btn.fi-color-secondary{
-    @apply inline-flex gap-3 justify-center items-center font-medium bg-gray-100 duration-200 text-zinc-800 hover:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-zinc-200;
+    @apply inline-flex items-center justify-center gap-3 font-medium duration-200 bg-gray-100 text-zinc-800 hover:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-zinc-200;
 }
 
 label{
     @apply space-x-1 text-sm leading-none;
+}
+
+.fi-btn-color-secondary svg{
+    @apply text-neutral-700;
 }

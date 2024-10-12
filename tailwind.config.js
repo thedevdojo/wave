@@ -20,7 +20,9 @@ export default {
         './resources/views/components/**/*.blade.php',
         './resources/views/components/blade.php',
         './wave/resources/views/**/*.blade.php',
-        './resources/themes/' + activeTheme + '/**/*.blade.php'
+        './resources/themes/' + activeTheme + '/**/*.blade.php',
+        './resources/plugins/**/*.php',
+        './config/*.php'
     ],
 
     theme: {
