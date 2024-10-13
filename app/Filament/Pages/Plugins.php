@@ -6,6 +6,7 @@ use Filament\Pages\Page;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
 
 class Plugins extends Page
 {
@@ -84,6 +85,8 @@ class Plugins extends Page
             $installedPlugins[] = $pluginFolder;
             $this->updateInstalledPlugins($installedPlugins);
 
+            $this->runPostActivationCommands($pluginFolder);
+
             Notification::make()
                 ->title('Successfully activated ' . $pluginFolder . ' plugin')
                 ->success()
@@ -91,6 +94,37 @@ class Plugins extends Page
         }
 
         $this->refreshPlugins();
+    }
+
+    private function runPostActivationCommands($pluginFolder)
+    {
+        $studlyFolderName = Str::studly($pluginFolder);
+        $pluginClass = "Wave\\Plugins\\{$studlyFolderName}\\{$studlyFolderName}Plugin";
+        
+        if (class_exists($pluginClass)) {
+            $plugin = new $pluginClass(app());
+            
+            if (method_exists($plugin, 'getPostActivationCommands')) {
+                $commands = $plugin->getPostActivationCommands();
+                
+                foreach ($commands as $command) {
+                    if (is_string($command)) {
+                        Artisan::call($command);
+                    } elseif (is_callable($command)) {
+                        $command();
+                    }
+                }
+            }
+
+            // Run migrations if they exist
+            $migrationPath = resource_path("plugins/{$pluginFolder}/database/migrations");
+            if (File::isDirectory($migrationPath)) {
+                Artisan::call('migrate', [
+                    '--path' => "resources/plugins/{$pluginFolder}/database/migrations",
+                    '--force' => true,
+                ]);
+            }
+        }
     }
 
     public function deactivate($pluginFolder)

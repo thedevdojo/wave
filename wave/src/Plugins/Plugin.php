@@ -28,4 +28,9 @@ abstract class Plugin extends ServiceProvider
 
     // You can add additional methods that plugins should implement
     abstract public function getPluginInfo(): array;
+
+    public function postActivation()
+    {
+        // Default implementation (empty)
+    }
 }

@@ -73,6 +73,19 @@ class PluginManager
         return null;
     }
 
+    protected function runPostActivationCommands(Plugin $plugin)
+    {
+        $commands = $plugin->getPostActivationCommands();
+        
+        foreach ($commands as $command) {
+            if (is_string($command)) {
+                Artisan::call($command);
+            } elseif (is_callable($command)) {
+                $command();
+            }
+        }
+    }
+
     protected function getInstalledPlugins()
     {
         $path = resource_path('plugins/installed.json');
