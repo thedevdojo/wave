@@ -22,6 +22,7 @@ use Intervention\Image\ImageManagerStatic;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Vite as BaseVite;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Wave\Plugins\PluginServiceProvider;
 
@@ -70,13 +71,6 @@ class WaveServiceProvider extends ServiceProvider
 
         $this->registerFilamentComponentsFriendlyNames();
 
-		if(!config('wave.show_docs')){
-			Gate::define('viewLarecipe', function($user, $documentation) {
-	            	return true;
-	        });
-	    }
-
-        $this->loadViewsFrom(__DIR__.'/../docs/', 'docs');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'wave');
         $this->loadMigrationsFrom(realpath(__DIR__.'/../database/migrations'));
         $this->loadBladeDirectives();
@@ -310,11 +304,6 @@ class WaveServiceProvider extends ServiceProvider
             DB::connection()->getPdo();
         } catch (\Exception $e) {
             $hasDatabaseConnection = false;
-        }
-
-        if (!$hasDatabaseConnection) {
-            // Code to execute if there is no database connection
-            echo "Database connection failed!";
         }
 
         return $hasDatabaseConnection;

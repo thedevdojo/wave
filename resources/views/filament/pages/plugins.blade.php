@@ -10,7 +10,7 @@
                     <div class="overflow-hidden border rounded-md border-neutral-200 dark:border-neutral-700">
                         <img class="relative" src="{{ url('wave/plugin/image' ) }}/{{ $pluginFolder }}">
                         <div class="flex items-center justify-between flex-shrink-0 w-full p-4 border-b border-neutral-200 dark:border-neutral-700">
-                            <div class="relative flex flex-col">
+                            <div class="relative flex flex-col pr-3">
                                 <h4 class="font-semibold">{{ $plugin['name'] }}</h4>
                                 <p class="text-xs text-zinc-500">{{ $plugin['description'] }}</p>
                                 <p class="text-xs text-zinc-500">{{ 'Version ' . ($plugin['version']['version'] ?? '') }}</p>
