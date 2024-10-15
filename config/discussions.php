@@ -56,7 +56,7 @@ return [
         'sidebar_width' => 'w-56',
         'container_classes' => 'max-w-7xl md:px-12 xl:px-20 mx-auto py-12',
         'container_max_width' => 'max-w-[1120px]',
-        'header_classes' => 'text-4xl font-semibold tracking-tighter'
+        'header_classes' => 'dark:text-white text-gray-900 text-4xl font-semibold tracking-tighter'
     ],
 
     /*
@@ -71,7 +71,7 @@ return [
     |   - markdown
     */
 
-    'editor' => 'markdown',
+    'editor' => 'richeditor',
 
     /*
     |--------------------------------------------------------------------------

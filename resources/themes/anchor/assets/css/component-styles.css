@@ -26,3 +26,13 @@ label{
 .fi-btn-color-secondary svg{
     @apply text-neutral-700;
 }
+
+.fi-modal-close-overlay{
+    z-index:100 !important;
+}
+
+
+.fi-modal-close-overlay + div{
+    z-index:101 !important;
+}
+

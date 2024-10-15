@@ -193,6 +193,10 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
         return !$this->changelogs->contains($latest_changelog->id);
     }
 
+    public function link(){
+        return url('/profile/' . $this->username);
+    }
+
     public function changelogs()
     {
         return $this->belongsToMany('Wave\Changelog');
