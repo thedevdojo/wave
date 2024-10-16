@@ -2,7 +2,9 @@ name: Wave Installer Check
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - 3.x
   pull_request:
     branches: [ main ]
 
