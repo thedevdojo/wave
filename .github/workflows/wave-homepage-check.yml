@@ -51,7 +51,7 @@ jobs:
         wkhtmltoimage http://127.0.0.1:8000 homepage_screenshot.png
 
     - name: Upload screenshot as artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: homepage-screenshot
         path: homepage_screenshot.png
