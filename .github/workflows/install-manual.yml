@@ -97,6 +97,21 @@ jobs:
           exit 1
         fi
 
+    - name: Install wkhtmltopdf
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wkhtmltopdf
+
+    - name: Capture screenshot
+      run: |
+        wkhtmltoimage http://127.0.0.1:8000 homepage_screenshot.png
+
+    - name: Upload screenshot as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: homepage-screenshot
+        path: homepage_screenshot.png
+
     - name: Stop Laravel server
       if: always()
       run: kill $(cat project_folder/laravel_server.pid)
