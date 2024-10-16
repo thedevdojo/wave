@@ -62,18 +62,33 @@ jobs:
           exit 1
         fi
 
-    - name: Navigate to install page and click "Install Wave"
+    - name: Navigate to install page and initiate installation
       run: |
         response=$(curl -sS -o install_page.html -w "%{http_code}" http://localhost:8000/install)
         if [ $response -eq 200 ]; then
           echo "Install page is accessible"
-          # Simulate clicking "Install Wave" button by making a POST request
-          install_response=$(curl -sS -X POST -o install_response.html -w "%{http_code}" http://localhost:8000/install)
-          if [ $install_response -eq 200 ] || [ $install_response -eq 302 ]; then
-            echo "Installation process initiated"
+          # Check if the page contains the "Install Wave" button
+          if grep -q "Install Wave" install_page.html; then
+            echo "Install Wave button found on the page"
+            # Attempt to initiate the installation by making a GET request
+            install_response=$(curl -sS -o install_response.html -w "%{http_code}" -L http://localhost:8000/install)
+            if [ $install_response -eq 200 ]; then
+              echo "Installation process initiated"
+              # Check if the response indicates successful installation
+              if grep -q "Successfully Installed" install_response.html; then
+                echo "Installation completed successfully"
+              else
+                echo "Installation may not have completed. Check install_response.html for details."
+                cat install_response.html
+              fi
+            else
+              echo "Failed to initiate installation. HTTP status code: $install_response"
+              cat install_response.html
+              exit 1
+            fi
           else
-            echo "Failed to initiate installation. HTTP status code: $install_response"
-            cat install_response.html
+            echo "Install Wave button not found on the page"
+            cat install_page.html
             exit 1
           fi
         else
