@@ -1,0 +1,61 @@
+name: Wave Homepage Check
+
+on:
+  workflow_call:
+    inputs:
+      install-path:
+        required: true
+        type: string
+
+jobs:
+  check-homepage:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Start Laravel server
+      run: |
+        cd ${{ inputs.install-path }}
+        php artisan serve &
+        echo $! > laravel_server.pid
+
+    - name: Wait for server to start
+      run: sleep 10
+
+    - name: Check if homepage is accessible
+      run: |
+        response=$(curl -sS -o homepage.html -w "%{http_code}" http://127.0.0.1:8000)
+        if [ $response -eq 200 ]; then
+          echo "Homepage is accessible"
+          if grep -q "Ship in Days" homepage.html; then
+            echo "Homepage contains expected content"
+          else
+            echo "Homepage doesn't contain expected content"
+            echo "Content of homepage.html:"
+            cat homepage.html
+            exit 1
+          fi
+        else
+          echo "Homepage is not accessible. HTTP status code: $response"
+          echo "Content of homepage.html:"
+          cat homepage.html
+          exit 1
+        fi
+
+    - name: Install wkhtmltopdf
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wkhtmltopdf
+
+    - name: Capture screenshot
+      run: |
+        wkhtmltoimage http://127.0.0.1:8000 homepage_screenshot.png
+
+    - name: Upload screenshot as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: homepage-screenshot
+        path: homepage_screenshot.png
+
+    - name: Stop Laravel server
+      if: always()
+      run: kill $(cat ${{ inputs.install-path }}/laravel_server.pid)

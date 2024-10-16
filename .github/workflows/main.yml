@@ -1,0 +1,23 @@
+name: Wave Main Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - 3.x
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  install:
+    uses: ./.github/workflows/wave-install.yml
+    with:
+      php-version: '8.2'
+
+  check-homepage:
+    needs: install
+    uses: ./.github/workflows/wave-homepage-check.yml
+    with:
+      install-path: ${{ needs.install.outputs.install-path }}
+
+  # Additional jobs can be added here
