@@ -9,7 +9,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test-installer:
+  installer-manual:
     runs-on: ubuntu-latest
     
     steps:
@@ -19,6 +19,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
+        extensions: pdo_sqlite
     
     - name: Create project directory
       run: mkdir project_folder
@@ -40,3 +41,62 @@ jobs:
         ls -la project_folder
         echo "Contents of project_folder/public directory (if it exists):"
         ls -la project_folder/public || echo "Public directory not found"
+
+    - name: Copy .env.example file
+      run: |
+        cd project_folder
+        cp .env.example .env
+
+    - name: Create SQLite database
+      run: |
+        cd project_folder
+        touch database/database.sqlite
+
+    - name: Install Composer Dependencies
+      run: |
+        cd project_folder
+        composer install
+
+    - name: Generate application key
+      run: |
+        cd project_folder
+        php artisan key:generate
+
+    - name: Database Migrations and Seed
+      run: |
+        cd project_folder
+        php artisan migrate
+        php artisan db:seed
+
+    - name: Start Laravel server
+      run: |
+        cd project_folder
+        php artisan serve &
+        echo $! > laravel_server.pid
+
+    - name: Wait for server to start
+      run: sleep 10
+
+    - name: Check if homepage is accessible
+      run: |
+        response=$(curl -sS -o homepage.html -w "%{http_code}" http://127.0.0.1:8000)
+        if [ $response -eq 200 ]; then
+          echo "Homepage is accessible"
+          if grep -q "Ship in Days" homepage.html; then
+            echo "Homepage contains expected content"
+          else
+            echo "Homepage doesn't contain expected content"
+            echo "Content of homepage.html:"
+            cat homepage.html
+            exit 1
+          fi
+        else
+          echo "Homepage is not accessible. HTTP status code: $response"
+          echo "Content of homepage.html:"
+          cat homepage.html
+          exit 1
+        fi
+
+    - name: Stop Laravel server
+      if: always()
+      run: kill $(cat project_folder/laravel_server.pid)
