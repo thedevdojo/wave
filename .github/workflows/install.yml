@@ -1,0 +1,70 @@
+name: Wave Installer Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-installer:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+    
+    - name: Install Composer dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Create test directory
+      run: mkdir test_install
+
+    - name: Copy Wave files to test directory
+      run: cp -R * test_install/
+
+    - name: Navigate to test directory
+      run: cd test_install
+
+    - name: Run PHP built-in server
+      run: php -S localhost:8000 -t public &
+
+    - name: Wait for server to start
+      run: sleep 5
+
+    - name: Check if installer page is accessible
+      run: |
+        response=$(curl -sS http://localhost:8000)
+        if [[ $response == *"Wave Installer"* ]]; then
+          echo "Installer page is accessible"
+        else
+          echo "Installer page is not accessible"
+          exit 1
+        fi
+
+    - name: Run Composer install
+      run: |
+        cd test_install
+        composer install
+
+    - name: Check if .env file is created
+      run: |
+        if [ -f "test_install/.env" ]; then
+          echo ".env file created successfully"
+        else
+          echo ".env file not created"
+          exit 1
+        fi
+
+    - name: Check if application key is set
+      run: |
+        if grep -q "APP_KEY=" "test_install/.env"; then
+          echo "Application key is set"
+        else
+          echo "Application key is not set"
+          exit 1
+        fi
