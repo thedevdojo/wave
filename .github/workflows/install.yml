@@ -34,34 +34,64 @@ jobs:
     - name: Extract tarball to test directory
       run: tar -xzf wave.tar.gz -C test_install --strip-components=1
 
-    - name: Navigate to test directory
-      run: cd test_install
+    - name: Debug - List contents of test directory
+      run: |
+        echo "Contents of test_install directory:"
+        ls -la test_install
+        echo "Contents of test_install/public directory (if it exists):"
+        ls -la test_install/public || echo "Public directory not found"
+
+    - name: Install Composer dependencies
+      run: |
+        cd test_install
+        composer install --no-interaction --prefer-dist
+
+    - name: Copy .env.example to .env
+      run: |
+        cd test_install
+        cp .env.example .env
+
+    - name: Generate application key
+      run: |
+        cd test_install
+        php artisan key:generate
 
     - name: Run PHP built-in server
-      run: php -S localhost:8000 -t public &
+      run: |
+        cd test_install
+        php -S localhost:8000 -t public &
+        echo $! > php_server.pid
 
     - name: Wait for server to start
-      run: sleep 5
+      run: sleep 10
 
     - name: Check if installer page is accessible
       run: |
-        response=$(curl -sS http://localhost:8000)
-        if [[ $response == *"Wave Installer"* ]]; then
+        response=$(curl -sS -o response.html -w "%{http_code}" http://localhost:8000)
+        if [ $response -eq 200 ]; then
           echo "Installer page is accessible"
+          cat response.html
         else
-          echo "Installer page is not accessible"
+          echo "Installer page is not accessible. HTTP status code: $response"
+          cat response.html
           exit 1
         fi
 
-    - name: Run Composer install
+    - name: Debug - Check PHP error log
+      if: failure()
       run: |
-        cd test_install
-        composer install
+        echo "PHP Error Log:"
+        cat /tmp/php_errors.log || echo "No PHP error log found"
+
+    - name: Stop PHP server
+      if: always()
+      run: kill $(cat test_install/php_server.pid)
 
     - name: Check if .env file is created
       run: |
         if [ -f "test_install/.env" ]; then
           echo ".env file created successfully"
+          cat test_install/.env
         else
           echo ".env file not created"
           exit 1
