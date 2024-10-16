@@ -1,4 +1,4 @@
-name: Wave Installer Check
+name: Wave Automated Installation Check
 
 on:
   push:
