@@ -1,0 +1,42 @@
+name: Wave Manual Installation Check
+
+on:
+  push:
+    branches:
+      - main
+      - 3.x
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-installer:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+    
+    - name: Create project directory
+      run: mkdir project_folder
+
+    - name: Download tarball of current commit
+      run: |
+        TARBALL_URL=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                      -H "Accept: application/vnd.github.v3+json" \
+                      https://api.github.com/repos/${{ github.repository }}/tarball/${{ github.sha }} \
+                      -I | grep -i "location:" | cut -d " " -f 2 | tr -d '\r')
+        curl -L -o wave.tar.gz $TARBALL_URL
+
+    - name: Extract tarball to project directory
+      run: tar -xzf wave.tar.gz -C project_folder --strip-components=1
+
+    - name: Debug - List contents of project directory
+      run: |
+        echo "Contents of project_folder directory:"
+        ls -la project_folder
+        echo "Contents of project_folder/public directory (if it exists):"
+        ls -la project_folder/public || echo "Public directory not found"
