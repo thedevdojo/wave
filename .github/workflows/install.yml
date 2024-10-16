@@ -62,31 +62,58 @@ jobs:
           exit 1
         fi
 
-    - name: Debug - Check PHP error log
-      if: failure()
+    - name: Navigate to install page and click "Install Wave"
       run: |
-        echo "PHP Error Log:"
-        cat /tmp/php_errors.log || echo "No PHP error log found"
-
-    - name: Stop PHP server
-      if: always()
-      run: kill $(cat project_folder/php_server.pid)
-
-    - name: Check if .env file is created
-      run: |
-        if [ -f "project_folder/.env" ]; then
-          echo ".env file created successfully"
-          cat project_folder/.env
+        response=$(curl -sS -o install_page.html -w "%{http_code}" http://localhost:8000/install)
+        if [ $response -eq 200 ]; then
+          echo "Install page is accessible"
+          # Simulate clicking "Install Wave" button by making a POST request
+          install_response=$(curl -sS -X POST -o install_response.html -w "%{http_code}" http://localhost:8000/install)
+          if [ $install_response -eq 200 ] || [ $install_response -eq 302 ]; then
+            echo "Installation process initiated"
+          else
+            echo "Failed to initiate installation. HTTP status code: $install_response"
+            cat install_response.html
+            exit 1
+          fi
         else
-          echo ".env file not created"
+          echo "Install page is not accessible. HTTP status code: $response"
+          cat install_page.html
           exit 1
         fi
 
-    - name: Check if application key is set
+    - name: Check installation complete page
       run: |
-        if grep -q "APP_KEY=" "project_folder/.env"; then
-          echo "Application key is set"
+        response=$(curl -sS -o complete_page.html -w "%{http_code}" "http://localhost:8000/install?complete=true")
+        if [ $response -eq 200 ]; then
+          echo "Installation complete page is accessible"
+          if grep -q "Successfully Installed" complete_page.html; then
+            echo "Installation was successful"
+          else
+            echo "Installation complete page doesn't contain success message"
+            cat complete_page.html
+            exit 1
+          fi
         else
-          echo "Application key is not set"
+          echo "Installation complete page is not accessible. HTTP status code: $response"
+          cat complete_page.html
+          exit 1
+        fi
+
+    - name: Navigate to homepage and check content
+      run: |
+        response=$(curl -sS -o homepage.html -w "%{http_code}" http://localhost:8000)
+        if [ $response -eq 200 ]; then
+          echo "Homepage is accessible"
+          if grep -q "Ship in Days Not Weeks" homepage.html; then
+            echo "Homepage contains expected content"
+          else
+            echo "Homepage doesn't contain expected content"
+            cat homepage.html
+            exit 1
+          fi
+        else
+          echo "Homepage is not accessible. HTTP status code: $response"
+          cat homepage.html
           exit 1
         fi
