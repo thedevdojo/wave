@@ -12,14 +12,37 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Check install path
+      run: |
+        if [ ! -d "${{ inputs.install-path }}" ]; then
+          echo "Error: The specified install path does not exist: ${{ inputs.install-path }}"
+          echo "Contents of /home/runner/work/wave/wave:"
+          ls -la /home/runner/work/wave/wave
+          exit 1
+        fi
+
     - name: Start Laravel server
       run: |
-        cd ${{ inputs.install-path }}
-        php artisan serve &
+        cd "${{ inputs.install-path }}" || exit 1
+        echo "Current directory: $(pwd)"
+        echo "Contents of current directory:"
+        ls -la
+        php artisan serve --port=8000 &
         echo $! > laravel_server.pid
 
     - name: Wait for server to start
-      run: sleep 10
+      run: |
+        for i in {1..30}; do
+          if curl -s http://127.0.0.1:8000 > /dev/null; then
+            echo "Server is up!"
+            break
+          fi
+          if [ $i -eq 30 ]; then
+            echo "Server failed to start after 30 seconds"
+            exit 1
+          fi
+          sleep 1
+        done
 
     - name: Check if homepage is accessible
       run: |
@@ -58,4 +81,9 @@ jobs:
 
     - name: Stop Laravel server
       if: always()
-      run: kill $(cat ${{ inputs.install-path }}/laravel_server.pid)
+      run: |
+        if [ -f "${{ inputs.install-path }}/laravel_server.pid" ]; then
+          kill $(cat "${{ inputs.install-path }}/laravel_server.pid")
+        else
+          echo "No PID file found. Server may not have started correctly."
+        fi
