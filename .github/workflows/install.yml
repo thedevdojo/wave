@@ -21,7 +21,7 @@ jobs:
         php-version: '8.2'
     
     - name: Create test directory
-      run: mkdir test_install
+      run: mkdir project_folder
 
     - name: Download tarball of current commit
       run: |
@@ -32,33 +32,18 @@ jobs:
         curl -L -o wave.tar.gz $TARBALL_URL
 
     - name: Extract tarball to test directory
-      run: tar -xzf wave.tar.gz -C test_install --strip-components=1
+      run: tar -xzf wave.tar.gz -C project_folder --strip-components=1
 
     - name: Debug - List contents of test directory
       run: |
-        echo "Contents of test_install directory:"
-        ls -la test_install
-        echo "Contents of test_install/public directory (if it exists):"
-        ls -la test_install/public || echo "Public directory not found"
-
-    - name: Install Composer dependencies
-      run: |
-        cd test_install
-        composer install --no-interaction --prefer-dist
-
-    - name: Copy .env.example to .env
-      run: |
-        cd test_install
-        cp .env.example .env
-
-    - name: Generate application key
-      run: |
-        cd test_install
-        php artisan key:generate
+        echo "Contents of project_folder directory:"
+        ls -la project_folder
+        echo "Contents of project_folder/public directory (if it exists):"
+        ls -la project_folder/public || echo "Public directory not found"
 
     - name: Run PHP built-in server
       run: |
-        cd test_install
+        cd project_folder
         php -S localhost:8000 -t public &
         echo $! > php_server.pid
 
@@ -85,13 +70,13 @@ jobs:
 
     - name: Stop PHP server
       if: always()
-      run: kill $(cat test_install/php_server.pid)
+      run: kill $(cat project_folder/php_server.pid)
 
     - name: Check if .env file is created
       run: |
-        if [ -f "test_install/.env" ]; then
+        if [ -f "project_folder/.env" ]; then
           echo ".env file created successfully"
-          cat test_install/.env
+          cat project_folder/.env
         else
           echo ".env file not created"
           exit 1
@@ -99,7 +84,7 @@ jobs:
 
     - name: Check if application key is set
       run: |
-        if grep -q "APP_KEY=" "test_install/.env"; then
+        if grep -q "APP_KEY=" "project_folder/.env"; then
           echo "Application key is set"
         else
           echo "Application key is not set"
