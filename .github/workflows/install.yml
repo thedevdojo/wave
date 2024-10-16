@@ -2,9 +2,7 @@ name: Wave Installer Check
 
 on:
   push:
-    branches:
-      - main
-      - 3.x
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -20,14 +18,19 @@ jobs:
       with:
         php-version: '8.2'
     
-    - name: Install Composer dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
-
     - name: Create test directory
       run: mkdir test_install
 
-    - name: Copy Wave files to test directory
-      run: cp -R * test_install/
+    - name: Download tarball of current commit
+      run: |
+        TARBALL_URL=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                      -H "Accept: application/vnd.github.v3+json" \
+                      https://api.github.com/repos/${{ github.repository }}/tarball/${{ github.sha }} \
+                      -I | grep -i "location:" | cut -d " " -f 2 | tr -d '\r')
+        curl -L -o wave.tar.gz $TARBALL_URL
+
+    - name: Extract tarball to test directory
+      run: tar -xzf wave.tar.gz -C test_install --strip-components=1
 
     - name: Navigate to test directory
       run: cd test_install
