@@ -153,8 +153,10 @@ if (!file_exists($autoloadPath)) {
         require_once __DIR__ . '/windows.php';
     } elseif ($os == 'Mac') {
         require_once __DIR__ . '/mac.php';
+    } elseif ($os == 'Linux') {
+        // We can use the mac installation for linux machines
+        require_once __DIR__ . '/mac.php';
     } else {
-        print_r($os);
         die('OS not supported, Please run composer install and come back to this page.');
     }
 
