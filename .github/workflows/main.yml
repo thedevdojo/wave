@@ -20,4 +20,11 @@ jobs:
     with:
       install-path: ${{ needs.install.outputs.install-path }}
 
-  # Additional jobs can be added here
+  debug-path:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug Install Path
+        run: |
+          echo "Install path: ${{ needs.install.outputs.install-path }}"
+          ls -la ${{ needs.install.outputs.install-path }} || echo "Path does not exist"

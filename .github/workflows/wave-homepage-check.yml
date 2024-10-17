@@ -12,10 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Debug install path
+      run: |
+        echo "Provided install path: ${{ inputs.install-path }}"
+        ls -la ${{ inputs.install-path }} || echo "Provided path does not exist"
+        echo "Current directory: $(pwd)"
+        ls -la
+
     - name: Check install path
       run: |
         if [ ! -d "${{ inputs.install-path }}" ]; then
           echo "Error: The specified install path does not exist: ${{ inputs.install-path }}"
+          echo "Contents of current directory:"
+          ls -la
           echo "Contents of /home/runner/work/wave/wave:"
           ls -la /home/runner/work/wave/wave
           exit 1

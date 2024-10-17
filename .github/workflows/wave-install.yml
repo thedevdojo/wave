@@ -28,7 +28,7 @@ jobs:
         extensions: pdo_sqlite
     
     - name: Create project directory
-      run: mkdir project_folder
+      run: mkdir -p ${{ github.workspace }}/project_folder
 
     - name: Download tarball of current commit
       run: |
@@ -67,6 +67,10 @@ jobs:
         php artisan migrate
         php artisan db:seed
 
-    - name: Set install path
+    - name: Set and output install path
       id: set-path
-      run: echo "path=${{ github.workspace }}/project_folder" >> $GITHUB_OUTPUT
+      run: |
+        INSTALL_PATH="${{ github.workspace }}/project_folder"
+        echo "path=$INSTALL_PATH" >> $GITHUB_OUTPUT
+        echo "Wave installed at: $INSTALL_PATH"
+        ls -la $INSTALL_PATH
