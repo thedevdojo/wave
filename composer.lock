@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aed3ce5ce59848d2bea4f9b37593fdbf",
+    "content-hash": "01ec436c2459c4760e81f7467649c604",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -10131,6 +10131,57 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "alebatistella/duskapiconf",
+            "version": "v1.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AlexandreBellas/duskapiconf.git",
+                "reference": "e50e9bbe6b2274b0f495e2853d4c15542191a0cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AlexandreBellas/duskapiconf/zipball/e50e9bbe6b2274b0f495e2853d4c15542191a0cb",
+                "reference": "e50e9bbe6b2274b0f495e2853d4c15542191a0cb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AleBatistella\\DuskApiConf\\DuskApiConfServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AleBatistella\\DuskApiConf\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "mit"
+            ],
+            "authors": [
+                {
+                    "name": "Alexandre Batistella",
+                    "email": "alexandre.bellas@gmail.com"
+                },
+                {
+                    "name": "Inan Brunelli",
+                    "email": "inanbruneli@gmail.com"
+                }
+            ],
+            "description": "Change your Laravel configuration for each Dusk test with an easy API",
+            "support": {
+                "source": "https://github.com/AlexandreBellas/duskapiconf/tree/v1.2.5"
+            },
+            "time": "2023-08-14T18:25:57+00:00"
+        },
         {
             "name": "brianium/paratest",
             "version": "v7.6.0",

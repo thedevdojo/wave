@@ -1,4 +1,14 @@
 <?php return array (
+  'alebatistella/duskapiconf' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'AleBatistella\\DuskApiConf\\DuskApiConfServiceProvider',
+    ),
+    'aliases' => 
+    array (
+    ),
+  ),
   'anourvalar/eloquent-serialize' => 
   array (
     'aliases' => 

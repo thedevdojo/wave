@@ -29,6 +29,7 @@
         "tymon/jwt-auth": "@dev"
     },
     "require-dev": {
+        "alebatistella/duskapiconf": "^1.2",
         "fakerphp/faker": "^1.9.1",
         "laravel/dusk": "^8.0",
         "mockery/mockery": "^1.4.4",

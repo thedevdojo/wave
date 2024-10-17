@@ -8,7 +8,7 @@ dataset('routes', function () {
         '/blog/marketing/best-ways-to-market-your-application',
         '/pricing',
         '/changelog',
-        '/changelog/4',
+        '/changelog/3',
         '/auth/login',
         '/auth/register',
         '/auth/password/reset',
