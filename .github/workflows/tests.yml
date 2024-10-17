@@ -78,7 +78,7 @@ jobs:
       run: sleep 5
 
     - name: Execute tests (Unit and Feature tests) via PestPHP
-      run: vendor/bin/pest
+      run: ./vendor/bin/pest
 
     - name: Stop Laravel server
       if: always()
