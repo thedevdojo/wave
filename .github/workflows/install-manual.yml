@@ -1,4 +1,4 @@
-name: Wave Manual Installation Check
+name: Pest Tests
 
 on:
   push:
@@ -75,27 +75,10 @@ jobs:
         echo $! > laravel_server.pid
 
     - name: Wait for server to start
-      run: sleep 10
+      run: sleep 5
 
-    - name: Check if homepage is accessible
-      run: |
-        response=$(curl -sS -o homepage.html -w "%{http_code}" http://127.0.0.1:8000)
-        if [ $response -eq 200 ]; then
-          echo "Homepage is accessible"
-          if grep -q "Ship in Days" homepage.html; then
-            echo "Homepage contains expected content"
-          else
-            echo "Homepage doesn't contain expected content"
-            echo "Content of homepage.html:"
-            cat homepage.html
-            exit 1
-          fi
-        else
-          echo "Homepage is not accessible. HTTP status code: $response"
-          echo "Content of homepage.html:"
-          cat homepage.html
-          exit 1
-        fi
+    - name: Execute tests (Unit and Feature tests) via PestPHP
+      run: vendor/bin/pest
 
     - name: Stop Laravel server
       if: always()

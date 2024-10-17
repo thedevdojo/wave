@@ -33,7 +33,7 @@
         "laravel/dusk": "^8.0",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "6.4.0|^7.0|^8.1",
-        "pestphp/pest": "^3.0",
+        "pestphp/pest": "^3.4",
         "pestphp/pest-plugin-laravel": "^3.0",
         "phpunit/phpunit": "^11.0",
         "spatie/laravel-ignition": "^2.0"

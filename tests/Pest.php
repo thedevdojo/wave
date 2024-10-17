@@ -12,7 +12,7 @@
 */
 
 pest()->extend(Tests\TestCase::class)
-    ->extend(Tests\Traits\RecursiveRefreshDatabase::class)
+ // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
 /*
