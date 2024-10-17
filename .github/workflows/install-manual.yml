@@ -1,0 +1,102 @@
+name: Wave Manual Installation Check
+
+on:
+  push:
+    branches:
+      - main
+      - 3.x
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  installer-manual:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: pdo_sqlite
+    
+    - name: Create project directory
+      run: mkdir project_folder
+
+    - name: Download tarball of current commit
+      run: |
+        TARBALL_URL=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                      -H "Accept: application/vnd.github.v3+json" \
+                      https://api.github.com/repos/${{ github.repository }}/tarball/${{ github.sha }} \
+                      -I | grep -i "location:" | cut -d " " -f 2 | tr -d '\r')
+        curl -L -o wave.tar.gz $TARBALL_URL
+
+    - name: Extract tarball to project directory
+      run: tar -xzf wave.tar.gz -C project_folder --strip-components=1
+
+    - name: Debug - List contents of project directory
+      run: |
+        echo "Contents of project_folder directory:"
+        ls -la project_folder
+        echo "Contents of project_folder/public directory (if it exists):"
+        ls -la project_folder/public || echo "Public directory not found"
+
+    - name: Copy .env.example file
+      run: |
+        cd project_folder
+        cp .env.example .env
+
+    - name: Create SQLite database
+      run: |
+        cd project_folder
+        touch database/database.sqlite
+
+    - name: Install Composer Dependencies
+      run: |
+        cd project_folder
+        composer install
+
+    - name: Generate application key
+      run: |
+        cd project_folder
+        php artisan key:generate
+
+    - name: Database Migrations and Seed
+      run: |
+        cd project_folder
+        php artisan migrate
+        php artisan db:seed
+
+    - name: Start Laravel server
+      run: |
+        cd project_folder
+        php artisan serve &
+        echo $! > laravel_server.pid
+
+    - name: Wait for server to start
+      run: sleep 10
+
+    - name: Check if homepage is accessible
+      run: |
+        response=$(curl -sS -o homepage.html -w "%{http_code}" http://127.0.0.1:8000)
+        if [ $response -eq 200 ]; then
+          echo "Homepage is accessible"
+          if grep -q "Ship in Days" homepage.html; then
+            echo "Homepage contains expected content"
+          else
+            echo "Homepage doesn't contain expected content"
+            echo "Content of homepage.html:"
+            cat homepage.html
+            exit 1
+          fi
+        else
+          echo "Homepage is not accessible. HTTP status code: $response"
+          echo "Content of homepage.html:"
+          cat homepage.html
+          exit 1
+        fi
+
+    - name: Stop Laravel server
+      if: always()
+      run: kill $(cat project_folder/laravel_server.pid)
