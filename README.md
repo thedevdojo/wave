@@ -1,4 +1,12 @@
-<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/images/october2024/frame2.png" width="200"></a></p>
+<p align="center"><a href="https://devdojo.com/wave" target="_blank"><img src="https://cdn.devdojo.com/images/october2024/wave-logo.png" width="200"></a></p>
+
+<p align="center">
+<a href="https://github.com/thedevdojo/wave/actions"><img src="https://github.com/thedevdojo/wave/actions/workflows/tests.yml/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/thedevdojo/wave"><img src="https://img.shields.io/packagist/v/thedevdojo/wave" alt="Latest Stable Version"></a>
+<a href="https://github.com/thedevdojo/wave"><img src="https://img.shields.io/packagist/l/thedevdojo/wave" alt="License"></a>
+</p>
+
+[![Pest Tests](https://github.com/thedevdojo/wave/actions/workflows/tests.yml/badge.svg)](https://github.com/thedevdojo/wave/actions/workflows/tests.yml)
 
 Wave is a SaaS framework, built with <a href="https://laravel.com">Laravel</a>, that will make building your SaaS application fun and easier than ever before. <a href="https://devdojo.com/wave/docs" target="_blank">View the full docs here</a>.
 
