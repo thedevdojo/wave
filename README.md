@@ -8,7 +8,7 @@
 
 Wave is a SaaS framework, built with <a href="https://laravel.com">Laravel</a>, that will make building your SaaS application fun and easier than ever before. <a href="https://devdojo.com/wave/docs" target="_blank">View the full docs here</a>.
 
-Wave provides you with all the essential features found in many popular SaaS platforms, allowing you to quickly transform your idea into a profitable SaaS product. Here are a handful of features that Wave Provides
+Wave provides you with all the essential features found in many popular SaaS platforms, allowing you to quickly transform your idea into a profitable SaaS product. Here are a handful of features that Wave Provides:
 
  - <a href="https://devdojo.com/wave/docs/features/auth" target="_blank">Authentication</a>
  - <a href="https://devdojo.com/wave/docs/features/user-profiles" target="_blank">User Profiles</a>
