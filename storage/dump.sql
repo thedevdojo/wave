@@ -946,22 +946,8 @@ LOCK TABLES `settings` WRITE;
 INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`, `order`, `group`)
 VALUES
 	(1,'site.title','Site Title','Wave','','text',1,'Site'),
-	(2,'site.description','Site Description','The Software as a Service Starter Kit built on Laravel & Voyager','','text',2,'Site'),
-	(4,'site.google_analytics_tracking_id','Google Analytics Tracking ID',NULL,'','text',4,'Site'),
-	(5,'admin.bg_image','Admin Background Image','','','image',5,'Admin'),
-	(6,'admin.title','Admin Title','Wave','','text',1,'Admin'),
-	(7,'admin.description','Admin Description','Create some waves and build your next great idea','','text',2,'Admin'),
-	(8,'admin.loader','Admin Loader','settings/November2017/UYzuapBFBCrR4gKzwR9E.png','','image',3,'Admin'),
-	(9,'admin.icon_image','Admin Icon Image','settings/March2018/a1benhFYD9IhEgrKEL4n.png','','image',4,'Admin'),
-	(10,'admin.google_analytics_client_id','Google Analytics Client ID (used for admin dashboard)','854769825891-6pu07rot7151p7qtrph91joqmg0lo7ml.apps.googleusercontent.com','','text',1,'Admin'),
-	(11,'site.favicon','Favicon','',NULL,'image',6,'Site'),
-	(12,'auth.dashboard_redirect','Homepage Redirect to Dashboard if Logged in','0',NULL,'checkbox',7,'Auth'),
-	(13,'auth.email_or_username','Users Login with Email or Username','email','{\r\n    \"default\" : \"email\",\r\n    \"options\" : {\r\n        \"email\": \"Email Address\",\r\n        \"username\": \"Username\"\r\n    }\r\n}','select_dropdown',8,'Auth'),
-	(14,'auth.username_in_registration','Username when Registering','yes','{\r\n    \"default\" : \"yes\",\r\n    \"options\" : {\r\n        \"yes\": \"Yes, Include the Username Field when Registering\",\r\n        \"no\": \"No, Have it automatically generated\"\r\n    }\r\n}','select_dropdown',9,'Auth'),
-	(15,'auth.verify_email','Verify Email during Sign Up','0',NULL,'checkbox',10,'Auth'),
-	(16,'billing.card_upfront','Require Credit Card Up Front','0','{\n    \"on\" : \"Yes\",\n    \"off\" : \"No\",\n    \"checked\" : false\n}','checkbox',11,'Billing'),
-	(17,'billing.trial_days','Trial Days when No Credit Card Up Front','14',NULL,'text',12,'Billing'),
-	(18,'site.custom_javascript','Custom Javascript (inserted before the ending </body> tag)',NULL,NULL,'code_editor',13,'Site');
+	(2,'site.description','Site Description','The Software as a Service Starter Kit built with Laravel','','text',2,'Site'),
+	(3,'site.google_analytics_tracking_id','Google Analytics Tracking ID',NULL,'','text',4,'Site');
 
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;

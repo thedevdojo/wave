@@ -83,7 +83,7 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
 
     public function subscribedToPlan($planSlug)
     {
-        $plan = Plan::where('slug', $planSlug)->first();
+        $plan = Plan::where('name', $planSlug)->first();
         if (!$plan) {
             return false;
         }

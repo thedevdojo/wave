@@ -25,6 +25,7 @@ use Illuminate\Foundation\Vite as BaseVite;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Wave\Plugins\PluginServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 
 class WaveServiceProvider extends ServiceProvider
 {
@@ -128,118 +129,32 @@ class WaveServiceProvider extends ServiceProvider
 
     protected function loadBladeDirectives(){
 
-        Blade::directive('admin', function ($plan) {
-            return "<?php if (!auth()->guest() && auth()->user()->isAdmin()) { ?>";
-        });
+        //app()->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
+            // @admin directives
+            Blade::if('admin', function () {
+                return !auth()->guest() && auth()->user()->isAdmin();
+            });
 
-        Blade::directive('elsenotadmin', function () {
-            return "<?php } else { ?>";
-        });
+            //@subscriber directives
+            Blade::if('subscriber', function () {
+                return !auth()->guest() && auth()->user()->subscriber();
+            });
 
-        Blade::directive('endadmin', function ($plan) {
-            return "<?php } ?>";
-        });
+            //@notsubscriber directives
+            Blade::if('notsubscriber', function () {
+                return !auth()->guest() && !auth()->user()->subscriber();
+            });
 
-        // Subscription Directives
+            // Subscribed Directives
+            Blade::if('subscribed', function ($plan) {
+                return !auth()->guest() && auth()->user()->subscribedToPlan($plan);
+            });
 
-        Blade::directive('subscribed', function ($plan) {
-            return "<?php if (!auth()->guest() && auth()->user()->subscribed($plan)) { ?>";
-        });
+            // home directives
+            Blade::if('home', function () {
+                return request()->is('/');
+            });
 
-        Blade::directive('elsenotsubscribed', function () {
-            return "<?php } else { ?>";
-        });
-
-        Blade::directive('endsubscribed', function () {
-            return "<?php } ?>";
-        });
-
-
-        // Subscriber Directives
-
-        Blade::directive('subscriber', function () {
-            return "<?php if (!auth()->guest() && auth()->user()->subscriber()) { ?>";
-        });
-
-        Blade::directive('elsenotsubscriber', function () {
-            return "<?php } else { ?>";
-        });
-
-        Blade::directive('endsubscriber', function () {
-            return "<?php } ?>";
-        });
-
-
-        Blade::directive('notsubscriber', function () {
-            return "<?php if (!auth()->guest() && !auth()->user()->subscriber()) { ?>";
-        });
-
-        Blade::directive('elsesubscriber', function () {
-            return "<?php } else { ?>";
-        });
-        
-        Blade::directive('endnotsubscriber', function () {
-            return "<?php } ?>";
-        });
-
-        
-
-
-        // Trial Directives
-
-        Blade::directive('trial', function ($plan) {
-            return "<?php if (!auth()->guest() && auth()->user()->onTrial()) { ?>";
-        });
-
-        Blade::directive('nottrial', function () {
-            return "<?php } else { ?>";
-        });
-
-        Blade::directive('endtrial', function () {
-            return "<?php } ?>";
-        });
-
-        // home Directives
-
-        Blade::directive('home', function () {
-            $isHomePage = false;
-
-            // check if we are on the homepage
-            if ( request()->is('/') ) {
-                $isHomePage = true;
-            }
-
-            return "<?php if ($isHomePage) { ?>";
-        });
-
-        Blade::directive('nothome', function(){
-            return "<?php } else { ?>";
-        });
-
-
-        Blade::directive('endhome', function () {
-            return "<?php } ?>";
-        });
-
-
-        Blade::directive('waveCheckout', function(){
-            return '{!! view("wave::checkout")->render() !!}';
-        });
-
-        // role Directives
-
-        Blade::directive('role', function ($role) {
-            return "<?php if (!auth()->guest() && auth()->user()->hasRole($role)) { ?>";
-        });
-
-        Blade::directive('notrole', function () {
-            return "<?php } else { ?>";
-        });
-
-
-        Blade::directive('endrole', function () {
-            return "<?php } ?>";
-        });
     }
 
     protected function registerFilamentComponentsFriendlyNames(){

@@ -4,7 +4,6 @@
     @include('theme::partials.dev_bar')
 @endif
 
-@waveCheckout
 {{-- @yield('javascript') --}}
 
 @if(setting('site.google_analytics_tracking_id', ''))
@@ -17,5 +16,4 @@
 
         gtag('config', '{{ setting("site.google_analytics_tracking_id") }}');
     </script>
-
 @endif

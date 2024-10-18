@@ -11,6 +11,7 @@ return [
         'show_subheadline' => false,
         'email_address' => 'Email Address',
         'password' => 'Password',
+        'remember_me' => 'Remember me',
         'edit' => 'Edit',
         'button' => 'Continue',
         'forget_password' => 'Forget your password?',

@@ -53,7 +53,7 @@ class SettingResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('key')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('display_name')
+                Tables\Columns\TextColumn::make('value')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->searchable(),

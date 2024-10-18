@@ -32,7 +32,7 @@
                     <x-app.alert id="no_subscriptions" :dismissable="false" type="info">
                         You are logged in as an admin and have full access. Authenticate with a different user and visit this page to see the subscription checkout process.
                     </x-app.alert>
-                @notrole
+                @else
                     @subscriber
                         
                         <div class="relative w-full h-auto">                            
@@ -48,8 +48,6 @@
                             @endif
                             <livewire:billing.update />
                         </div>
-                       
-
                     @endsubscriber
 
                     @notsubscriber
