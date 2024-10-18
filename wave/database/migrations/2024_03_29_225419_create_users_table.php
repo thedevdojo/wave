@@ -19,12 +19,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('remember_token', 100)->nullable();
-            $table->text('settings')->nullable();
             $table->timestamps();
             $table->string('username')->unique();
-            $table->string('stripe_id')->nullable();
-            $table->string('card_brand')->nullable();
-            $table->string('card_last_four')->nullable();
             $table->dateTime('trial_ends_at')->nullable();
             $table->string('verification_code')->nullable();
             $table->tinyInteger('verified')->nullable();

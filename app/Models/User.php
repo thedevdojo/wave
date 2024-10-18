@@ -22,6 +22,7 @@ class User extends WaveUser
         'name',
         'email',
         'username',
+        'avatar',
         'password',
         'role_id',
         'verification_code',

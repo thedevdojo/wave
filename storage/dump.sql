@@ -1110,7 +1110,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `username`, `avatar`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`, `stripe_id`, `card_brand`, `card_last_four`, `trial_ends_at`, `verification_code`, `verified`)
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `username`, `avatar`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`, `trial_ends_at`, `verification_code`, `verified`)
 VALUES
 	(1,1,'Tony Lea','tnylea@gmail.com','tnylea','users/default.png','$2y$10$NTj4nKIuYQpkiGuyAP8Kl.3vsX2TiiF/b7I3ELoF4mxkINxpvAI/a','pBCFKLJ0KAuikvH3Jl4l7iRbnyItD7QLSwgpnku83ydezT9ATd0d9j7fwkq0',NULL,'2017-11-21 16:07:22','2018-08-26 20:18:24',NULL,NULL,NULL,NULL,NULL,1),
 	(9,2,'John Doe','johndoe@gmail.com','johndoe','users/default.png','$2y$10$3VqIf6CSwroI2kz7aqMXx.2MXa.ERlRWZ/vJ1dKPaB5aF1lbhefGm','06HEVc3NqyMs0rpUra4XAh2SLf5id691aKdv8d2dYNEHVVdAZAZiydF6zSCx',NULL,'2018-06-22 21:32:49','2018-06-22 21:32:49',NULL,NULL,NULL,NULL,NULL,1),

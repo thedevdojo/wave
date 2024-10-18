@@ -1,6 +1,6 @@
 <?php
 
-    use function Laravel\Folio\{name};
+    use function Laravel\Folio\{middleware, name};
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
     use Filament\Forms\Form;
@@ -9,6 +9,7 @@
 	use Wave\Traits\HasDynamicFields;
     use Wave\ApiKey;
     
+	middleware('auth');
     name('settings.profile');
 
 	new class extends Component implements HasForms
@@ -164,7 +165,7 @@
 		"
 		class="relative w-full">
 			<form wire:submit="save" class="w-full">
-				<div class="relative flex flex-col lg:px-10 mt-5">
+				<div class="relative flex flex-col mt-5 lg:px-10">
 					<div class="relative flex-shrink-0 w-32 h-32 cursor-pointer group">
 						<img id="preview" src="{{ auth()->user()->avatar() . '?' . time() }}" class="w-32 h-32 rounded-full">
 						
