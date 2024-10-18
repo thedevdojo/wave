@@ -14,7 +14,7 @@ return [
         'add_default_role_on_register' => true,
         'default_role'                 => 'trial',
         'namespace'                    => \App\Models\User::class,
-        'default_avatar'               => 'users/default.png',
+        'default_avatar'               => 'demo/default.png',
     ],
 
     /*

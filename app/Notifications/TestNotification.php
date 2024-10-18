@@ -48,7 +48,7 @@ class TestNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'icon' => '/storage/users/default.png',
+            'icon' => '/storage/demo/default.png',
             'body' => 'This is an example, when the user clicks this notification it will go to the link.',
             'link' => '/dashboard',
             'user' => [
