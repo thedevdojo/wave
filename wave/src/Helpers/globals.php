@@ -2,42 +2,6 @@
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 
-
-if (!function_exists('profile_field')){
-
-	function profile_field($type, $key){
-
-		$value = auth()->user()->profile($key);
-		if($value){
-			return key_value($type, $key, $value);
-		} else {
-			return key_value($type, $key);
-		}
-
-	}
-
-}
-
-if(!function_exists('stringToColorCode')){
-
-	function stringToColorCode($str) {
-	  $code = dechex(crc32($str));
-	  $code = substr($code, 0, 6);
-	  return $code;
-	}
-
-}
-
-if(!function_exists('tailwindPlanColor')){
-
-	function tailwindPlanColor($str) {
-	  $code = dechex(crc32($str));
-	  $code = substr($code, 0, 6);
-	  return $code;
-	}
-
-}
-
 if (!function_exists('setting')) {
     function setting($key, $default = null)
     {
