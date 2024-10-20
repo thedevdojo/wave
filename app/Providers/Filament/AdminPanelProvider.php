@@ -36,30 +36,6 @@ class AdminPanelProvider extends PanelProvider
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    public function boot(): void
-    {
-        // Filament::serving(function () {
-        //     Filament::registerNavigationGroups([
-        //         NavigationGroup::make()
-        //             ->label('Roles & Permissions')
-        //             ->icon('phosphor-shield-star-duotone')
-        //             ->collapsed(),
-        //     ]);
-        // });
-
-        // Filament::navigation(function (NavigationBuilder $builder): NavigationBuilder {
-        //     return $builder
-        //         ->groups([
-        //             NavigationGroup::make('Website')
-        //                 ->items([
-        //                     ...UserResource::getNavigationItems(),
-        //                     ...RoleResource::getNavigationItems(),
-        //                     ...PlanResource::getNavigationItems(),
-        //                 ]),
-        //         ]);
-        // });
-    }
-
     public static function getNavigationIcon(): ?string
     {
         return 'heroicon-o-presentation-chart-line';
@@ -76,20 +52,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            // ->navigation(function (NavigationBuilder $builder){
-            //     return $builder
-            //     ->items([
-            //         ...UserResource::getNavigationItems(),
-            //     ])
-            //     ->groups([
-            //         NavigationGroup::make('Roles & Permissions')
-            //             ->icon('phosphor-shield-star-duotone')
-            //             ->items([
-            //                 ...RoleResource::getNavigationItems(),
-            //                 ...PlanResource::getNavigationItems(),
-            //             ])->collapsed(),
-            //     ]);
-            // })
             ->colors([
                 'primary' => Color::Blue,
             ])
