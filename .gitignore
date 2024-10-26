@@ -33,6 +33,8 @@ resources/themes/.gitignore
 /resources/plugins/*
 !/resources/plugins/installed.json
 /storage/app/public/livewire-tmp
+/storage/app/public/*
+!/storage/app/public/demo
 
 # Ignore everything inside the resources/plugins folder
 resources/plugins/*
