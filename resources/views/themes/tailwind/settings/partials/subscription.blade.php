@@ -2,7 +2,7 @@
     @if(auth()->user()->hasRole('admin'))
         <p>This user is an admin user and therefore does not need a subscription</p>
     @else
-        @if(auth()->user()->subscriber())
+        @if(auth()->user()->subscriber() && auth()->user()->subscription)
             <div class="flex flex-col">
                 <h5 class="mb-2 text-xl font-bold text-gray-700">Modify Payment Information</h5>
                 <p>Click the button below to update your default payment method</p>
