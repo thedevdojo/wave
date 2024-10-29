@@ -21,7 +21,6 @@ class UserRegistered
      */
     public function handle(Registered $event): void
     {
-        dd($event)
         // $user = $event->user;
         // Perform any functionality to the user here...
     }
