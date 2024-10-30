@@ -7,7 +7,7 @@
             
             <div class="w-full">
                 <div class="flex flex-col">
-                    <div class="mt-1 text-2xl font-semibold tracking-tight text-gray-900">{{ \Wave\User::count() }}</div>
+                    <div class="mt-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">{{ \Wave\User::count() }}</div>
                 </div>
             </div>
             
@@ -22,7 +22,7 @@
             
             <div class="w-full">
                 <div class="flex flex-col">
-                    <div class="mt-1 text-xl font-semibold tracking-tight text-gray-900">{{ \Wave\User::count() }}</div>
+                    <div class="mt-1 text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">{{ \Wave\User::count() }}</div>
                 </div>
             </div>
             
