@@ -40,15 +40,16 @@ class FormsResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                ->label('Name')
-                ->required()
-                ->live(debounce: 500)
-                ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
-                ->maxLength(191),
+                    ->label('Name')
+                    ->required()
+                    ->live(debounce: 500)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
+                    ->maxLength(191),
 
                 TextInput::make('slug')
                     ->label('Slug')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(191),
 
                 Repeater::make('fields')

@@ -35,6 +35,7 @@ class PageResource extends Resource
                     ->maxLength(191),
                 Forms\Components\TextInput::make('slug')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(191),
                 Forms\Components\RichEditor::make('body')
                     ->required()
