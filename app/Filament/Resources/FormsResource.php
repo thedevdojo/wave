@@ -49,7 +49,7 @@ class FormsResource extends Resource
                 TextInput::make('slug')
                     ->label('Slug')
                     ->required()
-                    ->unique()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(191),
 
                 Repeater::make('fields')
