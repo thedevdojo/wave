@@ -27,6 +27,7 @@ class SettingResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('key')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(191),
                 Forms\Components\TextInput::make('display_name')
                     ->required()
