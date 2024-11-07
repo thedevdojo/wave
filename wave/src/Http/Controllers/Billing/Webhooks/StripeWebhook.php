@@ -34,8 +34,6 @@ class StripeWebhook extends Controller
             exit();
         }
 
-        dump($event->type);
-
         if($event->type == 'checkout.session.completed'
             || $event->type == 'checkout.session.async_payment_succeeded') {
             $this->fulfill_checkout($event->data->object->id, $event);
@@ -131,8 +129,6 @@ class StripeWebhook extends Controller
                 'status' => 'active',
                 'seats' => 1
             ]);
-
-            //dump($checkout_session);
         }
     }
 }
