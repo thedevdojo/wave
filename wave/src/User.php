@@ -113,7 +113,6 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
 
     public function switchPlans(Plan $plan){
         $this->syncRoles([]);
-        dump('assigned role: ' . $plan->role->name);
         $this->assignRole( $plan->role->name );
     }
 

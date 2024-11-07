@@ -18,14 +18,6 @@ class PaddleWebhook extends Controller
     {
         $event = $request->get('event_type', null);
 
-        dump('hit the handler');
-        dump($event);
-
-        dump('request');
-        dump($request);
-
-        Log::info('hit the handler');
-
         switch ($event) {
             case 'subscription.canceled':
                 $this->subscriptionCancelled($request);
@@ -35,7 +27,6 @@ class PaddleWebhook extends Controller
         }
     
         return response()->json(['message' => 'Webhook handled successfully'], 200);
-
     }
 
     protected function subscriptionCancelled(Request $request)

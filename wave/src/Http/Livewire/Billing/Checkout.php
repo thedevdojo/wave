@@ -106,7 +106,7 @@ class Checkout extends Component
         $transaction = null;
 
         $response = Http::withToken( config('wave.paddle.api_key') )->get($this->paddle_url . '/transactions/' . $transactionId);
-        dump($response->body());
+        
         if ($response->successful()) {
             $resBody = json_decode($response->body());
             if (isset($resBody->data->status) && ($resBody->data->status == 'paid' || $resBody->data->status == 'completed' || $resBody->data->status == 'ready')) {
