@@ -32,14 +32,14 @@
                     <div x-ref="yearly" x-on:click="billing='Yearly'; toggleRepositionMarker($el)" :class="{ 'text-white': billing == 'Yearly', 'text-zinc-900' : billing != 'Yearly' }" class="relative z-20 px-3.5 py-1 text-sm font-medium leading-6 rounded-full duration-300 ease-out cursor-pointer">
                         Yearly
                     </div>
-                    <div x-ref="marker" class="absolute left-0 z-10 w-1/2 h-full opacity-0" x-cloak>
+                    <div x-ref="marker" class="absolute start-0 z-10 w-1/2 h-full opacity-0" x-cloak>
                         <div class="w-full h-full rounded-full shadow-sm bg-zinc-900"></div>
                     </div>
                 </div>  
             </div>
         @endif
 
-        <div class="flex flex-col flex-wrap lg:flex-row lg:space-x-5">
+        <div class="flex flex-col flex-wrap lg:flex-row lg:space-x-5 rtl:space-x-reverse">
 
             @foreach(Wave\Plan::where('active', 1)->get() as $plan)
                 @php $features = explode(',', $plan->features); @endphp
@@ -68,7 +68,7 @@
                                 @foreach($features as $feature)
                                     <li class="mt-1">
                                         <span class="flex items-center text-green-500">
-                                            <svg class="w-4 h-4 mr-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"></path></svg>
+                                            <svg class="w-4 h-4 me-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"></path></svg>
                                             <span class="text-zinc-700">
                                                 {{ $feature }}
                                             </span>

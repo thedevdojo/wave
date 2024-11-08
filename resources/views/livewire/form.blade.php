@@ -3,7 +3,7 @@
         <div class="mt-8 w-full">
             {{ $this->form }}
         </div>
-        <div class="pt-6 w-full text-right">
+        <div class="pt-6 w-full text-end">
             <x-button type="submit">Save</x-button>
         </div>
     </form>

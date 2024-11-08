@@ -1,11 +1,11 @@
 <nav class="relative h-full">
-    <ul id="menu" class="flex hidden flex-1 gap-x-8 justify-center items-center ml-0 w-full h-full bg-white border-t border-zinc-100 md:flex md:w-auto md:items-center md:border-t-0 md:flex-row">
+    <ul id="menu" class="flex hidden flex-1 gap-x-8 justify-center items-center ms-0 w-full h-full bg-white border-t border-zinc-100 md:flex md:w-auto md:items-center md:border-t-0 md:flex-row">
         <li class="flex relative z-30 flex-col items-start h-full border-b border-zinc-100 md:border-b-0 group md:flex-row md:items-center">
             <a href="#_" class="flex gap-1 items-center px-6 w-full h-16 text-base font-medium text-zinc-500 transition duration-300 md:h-full md:px-0 md:w-auto hover:text-zinc-800">
                 <span class="">Platform</span>
                 <svg class="w-5 h-5 transition-all duration-300 ease-out group-hover:-rotate-180" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
             </a>
-            <div class="hidden top-0 left-0 invisible space-y-3 w-full w-screen bg-white border-t border-b border-zinc-100 shadow-md opacity-0 transition-all duration-300 ease-out -translate-y-2 md:block group-hover:block group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 md:fixed md:mt-24">
+            <div class="hidden top-0 start-0 invisible space-y-3 w-full w-screen bg-white border-t border-b border-zinc-100 shadow-md opacity-0 transition-all duration-300 ease-out -translate-y-2 md:block group-hover:block group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 md:fixed md:mt-24">
                 <ul class="flex flex-col justify-between px-8 mx-auto max-w-6xl md:px-12 md:flex-row">
                     <li class="w-full border-l border-zinc-100 md:w-1/5">
                         <a href="#_" class="block p-6 h-full text-lg font-semibold transition duration-300 hover:bg-zinc-50 lg:p-7 lg:py-10">
@@ -50,7 +50,7 @@
                 <span class="">Resources</span>
                 <svg class="w-5 h-5 transition-all duration-300 ease-out group-hover:-rotate-180" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
             </a>
-            <div class="hidden top-0 left-0 invisible space-y-3 w-full w-screen bg-white border-t border-b border-zinc-100 shadow-sm opacity-0 transition-all duration-300 ease-out -translate-y-2 md:block group-hover:block group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 md:fixed md:mt-24">
+            <div class="hidden top-0 start-0 invisible space-y-3 w-full w-screen bg-white border-t border-b border-zinc-100 shadow-sm opacity-0 transition-all duration-300 ease-out -translate-y-2 md:block group-hover:block group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 md:fixed md:mt-24">
                 <ul class="flex flex-col justify-between mx-auto max-w-7xl md:flex-row md:px-4">
                     <li class="w-full border-l border-zinc-100 md:w-1/5">
                         <a href="#_" class="block p-6 text-lg font-semibold rounded-lg transition duration-300 hover:bg-zinc-50 lg:p-7 lg:py-10">
@@ -107,7 +107,7 @@
 
 
 @guest
-    <div class="hidden relative z-30 flex-shrink-0 justify-center items-center space-x-3 h-full text-sm md:flex">
+    <div class="hidden relative z-30 flex-shrink-0 justify-center items-center space-x-3 rtl:space-x-reverse h-full text-sm md:flex">
         <x-button href="{{ route('login') }}" tag="a" class="text-sm" color="secondary">Login</x-button>
         <x-button href="{{ route('register') }}" tag="a" class="text-sm">Sign Up</x-button>
     </div>

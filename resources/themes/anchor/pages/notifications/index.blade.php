@@ -51,8 +51,8 @@
 								<div class="flex-shrink-0 pt-1">
 									<img class="w-10 h-10 rounded-full" src="{{ @$notification_data->icon }}" alt="">
 								</div>
-								<div class="flex flex-col flex-1 items-start ml-3 space-y-1 w-0">
-									<div class="flex relative items-center space-x-2">
+								<div class="flex flex-col flex-1 items-start ms-3 space-y-1 w-0">
+									<div class="flex relative items-center space-x-2 rtl:space-x-reverse">
 										<p class="text-sm font-bold leading-5 text-zinc-600">{{ @$notification_data->user['name'] }}</p>
 										<time class="text-xs font-medium leading-5 text-zinc-500">{{ \Carbon\Carbon::parse(@$notification->created_at)->format('F, jS h:i A') }}</span></time>
 									</div>
@@ -60,16 +60,16 @@
 									
 								</div>
 							</a>
-							<span wire:click="delete('{{ $notification->id }}')" class="flex justify-start py-1 pl-16 ml-1 w-full text-xs cursor-pointer text-zinc-500 k hover:text-zinc-700 mark-as-read hover:underline">
-								<svg class="absolute mt-1 mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-								<svg class="mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+							<span wire:click="delete('{{ $notification->id }}')" class="flex justify-start py-1 ps-16 ms-1 w-full text-xs cursor-pointer text-zinc-500 k hover:text-zinc-700 mark-as-read hover:underline">
+								<svg class="absolute mt-1 me-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+								<svg class="me-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
 								Mark as Read
 							</span>
 
 						</div>
 					@empty
 						<div class="@if($notifications_count > 0){{ 'hidden' }}@endif flex items-center bg-gray-100 mt-5 rounded-lg justify-center h-24 w-full text-gray-400">
-							<svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+							<svg class="me-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
 							No Notifications
 						</div>
 					@endforelse

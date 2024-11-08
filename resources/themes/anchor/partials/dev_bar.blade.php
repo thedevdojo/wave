@@ -18,7 +18,7 @@
             document.removeEventListener('keydown', escapeKeyCloseDevBar);
         }})"
     id="wave_dev_bar"
-    class="fixed bottom-0 left-0 z-[999] w-full h-screen transition-all duration-150 ease-out transform"
+    class="fixed bottom-0 start-0 z-[999] w-full h-screen transition-all duration-150 ease-out transform"
     x-data="{ open: false, url: '', active: '' }"
     :class="{ 'translate-y-full': !open, 'translate-y-0': open }"
     x-on:keydown.escape="open = false"

@@ -20,7 +20,7 @@
 }
 
 label{
-    @apply space-x-1 text-sm leading-none;
+    @apply space-x-1 rtl:space-x-reverse text-sm leading-none;
 }
 
 .fi-btn-color-secondary svg{

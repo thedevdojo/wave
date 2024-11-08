@@ -111,7 +111,7 @@
                 <div class="flex flex-col">
                     <form wire:submit="add" class="w-full max-w-lg">
                         {{ $this->form }}
-                        <div class="w-full pt-6 text-right">
+                        <div class="w-full pt-6 text-end">
                             <x-button type="submit">Create New Key</x-button>
                         </div>
                     </form>

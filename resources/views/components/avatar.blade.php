@@ -24,10 +24,10 @@
 	};
 
 	$groupMargin = match($size){
-		'xs' => '-ml-3',
-		'sm' => '-ml-5',
-		'md' => '-ml-7',
-		default => '-ml-7',
+		'xs' => '-ms-3',
+		'sm' => '-ms-5',
+		'md' => '-ms-7',
+		default => '-ms-7',
 	};
 @endphp
 
@@ -41,9 +41,9 @@
 	@if (filter_var($badge, FILTER_VALIDATE_BOOLEAN) && ($size == 'sm' || $size == 'xs') && !empty($badgeText))
 		<x-filament::badge
 			@class([
-				"absolute size-6 !rounded-full bg-purple-600 border-white border-2 right-0 !p-0 text-white",
-				"translate-x-1/2 -translate-y-1/2" => $size == 'xs',
-				"translate-x-1/3 -translate-y-1/3" => $size == 'sm',
+				"absolute size-6 !rounded-full bg-purple-600 border-white border-2 end-0 !p-0 text-white",
+				"ltr:translate-x-1/2 rtl:-translate-x-1/2 -translate-y-1/2" => $size == 'xs',
+				"ltr:translate-x-1/3 rtl:-translate-x-1/3 -translate-y-1/3" => $size == 'sm',
 			])
 		>
 			{{ $badgeText }}
@@ -96,7 +96,7 @@
     @if (filter_var($indicator, FILTER_VALIDATE_BOOLEAN) && $size != '2xs')
 		<span
 			@class([
-				'absolute bottom-0 right-0 rounded-full border-white bg-green-500',
+				'absolute bottom-0 end-0 rounded-full border-white bg-green-500',
 				'size-2.5 border' => $size == 'xs',
 				'size-3.5 border' => $size == 'sm',
 				'size-5 border-2' => $size == 'md',

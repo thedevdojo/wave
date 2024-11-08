@@ -38,7 +38,7 @@
                         <div class="relative w-full h-auto">                            
                             <x-app.alert id="no_subscriptions" :dismissable="false" type="success">
                                 <div class="flex items-center w-full">
-                                    <x-phosphor-seal-check-duotone class="flex-shrink-0 mr-1.5 -ml-1.5 w-6 h-6" /> 
+                                    <x-phosphor-seal-check-duotone class="flex-shrink-0 me-1.5 -ms-1.5 w-6 h-6" /> 
                                     <span>You are currently subscribed to the {{ auth()->user()->plan()->name }} {{ auth()->user()->planInterval() }} Plan.</span>
                                 </div>
                             </x-app.alert>
@@ -53,16 +53,16 @@
                     @notsubscriber
                         <div class="mb-4">
                             <x-app.alert id="no_subscriptions" :dismissable="false" type="info">
-                                <div class="flex items-center space-x-1.5">
-                                    <x-phosphor-shopping-bag-open-duotone class="flex-shrink-0 mr-1.5 -ml-1.5 w-6 h-6" />
+                                <div class="flex items-center space-x-1.5 rtl:space-x-reverse">
+                                    <x-phosphor-shopping-bag-open-duotone class="flex-shrink-0 me-1.5 -ms-1.5 w-6 h-6" />
                                     <span>No active subscriptions found. Please select a plan below.</span>
                                 </div>
                             </x-app.alert>
                         </div>
                         <livewire:billing.checkout />
                         <p class="flex items-center mt-3 mb-4">
-                            <x-phosphor-shield-check-duotone class="w-4 h-4 mr-1" />
-                            <span class="mr-1">Billing is securely managed via </span><strong>{{ ucfirst(config('wave.billing_provider')) }} Payment Platform</strong>.
+                            <x-phosphor-shield-check-duotone class="w-4 h-4 me-1" />
+                            <span class="me-1">Billing is securely managed via </span><strong>{{ ucfirst(config('wave.billing_provider')) }} Payment Platform</strong>.
                         </p>
                     @endnotsubscriber
                 @endrole

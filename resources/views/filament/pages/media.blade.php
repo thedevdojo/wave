@@ -150,17 +150,17 @@
                         }
                     }" class="flex flex-col justify-start items-center w-full h-full bg-white">
                     
-                    <header class="flex space-x-3 w-full">
+                    <header class="flex space-x-3 rtl:space-x-reverse w-full">
                         <div class="flex overflow-hidden flex-shrink-0 rounded divide-x divide-gray-700">
                             <button class="flex relative items-center px-4 py-2 text-xs font-medium text-white bg-black hover:bg-gray-900">
                                 <label class="absolute inset-0 w-full h-full cursor-pointer">
                                     <input type="file" wire:model="upload" class="hidden absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                                 </label>
-                                <svg class="mr-1 w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M12.0005 11.7495L12.0005 20.2495M12.0005 11.7495L15.2505 15.2495M12.0005 11.7495L8.75049 15.2495" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.25 15.25C2.96461 14.2882 2.75 13.1762 2.75 12C2.75 9.94957 4.20204 8.23828 6.13392 7.83831C7.01365 5.45184 9.30808 3.75 12 3.75C15.3711 3.75 18.1189 6.41898 18.2454 9.75913C19.9257 9.8846 21.25 11.2876 21.25 13C21.25 14.0407 20.5 15 19.75 15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                                <svg class="me-1 w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M12.0005 11.7495L12.0005 20.2495M12.0005 11.7495L15.2505 15.2495M12.0005 11.7495L8.75049 15.2495" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.25 15.25C2.96461 14.2882 2.75 13.1762 2.75 12C2.75 9.94957 4.20204 8.23828 6.13392 7.83831C7.01365 5.45184 9.30808 3.75 12 3.75C15.3711 3.75 18.1189 6.41898 18.2454 9.75913C19.9257 9.8846 21.25 11.2876 21.25 13C21.25 14.0407 20.5 15 19.75 15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
                                 <span>Upload</span>
                             </button>
                             <button class="flex items-center px-4 py-2 text-xs font-medium text-white bg-black hover:bg-gray-900">
-                                <svg class="mr-1 w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M21.25 11.25v-1.5a3 3 0 0 0-3-3h-3.077a3 3 0 0 1-2.035-.796l-1.526-1.408a3 3 0 0 0-2.035-.796H5.749a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h5.501" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18 21.25v-6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14.75 18h6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                                <svg class="me-1 w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M21.25 11.25v-1.5a3 3 0 0 0-3-3h-3.077a3 3 0 0 1-2.035-.796l-1.526-1.408a3 3 0 0 0-2.035-.796H5.749a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h5.501" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18 21.25v-6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14.75 18h6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
                                 <span>Add Folder</span>
                             </button>
                         </div>
@@ -174,10 +174,10 @@
                                 <div class="w-full">
                                     <label for="search" class="sr-only">Search</label>
                                     <div class="relative">
-                                        <div class="flex absolute inset-y-0 left-0 items-center pl-2.5 pointer-events-none">
+                                        <div class="flex absolute inset-y-0 start-0 items-center ps-2.5 pointer-events-none">
                                             <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"></path></svg>
                                         </div>
-                                        <input id="search" name="search" class="block py-1.5 pr-3 pl-8 w-full text-sm placeholder-gray-500 bg-white rounded-md border-0 ring-1 ring-gray-200 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300 sm:text-sm" placeholder="Search" type="search">
+                                        <input id="search" name="search" class="block py-1.5 pe-3 ps-8 w-full text-sm placeholder-gray-500 bg-white rounded-md border-0 ring-1 ring-gray-200 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300 sm:text-sm" placeholder="Search" type="search">
                                     </div>
                                 </div>
                             </div>
@@ -185,11 +185,11 @@
 
                         <div class="flex overflow-hidden flex-shrink-0 rounded divide-x divide-gray-200 ring-1 ring-gray-200">
                             <button class="flex items-center px-4 py-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-100">
-                                <svg class="mr-1 w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M16.89 20.25H5.75a3 3 0 0 1-3-3V6.75a3 3 0 0 1 3-3H7.9a3 3 0 0 1 1.573.445l1.804 1.11a3 3 0 0 0 1.572.445h2.402a3 3 0 0 1 3 3v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.89 20.25a3 3 0 0 0 2.916-2.294l1.39-5.735a2 2 0 0 0-1.944-2.471h-9.24a3 3 0 0 0-2.885 2.176l-2.343 8.166" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                                <svg class="me-1 w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M16.89 20.25H5.75a3 3 0 0 1-3-3V6.75a3 3 0 0 1 3-3H7.9a3 3 0 0 1 1.573.445l1.804 1.11a3 3 0 0 0 1.572.445h2.402a3 3 0 0 1 3 3v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16.89 20.25a3 3 0 0 0 2.916-2.294l1.39-5.735a2 2 0 0 0-1.944-2.471h-9.24a3 3 0 0 0-2.885 2.176l-2.343 8.166" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
                                 <span>Move</span>
                             </button>
                             <button class="flex items-center px-4 py-2 text-xs font-medium text-red-500 bg-white hover:bg-gray-100">
-                                <svg class="mr-1 w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M12 21.25c5.244 0 5.75-.128 6.25-6.25.242-2.966.428-4.986.381-6.36A.374.374 0 0 1 19 8.25a1.25 1.25 0 1 0 0-2.5h-3.548c-.9-.029-2.034 0-3.452 0-1.418 0-2.552-.029-3.452 0H5a1.25 1.25 0 1 0 0 2.5c.21 0 .376.179.369.39-.047 1.374.139 3.394.381 6.36.5 6.122 1.006 6.25 6.25 6.25z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7.085 5.75l1.094-1.97a2 2 0 0 1 1.748-1.03h4.146a2 2 0 0 1 1.748 1.03l1.094 1.97" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.75 8.75v8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14.25 8.75v8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                                <svg class="me-1 w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M12 21.25c5.244 0 5.75-.128 6.25-6.25.242-2.966.428-4.986.381-6.36A.374.374 0 0 1 19 8.25a1.25 1.25 0 1 0 0-2.5h-3.548c-.9-.029-2.034 0-3.452 0-1.418 0-2.552-.029-3.452 0H5a1.25 1.25 0 1 0 0 2.5c.21 0 .376.179.369.39-.047 1.374.139 3.394.381 6.36.5 6.122 1.006 6.25 6.25 6.25z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7.085 5.75l1.094-1.97a2 2 0 0 1 1.748-1.03h4.146a2 2 0 0 1 1.748 1.03l1.094 1.97" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.75 8.75v8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14.25 8.75v8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
                                 <span>Delete</span>
                             </button>
                         </div>
@@ -205,7 +205,7 @@
                     </header>
                     
                     <nav class="flex justify-between items-center py-2 w-full text-xs">
-                        <ol role="list" class="flex items-center space-x-1">
+                        <ol role="list" class="flex items-center space-x-1 rtl:space-x-reverse">
                             <li>
                                 <button wire:click="goToDirectory('/')" class="inline-flex items-center px-3 py-2 font-normal text-center text-gray-900 bg-white rounded-md hover:bg-gray-100 focus:outline-none">
                                     <span>Home</span>
@@ -230,7 +230,7 @@
                         </div>
                     </nav>
 
-                    <div class="flex justify-start items-stretch space-x-10 w-full h-full">
+                    <div class="flex justify-start items-stretch space-x-10 rtl:space-x-reverse w-full h-full">
                         
                         <files class="flex w-full h-100">
                             <div class="overflow-hidden p-1 w-full h-full h-100">
