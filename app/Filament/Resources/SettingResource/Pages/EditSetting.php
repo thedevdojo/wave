@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\SettingResource\Pages;
 
+use Illuminate\Support\Facades\Cache;
 use App\Filament\Resources\SettingResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -15,5 +16,10 @@ class EditSetting extends EditRecord
         return [
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function afterSave(): void
+    {
+        Cache::forget('wave_settings');
     }
 }
