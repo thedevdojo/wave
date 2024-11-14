@@ -1,13 +1,22 @@
 <?php
 
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Cache;
 
 if (!function_exists('setting')) {
     function setting($key, $default = null)
     {
-        $value = ($default == null) ? '' : $default;
+        static $settingsCache = null;
 
-        return $value;
+        // Fetch all settings from cache or database
+        if ($settingsCache === null) {
+            $settingsCache = Cache::rememberForever('wave_settings', function () {
+                return Wave\Setting::pluck('value', 'key')->toArray();
+            });
+        }
+
+        // Return the requested setting or default value if not found
+        return $settingsCache[$key] ?? $default;
     }
 }
 
