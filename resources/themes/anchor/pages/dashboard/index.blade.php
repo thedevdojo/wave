@@ -15,7 +15,7 @@
                 :border="false"
             />
 
-        <div class="flex flex-col w-full mt-6 space-y-5 md:flex-row lg:mt-0 md:space-y-0 md:space-x-5">
+        <div class="flex flex-col w-full mt-6 space-y-5 md:flex-row lg:mt-0 md:space-y-0 md:space-x-5 rtl:space-x-reverse">
             <x-app.dashboard-card
 				href="https://devdojo.com/wave/docs"
 				target="_blank"
@@ -34,7 +34,7 @@
 			/>
         </div>
 
-		<div class="flex flex-col w-full mt-5 space-y-5 md:flex-row md:space-y-0 md:mb-0 md:space-x-5">
+		<div class="flex flex-col w-full mt-5 space-y-5 md:flex-row md:space-y-0 md:mb-0 md:space-x-5 rtl:space-x-reverse">
 			<x-app.dashboard-card
 				href="https://github.com/thedevdojo/wave"
 				target="_blank"

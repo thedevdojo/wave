@@ -7,9 +7,9 @@
         :class="{ 'text-zinc-900 bg-white border-zinc-200 dark:border-zinc-700 shadow-sm font-medium dark:bg-zinc-700/60 dark:text-zinc-100' : {{ $id }} == true, 'hover:bg-zinc-100 dark:hover:bg-zinc-700/60 hover:text-zinc-900 border-transparent dark:hover:text-zinc-100' : ({{ $id }} == false && {{ !$active }}) }"
     >
         <div class="flex relative items-center w-full h-auto">
-            <x-dynamic-component :component="$icon" class="flex-shrink-0 mr-2 w-5 h-5" />
-            <span class="mr-0">{{ $text }}</span>
-            <span :class="{ 'rotate-180' : {{ $id }} == true }" class="mr-0.5 ml-auto w-4 h-4 duration-300 ease-out">
+            <x-dynamic-component :component="$icon" class="flex-shrink-0 me-2 w-5 h-5" />
+            <span class="me-0">{{ $text }}</span>
+            <span :class="{ 'rotate-180' : {{ $id }} == true }" class="me-0.5 ms-auto w-4 h-4 duration-300 ease-out">
                 <x-phosphor-caret-down class="w-full h-full" />
             </span>
         </div>
