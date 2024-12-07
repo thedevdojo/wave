@@ -201,8 +201,9 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         if(setting('auth.verify_email')){
-            // send email verification
-            return redirect()->route('login')->with(['message' => 'Thanks for signing up! Please check your email to verify your account.', 'message_type' => 'success']);
+            session(['pending_verification_email' => $user->email]);
+            return redirect()->route('verification.notice')
+                ->with(['message' => 'Thanks for signing up! Please check your email to verify your account.', 'message_type' => 'success']);
         } else {
             $this->guard()->login($user);
 
