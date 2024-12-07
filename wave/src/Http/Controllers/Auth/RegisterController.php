@@ -201,8 +201,9 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         if(setting('auth.verify_email')){
-            // send email verification
-            return redirect()->route('login')->with(['message' => 'Thanks for signing up! Please check your email to verify your account.', 'message_type' => 'success']);
+            session(['pending_verification_email' => $user->email]);
+            return redirect()->route('verification.notice')
+                ->with(['message' => 'Thanks for signing up! Please check your email to verify your account.', 'message_type' => 'success']);
         } else {
             $this->guard()->login($user);
 
@@ -232,23 +233,5 @@ class RegisterController extends Controller
         }
 
         return strtolower($username);
-    }
-
-    public function resendVerificationEmail(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || $user->verified) {
-            return back()->with(['message' => 'This email is already verified or invalid.', 'message_type' => 'danger']);
-        }
-
-        // Resend the verification email
-        $this->sendVerificationEmail($user);
-
-        return back()->with(['message' => 'A new verification email has been sent. Please check your inbox.', 'message_type' => 'success']);
     }
 }
