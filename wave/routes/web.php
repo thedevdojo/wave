@@ -14,6 +14,8 @@ Route::view('docs/{page?}', 'docs::index')->where('page', '(.*)');
 Route::get('logout', '\Wave\Http\Controllers\Auth\LoginController@logout')->name('wave.logout');
 Route::get('user/verify/{verification_code}', '\Wave\Http\Controllers\Auth\RegisterController@verify')->name('verify');
 Route::post('register/complete', '\Wave\Http\Controllers\Auth\RegisterController@complete')->name('wave.register-complete');
+Route::get('/email/verify', '\Wave\Http\Controllers\Auth\VerificationController@notice')->name('verification.notice');
+Route::post('/email/resend', '\Wave\Http\Controllers\Auth\VerificationController@resend')->name('verification.resend');
 
 Route::get('blog', '\Wave\Http\Controllers\BlogController@index')->name('wave.blog');
 Route::get('blog/{category}', '\Wave\Http\Controllers\BlogController@category')->name('wave.blog.category');
