@@ -16,3 +16,10 @@ use Wave\Facades\Wave;
 
 // Wave routes
 Wave::routes();
+
+// Restriction for DevDojo Auth Setup - Restrict /auth/setup/* to admin users only
+Route::group(['prefix' => 'auth/setup', 'middleware' => ['auth', 'admin']], function () {
+    Route::any('{any}', function () {
+        return view('wave::auth.setup'); // Replace with the appropriate view or logic
+    })->where('any', '.*'); // Wildcard to match anything after /auth/setup/
+});
