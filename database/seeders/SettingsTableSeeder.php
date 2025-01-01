@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class SettingsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -15,12 +14,10 @@ class SettingsTableSeeder extends Seeder
     public function run()
     {
 
-
         \DB::table('settings')->delete();
 
-        \DB::table('settings')->insert(array (
-            0 =>
-            array (
+        \DB::table('settings')->insert([
+            0 => [
                 'id' => 1,
                 'key' => 'site.title',
                 'display_name' => 'Site Title',
@@ -29,9 +26,8 @@ class SettingsTableSeeder extends Seeder
                 'type' => 'text',
                 'order' => 1,
                 'group' => 'Site',
-            ),
-            1 =>
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'key' => 'site.description',
                 'display_name' => 'Site Description',
@@ -40,20 +36,18 @@ class SettingsTableSeeder extends Seeder
                 'type' => 'text',
                 'order' => 2,
                 'group' => 'Site',
-            ),
-            2 =>
-            array (
+            ],
+            2 => [
                 'id' => 4,
                 'key' => 'site.google_analytics_tracking_id',
                 'display_name' => 'Google Analytics Tracking ID',
-                'value' => NULL,
+                'value' => null,
                 'details' => '',
                 'type' => 'text',
                 'order' => 4,
                 'group' => 'Site',
-            )
-        ));
-
+            ],
+        ]);
 
     }
 }

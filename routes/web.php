@@ -11,7 +11,6 @@
 |
 */
 
-use Illuminate\Support\Facades\Route;
 use Wave\Facades\Wave;
 
 // Wave routes

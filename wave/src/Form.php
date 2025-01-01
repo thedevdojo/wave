@@ -34,7 +34,7 @@ class Form extends Model
     /**
      * Get a specific field's configuration.
      *
-     * @param string $fieldKey
+     * @param  string  $fieldKey
      * @return array|null
      */
     public function getFieldConfig($fieldKey)

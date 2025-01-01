@@ -2,12 +2,12 @@
 
 namespace Wave\Http\Controllers\Billing\Webhooks;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Stripe\Checkout\Session;
 use Wave\Plan;
 use Wave\Subscription;
-use Illuminate\Http\Request;
-use Stripe\Checkout\Session;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class StripeWebhook extends Controller
 {
@@ -24,28 +24,28 @@ class StripeWebhook extends Controller
                 $sig_header,
                 config('wave.stripe.webhook_secret')
             );
-        } catch(\UnexpectedValueException $e) {
+        } catch (\UnexpectedValueException $e) {
             // Invalid payload
             http_response_code(400);
             exit();
-        } catch(\Stripe\Exception\SignatureVerificationException $e) {
+        } catch (\Stripe\Exception\SignatureVerificationException $e) {
             // Invalid signature
             http_response_code(400);
             exit();
         }
 
-        if($event->type == 'checkout.session.completed'
+        if ($event->type == 'checkout.session.completed'
             || $event->type == 'checkout.session.async_payment_succeeded') {
             $this->fulfill_checkout($event->data->object->id, $event);
         }
 
         // This event occurs when someone updates information in their customer portal.
         // This could be cancelling a subscription or it could be changing their plan.
-        if($event->type == 'customer.subscription.updated'){
+        if ($event->type == 'customer.subscription.updated') {
             $stripeSubscription = $event->data->object;
-                    
+
             $subscription = Subscription::where('vendor_subscription_id', $stripeSubscription->id)->first();
-            if(isset($subscription)){
+            if (isset($subscription)) {
                 // Interval should be 'year' or 'month'
                 $subscriptionCycle = $stripeSubscription->plan->interval;
                 $plan_price_column = ($subscriptionCycle == 'year') ? 'yearly_price_id' : 'monthly_price_id';
@@ -58,8 +58,8 @@ class StripeWebhook extends Controller
                 $subscription->plan_id = $updatedPlan->id;
 
                 // this would be true if the user decides to cancel their subscription
-                if(is_null($stripeSubscription->cancel_at)){
-                    $subscription->ends_at = NULL;
+                if (is_null($stripeSubscription->cancel_at)) {
+                    $subscription->ends_at = null;
                 } else {
                     $subscription->ends_at = \Carbon\Carbon::createFromTimestamp($stripeSubscription->cancel_at)->toDateTimeString();
                 }
@@ -68,12 +68,12 @@ class StripeWebhook extends Controller
             }
         }
 
-        // Status docs here: https://docs.stripe.com/api/events/types#event_types-customer.subscription.deleted       
-        if($event->type == 'customer.subscription.deleted'){
+        // Status docs here: https://docs.stripe.com/api/events/types#event_types-customer.subscription.deleted
+        if ($event->type == 'customer.subscription.deleted') {
             $stripeSubscription = $event->data->object;
-                    
+
             $subscription = Subscription::where('vendor_subscription_id', $stripeSubscription->id)->first();
-            if(isset($subscription)){
+            if (isset($subscription)) {
                 $subscription->cancel();
             }
         }
@@ -83,11 +83,11 @@ class StripeWebhook extends Controller
 
     public function fulfill_checkout($session_id, $event): void
     {
-        $stripe = \Stripe\Stripe::setApiKey( config('wave.stripe.secret_key') );
+        $stripe = \Stripe\Stripe::setApiKey(config('wave.stripe.secret_key'));
 
         // Make this function safe to run multiple times,
         // even concurrently, with the same session ID
-        $cacheKey = 'stripe_checkout_session_' . $session_id;
+        $cacheKey = 'stripe_checkout_session_'.$session_id;
         if (Cache::has($cacheKey)) {
             return; // Session ID already processed, exit early
         }
@@ -127,7 +127,7 @@ class StripeWebhook extends Controller
                 'vendor_subscription_id' => $checkout_session->subscription,
                 'cycle' => $billing_cycle,
                 'status' => 'active',
-                'seats' => 1
+                'seats' => 1,
             ]);
         }
     }

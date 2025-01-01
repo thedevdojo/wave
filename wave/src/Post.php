@@ -9,19 +9,23 @@ class Post extends Model
 {
     public $guarded = [];
 
-    public function link(){
-    	return url('/blog/' . $this->category->slug . '/' . $this->slug);
+    public function link()
+    {
+        return url('/blog/'.$this->category->slug.'/'.$this->slug);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('\Wave\User', 'author_id');
     }
 
-    public function image(){
-    	return Storage::url($this->image);
+    public function image()
+    {
+        return Storage::url($this->image);
     }
 
-    public function category(){
-    	return $this->belongsTo('Wave\Category');
+    public function category()
+    {
+        return $this->belongsTo('Wave\Category');
     }
 }

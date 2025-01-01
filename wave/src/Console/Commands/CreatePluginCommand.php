@@ -2,10 +2,10 @@
 
 namespace Wave\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
 use GuzzleHttp\Client;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class CreatePluginCommand extends Command
 {
@@ -24,6 +24,7 @@ class CreatePluginCommand extends Command
 
         if (File::exists($pluginPath)) {
             $this->error("A plugin with the name '{$folderName}' already exists.");
+
             return;
         }
 
@@ -96,11 +97,11 @@ EOT;
 
     private function createViewFiles($folderName, $path)
     {
-        File::put("{$path}/resources/views/home.blade.php", "<p>Hello World</p>");
-        
-        $exampleContent = <<<EOT
+        File::put("{$path}/resources/views/home.blade.php", '<p>Hello World</p>');
+
+        $exampleContent = <<<'EOT'
 <div>
-    {{ \$message }}
+    {{ $message }}
 </div>
 EOT;
         File::put("{$path}/resources/views/livewire/{$folderName}.blade.php", $exampleContent);
@@ -159,16 +160,16 @@ EOT;
 
     private function downloadPlaceholderImage($path)
     {
-        $client = new Client();
+        $client = new Client;
         $imageUrl = 'https://cdn.devdojo.com/assets/img/plugin-placeholder.jpg';
         $imagePath = "{$path}/plugin.jpg";
 
         try {
             $response = $client->get($imageUrl);
             File::put($imagePath, $response->getBody());
-            $this->info("Placeholder image downloaded successfully.");
+            $this->info('Placeholder image downloaded successfully.');
         } catch (\Exception $e) {
-            $this->warn("Failed to download placeholder image: " . $e->getMessage());
+            $this->warn('Failed to download placeholder image: '.$e->getMessage());
         }
     }
 }

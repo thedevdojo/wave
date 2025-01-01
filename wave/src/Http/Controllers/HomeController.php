@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-
     /**
      * Show the application dashboard.
      *
@@ -15,18 +14,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-    	if(setting('auth.dashboard_redirect', true) != "null"){
-    		if(!Auth::guest()){
-    			return redirect('dashboard');
-    		}
-    	}
+        if (setting('auth.dashboard_redirect', true) != 'null') {
+            if (! Auth::guest()) {
+                return redirect('dashboard');
+            }
+        }
 
         $seo = [
 
-            'title'         => setting('site.title', 'Laravel Wave'),
-            'description'   => setting('site.description', 'Software as a Service Starter Kit'),
-            'image'         => url('/og_image.png'),
-            'type'          => 'website'
+            'title' => setting('site.title', 'Laravel Wave'),
+            'description' => setting('site.description', 'Software as a Service Starter Kit'),
+            'image' => url('/og_image.png'),
+            'type' => 'website',
 
         ];
 
