@@ -1,0 +1,32 @@
+name: pint
+
+on:
+  push:
+    branches:
+      - main
+      - 3.x
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  pint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+      - name: Install dependencies
+        run: composer install --no-interaction
+      - name: Run Laravel Pint
+        run: ./vendor/bin/pint
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: >
+            chore: fix code formatting
