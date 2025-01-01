@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Laravel\Folio\Folio;
 
 class FolioServiceProvider extends ServiceProvider
 {
@@ -18,8 +17,5 @@ class FolioServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void
-    {
-        
-    }
+    public function boot(): void {}
 }

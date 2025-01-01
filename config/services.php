@@ -33,6 +33,6 @@ return [
 
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
-    ]
+    ],
 
 ];

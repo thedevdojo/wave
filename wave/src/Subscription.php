@@ -28,7 +28,7 @@ class Subscription extends Model
         'last_payment_at',
         'next_payment_at',
         'cancel_url',
-        'update_url'
+        'update_url',
     ];
 
     /**
@@ -50,12 +50,13 @@ class Subscription extends Model
         return $this->belongsTo(config('wave.user_model', 'App\Models\User'), 'billable_id');
     }
 
-    public function cancel(){
+    public function cancel()
+    {
         $this->status = 'cancelled';
         $this->save();
 
         $this->user->syncRoles([]);
-        $this->user->assignRole( config('wave.default_user_role', 'registered') );
+        $this->user->assignRole(config('wave.default_user_role', 'registered'));
     }
 
     /**
@@ -65,5 +66,4 @@ class Subscription extends Model
     {
         return $this->belongsTo(Plan::class, 'plan_id');
     }
-
 }
