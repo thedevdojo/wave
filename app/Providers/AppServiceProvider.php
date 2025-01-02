@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,12 +47,12 @@ class AppServiceProvider extends ServiceProvider
             );
 
             // check file format
-            if (!in_array($format, $allow)) {
+            if (! in_array($format, $allow)) {
                 return false;
             }
 
             // check base64 format
-            if (!preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $explode[1])) {
+            if (! preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $explode[1])) {
                 return false;
             }
 
@@ -64,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
     {
         try {
             Schema::defaultStringLength(191);
+        } catch (\Exception $exception) {
         }
-        catch (\Exception $exception){}
     }
 }

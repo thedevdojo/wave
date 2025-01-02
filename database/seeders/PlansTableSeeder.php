@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class PlansTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -15,12 +14,10 @@ class PlansTableSeeder extends Seeder
     public function run()
     {
 
-
         \DB::table('plans')->delete();
 
-        \DB::table('plans')->insert(array (
-            0 =>
-            array (
+        \DB::table('plans')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'Basic',
                 'description' => 'Signup for the Basic User Plan to access all the basic features.',
@@ -31,9 +28,8 @@ class PlansTableSeeder extends Seeder
                 'yearly_price' => '50',
                 'created_at' => '2018-07-03 05:03:56',
                 'updated_at' => '2018-07-03 17:17:24',
-            ),
-            1 =>
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'name' => 'Premium',
                 'description' => 'Signup for our premium plan to access all our Premium Features.',
@@ -44,9 +40,8 @@ class PlansTableSeeder extends Seeder
                 'yearly_price' => '80',
                 'created_at' => '2018-07-03 16:29:46',
                 'updated_at' => '2018-07-03 17:17:08',
-            ),
-            2 =>
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'name' => 'Pro',
                 'description' => 'Gain access to our pro features with the pro plan.',
@@ -57,9 +52,8 @@ class PlansTableSeeder extends Seeder
                 'yearly_price' => '120',
                 'created_at' => '2018-07-03 16:30:43',
                 'updated_at' => '2018-08-22 22:26:19',
-            ),
-        ));
-
+            ],
+        ]);
 
     }
 }

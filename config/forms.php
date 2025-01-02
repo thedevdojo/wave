@@ -16,6 +16,6 @@ return [
         'TimePicker' => 'Time Picker',
         'FileUpload' => 'File Upload',
         'TagsInput' => 'Tags Input',
-        'ColorPicker' => 'Color Picker'
-    ]
+        'ColorPicker' => 'Color Picker',
+    ],
 ];
