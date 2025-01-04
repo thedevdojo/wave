@@ -16,7 +16,3 @@ use Wave\Facades\Wave;
 
 // Wave routes
 Wave::routes();
-
-Route::get('role', function(){
-    dd(\App\Models\User::find(2)->roles);
-});

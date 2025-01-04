@@ -42,10 +42,15 @@ if (!function_exists('fixPostgresSequence')) {
             $tables = \DB::select('SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' ORDER BY table_name;');
             foreach ($tables as $table) {
                 if (\Schema::hasColumn($table->table_name, 'id')) {
-                    $seq = \DB::table($table->table_name)->max('id') + 1;
-                    \DB::select('SELECT setval(pg_get_serial_sequence(\'' . $table->table_name . '\', \'id\'), coalesce(' . $seq . ',1), false) FROM ' . $table->table_name);
+                    $columnType = \DB::select("SELECT data_type FROM information_schema.columns WHERE table_name = '{$table->table_name}' AND column_name = 'id'")[0]->data_type;
+                    // Only proceed if the 'id' column is numeric
+                    if (in_array($columnType, ['integer', 'bigint', 'smallint', 'smallserial', 'serial', 'bigserial'])) {
+                        $seq = \DB::table($table->table_name)->max('id') + 1;
+                        \DB::select('SELECT setval(pg_get_serial_sequence(\'' . $table->table_name . '\', \'id\'), coalesce(' . $seq . ',1), false) FROM ' . $table->table_name);
+                    }
                 }
             }
         }
     }
 }
+

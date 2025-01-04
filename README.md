@@ -51,3 +51,9 @@ We've also got a full video series on how you can setup, build, and configure Wa
 ## Documentation
 
 Checkout the [official documentation here](https://devdojo.com/wave/docs).
+
+## Sponsors
+
+Wave is proudly supported by our amazing sponsors. A big thank you to:
+
+[![DigitalOcean Referral Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%203.svg)](https://www.digitalocean.com/?refcode=dc19b9819d06&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
