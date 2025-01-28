@@ -110,7 +110,7 @@ class AuthController extends Controller
         ]);
 
         // Get the Default role of a user
-        $role = Role::where('name', config('wave.user_default_role'))->first();
+        $role = Role::where('name', config('wave.default_user_role'))->first();
 
         $user = User::create([
             'name' => $request->name,
