@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiKey;
 use App\Models\User;
@@ -109,15 +108,11 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        // Get the Default role of a user
-        $role = Role::where('name', config('wave.default_user_role'))->first();
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
             'password' => bcrypt($request->password),
-            'role_id' => $role->id,
         ]);
 
         $credentials = ['email' => $request['email'], 'password' => $request['password']];
