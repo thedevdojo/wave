@@ -60,6 +60,8 @@ class StripeWebhook extends Controller
                 // this would be true if the user decides to cancel their subscription
                 if(is_null($stripeSubscription->cancel_at)){
                     $subscription->ends_at = NULL;
+                    $subscription->user->syncRoles([]);
+                    $subscription->user->assignRole('registered');
                 } else {
                     $subscription->ends_at = \Carbon\Carbon::createFromTimestamp($stripeSubscription->cancel_at)->toDateTimeString();
                 }
