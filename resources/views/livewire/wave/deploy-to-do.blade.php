@@ -2,11 +2,11 @@
     <div class="flex flex-col justify-center items-center w-full h-screen bg-zinc-50">
 
         <!-- Back to Admin Button -->
-        <a href="{{ url('admin') }}" class="flex absolute top-0 left-0 items-center pt-5 pl-5 mb-5 ml-5 font-medium text-zinc-900 group lg:w-auto lg:items-center lg:justify-center md:mb-0">
-            <span class="overflow-hidden absolute left-0 w-4 h-4 transition duration-150 ease-out transform translate-x-0 group-hover:-translate-x-0.5 group-hover:w-4">
+        <a href="{{ url('admin') }}" class="flex absolute top-0 start-0 items-center pt-5 ps-5 mb-5 ms-5 font-medium text-zinc-900 group lg:w-auto lg:items-center lg:justify-center md:mb-0">
+            <span class="overflow-hidden absolute start-0 w-4 h-4 transition duration-150 ease-out transform ltr:translate-x-0 rtl:translate-x-0 group-hover:ltr:-translate-x-0.5 group-hover:rtl:translate-x-0.5 group-hover:w-4">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
             </span>
-            <span class="mx-auto ml-1 text-sm font-bold leading-none select-none text-zinc-900">Back to Admin</span>
+            <span class="mx-auto ms-1 text-sm font-bold leading-none select-none text-zinc-900">Back to Admin</span>
         </a>
 
         <div id="notification" class="flex hidden justify-between items-center px-8 py-5 mb-10 w-full max-w-lg text-white rounded-lg bg-zinc-500">
@@ -16,10 +16,10 @@
 
         @if(!$app_id)
             <div class="overflow-hidden mx-auto w-full max-w-lg bg-white rounded-lg border shadow-xl border-zinc-100">
-                <div class="flex relative items-center pl-5 w-full h-20 text-white bg-center bg-cover bg-gradient-to-br from-blue-500 to-blue-600" style="background-image:url('{{ Storage::url('/settings/April2021/deploy-banner.png') }}')">
+                <div class="flex relative items-center ps-5 w-full h-20 text-white bg-center bg-cover bg-gradient-to-br from-blue-500 to-blue-600" style="background-image:url('{{ Storage::url('/settings/April2021/deploy-banner.png') }}')">
                     <img src="{{ Storage::url('/settings/April2021/deploy-to-do.png') }}" class="w-10 h-10">
 
-                    <div class="relative pl-3">
+                    <div class="relative ps-3">
                         <h3 class="text-base font-bold leading-tight text-white">Deploy Your App to Digital Ocean</h3>
                         <p class="text-xs">Easily deploy your Wave app to DigitalOcean.</p>
                     </div>
@@ -41,7 +41,7 @@
                         </label>
                         <a href="https://cloud.digitalocean.com/apps/github/install" target="_blank" class="flex items-center font-semibold text-blue-500 underline">
                             <span>Grant DigitalOcean Access to your Github Account</span>
-                            <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg>
+                            <svg class="ms-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg>
                         </a>
                     </div>
 
@@ -59,10 +59,10 @@
 
 
                 <div class="overflow-hidden bg-white rounded-lg border shadow-xl border-zinc-100">
-                    <div class="flex relative items-center pl-5 w-full h-20 text-white bg-center bg-cover bg-gradient-to-br from-blue-500 to-blue-600" style="background-image:url('{{ Storage::url('/settings/April2021/deploy-banner.png') }}')">
+                    <div class="flex relative items-center ps-5 w-full h-20 text-white bg-center bg-cover bg-gradient-to-br from-blue-500 to-blue-600" style="background-image:url('{{ Storage::url('/settings/April2021/deploy-banner.png') }}')">
                         <img src="{{ Storage::url('/settings/April2021/deploy-to-do.png') }}" class="w-10 h-10">
 
-                        <div class="relative pl-3">
+                        <div class="relative ps-3">
                             <h3 class="text-base font-bold leading-tight text-white">Your App on Digital Ocean</h3>
                             <p class="block text-xs">Deployed to the <a href="https://www.digitalocean.com/products/app-platform/" target="_blank" class="underline">DO App Platform</a></p>
                         </div>
@@ -90,7 +90,7 @@
                         }
                     @endphp
                     <div class="flex overflow-hidden items-center p-5 bg-white rounded-lg border shadow-xl border-zinc-100">
-                        <div class="flex relative justify-center items-center mr-3 h-full">
+                        <div class="flex relative justify-center items-center me-3 h-full">
                             <div class="w-4 h-4 @if($success){{ 'bg-green-400' }}@else{{ 'bg-red-400' }}@endif rounded-full"></div>
                         </div>
                         <div class="flex relative justify-between items-center w-full text-sm">

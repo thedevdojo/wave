@@ -66,7 +66,7 @@
 .fi-sidebar-header .fi-icon-btn{
     width:40px; 
     height:40px;
-    @apply rounded-lg -translate-x-2 translate-y-px;
+    @apply rounded-lg ltr:-translate-x-2 rtl:translate-x-2 translate-y-px;
 }
 
 .fi-sidebar-header .fi-icon-btn:hover{
