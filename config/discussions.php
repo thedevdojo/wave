@@ -4,11 +4,11 @@ return [
     'headline_logo' => '/vendor/foundationapp/discussions/assets/images/logo-light.png',
 
     'user' => [
-        'namespace'                     => 'App\Models\User',
+        'namespace' => 'App\Models\User',
         'database_field_with_user_name' => 'name',
-        'relative_url_to_profile'       => '',
-        'relative_url_to_image_assets'  => '',
-        'avatar_image_database_field'   => '',
+        'relative_url_to_profile' => '',
+        'relative_url_to_image_assets' => '',
+        'avatar_image_database_field' => '',
     ],
 
     'load_more' => [
@@ -39,7 +39,7 @@ return [
 
     'security' => [
         'limit_time_between_posts' => true, // true or false
-        'time_between_posts'       => 1, // In minutes
+        'time_between_posts' => 1, // In minutes
     ],
 
     /*
@@ -56,7 +56,7 @@ return [
         'sidebar_width' => 'w-56',
         'container_classes' => 'max-w-7xl md:px-12 xl:px-20 mx-auto py-12',
         'container_max_width' => 'max-w-[1120px]',
-        'header_classes' => 'dark:text-white text-gray-900 text-4xl font-semibold tracking-tighter'
+        'header_classes' => 'dark:text-white text-gray-900 text-4xl font-semibold tracking-tighter',
     ],
 
     /*
@@ -111,6 +111,6 @@ return [
             'icon' => '🙌',
             'title' => 'Show and tell',
             'description' => 'Show off something you\'ve made',
-        ]
+        ],
     ],
 ];

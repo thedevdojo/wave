@@ -16,12 +16,12 @@ trait HasProfileKeyValues
         return $this->profileKeyValues()->where('key', '=', $key)->first();
     }
 
-    public function setProfileKeyValue($key, $value, $type='text')
+    public function setProfileKeyValue($key, $value, $type = 'text')
     {
         $keyValue = $this->profileKeyValue($key);
 
-        if (!$keyValue) {
-            $keyValue = new ProfileKeyValue();
+        if (! $keyValue) {
+            $keyValue = new ProfileKeyValue;
             $keyValue->key = $key;
             $keyValue->keyvalue_id = $this->id;
             $keyValue->keyvalue_type = getMorphAlias(get_class($this)) ?? get_class($this);

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Wave\Facades\Wave;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,7 +33,7 @@ class DatabaseSeeder extends Seeder
     }
 }
 
-if (!function_exists('fixPostgresSequence')) {
+if (! function_exists('fixPostgresSequence')) {
 
     function fixPostgresSequence()
     {
@@ -46,11 +45,10 @@ if (!function_exists('fixPostgresSequence')) {
                     // Only proceed if the 'id' column is numeric
                     if (in_array($columnType, ['integer', 'bigint', 'smallint', 'smallserial', 'serial', 'bigserial'])) {
                         $seq = \DB::table($table->table_name)->max('id') + 1;
-                        \DB::select('SELECT setval(pg_get_serial_sequence(\'' . $table->table_name . '\', \'id\'), coalesce(' . $seq . ',1), false) FROM ' . $table->table_name);
+                        \DB::select('SELECT setval(pg_get_serial_sequence(\''.$table->table_name.'\', \'id\'), coalesce('.$seq.',1), false) FROM '.$table->table_name);
                     }
                 }
             }
         }
     }
 }
-

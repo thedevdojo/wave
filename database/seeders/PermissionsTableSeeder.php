@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class PermissionsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *

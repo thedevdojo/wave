@@ -3,12 +3,12 @@
 namespace Wave\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiKey;
-use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -50,10 +50,11 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    public function token(){
+    public function token()
+    {
         $request = app('request');
 
-        if(isset($request->key)){
+        if (isset($request->key)) {
 
             $key = ApiKey::where('key', '=', $request->key)->first();
 
@@ -61,7 +62,7 @@ class AuthController extends Controller
                 'last_used_at' => Carbon::now(),
             ]);
 
-            if(isset($key->id)){
+            if (isset($key->id)) {
                 return response()->json(['access_token' => JWTAuth::fromUser($key->user, ['exp' => config('wave.api.key_token_expires', 1)])]);
             } else {
                 abort('400', 'Invalid Api Key');
@@ -86,8 +87,7 @@ class AuthController extends Controller
     /**
      * Get the token array structure.
      *
-     * @param  string $token
-     *
+     * @param  string  $token
      * @return \Illuminate\Http\JsonResponse
      */
     protected function respondWithToken($token)
@@ -95,7 +95,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => config('wave.api.auth_token_expires', 60)
+            'expires_in' => config('wave.api.auth_token_expires', 60),
         ]);
     }
 

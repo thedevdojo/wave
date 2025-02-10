@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Role;
 class CreateUser extends Command
 {
     protected $signature = 'app:create-user';
+
     protected $description = 'Create a new user with role assignment';
 
     public function handle()
@@ -39,6 +40,7 @@ class CreateUser extends Command
             foreach ($validator->errors()->all() as $error) {
                 $this->line($error);
             }
+
             return 1;
         }
 
@@ -48,7 +50,7 @@ class CreateUser extends Command
             'email' => $email,
             'username' => $username,
             'password' => Hash::make($password),
-            'verified' => 1
+            'verified' => 1,
         ]);
 
         // Get roles and let user select
@@ -64,6 +66,7 @@ class CreateUser extends Command
         $user->assignRole($selectedRole);
 
         $this->info("User created successfully with role: {$selectedRole}");
+
         return 0;
     }
 }

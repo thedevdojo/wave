@@ -10,9 +10,9 @@ class PluginImageController extends Controller
 {
     public function show($plugin_name)
     {
-        $path = resource_path('plugins/' . $plugin_name . '/plugin.jpg');
+        $path = resource_path('plugins/'.$plugin_name.'/plugin.jpg');
 
-        if (!File::exists($path)) {
+        if (! File::exists($path)) {
             abort(404);
         }
 
@@ -20,7 +20,7 @@ class PluginImageController extends Controller
         $type = File::mimeType($path);
 
         $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
+        $response->header('Content-Type', $type);
 
         return $response;
     }

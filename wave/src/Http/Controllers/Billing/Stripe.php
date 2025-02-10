@@ -2,20 +2,17 @@
 
 namespace Wave\Http\Controllers\Billing;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Stripe\Checkout\Session;
-use Wave\Plan;
-use Wave\Subscription;
 
 class Stripe extends Controller
 {
-    public function redirect_to_customer_portal(){
-        
+    public function redirect_to_customer_portal()
+    {
+
         $latest_active_subscription = auth()->user()->latestSubscription();
         // Set your secret key. Remember to switch to your live secret key in production.
         // See your keys here: https://dashboard.stripe.com/apikeys
-        $stripe = new \Stripe\StripeClient( config('wave.stripe.secret_key') );
+        $stripe = new \Stripe\StripeClient(config('wave.stripe.secret_key'));
 
         $stripe->billingPortal->configurations->create([
             'business_profile' => [
@@ -28,7 +25,7 @@ class Stripe extends Controller
             'customer' => $latest_active_subscription->vendor_customer_id,
             'return_url' => route('settings.subscription'),
         ]);
-        
+
         return redirect($billingPortal->url);
 
     }
