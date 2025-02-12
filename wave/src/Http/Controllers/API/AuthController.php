@@ -57,11 +57,10 @@ class AuthController extends Controller
 
             $key = ApiKey::where('key', '=', $request->key)->first();
 
-            $key->update([
-                'last_used_at' => Carbon::now(),
-            ]);
-
             if(isset($key->id)){
+                $key->update([
+                    'last_used_at' => Carbon::now(),
+                ]);
                 return response()->json(['access_token' => JWTAuth::fromUser($key->user, ['exp' => config('wave.api.key_token_expires', 1)])]);
             } else {
                 abort('400', 'Invalid Api Key');
