@@ -46,7 +46,15 @@ class PageResource extends Resource
                     ->image(),
                 Forms\Components\Select::make('author_id')
                     ->label('Author')
-                    ->options(User::all()->pluck('name', 'id'))
+                    ->options(
+                        User::all()
+                            ->mapWithKeys(fn($user) => [
+                                $user->id => $user->name
+                                    ?? $user->username
+                                    ?? $user->email,
+                            ])
+                            ->toArray()
+                    )
                     ->searchable()
                     ->required(),
                 Forms\Components\Textarea::make('meta_description')

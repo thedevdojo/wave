@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiKey;
 use App\Models\User;
@@ -58,11 +57,10 @@ class AuthController extends Controller
 
             $key = ApiKey::where('key', '=', $request->key)->first();
 
-            $key->update([
-                'last_used_at' => Carbon::now(),
-            ]);
-
             if(isset($key->id)){
+                $key->update([
+                    'last_used_at' => Carbon::now(),
+                ]);
                 return response()->json(['access_token' => JWTAuth::fromUser($key->user, ['exp' => config('wave.api.key_token_expires', 1)])]);
             } else {
                 abort('400', 'Invalid Api Key');
@@ -109,15 +107,11 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        // Get the Default role of a user
-        $role = Role::where('name', config('wave.user_default_role'))->first();
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
             'password' => bcrypt($request->password),
-            'role_id' => $role->id,
         ]);
 
         $credentials = ['email' => $request['email'], 'password' => $request['password']];

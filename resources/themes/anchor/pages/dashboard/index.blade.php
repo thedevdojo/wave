@@ -11,7 +11,7 @@
 
         <x-app.heading
                 title="Dashboard"
-                description="Welcomde to an example application dashboard. Find more resources below."
+                description="Welcome to an example application dashboard. Find more resources below."
                 :border="false"
             />
 
