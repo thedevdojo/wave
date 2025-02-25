@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" dir="ltr">
 <head>
     @include('theme::partials.head', ['seo' => ($seo ?? null) ])
     <!-- Used to add dark mode right away, adding here prevents any flicker -->
@@ -15,7 +15,7 @@
 
     <x-app.sidebar />
 
-    <div class="flex flex-col min-h-screen pl-0 justify-stretch lg:pl-64">
+    <div class="flex flex-col min-h-screen ps-0 justify-stretch lg:ps-64">
         {{-- Mobile Header --}}
         <header class="lg:hidden px-5 block flex justify-between sticky top-0 z-40 bg-gray-50 dark:bg-zinc-900 -mb-px border-b border-zinc-200/70 dark:border-zinc-700 h-[72px] items-center">
             <button x-on:click="window.dispatchEvent(new CustomEvent('open-sidebar'))" class="flex items-center justify-center flex-shrink-0 w-10 h-10 rounded-md text-zinc-700 dark:text-zinc-200 hover:bg-gray-200/70 dark:hover:bg-zinc-700/70">
