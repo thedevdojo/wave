@@ -29,11 +29,16 @@ class FormsResource extends Resource
 {
     protected static ?string $model = Forms::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'phosphor-clipboard-duotone';
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?int $navigationSort = 12;
+    protected static ?int $navigationSort = 8;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
 
     public static function form(Form $form): Form
     {

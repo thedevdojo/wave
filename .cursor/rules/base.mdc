@@ -1,0 +1,66 @@
+---
+description: Base app instructions
+globs: 
+alwaysApply: false
+---
+
+# Your rule content
+This app is called "supapost", which is an ai post generator for X (formerly Twitter) service. It consists of this app, and it will also have a browser extension to make it easier for suers to generate/reply to posts directly on X. This app is using Wave, a laravel framework by dojo.
+
+Documentation for Wave framework can be found here: https://devdojo.com/wave/docs/getting-started
+
+---
+description: Database rules for Supapost project
+globs: ["**/*.php", "**/*.js", "**/*.ts"]
+alwaysApply: true
+---
+
+# Supapost Database Rules
+
+When working with database operations in this project, always refer to the database schema defined in `supapost.sql`.
+
+## Database Overview
+This app is called "supapost", which is an AI post generator for X (formerly Twitter) service. It consists of this app, and it will also have a browser extension to make it easier for users to generate/reply to posts directly on X. This app is using Wave, a Laravel framework by dojo.
+
+## Database Tables
+The database includes the following key tables:
+- `users` - User accounts and authentication
+- `posts` - Generated posts and content
+- `categories` - Content categorization
+- `api_keys` - API authentication keys
+- `changelogs` - System update logs
+- `early_subscriptions` - Early access subscribers
+- `forms` - Dynamic form definitions
+- `form_entries` - Form submission data
+- `migrations` - Database migration history
+- `model_has_permissions` - Permission assignments
+- `model_has_roles` - Role assignments
+- `notifications` - User notifications
+- `pages` - Static page content
+- `plans` - Subscription plans
+- `subscriptions` - User subscriptions
+
+## Database Validation Rules
+- Always use `exists:table_name,column_name` for foreign key validations
+- Use `unique:table_name,column_name` for unique field validations
+- For nullable foreign keys, use `nullable|exists:table_name,column_name`
+
+## Query Guidelines
+- Use prepared statements for all database queries
+- Avoid raw queries when possible
+- Use Eloquent relationships for related data
+- Implement proper indexing for frequently queried columns
+
+## Security Considerations
+- Never expose database credentials in code
+- Sanitize all user inputs before database operations
+- Implement proper access control for database operations
+- Use migrations for all database schema changes
+
+## Post Credits System
+- Users have post credits associated with their accounts
+- Plans define the number of post credits available
+- Track and validate post credit usage before generating new content
+
+- You can @ files here
+- You can use markdown but dont have to

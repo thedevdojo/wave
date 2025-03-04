@@ -23,6 +23,11 @@ class PlanResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -70,6 +75,16 @@ class PlanResource extends Resource
                         Forms\Components\TextInput::make('onetime_price')
                             ->maxLength(191),
                     ])->columns(2),
+                Section::make('Plan Credits')
+                    ->description('Define how many post credits users get with this plan')
+                    ->schema([
+                        Forms\Components\TextInput::make('post_credits')
+                            ->label('Post Credits')
+                            ->numeric()
+                            ->default(0)
+                            ->minValue(0)
+                            ->helperText('Number of post credits users receive when subscribing to this plan'),
+                    ]),
                 Section::make('Plan Status')
                     ->description('Make the plan default or active/inactive')
                     ->schema([
@@ -96,11 +111,26 @@ class PlanResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('role_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('post_credits')
+                    ->label('Credits')
+                    ->sortable()
+                    ->color(fn ($record) => $record->post_credits > 0 ? 'success' : 'danger')
+                    ->description(fn ($record) => $record->post_credits == 0 ? 'No credits assigned' : null),
+                Tables\Columns\TextColumn::make('monthly_price')
+                    ->label('Monthly Price')
+                    ->money('USD')
                     ->sortable(),
-                Tables\Columns\BooleanColumn::make('active')
-                    ->sortable(),    
+                Tables\Columns\TextColumn::make('yearly_price')
+                    ->label('Yearly Price')
+                    ->money('USD')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('role.name')
+                    ->label('Role')
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('active')
+                    ->boolean(),
+                Tables\Columns\IconColumn::make('default')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -115,7 +145,32 @@ class PlanResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('updateUserCredits')
+                    ->label('Update User Credits')
+                    ->icon('phosphor-users-duotone')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->modalHeading(fn ($record) => "Update credits for all users on {$record->name} plan")
+                    ->modalDescription(fn ($record) => "This will add {$record->post_credits} credits to all users currently subscribed to this plan. This action cannot be undone.")
+                    ->modalSubmitActionLabel('Yes, update credits')
+                    ->action(function (Plan $record) {
+                        // Get all users with this plan
+                        $users = \App\Models\User::whereHas('subscription', function ($query) use ($record) {
+                            $query->where('plan_id', $record->id);
+                        })->get();
+                        
+                        $count = 0;
+                        foreach ($users as $user) {
+                            $user->addPostCredits($record->post_credits);
+                            $count++;
+                        }
+                        
+                        \Filament\Notifications\Notification::make()
+                            ->title('Credits Updated')
+                            ->body("Added {$record->post_credits} credits to {$count} users.")
+                            ->success()
+                            ->send();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

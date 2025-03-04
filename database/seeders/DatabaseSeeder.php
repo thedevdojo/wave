@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
@@ -30,6 +30,10 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingsTableSeeder::class);
         $this->call(ProfileKeyValuesTableSeeder::class);
         $this->call(ThemesTableSeeder::class);
+        $this->call([
+            InspirationTagSeeder::class,
+            InspirationSeeder::class,
+        ]);
         fixPostgresSequence();
     }
 }

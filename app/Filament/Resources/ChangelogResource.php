@@ -17,9 +17,14 @@ class ChangelogResource extends Resource
 {
     protected static ?string $model = Changelog::class;
 
-    protected static ?string $navigationIcon = 'phosphor-book-open-text-duotone';
+    protected static ?string $navigationIcon = 'phosphor-note-duotone';
 
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 5;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
 
     public static function form(Form $form): Form
     {

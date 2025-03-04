@@ -28,6 +28,7 @@ class User extends WaveUser
         'verification_code',
         'verified',
         'trial_ends_at',
+        'post_credits',
     ];
 
     /**
@@ -38,6 +39,12 @@ class User extends WaveUser
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'trial_ends_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
     protected static function boot()
@@ -66,5 +73,28 @@ class User extends WaveUser
             // Assign the default role
             $user->assignRole( config('wave.default_user_role', 'registered') );
         });
+    }
+
+    public function deductPostCredit()
+    {
+        if ($this->post_credits > 0) {
+            $this->decrement('post_credits');
+            return true;
+        }
+        return false;
+    }
+
+    public function addPostCredits($amount)
+    {
+        $this->increment('post_credits', $amount);
+    }
+
+    /**
+     * Get the interests associated with the user.
+     */
+    public function interests()
+    {
+        return $this->belongsToMany(InspirationTag::class, 'user_interests', 'user_id', 'tag_id')
+            ->withTimestamps();
     }
 }

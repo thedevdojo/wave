@@ -17,9 +17,14 @@ class SettingResource extends Resource
 {
     protected static ?string $model = Setting::class;
 
-    protected static ?string $navigationIcon = 'phosphor-gear-fine-duotone';
+    protected static ?string $navigationIcon = 'phosphor-gear-duotone';
 
-    protected static ?int $navigationSort = 9;
+    protected static ?int $navigationSort = 10;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
 
     public static function form(Form $form): Form
     {

@@ -17,9 +17,14 @@ class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
 
-    protected static ?string $navigationIcon = 'phosphor-shield-check-duotone';
+    protected static ?string $navigationIcon = 'phosphor-lock-duotone';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 7;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
 
     public static function form(Form $form): Form
     {

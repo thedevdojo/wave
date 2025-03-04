@@ -1,19 +1,19 @@
 <section class="w-full">
-    <x-marketing.elements.heading level="h2" title="Oceans of Approval" description="Find out why users are on board with Wave, through their own words and success tales." />
+    <x-marketing.elements.heading level="h2" title="What Our Users Say" description="Discover how Supapost is helping social media managers and content creators save time and boost engagement." />
     <ul role="list" class="grid grid-cols-1 gap-12 py-12 mx-auto max-w-2xl lg:max-w-none lg:grid-cols-3">
         <li>
             <figure class="flex flex-col justify-between h-full">
                 <blockquote class="">
                     <p class="text-sm sm:text-base font-medium text-zinc-500">
-                        Wave's ready-to-use features sped up our launch significantly. Its authentication and subscription tools are particularly impressive and user-friendly.
+                        "Supapost has completely transformed my Twitter strategy. I'm posting more consistently and seeing much higher engagement rates. The AI understands my brand voice perfectly!"
                     </p>
                 </blockquote>
                 <figcaption class="flex flex-col justify-between mt-6">
-                    <img alt="#_" src="https://cdn.devdojo.com/images/june2024/adam.jpeg" class="object-cover rounded-full grayscale size-14">
+                    <img alt="Sarah Johnson" src="https://cdn.devdojo.com/images/june2024/testimonial-1.jpg" class="object-cover rounded-full size-14">
                     <div class="mt-4">
-                        <div class="font-medium text-zinc-900">Adam Wathan</div>
+                        <div class="font-medium text-zinc-900">Sarah Johnson</div>
                         <div class="mt-1 text-sm text-zinc-500">
-                            Creator of Tailwind CSS
+                            Social Media Manager
                         </div>
                     </div>
                 </figcaption>
@@ -23,15 +23,15 @@
             <figure class="flex flex-col justify-between h-full">
                 <blockquote class="">
                     <p class="text-sm sm:text-base font-medium text-zinc-500">
-                        Wave transformed our development workflow with its excellent API and profile management, saving us valuable time.
+                        "As a solopreneur, I couldn't keep up with social media demands. Supapost has been a game-changer, helping me maintain an active presence while I focus on growing my business."
                     </p>
                 </blockquote>
                 <figcaption class="flex flex-col justify-between mt-6">
-                    <img alt="#_" src="https://cdn.devdojo.com/images/june2024/caleb.jpeg" class="object-cover rounded-full grayscale size-14">
+                    <img alt="Michael Chen" src="https://cdn.devdojo.com/images/june2024/testimonial-2.jpg" class="object-cover rounded-full size-14">
                     <div class="mt-4">
-                        <div class="font-medium text-zinc-900">Caleb Porzio</div>
+                        <div class="font-medium text-zinc-900">Michael Chen</div>
                         <div class="mt-1 text-sm text-zinc-500">
-                            Creator of Livewire & Alpine
+                            Founder, TechStart
                         </div>
                     </div>
                 </figcaption>
@@ -41,15 +41,15 @@
             <figure class="flex flex-col justify-between h-full">
                 <blockquote class="">
                     <p class="text-sm sm:text-base font-medium text-zinc-500">
-                        Wave is an amazing SaaS Starter kit. The team here are Laravel leverages Wave all the time for many projects.
+                        "The browser extension is brilliant! I can generate engaging tweets without disrupting my workflow. My follower count has increased by 30% since I started using Supapost."
                     </p>
                 </blockquote>
                 <figcaption class="flex flex-col justify-between mt-6">
-                    <img alt="#_" src="https://cdn.devdojo.com/images/june2024/taylor.jpeg" class="object-cover rounded-full grayscale size-14">
+                    <img alt="Jessica Martinez" src="https://cdn.devdojo.com/images/june2024/testimonial-3.jpg" class="object-cover rounded-full size-14">
                     <div class="mt-4">
-                        <div class="font-medium text-zinc-900">Taylor Otwell</div>
+                        <div class="font-medium text-zinc-900">Jessica Martinez</div>
                         <div class="mt-1 text-sm text-zinc-500">
-                            Founder and Creator of Laravel
+                            Content Creator
                         </div>
                     </div>
                 </figcaption>

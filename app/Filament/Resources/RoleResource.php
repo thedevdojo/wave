@@ -17,9 +17,14 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'phosphor-address-book-duotone';
+    protected static ?string $navigationIcon = 'phosphor-user-circle-duotone';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 6;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('admin');
+    }
 
     public static function form(Form $form): Form
     {

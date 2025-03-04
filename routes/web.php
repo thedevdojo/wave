@@ -13,6 +13,23 @@
 
 use Illuminate\Support\Facades\Route;
 use Wave\Facades\Wave;
+use App\Http\Controllers\GeneratorController;
+use App\Http\Controllers\InspirationController;
 
 // Wave routes
 Wave::routes();
+
+// Generator routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/generator', [GeneratorController::class, 'index'])->name('generator');
+    Route::post('/generator/generate', [GeneratorController::class, 'generate'])->name('generator.generate');
+});
+
+// Inspiration routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/inspiration', 'App\Http\Controllers\InspirationController@index')->name('inspiration.index');
+    Route::get('/inspiration/interests/manage', 'App\Http\Controllers\InspirationController@interests')->name('inspiration.interests');
+    Route::post('/inspiration/interests', 'App\Http\Controllers\InspirationController@updateInterests')->name('inspiration.update_interests');
+    Route::get('/inspiration/{id}', 'App\Http\Controllers\InspirationController@show')->name('inspiration.show');
+    Route::post('/inspiration/generate', [InspirationController::class, 'generatePost'])->name('inspiration.generate');
+});

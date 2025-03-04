@@ -38,6 +38,7 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
         'verification_code',
         'verified',
         'trial_ends_at',
+        'post_credits',
     ];
 
     /**
@@ -112,8 +113,34 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
     }
 
     public function switchPlans(Plan $plan){
+        // Check if user has admin role before switching
+        $isAdmin = $this->hasRole('admin');
+        $isRegistered = $this->hasRole('registered');
+        
+        // Get current roles
+        $currentRoles = $this->getRoleNames()->toArray();
+        
+        // Determine which roles to keep
+        $rolesToKeep = [];
+        if ($isAdmin) {
+            $rolesToKeep[] = 'admin';
+        }
+        if ($isRegistered) {
+            $rolesToKeep[] = 'registered';
+        }
+        
+        // Remove all roles first
         $this->syncRoles([]);
-        $this->assignRole( $plan->role->name );
+        
+        // Re-add the roles to keep
+        if (!empty($rolesToKeep)) {
+            $this->assignRole($rolesToKeep);
+        }
+        
+        // Assign the new plan role if it's not already in the roles to keep
+        if (!in_array($plan->role->name, $rolesToKeep)) {
+            $this->assignRole($plan->role->name);
+        }
     }
 
     public function invoices(){

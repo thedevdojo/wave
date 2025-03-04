@@ -3,7 +3,15 @@
     name('blog.category');
 ?>
 
-<x-layouts.marketing>
+<x-layouts.marketing
+    :seo="[
+        'title' => $category->seo_title ?? $category->name . ' Articles',
+        'description' => $category->meta_description ?? 'Our latest ' . $category->name . ' posts and articles.',
+        'keywords' => $category->meta_keywords ?? $category->name,
+        'image' => $category->image ? asset('storage/' . $category->image) : setting('site.logo', url('/wave/img/logo.png')),
+        'type' => 'website'
+    ]"
+>
 
     @php
         $posts = $category->posts()->paginate(6);
@@ -12,8 +20,8 @@
     <x-container>
         <div class="relative pt-6">
             <x-marketing.elements.heading
-                title="{{ $category->name }} Articles"
-                description="Our latest {{ $category->name }} posts below."
+                title="{{ $category->page_heading ?? $category->name . ' Articles' }}"
+                description="{{ $category->page_description ?? 'Our latest ' . $category->name . ' posts below.' }}"
                 align="left"
             />
             
