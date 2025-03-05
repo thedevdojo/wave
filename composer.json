@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "devdojo/wave",
+    "description": "Wave SaaS Starter Kit",
+    "keywords": ["framework", "laravel", "SaaS", "Starter Kit"],
     "license": "MIT",
     "type": "project",
     "require": {
