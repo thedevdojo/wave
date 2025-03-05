@@ -18,7 +18,8 @@ class GeneratedPost extends Model
         'has_hashtags',
         'is_longform',
         'posted_to_x',
-        'x_post_id'
+        'x_post_id',
+        'settings',
     ];
     
     protected $casts = [
@@ -28,6 +29,7 @@ class GeneratedPost extends Model
         'posted_to_x' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'settings' => 'array',
     ];
     
     /**

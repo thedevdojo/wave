@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\OpenAIService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\GeneratedPost;
 
 class GeneratorController extends Controller
 {
@@ -20,7 +21,7 @@ class GeneratorController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('theme::dashboard.generator', [
+        return view('dashboard.generator.index', [
             'credits' => $user->post_credits,
         ]);
     }
@@ -101,5 +102,14 @@ class GeneratorController extends Controller
                 'message' => 'An error occurred while generating your post. Please try again later.'
             ], 500);
         }
+    }
+
+    public function history()
+    {
+        $posts = GeneratedPost::where('user_id', auth()->id())
+            ->latest()
+            ->paginate(20);
+
+        return view('dashboard.generator.posts.index', compact('posts'));
     }
 }

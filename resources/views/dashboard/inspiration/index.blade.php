@@ -1,9 +1,62 @@
 <?php
     use function Laravel\Folio\{middleware};
+    use Livewire\Volt\Component;
+    use App\Models\Inspiration;
+    use App\Models\InspirationTag;
+    use Illuminate\Support\Facades\Auth;
+    
     middleware('auth');
+
+    new class extends Component {
+        public $userInterests = [];
+        public $trendingTopics = [];
+        public $inspirationItems = [];
+        public $featuredInspirationItems = [];
+        public $categories = [];
+        public $activeFilter = 'all';
+        public $paginationInfo = [];
+        
+        public function mount($userInterests = [], $trendingTopics = [], $inspirations = null, $featuredInspirations = null, $categories = [])
+        {
+            $this->userInterests = $userInterests;
+            $this->trendingTopics = $trendingTopics;
+            $this->categories = $categories;
+            
+            // Extract only the data we need from the paginated collection
+            if ($inspirations) {
+                $this->inspirationItems = $inspirations->items();
+                $this->paginationInfo = [
+                    'current_page' => $inspirations->currentPage(),
+                    'last_page' => $inspirations->lastPage(),
+                    'per_page' => $inspirations->perPage(),
+                    'total' => $inspirations->total(),
+                ];
+            }
+            
+            // Extract featured inspirations data
+            if ($featuredInspirations) {
+                $this->featuredInspirationItems = $featuredInspirations->all();
+            }
+        }
+        
+        public function setFilter($filter)
+        {
+            $this->activeFilter = $filter;
+            
+            // Logic to filter the inspirations based on the selected filter
+            // This would update the component state without a page reload
+        }
+        
+        public function generatePostFromTopic($topic)
+        {
+            // Redirect to generator with the selected topic
+            return redirect()->route('generator')->with('topic', $topic);
+        }
+    }
 ?>
 
 <x-layouts.app>
+    @volt('inspiration-feed')
     <x-app.container x-data class="lg:space-y-6" x-cloak>
         
         <x-app.heading
@@ -27,15 +80,15 @@
             <div class="w-full">
                 <div class="p-5 w-full bg-white dark:bg-zinc-800 rounded-lg border border-slate-200 dark:border-zinc-700 mb-6">
                     <div class="flex space-x-4 mb-4">
-                        <button class="px-4 py-2 bg-blue-600 text-white rounded-md">All</button>
-                        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md dark:bg-zinc-700 dark:text-zinc-300">Trending</button>
-                        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md dark:bg-zinc-700 dark:text-zinc-300">For You</button>
+                        <button wire:click="setFilter('all')" class="px-4 py-2 {{ $activeFilter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300' }} rounded-md">All</button>
+                        <button wire:click="setFilter('trending')" class="px-4 py-2 {{ $activeFilter === 'trending' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300' }} rounded-md">Trending</button>
+                        <button wire:click="setFilter('for-you')" class="px-4 py-2 {{ $activeFilter === 'for-you' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300' }} rounded-md">For You</button>
                     </div>
                     
                     <div class="mb-6">
                         <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Your Interests</h3>
                         <div class="flex flex-wrap gap-2">
-                            @if(isset($userInterests) && count($userInterests) > 0)
+                            @if(count($userInterests) > 0)
                                 @foreach($userInterests as $interest)
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                                         {{ $interest }}
@@ -74,16 +127,15 @@
                                 </div>
                                 
                                 <div class="flex space-x-2">
-                                    <form action="{{ route('inspiration.generate') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="topic" value="{{ $topic['title'] }}">
-                                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
-                                            <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                            </svg>
-                                            Generate Post
-                                        </button>
-                                    </form>
+                                    <button 
+                                        wire:click="generatePostFromTopic('{{ $topic['title'] }}')"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                                    >
+                                        <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                        </svg>
+                                        Generate Post
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -92,8 +144,82 @@
                             <p class="text-gray-500 dark:text-gray-400">No inspirations found. Try adding more interests!</p>
                         </div>
                     @endforelse
+
+                    @if(count($inspirationItems) > 0)
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">All Inspirations</h2>
+                        @foreach($inspirationItems as $inspiration)
+                            <div class="p-5 w-full bg-white dark:bg-zinc-800 rounded-lg border border-slate-200 dark:border-zinc-700">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white">{{ $inspiration->title }}</h2>
+                                    <div class="flex items-center">
+                                        @if($inspiration->is_featured)
+                                            <span class="ml-2 px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs dark:bg-yellow-900 dark:text-yellow-200">Featured</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                <p class="text-gray-700 dark:text-gray-300 mb-4">{{ Str::limit($inspiration->content, 150) }}</p>
+                                
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    @foreach($inspiration->tags as $tag)
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                            {{ $tag->name }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                                
+                                <div class="flex justify-between items-center">
+                                    <div class="text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $inspiration->created_at->diffForHumans() }}
+                                    </div>
+                                    
+                                    <div class="flex space-x-2">
+                                        <button 
+                                            wire:click="generatePostFromTopic('{{ $inspiration->title }}')"
+                                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                                        >
+                                            <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                            </svg>
+                                            Generate Post
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <!-- Pagination -->
+                        @if($paginationInfo['last_page'] > 1)
+                            <div class="flex justify-center mt-6">
+                                <nav class="flex items-center">
+                                    <span class="text-sm text-gray-700 dark:text-gray-400">
+                                        Showing <span class="font-semibold">{{ $paginationInfo['current_page'] }}</span> of <span class="font-semibold">{{ $paginationInfo['last_page'] }}</span> pages
+                                    </span>
+                                </nav>
+                            </div>
+                        @endif
+                    @endif
                 </div>
+                
+                @if(count($featuredInspirationItems) > 0 && $activeFilter !== 'trending')
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Featured Content</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                        @foreach($featuredInspirationItems as $featured)
+                            <div class="p-5 bg-white dark:bg-zinc-800 rounded-lg border border-slate-200 dark:border-zinc-700">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ $featured->title }}</h3>
+                                <p class="text-gray-700 dark:text-gray-300 mb-4 text-sm">{{ Str::limit($featured->content, 100) }}</p>
+                                <button 
+                                    wire:click="generatePostFromTopic('{{ $featured->title }}')"
+                                    class="inline-flex items-center px-3 py-1 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                                >
+                                    Generate
+                                </button>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </x-app.container>
+    @endvolt
 </x-layouts.app> 

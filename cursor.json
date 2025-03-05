@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "name": "volt",
+      "description": "Standard for Volt components in the application",
+      "glob": "resources/views/**/*.blade.php",
+      "path": "cursor-instructions.md"
+    },
+    {
+      "name": "base",
+      "description": "Base app instructions",
+      "glob": "**/*",
+      "path": "cursor-rules.md"
+    }
+  ]
+} 
