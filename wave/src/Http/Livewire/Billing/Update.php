@@ -62,6 +62,9 @@ class Update extends Component
                 $this->cancel_url = $paddle_subscription->management_urls->cancel;
                 $this->update_url = $paddle_subscription->management_urls->update_payment_method;
             }
+        } elseif (config('wave.billing_provider') == 'stripe') {
+            // Correctly fetch Stripe's `ends_at`
+            $this->subscription_ends_at = optional($this->subscription)->ends_at;
         }
     }
     
