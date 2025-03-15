@@ -20,6 +20,7 @@
         "lab404/laravel-impersonate": "^1.7.5",
         "laravel/folio": "^1.1",
         "laravel/framework": "^11.0",
+        "laravel/pail": "^1.2",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.5",
         "livewire/livewire": "^3.0",
