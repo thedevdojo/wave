@@ -69,14 +69,14 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi",
-            "@php artisan db:seed",
-            "@php artisan livewire:publish --assets"
+            "@php artisan db:seed"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover",
             "@php artisan storage:link",
-            "@php artisan filament:upgrade"
+            "@php artisan filament:upgrade",
+            "@php artisan livewire:publish --assets"
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
