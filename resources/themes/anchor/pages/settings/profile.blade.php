@@ -8,14 +8,14 @@
 	use Livewire\Volt\Component;
 	use Wave\Traits\HasDynamicFields;
     use Wave\ApiKey;
-    
+
 	middleware('auth');
     name('settings.profile');
 
 	new class extends Component implements HasForms
 	{
         use InteractsWithForms, HasDynamicFields;
-        
+
         public ?array $data = [];
 		public ?string $avatar = null;
 
@@ -51,7 +51,7 @@
 
 			$state = $this->form->getState();
             $this->validate();
-			
+
 			if($this->avatar != null){
 				$this->saveNewUserAvatar();
 			}
@@ -90,7 +90,7 @@
     <x-app.settings-layout
         title="Settings"
         description="Manage your account avatar, name, email, and more.">
-        
+
 		@volt('settings.profile')
 		<div x-data="{
 				uploadCropEl: null,
@@ -132,9 +132,9 @@
 						that.avatar = base64;
 						document.getElementById('preview').src = that.avatar;
 					});
-					
+
 				}
-			}" 
+			}"
 		x-init="
 			uploadCropEl = document.getElementById('upload-crop');
 			uploadLoading = document.getElementById('uploadLoading');
@@ -168,7 +168,7 @@
 				<div class="relative flex flex-col mt-5 lg:px-10">
 					<div class="relative flex-shrink-0 w-32 h-32 cursor-pointer group">
 						<img id="preview" src="{{ auth()->user()->avatar() . '?' . time() }}" class="w-32 h-32 rounded-full">
-						
+
 						<div class="absolute inset-0 w-full h-full">
 							<input type="file" id="upload" class="absolute inset-0 z-20 w-full h-full opacity-0 cursor-pointer group">
 							<button class="absolute bottom-0 z-10 flex items-center justify-center w-10 h-10 mb-2 -ml-5 bg-black bg-opacity-75 rounded-full opacity-75 left-1/2 group-hover:opacity-100">
