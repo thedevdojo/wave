@@ -189,6 +189,8 @@ return [
         Lab404\Impersonate\ImpersonateServiceProvider::class,
         Wave\WaveServiceProvider::class,
         DevDojo\Themes\ThemesServiceProvider::class,
+        // Uncomment after installing Livewire Volt package:
+        // Livewire\Volt\VoltServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -14,9 +14,11 @@ export default defineConfig({
                 `resources/themes/${activeTheme}/assets/css/app.css`,
                 `resources/themes/${activeTheme}/assets/js/app.js`,
                 'resources/css/filament/admin/theme.css',
+                'resources/images/calendar-page-img.svg',
             ],
             refresh: [
                 `resources/themes/${activeTheme}/**/*`,
+                'resources/images/**/*',
             ],
         }),
     ],

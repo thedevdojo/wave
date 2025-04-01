@@ -11,6 +11,7 @@ class GeneratedPost extends Model
     
     protected $fillable = [
         'user_id',
+        'workspace_id',
         'content',
         'topic',
         'tone',
@@ -41,11 +42,27 @@ class GeneratedPost extends Model
     }
     
     /**
+     * Get the workspace that owns the post.
+     */
+    public function workspace()
+    {
+        return $this->belongsTo(Workspace::class);
+    }
+    
+    /**
      * Scope a query to only include posts for a specific user.
      */
     public function scopeForUser($query, $userId)
     {
         return $query->where('user_id', $userId);
+    }
+    
+    /**
+     * Scope a query to only include posts for a specific workspace.
+     */
+    public function scopeForWorkspace($query, $workspaceId)
+    {
+        return $query->where('workspace_id', $workspaceId);
     }
     
     /**

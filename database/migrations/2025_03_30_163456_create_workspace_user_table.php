@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('early_subscriptions', function (Blueprint $table) {
+        Schema::create('workspace_user', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
             $table->timestamps();
         });
     }
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('early_subscriptions');
+        Schema::dropIfExists('workspace_user');
     }
 };

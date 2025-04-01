@@ -1,244 +1,97 @@
-# Volt Component Standards for SupaPost
+# Cursor Instructions for SupaPost
 
-## File Structure
+## File Structure Standards
+- All app pages must be placed in the `resources/views` folder, NOT in the `themes` folder
+- Follow feature-based organization:
+  ```
+  resources/
+    ├── views/
+    │   ├── dashboard/
+    │   │   ├── generator/
+    │   │   │   └── index.blade.php
+    │   │   ├── inspiration/
+    │   │   │   └── index.blade.php
+    │   │   └── index.blade.php
+    │   └── layouts/
+    │       └── app.blade.php
+  ```
 
-### Standard Directory Layout
+## Image Location Standards
+- All images must be stored in the `resources/images` directory
+- Organize images in subdirectories by feature (e.g., `calendar`, `generator`)
+- For reusable UI elements, use categories like:
+  ```
+  resources/images/
+    ├── ui/
+    │   ├── icons/
+    │   └── backgrounds/
+    ├── calendar/
+    │   ├── calendar-page-img.svg
+    │   └── date-picker-icon.svg
+    └── logos/
+       └── chrome-logo.svg
+  ```
+- Use SVG format when possible for better scaling and smaller file size
 
-- **All app pages must be placed in the `resources/views` folder, NOT in the `themes` folder**
-- All blade templates should follow a logical organization within the views folder
-- Pages should be organized by feature or section (e.g., dashboard, admin, etc.)
+## Referencing Images in Blade Files
+- Use the Vite asset helper to reference images:
+  ```php
+  <img src="{{ Vite::asset('resources/images/calendar/calendar-page-img.svg') }}" alt="Calendar illustration">
+  ```
 
-For example:
-```
-resources/
-  └── views/
-      ├── dashboard/
-      │   ├── generator/
-      │   │   └── index.blade.php
-      │   ├── inspiration/
-      │   │   └── index.blade.php
-      │   └── index.blade.php
-      ├── layouts/
-      │   └── app.blade.php
-      └── components/
-          └── ...
-```
+- For background images in CSS:
+  ```html
+  <div style="background-image: url('{{ Vite::asset('resources/images/ui/backgrounds/pattern.svg') }}')">
+    <!-- Content -->
+  </div>
+  ```
+
+- Alternative method using the asset helper (for public images):
+  ```php
+  <img src="{{ asset('images/calendar/calendar-page-img.svg') }}" alt="Calendar illustration">
+  ```
 
 ## Component Structure
+- All interactive pages should use Livewire Volt components
+- Access component variables using the @volt directive:
+  ```php
+  @volt
+  class MyComponent extends \Livewire\Volt\Component
+  {
+      public $variable = 0;
+      
+      public function mount($passedVariable)
+      {
+          $this->variable = $passedVariable;
+      }
+  }
+  @endvolt
 
-All new pages and components should follow the Livewire Volt component pattern with the following standards:
+  <div>
+      <h1>Value: {{ $variable }}</h1>
+  </div>
+  ```
 
-### 1. Basic Structure
+## Controller Standards
+- Controllers should pass variables to Volt components via the mount method
+- Example:
+  ```php
+  return view('dashboard.generator.index', [
+      'credits' => $user->credits,
+  ]);
+  ```
 
-```php
-<?php
-    use function Laravel\Folio\{middleware};
-    use Livewire\Volt\Component;
-    use Illuminate\Support\Facades\Auth;
-    // Import other required models and classes
-    
-    middleware('auth');  // Or other required middleware
-
-    new class extends Component {
-        // Public properties that will be accessible in the view
-        public $property1;
-        public $property2 = []; // Initialize arrays as empty arrays
-        
-        // Mount method handles initialization (similar to constructor)
-        public function mount($param1 = null, $param2 = null)
-        {
-            // Set initial values, typically from controller parameters
-            $this->property1 = $param1;
-            // Any other initialization logic
-            $this->loadData();
-        }
-        
-        // Methods for loading data
-        public function loadData()
-        {
-            // Load data from database, API, etc.
-            // Typically populates the public properties
-        }
-        
-        // Action methods (triggered by user interactions)
-        public function performAction($param = null)
-        {
-            // Handle user actions like form submissions, button clicks, etc.
-        }
-    }
-?>
-
-<x-layouts.app>
-    <div class="container mx-auto px-4 py-8">
-        @volt('component-name')
-            <!-- Component template here -->
-            <div>
-                <!-- Access properties directly with $property1 -->
-                <!-- Trigger methods with wire:click="methodName" -->
-            </div>
-        @endvolt
-    </div>
-</x-layouts.app>
-```
-
-### 2. Controller Responsibilities
-
-Controllers should:
-- Pass initial data to the view
-- Be kept simple, primarily providing the initial data for the component
-- Delegate most business logic to the Volt component or dedicated service classes
-
-Example:
-```php
-public function index()
-{
-    $data1 = $this->fetchDataFromService();
-    $data2 = Model::get();
-    
-    return view('path.to.view', [
-        'data1' => $data1,
-        'data2' => $data2,
-    ]);
-}
-```
-
-### 3. Component Communication
-
-- Use dispatch/listen for parent-child communication
-- Use events for communication between unrelated components
-
-### 4. Form Handling
-
-For forms, use Laravel's form request validation in the Volt component:
-
-```php
-use function Livewire\Volt\{state, rules};
-
-state(['email' => '', 'name' => '']);
-
-rules(['email' => 'required|email', 'name' => 'required|min:3']);
-
-$submit = function() {
-    $this->validate();
-    // Process the form...
-};
-```
-
-### 5. Handling Pagination and Complex Objects
-
-Livewire has limitations on what property types it can serialize. For paginated collections or complex objects:
-
-```php
-// In the Volt component class
-public $itemsList = []; // Will store the actual items
-public $paginationInfo = []; // Will store pagination metadata
-
-public function mount($paginatedCollection = null)
-{
-    if ($paginatedCollection) {
-        // Extract only what we need from the paginated collection
-        $this->itemsList = $paginatedCollection->items();
-        $this->paginationInfo = [
-            'current_page' => $paginatedCollection->currentPage(),
-            'last_page' => $paginatedCollection->lastPage(),
-            'per_page' => $paginatedCollection->perPage(),
-            'total' => $paginatedCollection->total(),
-        ];
-    }
-}
-```
-
-Then in the template, use:
-```blade
-@foreach($itemsList as $item)
-    <!-- Item rendering -->
-@endforeach
-
-<!-- Pagination controls -->
-@if($paginationInfo['last_page'] > 1)
-    <div class="pagination">
-        <!-- Pagination UI -->
-    </div>
-@endif
-```
-
-### 6. Using Filament Forms with Volt Components
-
-When integrating Filament Forms with Volt components:
-
-```php
-<?php
-    use Livewire\Volt\Component;
-    use Filament\Forms\Components\TextInput;
-    use Filament\Forms\Components\Select;
-    use Filament\Forms\Concerns\InteractsWithForms;
-    use Filament\Forms\Contracts\HasForms;
-    use Filament\Forms\Form;
-    
-    new class extends Component implements HasForms {
-        use InteractsWithForms;
-        
-        // Required for Filament Forms
-        public ?array $data = [];
-        
-        // The form property must be defined
-        public $form;
-        
-        public function boot(): void
-        {
-            $this->form = $this->makeForm()
-                ->schema([
-                    TextInput::make('field_name')
-                        ->label('Field Label')
-                        ->required(),
-                    // Other form components...
-                ])
-                ->statePath('data');
-        }
-        
-        public function mount(): void
-        {
-            $this->form->fill();
-        }
-        
-        public function submit()
-        {
-            $data = $this->form->getState();
-            // Process the form data
-        }
-    }
-?>
-
-<x-layouts.app>
-    @volt('component-name')
-        <form wire:submit="submit">
-            {{ $this->form }}
-            
-            <button type="submit">
-                Submit
-            </button>
-        </form>
-    @endvolt
-</x-layouts.app>
-```
-
-Important points:
-- Implement `HasForms` interface and use `InteractsWithForms` trait
-- Define a `$form` property (this is required)
-- Define `$data` for storing form state
-- Use `boot()` to initialize the form schema
-- Use `$this->form` in templates to render the form
-
-## Converting Existing Pages
-
-When converting non-Volt pages to Volt components:
-
-1. Move controller logic to the Volt component class
-2. Ensure all required variables are properties in the class
-3. Use the mount method to accept initial data from the controller
-4. Replace page-reload actions with reactive Livewire methods
-
-## Example Components
-
-Refer to existing Volt components for reference:
-- `resources/views/dashboard/generator/index.blade.php` 
+## UI Components
+- Use Tailwind CSS for styling
+- Follow consistent color scheme and design patterns
+- For info boxes and notifications:
+  ```php
+  <div class="rounded-lg bg-blue-50 dark:bg-blue-900/50 p-4 text-blue-800 dark:text-blue-200 relative mb-4">
+      <!-- Content -->
+      <button wire:click="dismissInfoBox" class="absolute top-0 right-0 p-2 hover:bg-blue-100 dark:hover:bg-blue-800/50 rounded-tr-lg">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+      </button>
+  </div>
+  ```

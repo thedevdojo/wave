@@ -47,6 +47,90 @@ class User extends WaveUser
         'password' => 'hashed',
     ];
 
+    /**
+     * Get the settings for the user
+     */
+    public function settings()
+    {
+        return $this->hasMany(UserSetting::class);
+    }
+    
+    /**
+     * Get all workspaces the user belongs to as a member
+     */
+    public function memberWorkspaces()
+    {
+        return $this->belongsToMany(Workspace::class, 'workspace_user')
+                    ->withPivot('role')
+                    ->withTimestamps();
+    }
+    
+    /**
+     * Get workspaces owned by the user
+     */
+    public function ownedWorkspaces()
+    {
+        return $this->hasMany(Workspace::class, 'user_id');
+    }
+    
+    /**
+     * Check if user has agency plan
+     */
+    public function hasAgencyPlan()
+    {
+        return $this->subscription && $this->subscription->plan->name === 'Agency';
+    }
+    
+    /**
+     * Get a workspace-specific setting
+     *
+     * @param int $workspaceId
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getWorkspaceSetting($workspaceId, $key, $default = null)
+    {
+        return UserSetting::getForWorkspace($workspaceId, $key, $default);
+    }
+    
+    /**
+     * Set a workspace-specific setting
+     *
+     * @param int $workspaceId
+     * @param string $key
+     * @param mixed $value
+     * @return UserSetting
+     */
+    public function setWorkspaceSetting($workspaceId, $key, $value)
+    {
+        return UserSetting::setForWorkspace($workspaceId, $key, $value);
+    }
+    
+    /**
+     * Get a user setting by key
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getSetting($key, $default = null)
+    {
+        return UserSetting::getForUser($this->id, $key, $default);
+    }
+    
+    /**
+     * Set a user setting
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return UserSetting
+     */
+    public function setSetting($key, $value)
+    {
+        return UserSetting::setForUser($this->id, $key, $value);
+    }
+
     protected static function boot()
     {
         parent::boot();

@@ -1,28 +1,186 @@
 ---
-description: Base app instructions
+description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
-
-# Your rule content
-This app is called "supapost", which is an ai post generator for X (formerly Twitter) service. It consists of this app, and it will also have a browser extension to make it easier for suers to generate/reply to posts directly on X. This app is using Wave, a laravel framework by dojo.
-
-Documentation for Wave framework can be found here: https://devdojo.com/wave/docs/getting-started
-
 ---
-description: Database rules for Supapost project
-globs: ["**/*.php", "**/*.js", "**/*.ts"]
+description: Comprehensive Supapost Application Guide
+globs: ["**/*.php", "**/*.js", "**/*.ts", "**/*.blade.php"]
 alwaysApply: true
 ---
 
-# Supapost Database Rules
+# Supapost - X Post Generator Application
+
+This app is called "Supapost", an AI post generator for X (formerly Twitter). It includes both a web application and a Chrome browser extension to enable users to generate/reply to posts directly on X without leaving the platform. The app is built using the Wave framework by DevDojo.
+
+Documentation for Wave framework: https://devdojo.com/wave/docs/getting-started
+
+## Coding Standards
+
+- Follow PSR-12 standards for PHP code
+- Use camelCase for variable and method names
+- Use PascalCase for class names
+- Include docblocks for classes and public methods
+
+## Consistent Technology Usage
+
+### Framework & Component Structure
+- All pages should use Laravel with Wave framework fundamentals
+- Pages requiring server-side state management should use Livewire/Volt components
+- Pages should follow the `@volt('name')` pattern for encapsulating logic
+- Use `x-layouts.app` and `x-app.container` for consistent page structure
+
+### State Management
+- Server-side state should be managed with Livewire/Volt properties and methods
+- Session variables should be used for cross-page persistence (like `session()->put()`)
+- Client-side temporary state can use Alpine.js with `x-data`
+- Prefer Livewire for stateful components that need database interaction
+
+### UI Interactions
+- Use `wire:click` for server-side action handlers
+- Use `@click` for purely client-side interactions without server needs
+- Use `x-show` and similar Alpine directives for simple DOM manipulation
+- Use `x-transition` for animations when appropriate
+
+### Component Communication
+- Use Livewire events (`$this->dispatch()`) for server-triggered updates
+- Use Alpine events (`x-on:eventname.window`) for cross-component client updates
+- Use Livewire's `$listeners` array to define component event listeners
+
+## File Structure Standards
+
+**Important: All application pages must be placed in the `resources/views` folder, NOT in the `themes` folder.**
+
+The application follows a standard Laravel structure with these additional guidelines:
+- Organize views by feature in the views directory (e.g., dashboard/generator/, dashboard/inspiration/)
+- Use appropriate subdirectories to maintain logical organization
+- Keep layouts and reusable components in their respective directories
+
+Example organization:
+```
+resources/
+  ├── views/
+  │   ├── dashboard/
+  │   │   ├── generator/
+  │   │   │   └── index.blade.php
+  │   │   ├── inspiration/
+  │   │   │   └── index.blade.php
+  │   │   └── index.blade.php
+  │   └── layouts/
+  │       └── app.blade.php
+```
+
+## Image Location Standards
+- All images must be stored in the `resources/images` directory
+- Organize into logical subdirectories (e.g., `calendar`, `logos`, `ui/icons`)
+- Use SVG format when possible for better scaling and smaller file size
+
+Example image organization:
+```
+resources/images/
+  ├── ui/
+  │   ├── icons/
+  │   └── backgrounds/
+  ├── calendar/
+  │   ├── calendar-page-img.svg
+  │   └── date-picker-icon.svg
+  └── logos/
+     └── chrome-logo.svg
+```
+
+### Referencing Images in Templates
+- Use Vite asset helper: `{{ Vite::asset('resources/images/path/to/image.svg') }}`
+- For background images in CSS: `background-image: url('{{ Vite::asset('resources/images/ui/backgrounds/pattern.svg') }}')`
+- Alternative method using the asset helper (for public images): `{{ asset('images/calendar/calendar-page-img.svg') }}`
+
+## Architecture Guidelines
+
+### Volt Component Standard
+
+**All UI views should use the Livewire Volt component approach**
+
+This approach combines the view and its related logic into a self-contained component:
+
+1. Each blade file should begin with a PHP class that extends `Livewire\Volt\Component`
+2. All view-related state and behavior should be encapsulated in this class
+3. Controllers should be minimal, primarily passing initial data to the component
+
+Example component:
+```php
+<?php
+    use function Laravel\Folio\{middleware};
+    use Livewire\Volt\Component;
+    
+    middleware('auth');
+
+    new class extends Component {
+        public $property;
+        
+        public function mount($initialData)
+        {
+            $this->property = $initialData;
+        }
+        
+        // Component methods
+    }
+?>
+
+<x-layouts.app>
+    @volt('component-name')
+        <!-- Component UI here -->
+    @endvolt
+</x-layouts.app>
+```
+
+### Component Structure
+Full example for accessing component variables:
+```php
+@volt
+class MyComponent extends \Livewire\Volt\Component
+{
+    public $variable = 0;
+    
+    public function mount($passedVariable)
+    {
+        $this->variable = $passedVariable;
+    }
+}
+@endvolt
+
+<div>
+    <h1>Value: {{ $variable }}</h1>
+</div>
+```
+
+### Controller Standards
+- Controllers should pass variables to Volt components via the mount method
+- Example:
+  ```php
+  return view('dashboard.generator.index', [
+      'credits' => $user->credits,
+  ]);
+  ```
+
+### UI Components
+- Use Tailwind CSS for styling
+- Follow consistent color scheme and design patterns
+- For info boxes and notifications:
+  ```php
+  <div class="rounded-lg bg-blue-50 dark:bg-blue-900/50 p-4 text-blue-800 dark:text-blue-200 relative mb-4">
+      <!-- Content -->
+      <button wire:click="dismissInfoBox" class="absolute top-0 right-0 p-2 hover:bg-blue-100 dark:hover:bg-blue-800/50 rounded-tr-lg">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+      </button>
+  </div>
+  ```
+
+## Database Guidelines
 
 When working with database operations in this project, always refer to the database schema defined in `supapost.sql`.
 
-## Database Overview
-This app is called "supapost", which is an AI post generator for X (formerly Twitter) service. It consists of this app, and it will also have a browser extension to make it easier for users to generate/reply to posts directly on X. This app is using Wave, a Laravel framework by dojo.
-
-## Database Tables
+### Database Tables
 The database includes the following key tables:
 - `users` - User accounts and authentication
 - `posts` - Generated posts and content
@@ -40,27 +198,28 @@ The database includes the following key tables:
 - `plans` - Subscription plans
 - `subscriptions` - User subscriptions
 
-## Database Validation Rules
+### Database Validation Rules
 - Always use `exists:table_name,column_name` for foreign key validations
 - Use `unique:table_name,column_name` for unique field validations
 - For nullable foreign keys, use `nullable|exists:table_name,column_name`
 
-## Query Guidelines
+### Query Guidelines
 - Use prepared statements for all database queries
 - Avoid raw queries when possible
 - Use Eloquent relationships for related data
 - Implement proper indexing for frequently queried columns
 
-## Security Considerations
+### Security Considerations
 - Never expose database credentials in code
 - Sanitize all user inputs before database operations
 - Implement proper access control for database operations
 - Use migrations for all database schema changes
 
-## Post Credits System
+### Post Credits System
 - Users have post credits associated with their accounts
 - Plans define the number of post credits available
 - Track and validate post credit usage before generating new content
 
-- You can @ files here
-- You can use markdown but dont have to
+## Reference Components
+
+- Generator: `resources/views/dashboard/generator/index.blade.php`

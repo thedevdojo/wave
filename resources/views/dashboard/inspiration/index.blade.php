@@ -60,37 +60,36 @@
     <x-app.container x-data class="lg:space-y-6" x-cloak>
         
         <x-app.heading
-            title="Inspiration Feed"
+            title="Content ideas"
             description="Discover trending topics and content based on your interests"
             :border="false"
         />
-        
-        <div class="flex justify-end">
-            <a href="{{ route('inspiration.interests') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:bg-zinc-700 dark:text-zinc-300 dark:border-zinc-600 dark:hover:bg-zinc-600">
-                <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500 dark:text-zinc-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                Manage Interests
-            </a>
-        </div>
         
         <div class="flex flex-col">
             <!-- Main Content -->
             <div class="w-full">
                 <div class="p-5 w-full bg-white dark:bg-zinc-800 rounded-lg border border-slate-200 dark:border-zinc-700 mb-6">
-                    <div class="flex space-x-4 mb-4">
-                        <button wire:click="setFilter('all')" class="px-4 py-2 {{ $activeFilter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300' }} rounded-md">All</button>
-                        <button wire:click="setFilter('trending')" class="px-4 py-2 {{ $activeFilter === 'trending' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300' }} rounded-md">Trending</button>
-                        <button wire:click="setFilter('for-you')" class="px-4 py-2 {{ $activeFilter === 'for-you' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300' }} rounded-md">For You</button>
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex space-x-4">
+                            <button wire:click="setFilter('all')" class="px-4 py-2 {{ $activeFilter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300' }} rounded-md">All</button>
+                            <button wire:click="setFilter('trending')" class="px-4 py-2 {{ $activeFilter === 'trending' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300' }} rounded-md">Trending</button>
+                            <button wire:click="setFilter('for-you')" class="px-4 py-2 {{ $activeFilter === 'for-you' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300' }} rounded-md">For You</button>
+                        </div>
+                        <a href="{{ route('inspiration.interests') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:bg-zinc-700 dark:text-zinc-300 dark:border-zinc-600 dark:hover:bg-zinc-600">
+                            <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500 dark:text-zinc-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Manage interests
+                        </a>
                     </div>
                     
                     <div class="mb-6">
-                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Your Interests</h3>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Your interests:</h3>
                         <div class="flex flex-wrap gap-2">
                             @if(count($userInterests) > 0)
                                 @foreach($userInterests as $interest)
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300">
                                         {{ $interest }}
                                     </span>
                                 @endforeach

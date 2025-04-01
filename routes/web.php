@@ -16,6 +16,7 @@ use Wave\Facades\Wave;
 use App\Http\Controllers\GeneratorController;
 use App\Http\Controllers\InspirationController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\WorkspaceController;
 
 // Wave routes
 Wave::routes();
@@ -44,6 +45,22 @@ Route::middleware(['auth'])->group(function () {
 // Calendar routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+});
+
+// Add workspace routes for agency plan users
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Workspace routes
+    Route::get('/workspaces', [WorkspaceController::class, 'index'])->name('workspaces.index');
+    Route::get('/workspaces/create', [WorkspaceController::class, 'create'])->name('workspaces.create');
+    Route::post('/workspaces', [WorkspaceController::class, 'store'])->name('workspaces.store');
+    Route::get('/workspaces/{workspace}', [WorkspaceController::class, 'show'])->name('workspaces.show');
+    Route::get('/workspaces/{workspace}/edit', [WorkspaceController::class, 'edit'])->name('workspaces.edit');
+    Route::get('/workspaces/{workspace}/delete', [WorkspaceController::class, 'showDeleteForm'])->name('workspaces.delete');
+    Route::put('/workspaces/{workspace}', [WorkspaceController::class, 'update'])->name('workspaces.update');
+    Route::delete('/workspaces/{workspace}', [WorkspaceController::class, 'destroy'])->name('workspaces.destroy');
+    
+    // Switch current workspace
+    Route::get('/workspace/switch/{workspaceId}', [WorkspaceController::class, 'switchWorkspace'])->name('workspace.switch');
 });
 
 

@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            // Add fields for AI-generated posts
-            $table->text('content')->nullable()->after('body');
-            $table->string('topic')->nullable()->after('content');
-            $table->string('tone')->nullable()->after('topic');
+        Schema::table('generated_posts', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->after('id');
+            $table->foreignId('workspace_id')->nullable()->constrained()->onDelete('cascade')->after('user_id');
+            $table->text('content')->after('workspace_id');
+            $table->string('topic')->after('content');
+            $table->string('tone')->after('topic');
             $table->boolean('has_emoji')->default(false)->after('tone');
             $table->boolean('has_hashtags')->default(false)->after('has_emoji');
             $table->boolean('is_longform')->default(false)->after('has_hashtags');
             $table->boolean('posted_to_x')->default(false)->after('is_longform');
             $table->string('x_post_id')->nullable()->after('posted_to_x');
+            $table->json('settings')->nullable()->after('x_post_id');
         });
     }
 
@@ -29,8 +31,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('generated_posts', function (Blueprint $table) {
             $table->dropColumn([
+                'user_id',
+                'workspace_id',
                 'content',
                 'topic',
                 'tone',
@@ -38,7 +42,8 @@ return new class extends Migration
                 'has_hashtags',
                 'is_longform',
                 'posted_to_x',
-                'x_post_id'
+                'x_post_id',
+                'settings'
             ]);
         });
     }

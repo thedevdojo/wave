@@ -1,0 +1,303 @@
+/* SupaPost X Button */
+.sp-button {
+  background-color: rgba(29, 161, 242, 0.1);
+  color: #1da1f2;
+  border: none;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  transition: background-color 0.2s;
+}
+
+.sp-button:hover {
+  background-color: rgba(29, 161, 242, 0.2);
+}
+
+.sp-button-icon {
+  margin-right: 4px;
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* SupaPost Modal */
+.sp-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sp-modal {
+  background-color: #fff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.sp-modal-title {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+.sp-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 20px;
+  padding: 4px;
+}
+
+.sp-modal-close:hover {
+  color: #333;
+}
+
+.sp-modal-body {
+  padding: 16px;
+  flex: 1;
+}
+
+.sp-modal-footer {
+  padding: 12px 16px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sp-form-group {
+  margin-bottom: 16px;
+}
+
+.sp-form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #666;
+  font-size: 14px;
+}
+
+.sp-form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #cfd9de;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.sp-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.sp-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sp-checkbox-label input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+.sp-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid #cfd9de;
+  border-radius: 12px;
+  font-size: 14px;
+  resize: vertical;
+  margin-bottom: 16px;
+}
+
+.sp-textarea:focus {
+  outline: none;
+  border-color: #1da1f2;
+  box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+}
+
+.sp-character-count {
+  color: #657786;
+  font-size: 12px;
+  text-align: right;
+  margin-bottom: 16px;
+}
+
+.sp-warning {
+  color: #e0245e;
+}
+
+.sp-modal-footer-left {
+  display: flex;
+  align-items: center;
+}
+
+.sp-credits-badge {
+  background-color: #e8f5fe;
+  color: #1da1f2;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+}
+
+.sp-btn {
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sp-btn:hover {
+  background-color: #1a91da;
+}
+
+.sp-btn:disabled {
+  background-color: #9ad0f5;
+  cursor: not-allowed;
+}
+
+.sp-btn-secondary {
+  background-color: #fff;
+  color: #1da1f2;
+  border: 1px solid #1da1f2;
+}
+
+.sp-btn-secondary:hover {
+  background-color: #e8f5fe;
+}
+
+.sp-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.sp-spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1da1f2;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.sp-error {
+  color: #e0245e;
+  padding: 12px;
+  background-color: #f8d7da;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.sp-login-prompt {
+  text-align: center;
+  padding: 20px;
+}
+
+.sp-login-prompt p {
+  margin-bottom: 16px;
+  color: #657786;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .sp-modal {
+    background-color: #15202b;
+    color: #fff;
+  }
+  
+  .sp-modal-header {
+    border-bottom-color: #38444d;
+  }
+  
+  .sp-modal-footer {
+    border-top-color: #38444d;
+  }
+  
+  .sp-modal-title {
+    color: #fff;
+  }
+  
+  .sp-modal-close {
+    color: #8899a6;
+  }
+  
+  .sp-modal-close:hover {
+    color: #fff;
+  }
+  
+  .sp-form-group label {
+    color: #8899a6;
+  }
+  
+  .sp-textarea,
+  .sp-form-group select {
+    background-color: #192734;
+    border-color: #38444d;
+    color: #fff;
+  }
+  
+  .sp-textarea:focus,
+  .sp-form-group select:focus {
+    border-color: #1da1f2;
+  }
+  
+  .sp-character-count {
+    color: #8899a6;
+  }
+  
+  .sp-btn-secondary {
+    background-color: transparent;
+  }
+  
+  .sp-btn-secondary:hover {
+    background-color: rgba(29, 161, 242, 0.1);
+  }
+  
+  .sp-error {
+    background-color: rgba(224, 36, 94, 0.1);
+  }
+} 

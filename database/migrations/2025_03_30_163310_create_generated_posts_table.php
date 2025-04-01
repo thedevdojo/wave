@@ -14,14 +14,16 @@ return new class extends Migration
         Schema::create('generated_posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('workspace_id')->nullable()->constrained()->onDelete('cascade');
             $table->text('content');
             $table->string('topic');
-            $table->string('tone')->nullable();
+            $table->string('tone');
             $table->boolean('has_emoji')->default(false);
             $table->boolean('has_hashtags')->default(false);
             $table->boolean('is_longform')->default(false);
             $table->boolean('posted_to_x')->default(false);
             $table->string('x_post_id')->nullable();
+            $table->json('settings')->nullable();
             $table->timestamps();
         });
     }

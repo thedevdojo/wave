@@ -1,0 +1,217 @@
+/* General Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.container {
+  width: 320px;
+  min-height: 300px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #1da1f2;
+}
+
+h2 {
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: #444;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e6ecf0;
+  margin-bottom: 16px;
+}
+
+.credits-badge {
+  background-color: #e8f5fe;
+  color: #1da1f2;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+}
+
+/* Form Containers */
+.form-container {
+  margin-bottom: 16px;
+}
+
+.form-container.hidden {
+  display: none;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #666;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #cfd9de;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #1da1f2;
+  box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+}
+
+.checkbox-group {
+  margin-bottom: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+}
+
+/* API Key Display */
+.api-key-display {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #657786;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: #1da1f2;
+  color: white;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #0c86d0;
+}
+
+.btn-secondary {
+  background-color: #e6ecf0;
+  color: #657786;
+}
+
+.btn-secondary:hover {
+  background-color: #d8e0e8;
+}
+
+.btn-warning {
+  background-color: #ffad1f;
+  color: white;
+  width: 100%;
+}
+
+.btn-warning:hover {
+  background-color: #e6910e;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.button-group button {
+  flex: 1;
+  margin: 0 4px;
+}
+
+.button-group button:first-child {
+  margin-left: 0;
+}
+
+.button-group button:last-child {
+  margin-right: 0;
+}
+
+/* Form Footer */
+.form-footer {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 12px;
+  color: #657786;
+}
+
+.form-footer a {
+  color: #1da1f2;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Status Messages */
+.status-container {
+  margin-top: 16px;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.status-container.hidden {
+  display: none;
+}
+
+.status-message {
+  font-size: 13px;
+  text-align: center;
+}
+
+.status-message.success {
+  color: #10a810;
+}
+
+.status-message.error {
+  color: #e0245e;
+}
+
+.status-message.info {
+  color: #1da1f2;
+} 

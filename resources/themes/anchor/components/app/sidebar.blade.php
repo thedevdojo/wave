@@ -23,13 +23,18 @@
                     </a>
                 </div>
 
+                <!-- Workspace Switcher -->
+                <div class="px-4 mt-2">
+                    <x-app.workspace-switcher />
+                </div>
+
                 <div class="flex flex-col justify-start items-center mt-4 px-4 space-y-1.5 w-full h-full text-slate-600 dark:text-zinc-400">
                     <x-app.sidebar-link href="{{ route('dashboard') }}" icon="phosphor-house" :active="Request::is('dashboard')">Dashboard</x-app.sidebar-link>
-                    <x-app.sidebar-link href="/generator" icon="phosphor-sparkle" :active="Request::is('generator')">Generator</x-app.sidebar-link>
+                    <x-app.sidebar-link href="/generator" icon="phosphor-sparkle" :active="Request::is('generator')">Post generator</x-app.sidebar-link>
                     <div class="relative w-full">
                         <x-app.sidebar-link href="{{ route('inspiration.index') }}" icon="phosphor-lightbulb" :active="Request::is('inspiration')">
                             <div class="flex items-center justify-between w-full">
-                                <span>Inspiration</span>
+                                <span class="whitespace-nowrap">Content ideas</span>
                                 <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2">
                                     <g clip-path="url(#clip0_31412_16155)">
                                         <path d="M0 2.0502V10.0502C0 11.1502 0.9 12.0502 2 12.0502H9C10.1 12.0502 11 11.1502 11 10.0502V2.0502L8 6.0502L5.5 0.950195L3 6.0502L0 2.0502Z" fill="#FCB709"/>
@@ -43,7 +48,9 @@
                             </div>
                         </x-app.sidebar-link>
                     </div>
-                    <x-app.sidebar-link href="{{ route('calendar') }}" icon="phosphor-calendar" :active="Request::is('calendar')">Content calendar</x-app.sidebar-link>
+                    <x-app.sidebar-link href="{{ route('calendar') }}" icon="phosphor-calendar" :active="Request::is('calendar*')">
+                        <span class="whitespace-nowrap">Content calendar</span>
+                    </x-app.sidebar-link>
                 </div>
             </div>
 

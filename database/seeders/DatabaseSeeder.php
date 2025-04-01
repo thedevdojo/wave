@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Wave\Facades\Wave;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,27 +18,62 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(RolesTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        $this->call(ChangelogsTableSeeder::class);
-        $this->call(ApiKeysTableSeeder::class);
-        $this->call(CategoriesTableSeeder::class);
-        $this->call(NotificationsTableSeeder::class);
-        $this->call(PagesTableSeeder::class);
-        $this->call(PasswordResetsTableSeeder::class);
-        $this->call(PermissionsTableSeeder::class);
-        $this->call(PermissionRoleTableSeeder::class);
-        $this->call(ModelHasRolesTableSeeder::class);
-        $this->call(PlansTableSeeder::class);
-        $this->call(PostsTableSeeder::class);
-        $this->call(SettingsTableSeeder::class);
-        $this->call(ProfileKeyValuesTableSeeder::class);
-        $this->call(ThemesTableSeeder::class);
+        // Fix the database structure first
+        $this->fixDatabaseStructure();
+        
         $this->call([
+            ApiKeysTableSeeder::class,
+            CategoriesTableSeeder::class,
+            PasswordResetsTableSeeder::class,
+            PermissionsTableSeeder::class,
+            PermissionRoleTableSeeder::class,
+            ModelHasRolesTableSeeder::class,
+            PlansTableSeeder::class,
+            PostsTableSeeder::class,
+            SettingsTableSeeder::class,
+            ProfileKeyValuesTableSeeder::class,
+            ThemesTableSeeder::class,
             InspirationTagSeeder::class,
             InspirationSeeder::class,
         ]);
-        fixPostgresSequence();
+    }
+    
+    /**
+     * Fix the database structure
+     */
+    protected function fixDatabaseStructure()
+    {
+        // Only perform minimal fixing - the migrations should handle most of this
+        
+        // Make sure user_settings has workspace_id
+        if (Schema::hasTable('user_settings') && !Schema::hasColumn('user_settings', 'workspace_id')) {
+            DB::statement("ALTER TABLE user_settings ADD COLUMN workspace_id BIGINT UNSIGNED NULL AFTER user_id");
+            
+            // Add foreign key if workspaces table exists
+            if (Schema::hasTable('workspaces')) {
+                try {
+                    DB::statement("ALTER TABLE user_settings ADD CONSTRAINT user_settings_workspace_id_foreign FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE");
+                } catch (\Exception $e) {
+                    // Foreign key might already exist or have other issues
+                    \Illuminate\Support\Facades\Log::info('Could not add foreign key: ' . $e->getMessage());
+                }
+            }
+        }
+        
+        // Make sure generated_posts has workspace_id if it exists
+        if (Schema::hasTable('generated_posts') && !Schema::hasColumn('generated_posts', 'workspace_id')) {
+            DB::statement("ALTER TABLE generated_posts ADD COLUMN workspace_id BIGINT UNSIGNED NULL AFTER user_id");
+            
+            // Add foreign key if workspaces table exists
+            if (Schema::hasTable('workspaces')) {
+                try {
+                    DB::statement("ALTER TABLE generated_posts ADD CONSTRAINT generated_posts_workspace_id_foreign FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE");
+                } catch (\Exception $e) {
+                    // Foreign key might already exist or have other issues
+                    \Illuminate\Support\Facades\Log::info('Could not add foreign key to generated_posts: ' . $e->getMessage());
+                }
+            }
+        }
     }
 }
 

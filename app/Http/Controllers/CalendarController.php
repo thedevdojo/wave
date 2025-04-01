@@ -8,6 +8,6 @@ class CalendarController extends Controller
 {
     public function index()
     {
-        return view('dashboard.calendar');
+        return view('dashboard.calendar.index');
     }
 } 

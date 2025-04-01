@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SupaPost for X</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>SupaPost for X</h1>
+    </div>
+
+    <!-- API Key Form (Shown when no API key is set) -->
+    <div id="apikey-container" class="form-container">
+      <h2>Connect Your Account</h2>
+      <p>Enter your SupaPost API key to connect your account.</p>
+      <form id="apikey-form">
+        <div class="form-group">
+          <label for="api-key">API Key</label>
+          <input type="text" id="api-key" name="api-key" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Connect</button>
+      </form>
+      <div class="form-footer">
+        <p>
+          <a href="#" id="generate-key-link" target="_blank">Generate API Key</a> in your SupaPost account
+        </p>
+      </div>
+    </div>
+
+    <!-- Settings (Shown when API key is set) -->
+    <div id="settings-container" class="form-container hidden">
+      <h2>Settings</h2>
+      <form id="settings-form">
+        <div class="form-group">
+          <label for="default-tone">Default Reply Tone</label>
+          <select id="default-tone" name="default-tone">
+            <option value="casual">Casual</option>
+            <option value="formal">Formal</option>
+            <option value="humorous">Humorous</option>
+            <option value="professional">Professional</option>
+          </select>
+        </div>
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="longform" name="longform">
+            <span>Enable Longform Replies</span>
+          </label>
+        </div>
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="emoji" name="emoji">
+            <span>Include Emojis</span>
+          </label>
+        </div>
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="hashtags" name="hashtags">
+            <span>Include Hashtags</span>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+      </form>
+      <div class="form-group">
+        <p class="api-key-display">API Key: <span id="current-api-key">••••••••••••••••</span></p>
+        <button id="reset-key-btn" class="btn btn-warning">Change API Key</button>
+      </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="status-container" class="status-container hidden">
+      <div id="status-message" class="status-message"></div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html> 

@@ -37,7 +37,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \RalphJSmit\Livewire\Urls\Middleware\LivewireUrlsMiddleware::class
+            \RalphJSmit\Livewire\Urls\Middleware\LivewireUrlsMiddleware::class,
+            \App\Http\Middleware\WorkspaceContext::class
         ],
 
         'api' => [
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'agency.plan' => \App\Http\Middleware\AgencyPlan::class,
     ];
 }
