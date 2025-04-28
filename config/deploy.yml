@@ -1,13 +1,23 @@
 # Name of your application. Used to uniquely configure containers.
-service: my-app
+service: wave
 
-# Name of the container image.
-image: my-user/my-app
+# Name of the container image. Change ronald2wing to your username
+image: ronald2wing/wave
 
 # Deploy to these servers.
 servers:
+  cron:
+    cmd: php /var/www/html/artisan schedule:work
+    hosts:
+      - <%= ENV['SSH_HOST'] %>
+    options:
+      health-cmd: pgrep -f "php artisan schedule:work" || exit 1
+      network: private
   web:
-    - 192.168.0.1
+    hosts:
+      - <%= ENV['SSH_HOST'] %>
+    options:
+      network: private
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -18,8 +28,9 @@ servers:
 #
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
+  app_port: 8080
+  host: <%= ENV['PROD_HOST'] %>
   ssl: true
-  host: app.example.com
   # Proxy connects to your container on port 80 by default.
   # app_port: 3000
 
@@ -27,7 +38,8 @@ proxy:
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  username: my-user
+  # Change ronald2wing to your username
+  username: ronald2wing
 
   # Always use an access token rather than real password (pulled from .kamal/secrets).
   password:
@@ -47,12 +59,30 @@ builder:
 #     DB_HOST: 192.168.0.2
 #   secret:
 #     - RAILS_MASTER_KEY
+env:
+  clear:
+    APP_DEBUG: false
+    APP_ENV: production
+    APP_NAME: Wave
+    APP_URL: https://<%= ENV['PROD_HOST'] %>
+    DB_CONNECTION: mysql
+    DB_DATABASE: wave_production
+    DB_HOST: wave-db
+    DB_USERNAME: wave
+    REDIS_HOST: wave-redis
+    SESSION_DRIVER: redis
+  secret:
+    - APP_KEY
+    - DB_PASSWORD
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal app logs -r job" will tail logs from the first server in the job section.
 #
 # aliases:
 #   shell: app exec --interactive --reuse "bash"
+aliases:
+  shell: app exec --interactive --reuse "bash"
+  tinker: app exec --interactive --reuse "php artisan tinker"
 
 # Use a different ssh user than root
 #
@@ -69,6 +99,7 @@ builder:
 # version inside the asset_path.
 #
 # asset_path: /app/public/assets
+asset_path: /var/www/html/public/build
 
 # Configure rolling deploys by setting a wait time between batches of restarts.
 #
@@ -99,3 +130,47 @@ builder:
 #     port: 6379
 #     directories:
 #       - data:/data
+accessories:
+  db:
+    directories:
+      - data:/var/lib/mysql
+    env:
+      clear:
+        MYSQL_DATABASE: wave_production
+        MYSQL_PASSWORD: <%= ENV['DB_PASSWORD'] %>
+        MYSQL_ROOT_PASSWORD: <%= ENV['DB_PASSWORD'] %>
+        MYSQL_USER: wave
+    host: <%= ENV['SSH_HOST'] %>
+    image: mysql:9.3
+    options:
+      network: private
+  db_backup:
+    env:
+      clear:
+        AWS_BUCKET_NAME: wave
+        AWS_DEFAULT_REGION: us-east-1
+        DB_DUMP_INCLUDE: wave_production
+        DB_DUMP_RETENTION: 30d
+        DB_DUMP_TARGET: s3://wave/backups/
+        DB_NAME: wave_production
+        DB_PASS: <%= ENV['DB_PASSWORD'] %>
+        DB_RESTORE_TARGET: s3://wave/backups/
+        DB_SERVER: wave-db
+        DB_USER: wave
+        SINGLE_DATABASE: true
+      secret:
+        - AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY
+    host: <%= ENV['SSH_HOST'] %>
+    image: databack/mysql-backup:1.2.2
+    options:
+      network: private
+    volumes:
+      - backup-data:/db
+  redis:
+    directories:
+      - redis-data:/data
+    host: <%= ENV['SSH_HOST'] %>
+    image: valkey/valkey:8.1.1
+    options:
+      network: private

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ssh root@$KAMAL_HOSTS 'bash -s' <.kamal/hooks/setup-server.sh
