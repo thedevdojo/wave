@@ -33,6 +33,7 @@
         "alebatistella/duskapiconf": "^1.2",
         "fakerphp/faker": "^1.9.1",
         "laravel/dusk": "^8.0",
+        "laravel/sail": "^1.42",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "6.4.0|^7.0|^8.1",
         "pestphp/pest": "^3.4",
