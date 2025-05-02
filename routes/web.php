@@ -16,3 +16,7 @@ use Wave\Facades\Wave;
 
 // Wave routes
 Wave::routes();
+
+Route::get('/up', function () {
+    return response('OK', 200);
+});

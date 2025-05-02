@@ -1,0 +1,52 @@
+# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
+# Ignore git directory
+/.git/
+
+# Ignore all environment files (except templates)
+/.env*
+!/.env.example
+
+# Ignore all logfiles and tempfiles
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/framework/cache/*
+!/storage/framework/cache/.gitkeep
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitkeep
+/storage/framework/testing/*
+!/storage/framework/testing/.gitkeep
+/storage/framework/views/*
+!/storage/framework/views/.gitkeep
+/storage/app/*
+!/storage/app/.gitkeep
+/storage/app/public/*
+!/storage/app/public/.gitkeep
+
+# Ignore temporary files
+/bootstrap/cache/*
+!/bootstrap/cache/.gitkeep
+
+# Ignore dependencies
+/node_modules/
+/vendor/
+
+# Ignore compiled assets
+/public/build/*
+/public/hot
+/public/storage
+/public/css
+/public/js
+/public/mix-manifest.json
+
+# IDE specific files
+/.idea
+/.vscode
+/.fleet
+/.phpstorm.meta.php
+/_ide_helper*.php
+
+# Testing and documentation
+/phpunit.xml
+/.phpunit.cache
+/tests/coverage
+/docs
