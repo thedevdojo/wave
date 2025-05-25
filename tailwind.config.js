@@ -1,5 +1,4 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
-//import forms from '@tailwindcss/forms';
 import fs from 'fs';
 import path from 'path';
 
