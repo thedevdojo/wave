@@ -2,9 +2,6 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 import fs from 'fs';
 import path from 'path';
 
-const themeFilePath = path.resolve(__dirname, 'theme.json');
-const activeTheme = fs.existsSync(themeFilePath) ? JSON.parse(fs.readFileSync(themeFilePath, 'utf8')).name : 'anchor';
-
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -17,7 +14,7 @@ export default {
         './resources/views/components/**/*.blade.php',
         './resources/views/components/blade.php',
         './wave/resources/views/**/*.blade.php',
-        './resources/themes/' + activeTheme + '/**/*.blade.php',
+        './resources/themes/anchor/**/*.blade.php',
         './resources/plugins/**/*.php',
         './config/*.php'
     ],
