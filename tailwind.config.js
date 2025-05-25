@@ -1,5 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
+//import forms from '@tailwindcss/forms';
 import preset from './vendor/filament/support/tailwind.config.preset';
 import fs from 'fs';
 import path from 'path';
@@ -39,5 +39,5 @@ export default {
         },
     },
 
-    plugins: [forms, require('@tailwindcss/typography')],
+    plugins: [],
 };
