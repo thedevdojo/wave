@@ -2,58 +2,59 @@
 
 namespace Wave\Http\Livewire\Billing;
 
-use Wave\Plan;
-use Wave\Subscription;
-use Livewire\Component;
-use Stripe\StripeClient;
-use Livewire\Attributes\On;
-use Filament\Actions\Action;
-use Illuminate\Support\Facades\Http;
 use Filament\Notifications\Notification;
-use \Wave\Actions\Billing\Paddle\AddSubscriptionIdFromTransaction;
+use Illuminate\Support\Facades\Http;
+use Livewire\Component;
+use Wave\Actions\Billing\Paddle\AddSubscriptionIdFromTransaction;
+use Wave\Subscription;
 
 class Update extends Component
 {
     public $update_url;
+
     public $cancel_url;
+
     public $paddle_url;
 
     public $cancellation_scheduled = false;
+
     public $subscription_ends_at;
 
     public $error_retrieving_data = false;
 
     public $subscription;
 
-    public function mount(){
+    public function mount()
+    {
         $this->subscription = auth()->user()->subscription;
-        
-        if(config('wave.billing_provider') == 'paddle' && auth()->user()->subscriber()){
+
+        if (config('wave.billing_provider') == 'paddle' && auth()->user()->subscriber()) {
             $subscription = $this->subscription;
 
-            if(is_null($this->subscription->vendor_subscription_id)){
+            if (is_null($this->subscription->vendor_subscription_id)) {
                 // If we did not obtain the user subscription id, try to get it again.
                 $subscription = app(AddSubscriptionIdFromTransaction::class)($this->subscription->vendor_transaction_id);
-                if(is_null($subscription)){
+                if (is_null($subscription)) {
                     $this->error_retrieving_data = true;
+
                     return;
                 }
             }
 
             $this->paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
-            
-            if(isset($subscription->id)){
+
+            if (isset($subscription->id)) {
                 try {
-                    $response = Http::withToken( config('wave.paddle.api_key') )->get($this->paddle_url . '/subscriptions/' . $subscription->vendor_subscription_id, []);
+                    $response = Http::withToken(config('wave.paddle.api_key'))->get($this->paddle_url.'/subscriptions/'.$subscription->vendor_subscription_id, []);
                     $paddle_subscription = json_decode($response->body());
                     $paddle_subscription = $paddle_subscription->data;
                 } catch (\Exception $e) {
                     $this->error_retrieving_data = true;
+
                     return;
                 }
-            
-                
-                if(isset($paddle_subscription->scheduled_change->action) && $paddle_subscription->scheduled_change->action == 'cancel'){
+
+                if (isset($paddle_subscription->scheduled_change->action) && $paddle_subscription->scheduled_change->action == 'cancel') {
                     $this->cancellation_scheduled = true;
                 }
 
@@ -67,15 +68,16 @@ class Update extends Component
             $this->subscription_ends_at = optional($this->subscription)->ends_at;
         }
     }
-    
-    public function cancel(){
+
+    public function cancel()
+    {
 
         $subscription = auth()->user()->latestSubscription();
-        $response = Http::withToken( config('wave.paddle.api_key') )->post($this->paddle_url . '/subscriptions/' . $subscription->vendor_subscription_id . '/cancel', [
-            'reason' => 'Customer requested cancellation'
+        $response = Http::withToken(config('wave.paddle.api_key'))->post($this->paddle_url.'/subscriptions/'.$subscription->vendor_subscription_id.'/cancel', [
+            'reason' => 'Customer requested cancellation',
         ]);
 
-        if($response->successful()){
+        if ($response->successful()) {
             $this->cancellation_scheduled = true;
 
             $responseObject = json_decode($response->body());
@@ -86,19 +88,21 @@ class Update extends Component
             Notification::make()
                 ->title('Cancellation scheduled.')
                 ->success()
-                ->send(); 
-        } 
+                ->send();
+        }
     }
 
-    public function cancelImmediately(){
+    public function cancelImmediately()
+    {
         $subscription = auth()->user()->subscription;
 
-        $response = Http::withToken( config('wave.paddle.api_key') )->post($this->paddle_url . '/subscriptions/' . $subscription->vendor_subscription_id . '/cancel', [
-            'effective_from' => 'immediately'
+        $response = Http::withToken(config('wave.paddle.api_key'))->post($this->paddle_url.'/subscriptions/'.$subscription->vendor_subscription_id.'/cancel', [
+            'effective_from' => 'immediately',
         ]);
 
-        if($response->successful()){
+        if ($response->successful()) {
             $subscription->cancel();
+
             return redirect('/settings/subscription');
         }
     }
