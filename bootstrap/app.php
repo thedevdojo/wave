@@ -14,7 +14,22 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->redirectGuestsTo(fn () => route('login'));
+        $middleware->redirectUsersTo(RouteServiceProvider::HOME);
+
+        $middleware->encryptCookies(except: [
+            'theme',
+        ]);
+        $middleware->validateCsrfTokens(except: [
+            '/webhook/paddle',
+            '/webhook/stripe',
+        ]);
+
+        $middleware->append(\Filament\Http\Middleware\DisableBladeIconComponents::class);
+
+        $middleware->web(\RalphJSmit\Livewire\Urls\Middleware\LivewireUrlsMiddleware::class);
+
+        $middleware->throttleApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
