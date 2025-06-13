@@ -22,14 +22,17 @@ class Form extends Model
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'fields' => 'array', // Cast the fields attribute to an array
-        'is_active' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'fields' => 'array', // Cast the fields attribute to an array
+            'is_active' => 'boolean',
+        ];
+    }
 
     /**
      * Get a specific field's configuration.

@@ -32,15 +32,18 @@ class Subscription extends Model
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'cancelled_at' => 'datetime',
-        'last_payment_at' => 'datetime',
-        'next_payment_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'cancelled_at' => 'datetime',
+            'last_payment_at' => 'datetime',
+            'next_payment_at' => 'datetime',
+        ];
+    }
 
     /**
      * The user that owns the subscription.

@@ -23,14 +23,17 @@ class FormEntry extends Model
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'data' => 'array', // Cast the data attribute to an array
-        'metadata' => 'array', // Cast the metadata attribute to an array
-    ];
+    protected function casts(): array
+    {
+        return [
+            'data' => 'array', // Cast the data attribute to an array
+            'metadata' => 'array', // Cast the metadata attribute to an array
+        ];
+    }
 
     /**
      * Get the form that owns the form entry.

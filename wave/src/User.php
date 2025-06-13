@@ -46,13 +46,16 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'trial_ends_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'trial_ends_at' => 'datetime',
+        ];
+    }
 
     public function onTrial()
     {
