@@ -65,7 +65,7 @@ class Update extends Component
             }
         } elseif (config('wave.billing_provider') == 'stripe') {
             // Correctly fetch Stripe's `ends_at`
-            $this->subscription_ends_at = optional($this->subscription)->ends_at;
+            $this->subscription_ends_at = $this->subscription?->ends_at;
         }
     }
 
