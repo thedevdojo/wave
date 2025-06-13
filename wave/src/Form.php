@@ -2,6 +2,7 @@
 
 namespace Wave;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -50,7 +51,7 @@ class Form extends Model
     /**
      * Get the form entries for the form.
      */
-    public function entries()
+    public function entries(): HasMany
     {
         return $this->hasMany(FormEntry::class);
     }

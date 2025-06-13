@@ -11,7 +11,7 @@ class PagesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
 
         \DB::table('pages')->delete();

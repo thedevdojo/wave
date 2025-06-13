@@ -13,7 +13,7 @@ class CreatePluginCommand extends Command
 
     protected $description = 'Create a new plugin skeleton';
 
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name') ?? $this->ask('What is the name of your plugin?');
         $description = $this->ask('Provide a short description for your plugin:');

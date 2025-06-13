@@ -2,6 +2,7 @@
 
 namespace Wave;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,7 +15,7 @@ class Post extends Model
         return url('/blog/'.$this->category->slug.'/'.$this->slug);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo('\Wave\User', 'author_id');
     }
@@ -24,7 +25,7 @@ class Post extends Model
         return Storage::url($this->image);
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo('Wave\Category');
     }

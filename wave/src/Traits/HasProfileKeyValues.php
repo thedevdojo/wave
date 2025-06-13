@@ -2,11 +2,12 @@
 
 namespace Wave\Traits;
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Wave\ProfileKeyValue;
 
 trait HasProfileKeyValues
 {
-    public function profileKeyValues()
+    public function profileKeyValues(): MorphMany
     {
         return $this->morphMany(ProfileKeyValue::class, 'keyvalue');
     }

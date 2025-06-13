@@ -2,6 +2,9 @@
 
 namespace Wave;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Devdojo\Auth\Models\User as AuthUser;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
@@ -69,7 +72,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return true;
     }
 
-    public function subscriptions()
+    public function subscriptions(): HasMany
     {
         return $this->hasMany(Subscription::class, 'billable_id')->where('billable_type', 'user');
     }
@@ -108,7 +111,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return $this->subscriptions()->where('status', 'active')->orderBy('created_at', 'desc')->first();
     }
 
-    public function subscription()
+    public function subscription(): HasOne
     {
         return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderBy('created_at', 'desc');
     }
@@ -205,7 +208,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return url('/profile/'.$this->username);
     }
 
-    public function changelogs()
+    public function changelogs(): BelongsToMany
     {
         return $this->belongsToMany('Wave\Changelog');
     }
@@ -215,7 +218,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return ApiKey::create(['user_id' => $this->id, 'name' => $name, 'key' => Str::random(60)]);
     }
 
-    public function apiKeys()
+    public function apiKeys(): HasMany
     {
         return $this->hasMany('Wave\ApiKey')->orderBy('created_at', 'DESC');
     }

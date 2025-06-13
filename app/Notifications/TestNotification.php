@@ -44,7 +44,7 @@ class TestNotification extends Notification
      *
      * @return array<string, mixed>
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             'icon' => '/storage/demo/default.png',

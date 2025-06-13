@@ -2,6 +2,7 @@
 
 namespace Wave;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
 class ApiKey extends Model
@@ -32,7 +33,7 @@ class ApiKey extends Model
         ];
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(config('auth.providers.users.model'));
     }

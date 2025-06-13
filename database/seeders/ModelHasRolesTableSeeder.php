@@ -11,7 +11,7 @@ class ModelHasRolesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
 
         \DB::table('model_has_roles')->delete();
