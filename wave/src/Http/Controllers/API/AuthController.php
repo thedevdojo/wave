@@ -2,6 +2,8 @@
 
 namespace Wave\Http\Controllers\API;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
@@ -10,17 +12,14 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiKey;
 
-class AuthController extends Controller
+class AuthController extends Controller implements HasMiddleware
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('auth:api', ['except' => ['login', 'token', 'register', 'refresh']]);
-        $this->middleware('jwt.refresh')->only('refresh');
+        return [
+            new Middleware('auth:api', except: ['login', 'token', 'register', 'refresh']),
+            new Middleware('jwt.refresh', only: ['refresh']),
+        ];
     }
 
     /**
