@@ -21,5 +21,5 @@ Wave::api();
 
 // Posts Example API Route
 Route::middleware('auth:api')->group(function () {
-    Route::get('/posts', '\App\Http\Controllers\Api\ApiController@posts');
+    Route::get('/posts', [\App\Http\Controllers\Api\ApiController::class, 'posts']);
 });
