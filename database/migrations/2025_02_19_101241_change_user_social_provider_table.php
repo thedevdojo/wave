@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('social_provider_user', function (Blueprint $table) {
-            $table->string('token',2048)->change();
-            $table->string('refresh_token',2048)->nullable()->change();
+            $table->string('token', 2048)->change();
+            $table->string('refresh_token', 2048)->nullable()->change();
         });
     }
 
@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('social_provider_user', function (Blueprint $table) {
-            $table->string('token',191)->change();
-            $table->string('refresh_token',191)->nullable()->change();
+            $table->string('token', 191)->change();
+            $table->string('refresh_token', 191)->nullable()->change();
         });
     }
 };

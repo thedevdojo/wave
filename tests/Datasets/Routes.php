@@ -13,6 +13,6 @@ dataset('routes', function () {
         '/auth/register',
         '/auth/password/reset',
         '/about',
-        '/profile/admin'
+        '/profile/admin',
     ];
 });

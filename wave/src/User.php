@@ -2,26 +2,21 @@
 
 namespace Wave;
 
-use Wave\Plan;
-use Carbon\Carbon;
-use Wave\Changelog;
-use Wave\Subscription;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Http;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Filament\Models\Contracts\HasAvatar;
-use Illuminate\Notifications\Notifiable;
 use Devdojo\Auth\Models\User as AuthUser;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Lab404\Impersonate\Models\Impersonate;
+use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
+class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 {
-    use Notifiable, Impersonate, HasRoles;
+    use HasRoles, Impersonate, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -67,10 +62,9 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
         if ($this->subscriber()) {
             return false;
         }
+
         return true;
     }
-
-    
 
     public function subscriptions()
     {
@@ -85,20 +79,25 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
     public function subscribedToPlan($planSlug)
     {
         $plan = Plan::where('name', $planSlug)->first();
-        if (!$plan) {
+        if (! $plan) {
             return false;
         }
+
         return $this->subscriptions()->where('plan_id', $plan->id)->where('status', 'active')->exists();
     }
 
-    public function plan(){
+    public function plan()
+    {
         $latest_subscription = $this->latestSubscription();
+
         return Plan::find($latest_subscription->plan_id);
     }
 
-    public function planInterval(){
+    public function planInterval()
+    {
         $latest_subscription = $this->latestSubscription();
-        return ($latest_subscription->cycle == 'month') ? 'Monthly' : 'Yearly'; 
+
+        return ($latest_subscription->cycle == 'month') ? 'Monthly' : 'Yearly';
     }
 
     public function latestSubscription()
@@ -111,45 +110,47 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
         return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderBy('created_at', 'desc');
     }
 
-    public function switchPlans(Plan $plan){
+    public function switchPlans(Plan $plan)
+    {
         $this->syncRoles([]);
-        $this->assignRole( $plan->role->name );
+        $this->assignRole($plan->role->name);
     }
 
-    public function invoices(){
+    public function invoices()
+    {
         $user_invoices = [];
 
-        if(is_null($this->subscription)){
+        if (is_null($this->subscription)) {
             return null;
         }
 
-        if(config('wave.billing_provider') == 'stripe'){
+        if (config('wave.billing_provider') == 'stripe') {
             $stripe = new \Stripe\StripeClient(config('wave.stripe.secret_key'));
-            $subscriptions = $this->subscriptions()->get();        
-            foreach($subscriptions as $subscription){
-                $invoices = $stripe->invoices->all([ 'customer' => $subscription->vendor_customer_id, 'limit' => 100 ]);
+            $subscriptions = $this->subscriptions()->get();
+            foreach ($subscriptions as $subscription) {
+                $invoices = $stripe->invoices->all(['customer' => $subscription->vendor_customer_id, 'limit' => 100]);
 
-                foreach($invoices as $invoice){
-                    array_push($user_invoices, (object)[
+                foreach ($invoices as $invoice) {
+                    array_push($user_invoices, (object) [
                         'id' => $invoice->id,
                         'created' => \Carbon\Carbon::parse($invoice->created)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
-                        'total' => number_format(($invoice->total /100), 2, '.', ' '),
-                        'download' => $invoice->invoice_pdf
+                        'total' => number_format(($invoice->total / 100), 2, '.', ' '),
+                        'download' => $invoice->invoice_pdf,
                     ]);
                 }
             }
-        } else { 
+        } else {
             $paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
-            $response = Http::withToken(config('wave.paddle.api_key'))->get($paddle_url . '/transactions', [
-                'subscription_id' => $this->subscription->vendor_subscription_id
+            $response = Http::withToken(config('wave.paddle.api_key'))->get($paddle_url.'/transactions', [
+                'subscription_id' => $this->subscription->vendor_subscription_id,
             ]);
             $responseJson = json_decode($response->body());
-            foreach($responseJson->data as $invoice){
-                array_push($user_invoices, (object)[
+            foreach ($responseJson->data as $invoice) {
+                array_push($user_invoices, (object) [
                     'id' => $invoice->id,
                     'created' => \Carbon\Carbon::parse($invoice->created_at)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
-                    'total' => number_format(($invoice->details->totals->subtotal /100), 2, '.', ' '),
-                    'download' => '/settings/invoices/' . $invoice->id
+                    'total' => number_format(($invoice->details->totals->subtotal / 100), 2, '.', ' '),
+                    'download' => '/settings/invoices/'.$invoice->id,
                 ]);
             }
         }
@@ -181,7 +182,7 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
     public function canBeImpersonated()
     {
         // Any user that is not an admin can be impersonated
-        return !$this->hasRole('admin');
+        return ! $this->hasRole('admin');
     }
 
     public function hasChangelogNotifications()
@@ -189,12 +190,16 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
         // Get the latest Changelog
         $latest_changelog = Changelog::orderBy('created_at', 'DESC')->first();
 
-        if (!$latest_changelog) return false;
-        return !$this->changelogs->contains($latest_changelog->id);
+        if (! $latest_changelog) {
+            return false;
+        }
+
+        return ! $this->changelogs->contains($latest_changelog->id);
     }
 
-    public function link(){
-        return url('/profile/' . $this->username);
+    public function link()
+    {
+        return url('/profile/'.$this->username);
     }
 
     public function changelogs()
@@ -245,6 +250,7 @@ class User extends AuthUser implements JWTSubject, HasAvatar, FilamentUser
     public function profile($key)
     {
         $keyValue = $this->profileKeyValue($key);
+
         return isset($keyValue->value) ? $keyValue->value : '';
     }
 
