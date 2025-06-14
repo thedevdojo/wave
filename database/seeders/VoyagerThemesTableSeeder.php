@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class VoyagerThemesTableSeeder extends Seeder
@@ -12,9 +13,9 @@ class VoyagerThemesTableSeeder extends Seeder
     public function run(): void
     {
 
-        \DB::table('themes')->delete();
+        DB::table('themes')->delete();
 
-        \DB::table('themes')->insert([
+        DB::table('themes')->insert([
             0 => [
                 'id' => 1,
                 'name' => 'Tailwind Theme',

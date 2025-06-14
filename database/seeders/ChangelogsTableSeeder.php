@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class ChangelogsTableSeeder extends Seeder
@@ -12,9 +13,9 @@ class ChangelogsTableSeeder extends Seeder
     public function run(): void
     {
 
-        \DB::table('changelogs')->delete();
+        DB::table('changelogs')->delete();
 
-        \DB::table('changelogs')->insert([
+        DB::table('changelogs')->insert([
             0 => [
                 'id' => 1,
                 'title' => 'Wave 1.0 Released',
@@ -26,7 +27,7 @@ class ChangelogsTableSeeder extends Seeder
                 'updated_at' => '2018-05-21 00:38:02',
             ]]);
 
-        \DB::table('changelogs')->insert([
+        DB::table('changelogs')->insert([
             1 => [
                 'id' => 2,
                 'title' => 'Wave 2.0 Released',
@@ -36,7 +37,7 @@ class ChangelogsTableSeeder extends Seeder
                 'updated_at' => '2020-03-21 00:38:02',
             ]]);
 
-        \DB::table('changelogs')->insert([
+        DB::table('changelogs')->insert([
             1 => [
                 'id' => 3,
                 'title' => 'Wave 3.0 Released',

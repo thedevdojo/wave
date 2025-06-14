@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
@@ -12,9 +13,9 @@ class RolesTableSeeder extends Seeder
     public function run(): void
     {
 
-        \DB::table('roles')->delete();
+        DB::table('roles')->delete();
 
-        \DB::table('roles')->insert([
+        DB::table('roles')->insert([
             0 => [
                 'id' => 1,
                 'guard_name' => 'web',

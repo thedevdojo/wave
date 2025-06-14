@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Illuminate\Support\Facades\Config;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -97,12 +98,12 @@ class AdminPanelProvider extends PanelProvider
     private function renderAnalyticsIfCredentialsExist()
     {
         if (file_exists(storage_path('app/analytics/service-account-credentials.json'))) {
-            \Config::set('filament-google-analytics.page_views.filament_dashboard', true);
-            \Config::set('filament-google-analytics.active_users_one_day.filament_dashboard', true);
-            \Config::set('filament-google-analytics.active_users_seven_day.filament_dashboard', true);
-            \Config::set('filament-google-analytics.active_users_twenty_eight_day.filament_dashboard', true);
-            \Config::set('filament-google-analytics.most_visited_pages.filament_dashboard', true);
-            \Config::set('filament-google-analytics.top_referrers_list.filament_dashboard', true);
+            Config::set('filament-google-analytics.page_views.filament_dashboard', true);
+            Config::set('filament-google-analytics.active_users_one_day.filament_dashboard', true);
+            Config::set('filament-google-analytics.active_users_seven_day.filament_dashboard', true);
+            Config::set('filament-google-analytics.active_users_twenty_eight_day.filament_dashboard', true);
+            Config::set('filament-google-analytics.most_visited_pages.filament_dashboard', true);
+            Config::set('filament-google-analytics.top_referrers_list.filament_dashboard', true);
         } else {
             $this->dynamicWidgets = [Widgets\AnalyticsPlaceholderWidget::class];
         }

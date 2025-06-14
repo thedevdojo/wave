@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class PasswordResetsTableSeeder extends Seeder
@@ -12,7 +13,7 @@ class PasswordResetsTableSeeder extends Seeder
     public function run(): void
     {
 
-        \DB::table('password_resets')->delete();
+        DB::table('password_resets')->delete();
 
     }
 }
