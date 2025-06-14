@@ -3,12 +3,11 @@
 namespace Wave\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Query\Builder;
 use Wave\Changelog;
 
 class ChangelogController extends Controller
 {
-   public function read()
+    public function read()
     {
         $user = auth()->user();
         Changelog::whereDoesntHave('users', function ($query) use ($user) {

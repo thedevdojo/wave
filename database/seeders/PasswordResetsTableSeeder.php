@@ -3,22 +3,17 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PasswordResetsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        
 
-        \DB::table('password_resets')->delete();
-        
-        
-        
+        DB::table('password_resets')->delete();
+
     }
 }

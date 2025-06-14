@@ -17,6 +17,6 @@ return [
     'sent' => 'Na Twój adres mailowy został wysłany link do zresetowania hasła!',
     'throttled' => 'Poczekaj przed następną próbą.',
     'token' => 'Token resetowania hasła jest niepoprawny.',
-    'user' => "W naszej bazie nie ma użytkownika z podanym adresem mailowym.",
+    'user' => 'W naszej bazie nie ma użytkownika z podanym adresem mailowym.',
 
 ];
