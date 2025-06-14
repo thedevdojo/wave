@@ -25,8 +25,6 @@ class AuthController extends Controller implements HasMiddleware
 
     /**
      * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function login(): JsonResponse
     {
@@ -41,8 +39,6 @@ class AuthController extends Controller implements HasMiddleware
 
     /**
      * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function logout(): JsonResponse
     {
@@ -77,8 +73,6 @@ class AuthController extends Controller implements HasMiddleware
 
     /**
      * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function refresh(): JsonResponse
     {
@@ -87,9 +81,6 @@ class AuthController extends Controller implements HasMiddleware
 
     /**
      * Get the token array structure.
-     *
-     * @param  string  $token
-     * @return \Illuminate\Http\JsonResponse
      */
     protected function respondWithToken(string $token): JsonResponse
     {

@@ -23,7 +23,6 @@ class VerifyPaddleWebhookSignature
     /**
      * Handle the incoming request.
      *
-     * @return \Illuminate\Http\Response
      *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
@@ -40,9 +39,6 @@ class VerifyPaddleWebhookSignature
 
     /**
      * Validate signature.
-     *
-     * @param  string  $signature
-     * @return bool
      */
 
     // the signature is not $signature[0] it's $signature

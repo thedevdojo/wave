@@ -164,27 +164,18 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return $user_invoices;
     }
 
-    /**
-     * @return bool
-     */
     public function canImpersonate(): bool
     {
         // If user is admin they can impersonate
         return $this->hasRole('admin');
     }
 
-    /**
-     * @return bool
-     */
     public function isAdmin(): bool
     {
         // return if the user has a role of admin
         return $this->hasRole('admin');
     }
 
-    /**
-     * @return bool
-     */
     public function canBeImpersonated(): bool
     {
         // Any user that is not an admin can be impersonated
@@ -240,8 +231,6 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
      */
     public function getJWTCustomClaims(): array
     {
