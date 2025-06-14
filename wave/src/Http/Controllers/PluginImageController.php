@@ -19,7 +19,7 @@ class PluginImageController extends Controller
         $file = File::get($path);
         $type = File::mimeType($path);
 
-        $response = Response::make($file, 200);
+        $response = response($file, 200);
         $response->header('Content-Type', $type);
 
         return $response;
