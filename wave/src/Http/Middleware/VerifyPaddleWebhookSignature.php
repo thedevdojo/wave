@@ -2,9 +2,9 @@
 
 namespace Wave\Http\Middleware;
 
-use Illuminate\Http\Response;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**

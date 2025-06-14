@@ -2,9 +2,9 @@
 
 namespace App\Filament\Pages;
 
-use Illuminate\Support\Facades\Artisan;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Wave\Theme;
 

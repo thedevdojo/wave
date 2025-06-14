@@ -2,8 +2,8 @@
 
 namespace Wave\Http\Controllers;
 
-use Illuminate\View\View;
 use App\Http\Controllers\Controller;
+use Illuminate\View\View;
 use Wave\Page;
 
 class PageController extends Controller

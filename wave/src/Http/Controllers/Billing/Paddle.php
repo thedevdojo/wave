@@ -2,8 +2,8 @@
 
 namespace Wave\Http\Controllers\Billing;
 
-use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 
 class Paddle extends Controller

@@ -2,10 +2,10 @@
 
 namespace Wave\Http\Middleware;
 
-use Illuminate\Http\Request;
 use Closure;
-// use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Factory as Auth;
+// use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiToken;
 

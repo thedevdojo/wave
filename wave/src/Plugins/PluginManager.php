@@ -2,9 +2,9 @@
 
 namespace Wave\Plugins;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PluginManager
