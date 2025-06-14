@@ -8,10 +8,8 @@ class PermissionRoleTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         \DB::table('role_has_permissions')->delete();
     }

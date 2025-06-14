@@ -3,6 +3,7 @@
 namespace Wave;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Subscription extends Model
 {
@@ -32,22 +33,25 @@ class Subscription extends Model
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'cancelled_at' => 'datetime',
-        'last_payment_at' => 'datetime',
-        'next_payment_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'cancelled_at' => 'datetime',
+            'last_payment_at' => 'datetime',
+            'next_payment_at' => 'datetime',
+        ];
+    }
 
     /**
      * The user that owns the subscription.
      */
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(config('wave.user_model', 'App\Models\User'), 'billable_id');
+        return $this->belongsTo(config('wave.user_model', \App\Models\User::class), 'billable_id');
     }
 
     public function cancel()
@@ -62,7 +66,7 @@ class Subscription extends Model
     /**
      * The plan that belongs to the subscription.
      */
-    public function plan()
+    public function plan(): BelongsTo
     {
         return $this->belongsTo(Plan::class, 'plan_id');
     }

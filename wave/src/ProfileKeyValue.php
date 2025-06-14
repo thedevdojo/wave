@@ -3,6 +3,7 @@
 namespace Wave;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class ProfileKeyValue extends Model
 {
@@ -18,7 +19,7 @@ class ProfileKeyValue extends Model
         'value',
     ];
 
-    public function profileKeyValue()
+    public function profileKeyValue(): MorphTo
     {
         return $this->morphTo();
     }

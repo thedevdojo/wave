@@ -13,7 +13,7 @@ class CreateRole extends Command
 
     protected $description = 'Create a new role with optional permissions';
 
-    public function handle()
+    public function handle(): int
     {
         $name = $this->ask('Enter the name of the new role');
 

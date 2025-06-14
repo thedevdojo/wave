@@ -15,7 +15,7 @@ class CreateUser extends Command
 
     protected $description = 'Create a new user with role assignment';
 
-    public function handle()
+    public function handle(): int
     {
         $name = $this->ask('Enter the user\'s name');
         $email = $this->ask('Enter the user\'s email');

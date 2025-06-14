@@ -6,6 +6,9 @@ use Devdojo\Auth\Models\User as AuthUser;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -46,13 +49,16 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'trial_ends_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'trial_ends_at' => 'datetime',
+        ];
+    }
 
     public function onTrial()
     {
@@ -66,7 +72,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return true;
     }
 
-    public function subscriptions()
+    public function subscriptions(): HasMany
     {
         return $this->hasMany(Subscription::class, 'billable_id')->where('billable_type', 'user');
     }
@@ -105,7 +111,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return $this->subscriptions()->where('status', 'active')->orderBy('created_at', 'desc')->first();
     }
 
-    public function subscription()
+    public function subscription(): HasOne
     {
         return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderBy('created_at', 'desc');
     }
@@ -202,7 +208,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return url('/profile/'.$this->username);
     }
 
-    public function changelogs()
+    public function changelogs(): BelongsToMany
     {
         return $this->belongsToMany('Wave\Changelog');
     }
@@ -212,7 +218,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return ApiKey::create(['user_id' => $this->id, 'name' => $name, 'key' => Str::random(60)]);
     }
 
-    public function apiKeys()
+    public function apiKeys(): HasMany
     {
         return $this->hasMany('Wave\ApiKey')->orderBy('created_at', 'DESC');
     }

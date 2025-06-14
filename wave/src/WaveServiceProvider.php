@@ -26,7 +26,7 @@ use Wave\Plugins\PluginServiceProvider;
 
 class WaveServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
 
         $loader = AliasLoader::getInstance();
@@ -61,7 +61,7 @@ class WaveServiceProvider extends ServiceProvider
         $this->app->register(PluginServiceProvider::class);
     }
 
-    public function boot(Router $router, Dispatcher $event)
+    public function boot(Router $router, Dispatcher $event): void
     {
 
         Relation::morphMap([
