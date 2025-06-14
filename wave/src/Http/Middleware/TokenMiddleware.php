@@ -2,6 +2,7 @@
 
 namespace Wave\Http\Middleware;
 
+use Illuminate\Http\Request;
 use Closure;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Factory as Auth;
@@ -24,7 +25,7 @@ class TokenMiddleware
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, ?string $guard = null)
     {
         if ($request->token && strlen($request->token) <= 60) {
             $api_token = ApiToken::where('token', '=', $request->token)->first();

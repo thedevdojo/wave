@@ -2,6 +2,7 @@
 
 namespace Wave\Http\Middleware;
 
+use Illuminate\Http\Request;
 use Closure;
 
 class ThemeDemoMiddleware
@@ -12,7 +13,7 @@ class ThemeDemoMiddleware
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (isset($request->theme)) {
             return redirect()->to('/')->withCookie(cookie('theme', $request->theme, 60, null, null, false, false));

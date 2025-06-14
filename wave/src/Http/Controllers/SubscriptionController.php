@@ -2,6 +2,8 @@
 
 namespace Wave\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,7 +31,7 @@ class SubscriptionController extends Controller
         $this->paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
     }
 
-    public function cancel(Request $request)
+    public function cancel(Request $request): JsonResponse
     {
         $this->cancelSubscription($request->id);
 
@@ -90,7 +92,7 @@ class SubscriptionController extends Controller
         }
     }
 
-    public function checkout(Request $request)
+    public function checkout(Request $request): JsonResponse
     {
         $retryCount = 5;
         $initialDelay = 2;
@@ -200,7 +202,7 @@ class SubscriptionController extends Controller
 
     }
 
-    public function invoice(Request $request, $transactionId)
+    public function invoice(Request $request, $transactionId): RedirectResponse
     {
 
         $response = Http::withToken($this->api_key)->get($this->paddle_url.'/transactions/'.$transactionId.'/invoice');
@@ -210,7 +212,7 @@ class SubscriptionController extends Controller
         return redirect()->to($invoice->data->url);
     }
 
-    public function switchPlans(Request $request)
+    public function switchPlans(Request $request): RedirectResponse
     {
         $plan = Plan::where('plan_id', $request->plan_id)->first();
 

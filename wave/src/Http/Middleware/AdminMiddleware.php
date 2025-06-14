@@ -2,6 +2,7 @@
 
 namespace Wave\Http\Middleware;
 
+use Illuminate\Http\Request;
 use Closure;
 
 class AdminMiddleware
@@ -12,7 +13,7 @@ class AdminMiddleware
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (! auth()->user()->hasRole('admin')) {
             return redirect()->route('home');

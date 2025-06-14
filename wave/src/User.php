@@ -167,7 +167,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     /**
      * @return bool
      */
-    public function canImpersonate()
+    public function canImpersonate(): bool
     {
         // If user is admin they can impersonate
         return $this->hasRole('admin');
@@ -176,7 +176,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     /**
      * @return bool
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         // return if the user has a role of admin
         return $this->hasRole('admin');
@@ -185,7 +185,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     /**
      * @return bool
      */
-    public function canBeImpersonated()
+    public function canBeImpersonated(): bool
     {
         // Any user that is not an admin can be impersonated
         return ! $this->hasRole('admin');
@@ -243,7 +243,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }

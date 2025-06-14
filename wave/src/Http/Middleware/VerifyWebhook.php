@@ -2,6 +2,7 @@
 
 namespace Wave\Http\Middleware;
 
+use Illuminate\Http\Request;
 use Closure;
 use InvalidArgumentException;
 
@@ -15,7 +16,7 @@ class VerifyWebhook
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $signature = $request->get('p_signature');
         $fields = $request->except('p_signature');

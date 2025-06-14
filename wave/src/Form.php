@@ -41,7 +41,7 @@ class Form extends Model
      * @param  string  $fieldKey
      * @return array|null
      */
-    public function getFieldConfig($fieldKey)
+    public function getFieldConfig(string $fieldKey): ?array
     {
         $fields = $this->fields;
 

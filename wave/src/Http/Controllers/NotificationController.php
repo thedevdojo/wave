@@ -2,12 +2,13 @@
 
 namespace Wave\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function delete(Request $request, $id)
+    public function delete(Request $request, $id): JsonResponse
     {
         $notification = auth()->user()->notifications()->where('id', $id)->first();
         if ($notification) {

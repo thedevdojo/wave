@@ -2,12 +2,13 @@
 
 namespace Wave\Http\Controllers\Billing;
 
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
 class Paddle extends Controller
 {
-    public function invoice($transactionId)
+    public function invoice($transactionId): RedirectResponse
     {
         $paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
 

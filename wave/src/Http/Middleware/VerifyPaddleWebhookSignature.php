@@ -2,6 +2,7 @@
 
 namespace Wave\Http\Middleware;
 
+use Illuminate\Http\Response;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -26,7 +27,7 @@ class VerifyPaddleWebhookSignature
      *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $signature = $request->header(self::SIGNATURE_HEADER);
 
@@ -46,7 +47,7 @@ class VerifyPaddleWebhookSignature
 
     // the signature is not $signature[0] it's $signature
     // the true it's false and false it's true when if ($this->isInvalidSignature($request, $signature)) { throw new AccessDeniedHttpException('Invalid webhook signature.'); }
-    protected function isInvalidSignature(Request $request, $signature)
+    protected function isInvalidSignature(Request $request, string $signature): bool
     {
         if (empty($signature)) {
             return true;

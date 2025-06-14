@@ -2,11 +2,12 @@
 
 namespace Wave\Http\Controllers\Billing;
 
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 
 class Stripe extends Controller
 {
-    public function redirect_to_customer_portal()
+    public function redirect_to_customer_portal(): RedirectResponse
     {
 
         $latest_active_subscription = auth()->user()->latestSubscription();
