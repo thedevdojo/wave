@@ -62,7 +62,7 @@ class Checkout extends Component
             'cancel_url' => url('settings/subscription'),
         ]);
 
-        return redirect($checkout_session->url);
+        return redirect()->to($checkout_session->url);
     }
 
     public function updateCycleBasedOnPlans()
@@ -93,7 +93,7 @@ class Checkout extends Component
     {
         $subscription = app(AddSubscriptionIdFromTransaction::class)($transactionId);
         if (! is_null($subscription)) {
-            return redirect('/subscription/welcome');
+            return redirect()->to('/subscription/welcome');
         }
 
         $this->js('closeLoader()');
@@ -194,7 +194,7 @@ class Checkout extends Component
             $subscription->save();
             $subscription->user->switchPlans($plan);
 
-            return redirect('/settings/subscription')->with(['update' => true]);
+            return redirect()->to('/settings/subscription')->with(['update' => true]);
         }
     }
 

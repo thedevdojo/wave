@@ -40,7 +40,7 @@ class SubscriptionController extends Controller
     {
         // Ensure user is authenticated
         if (! auth()->check()) {
-            return redirect('/login')->with(['message' => 'Please log in to continue.', 'message_type' => 'danger']);
+            return redirect()->to('/login')->with(['message' => 'Please log in to continue.', 'message_type' => 'danger']);
         }
 
         // Auth user get latest subscription id
@@ -50,7 +50,7 @@ class SubscriptionController extends Controller
         $localSubscription = Subscription::where('subscription_id', $subscription_id)->first();
 
         if (! $localSubscription || auth()->user()->latestSubscription->subscription_id != $subscription_id) {
-            return back()->with(['message' => 'Invalid subscription ID.', 'message_type' => 'danger']);
+            return redirect()->back()->with(['message' => 'Invalid subscription ID.', 'message_type' => 'danger']);
         }
 
         $response = Http::withToken($this->api_key)
@@ -77,16 +77,16 @@ class SubscriptionController extends Controller
                 $user->role_id = $cancelledRole->id;
                 $user->save();
 
-                return back()->with(['message' => 'Your subscription has been successfully canceled.', 'message_type' => 'success']);
+                return redirect()->back()->with(['message' => 'Your subscription has been successfully canceled.', 'message_type' => 'success']);
             } else {
                 // Handle any errors that were returned in the response body
                 $error = isset($body['error']['message']) ? $body['error']['message'] : 'Unknown error while canceling the subscription.';
 
-                return back()->with(['message' => $error, 'message_type' => 'danger']);
+                return redirect()->back()->with(['message' => $error, 'message_type' => 'danger']);
             }
         } else {
             // Handle failed HTTP requests
-            return back()->with(['message' => 'Failed to cancel the subscription. Please try again later.', 'message_type' => 'danger']);
+            return redirect()->back()->with(['message' => 'Failed to cancel the subscription. Please try again later.', 'message_type' => 'danger']);
         }
     }
 
@@ -207,7 +207,7 @@ class SubscriptionController extends Controller
         $invoice = json_decode($response->body());
 
         // redirect user to the invoice download URL
-        return redirect($invoice->data->url);
+        return redirect()->to($invoice->data->url);
     }
 
     public function switchPlans(Request $request)
@@ -243,11 +243,11 @@ class SubscriptionController extends Controller
                         'plan_id' => $request->plan_id,
                     ]);
 
-                    return back()->with(['message' => 'Successfully switched to the '.$plan->name.' plan.', 'message_type' => 'success']);
+                    return redirect()->back()->with(['message' => 'Successfully switched to the '.$plan->name.' plan.', 'message_type' => 'success']);
                 }
             }
         }
 
-        return back()->with(['message' => 'Sorry, there was an issue updating your plan.', 'message_type' => 'danger']);
+        return redirect()->back()->with(['message' => 'Sorry, there was an issue updating your plan.', 'message_type' => 'danger']);
     }
 }

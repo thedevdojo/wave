@@ -26,7 +26,7 @@ class Stripe extends Controller
             'return_url' => route('settings.subscription'),
         ]);
 
-        return redirect($billingPortal->url);
+        return redirect()->to($billingPortal->url);
 
     }
 }

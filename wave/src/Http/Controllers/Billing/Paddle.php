@@ -15,7 +15,7 @@ class Paddle extends Controller
         $invoice = json_decode($response->body());
 
         // redirect user to the invoice download URL
-        return redirect($invoice->data->url);
+        return redirect()->to($invoice->data->url);
 
     }
 }
