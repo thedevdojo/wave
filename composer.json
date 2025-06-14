@@ -21,7 +21,7 @@
         "filament/filament": "^3.3",
         "gehrisandro/tailwind-merge-laravel": "^1.3",
         "guzzlehttp/guzzle": "^7.8",
-        "intervention/image": "^2.7",
+        "intervention/image": "^3.11",
         "lab404/laravel-impersonate": "^1.7.5",
         "laravel/folio": "^1.1",
         "laravel/framework": "^12.18",
@@ -31,7 +31,7 @@
         "livewire/livewire": "^3.5",
         "ralphjsmit/livewire-urls": "^1.5",
         "spatie/laravel-permission": "^6.12",
-        "stripe/stripe-php": "^15.3",
+        "stripe/stripe-php": "^17.3",
         "tymon/jwt-auth": "^2.2"
     },
     "require-dev": {
@@ -40,9 +40,9 @@
         "laravel/dusk": "^8.2",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "pestphp/pest": "^3.4",
-        "pestphp/pest-plugin-laravel": "^3.1",
-        "phpunit/phpunit": "^11.5.3",
+        "pestphp/pest": "^3.8",
+        "pestphp/pest-plugin-laravel": "^3.2",
+        "phpunit/phpunit": "^11.5.15",
         "spatie/laravel-ignition": "^2.9"
     },
     "autoload": {
