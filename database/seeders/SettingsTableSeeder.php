@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SettingsTableSeeder extends Seeder
 {
@@ -12,9 +13,9 @@ class SettingsTableSeeder extends Seeder
     public function run(): void
     {
 
-        \DB::table('settings')->delete();
+        DB::table('settings')->delete();
 
-        \DB::table('settings')->insert([
+        DB::table('settings')->insert([
             0 => [
                 'id' => 1,
                 'key' => 'site.title',

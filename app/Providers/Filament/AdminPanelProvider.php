@@ -7,9 +7,9 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
+use Filament\PanelProvider;
 // use Filament\Widgets;
 // use BezhanSalleh\FilamentGoogleAnalytics\Widgets;
-use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -18,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Config;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Wave\Widgets;
 
@@ -97,12 +98,12 @@ class AdminPanelProvider extends PanelProvider
     private function renderAnalyticsIfCredentialsExist()
     {
         if (file_exists(storage_path('app/analytics/service-account-credentials.json'))) {
-            \Config::set('filament-google-analytics.page_views.filament_dashboard', true);
-            \Config::set('filament-google-analytics.active_users_one_day.filament_dashboard', true);
-            \Config::set('filament-google-analytics.active_users_seven_day.filament_dashboard', true);
-            \Config::set('filament-google-analytics.active_users_twenty_eight_day.filament_dashboard', true);
-            \Config::set('filament-google-analytics.most_visited_pages.filament_dashboard', true);
-            \Config::set('filament-google-analytics.top_referrers_list.filament_dashboard', true);
+            Config::set('filament-google-analytics.page_views.filament_dashboard', true);
+            Config::set('filament-google-analytics.active_users_one_day.filament_dashboard', true);
+            Config::set('filament-google-analytics.active_users_seven_day.filament_dashboard', true);
+            Config::set('filament-google-analytics.active_users_twenty_eight_day.filament_dashboard', true);
+            Config::set('filament-google-analytics.most_visited_pages.filament_dashboard', true);
+            Config::set('filament-google-analytics.top_referrers_list.filament_dashboard', true);
         } else {
             $this->dynamicWidgets = [Widgets\AnalyticsPlaceholderWidget::class];
         }

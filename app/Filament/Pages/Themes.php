@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Wave\Theme;
 
@@ -117,9 +118,9 @@ class Themes extends Page
                 ->send();
         }
 
-        \Artisan::call('config:clear');
-        \Artisan::call('view:clear');
-        \Artisan::call('route:clear');
+        Artisan::call('config:clear');
+        Artisan::call('view:clear');
+        Artisan::call('route:clear');
 
         $this->refreshThemes();
 

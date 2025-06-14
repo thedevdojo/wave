@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -12,9 +13,9 @@ class CategoriesTableSeeder extends Seeder
     public function run(): void
     {
 
-        \DB::table('categories')->delete();
+        DB::table('categories')->delete();
 
-        \DB::table('categories')->insert([
+        DB::table('categories')->insert([
             0 => [
                 'id' => 1,
                 'parent_id' => null,

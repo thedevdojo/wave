@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PermissionRoleTableSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class PermissionRoleTableSeeder extends Seeder
      */
     public function run(): void
     {
-        \DB::table('role_has_permissions')->delete();
+        DB::table('role_has_permissions')->delete();
     }
 }

@@ -3,8 +3,9 @@
 namespace Wave\Http\Middleware;
 
 use Closure;
-// use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Factory as Auth;
+// use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiToken;
 
@@ -20,11 +21,9 @@ class TokenMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next, ?string $guard = null)
     {
         if ($request->token && strlen($request->token) <= 60) {
             $api_token = ApiToken::where('token', '=', $request->token)->first();

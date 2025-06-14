@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TranslationsTableSeeder extends Seeder
 {
@@ -12,9 +13,9 @@ class TranslationsTableSeeder extends Seeder
     public function run(): void
     {
 
-        \DB::table('translations')->delete();
+        DB::table('translations')->delete();
 
-        \DB::table('translations')->insert([
+        DB::table('translations')->insert([
             0 => [
                 'id' => 1,
                 'table_name' => 'data_types',

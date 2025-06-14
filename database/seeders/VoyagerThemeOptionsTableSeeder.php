@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class VoyagerThemeOptionsTableSeeder extends Seeder
 {
@@ -12,9 +13,9 @@ class VoyagerThemeOptionsTableSeeder extends Seeder
     public function run(): void
     {
 
-        \DB::table('theme_options')->delete();
+        DB::table('theme_options')->delete();
 
-        \DB::table('theme_options')->insert([
+        DB::table('theme_options')->insert([
             0 => [
                 'id' => 17,
                 'theme_id' => 1,

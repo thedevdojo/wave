@@ -4,6 +4,7 @@ namespace Wave\Plugins;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PluginManager
@@ -22,29 +23,29 @@ class PluginManager
     {
         $installedPlugins = $this->getInstalledPlugins();
 
-        \Log::info('Installed plugins: '.json_encode($installedPlugins));
+        Log::info('Installed plugins: '.json_encode($installedPlugins));
 
         foreach ($installedPlugins as $pluginName) {
             $studlyPluginName = Str::studly($pluginName);
             $pluginClass = "Wave\\Plugins\\{$studlyPluginName}\\{$studlyPluginName}Plugin";
 
-            \Log::info("Attempting to load plugin: {$pluginClass}");
+            Log::info("Attempting to load plugin: {$pluginClass}");
 
             $expectedPath = $this->findPluginFile($pluginName);
             if ($expectedPath) {
-                \Log::info("File found at: {$expectedPath}, attempting to include it.");
+                Log::info("File found at: {$expectedPath}, attempting to include it.");
                 include_once $expectedPath;
 
                 if (class_exists($pluginClass)) {
                     $plugin = new $pluginClass($this->app);
                     $this->plugins[$pluginName] = $plugin;
                     $this->app->register($plugin);
-                    \Log::info("Successfully loaded plugin: {$pluginClass}");
+                    Log::info("Successfully loaded plugin: {$pluginClass}");
                 } else {
-                    \Log::warning("Plugin class not found after including file: {$pluginClass}");
+                    Log::warning("Plugin class not found after including file: {$pluginClass}");
                 }
             } else {
-                \Log::warning("Plugin file not found for: {$pluginName}");
+                Log::warning("Plugin file not found for: {$pluginName}");
             }
         }
     }
@@ -91,7 +92,7 @@ class PluginManager
     {
         $path = resource_path('plugins/installed.json');
         if (! File::exists($path)) {
-            \Log::warning("installed.json does not exist at: {$path}");
+            Log::warning("installed.json does not exist at: {$path}");
 
             return [];
         }

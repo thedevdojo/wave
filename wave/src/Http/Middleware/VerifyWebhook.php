@@ -3,6 +3,7 @@
 namespace Wave\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use InvalidArgumentException;
 
 class VerifyWebhook
@@ -12,10 +13,9 @@ class VerifyWebhook
      *
      * @see https://developer.paddle.com/webhook-reference/ZG9jOjI1MzUzOTg2-verifying-webhooks
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $signature = $request->get('p_signature');
         $fields = $request->except('p_signature');

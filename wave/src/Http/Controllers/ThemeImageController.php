@@ -4,7 +4,6 @@ namespace Wave\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Response;
 
 class ThemeImageController extends Controller
 {
@@ -19,7 +18,7 @@ class ThemeImageController extends Controller
         $file = File::get($path);
         $type = File::mimeType($path);
 
-        $response = Response::make($file, 200);
+        $response = response($file);
         $response->header('Content-Type', $type);
 
         return $response;

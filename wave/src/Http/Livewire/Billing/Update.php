@@ -103,7 +103,7 @@ class Update extends Component
         if ($response->successful()) {
             $subscription->cancel();
 
-            return redirect('/settings/subscription');
+            return redirect()->to('/settings/subscription');
         }
     }
 

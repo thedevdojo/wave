@@ -108,12 +108,12 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     public function latestSubscription()
     {
-        return $this->subscriptions()->where('status', 'active')->orderBy('created_at', 'desc')->first();
+        return $this->subscriptions()->where('status', 'active')->orderByDesc('created_at')->first();
     }
 
     public function subscription(): HasOne
     {
-        return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderBy('created_at', 'desc');
+        return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderByDesc('created_at');
     }
 
     public function switchPlans(Plan $plan)
@@ -164,28 +164,19 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return $user_invoices;
     }
 
-    /**
-     * @return bool
-     */
-    public function canImpersonate()
+    public function canImpersonate(): bool
     {
         // If user is admin they can impersonate
         return $this->hasRole('admin');
     }
 
-    /**
-     * @return bool
-     */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         // return if the user has a role of admin
         return $this->hasRole('admin');
     }
 
-    /**
-     * @return bool
-     */
-    public function canBeImpersonated()
+    public function canBeImpersonated(): bool
     {
         // Any user that is not an admin can be impersonated
         return ! $this->hasRole('admin');
@@ -194,7 +185,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     public function hasChangelogNotifications()
     {
         // Get the latest Changelog
-        $latest_changelog = Changelog::orderBy('created_at', 'DESC')->first();
+        $latest_changelog = Changelog::orderByDesc('created_at')->first();
 
         if (! $latest_changelog) {
             return false;
@@ -220,7 +211,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     public function apiKeys(): HasMany
     {
-        return $this->hasMany('Wave\ApiKey')->orderBy('created_at', 'DESC');
+        return $this->hasMany('Wave\ApiKey')->orderByDesc('created_at');
     }
 
     public function avatar()
@@ -240,10 +231,8 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }

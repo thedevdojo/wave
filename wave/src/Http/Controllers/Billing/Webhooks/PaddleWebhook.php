@@ -3,6 +3,7 @@
 namespace Wave\Http\Controllers\Billing\Webhooks;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Wave\Subscription;
@@ -11,7 +12,7 @@ class PaddleWebhook extends Controller
 {
     public $paddle_url;
 
-    public function handler(Request $request)
+    public function handler(Request $request): JsonResponse
     {
         $event = $request->get('event_type', null);
 

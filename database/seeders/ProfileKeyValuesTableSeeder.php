@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProfileKeyValuesTableSeeder extends Seeder
 {
@@ -12,9 +13,9 @@ class ProfileKeyValuesTableSeeder extends Seeder
     public function run(): void
     {
 
-        \DB::table('profile_key_values')->delete();
+        DB::table('profile_key_values')->delete();
 
-        \DB::table('profile_key_values')->insert([
+        DB::table('profile_key_values')->insert([
             0 => [
                 'id' => 10,
                 'type' => 'text_area',
