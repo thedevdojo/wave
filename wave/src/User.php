@@ -108,12 +108,12 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     public function latestSubscription()
     {
-        return $this->subscriptions()->where('status', 'active')->orderBy('created_at', 'desc')->first();
+        return $this->subscriptions()->where('status', 'active')->orderByDesc('created_at')->first();
     }
 
     public function subscription(): HasOne
     {
-        return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderBy('created_at', 'desc');
+        return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderByDesc('created_at');
     }
 
     public function switchPlans(Plan $plan)
@@ -194,7 +194,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     public function hasChangelogNotifications()
     {
         // Get the latest Changelog
-        $latest_changelog = Changelog::orderBy('created_at', 'DESC')->first();
+        $latest_changelog = Changelog::orderByDesc('created_at')->first();
 
         if (! $latest_changelog) {
             return false;
@@ -220,7 +220,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     public function apiKeys(): HasMany
     {
-        return $this->hasMany('Wave\ApiKey')->orderBy('created_at', 'DESC');
+        return $this->hasMany('Wave\ApiKey')->orderByDesc('created_at');
     }
 
     public function avatar()
