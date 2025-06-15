@@ -49,6 +49,12 @@
                     // Continue with the installation process
                 }
 
+                // Make sure the database directory exists
+                $databaseDir = dirname(database_path('database.sqlite'));
+                if (!\Illuminate\Support\Facades\File::exists($databaseDir)) {
+                    \Illuminate\Support\Facades\File::makeDirectory($databaseDir, 0755, true);
+                }
+
                 if (!\Illuminate\Support\Facades\File::exists(database_path('database.sqlite'))) {
                     \Illuminate\Support\Facades\File::put(database_path('database.sqlite'), '');
                 }

@@ -26,7 +26,7 @@ class EditForms extends EditRecord
         }
 
         // dd($data['fields']);
-        
+
         // foreach($data['fields'] as $field){
         //     $fields[] = json_decode($field, true);
         // }

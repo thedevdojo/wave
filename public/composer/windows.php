@@ -1,5 +1,5 @@
 <?php
-$combinedOutputFile = $projectRoot . '\public\combined_output.txt';
+$combinedOutputFile = $projectRoot.'\public\combined_output.txt';
 ?>
 
 <!DOCTYPE html>

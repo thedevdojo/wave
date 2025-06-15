@@ -37,15 +37,15 @@
         <?php
 
             if ($os == 'Windows') {
-                $outputFile = $projectRoot . '\output.txt';
-                while (!file_exists($outputFile)) {
+                $outputFile = $projectRoot.'\output.txt';
+                while (! file_exists($outputFile)) {
                     usleep(100000); // Wait until the output file is created
                 }
                 $fp = fopen($outputFile, 'r');
-                while (!feof($fp)) {
+                while (! feof($fp)) {
                     $output = fgets($fp);
                     if ($output !== false) {
-                        echo '<script>addParagraph(' . json_encode(nl2br(htmlspecialchars($output))) . ');</script>';
+                        echo '<script>addParagraph('.json_encode(nl2br(htmlspecialchars($output))).');</script>';
                         flush(); // Ensure the output is sent to the browser immediately
                     }
                     usleep(100000); // Slight delay to reduce CPU usage
@@ -56,9 +56,9 @@
                 // Check if the process was opened successfully
                 if (is_resource($process)) {
                     // Stream the output in real-time
-                    while (!feof($process)) {
+                    while (! feof($process)) {
                         $output = fread($process, 4096);
-                        echo '<script>addParagraph(' . json_encode(nl2br(htmlspecialchars($output))) . ');</script>';
+                        echo '<script>addParagraph('.json_encode(nl2br(htmlspecialchars($output))).');</script>';
                         flush(); // Ensure the output is sent to the browser immediately
                     }
 
@@ -67,14 +67,14 @@
                 }
             }
 
-            sleep(3);
+        sleep(3);
 
-            // Check for errors
-            if (isset($returnVar) && $returnVar !== 0) {
-                http_response_code(500);
-                echo "<p class='text-red-500'>Composer install failed. Please make sure you meet the minimum requirements</p>";
-                exit(1);
-            }
+        // Check for errors
+        if (isset($returnVar) && $returnVar !== 0) {
+            http_response_code(500);
+            echo "<p class='text-red-500'>Composer install failed. Please make sure you meet the minimum requirements</p>";
+            exit(1);
+        }
 
         ?>
         <script>

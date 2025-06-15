@@ -3,16 +3,15 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Wave\Facades\Wave;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
@@ -34,23 +33,22 @@ class DatabaseSeeder extends Seeder
     }
 }
 
-if (!function_exists('fixPostgresSequence')) {
+if (! function_exists('fixPostgresSequence')) {
 
     function fixPostgresSequence()
     {
         if (config('database.default') === 'pgsql') {
-            $tables = \DB::select('SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' ORDER BY table_name;');
+            $tables = DB::select('SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' ORDER BY table_name;');
             foreach ($tables as $table) {
-                if (\Schema::hasColumn($table->table_name, 'id')) {
-                    $columnType = \DB::select("SELECT data_type FROM information_schema.columns WHERE table_name = '{$table->table_name}' AND column_name = 'id'")[0]->data_type;
+                if (Schema::hasColumn($table->table_name, 'id')) {
+                    $columnType = DB::select("SELECT data_type FROM information_schema.columns WHERE table_name = '{$table->table_name}' AND column_name = 'id'")[0]->data_type;
                     // Only proceed if the 'id' column is numeric
                     if (in_array($columnType, ['integer', 'bigint', 'smallint', 'smallserial', 'serial', 'bigserial'])) {
-                        $seq = \DB::table($table->table_name)->max('id') + 1;
-                        \DB::select('SELECT setval(pg_get_serial_sequence(\'' . $table->table_name . '\', \'id\'), coalesce(' . $seq . ',1), false) FROM ' . $table->table_name);
+                        $seq = DB::table($table->table_name)->max('id') + 1;
+                        DB::select('SELECT setval(pg_get_serial_sequence(\''.$table->table_name.'\', \'id\'), coalesce('.$seq.',1), false) FROM '.$table->table_name);
                     }
                 }
             }
         }
     }
 }
-

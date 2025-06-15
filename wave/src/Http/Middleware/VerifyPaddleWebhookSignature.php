@@ -4,15 +4,18 @@ namespace Wave\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Code modifed from: https://github.com/laravel/cashier-paddle/blob/2.x/src/Http/Middleware/VerifyWebhookSignature.php
+ *
  * @see https://developer.paddle.com/webhook-reference/verifying-webhooks
  */
 class VerifyPaddleWebhookSignature
 {
     public const SIGNATURE_HEADER = 'Paddle-Signature';
+
     public const HASH_ALGORITHM_1 = 'h1';
 
     protected ?int $maximumVariance = 5;
@@ -20,13 +23,10 @@ class VerifyPaddleWebhookSignature
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return \Illuminate\Http\Response
      *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $signature = $request->header(self::SIGNATURE_HEADER);
 
@@ -39,15 +39,11 @@ class VerifyPaddleWebhookSignature
 
     /**
      * Validate signature.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $signature
-     * @return bool
      */
 
-    //the signature is not $signature[0] it's $signature
-    //the true it's false and false it's true when if ($this->isInvalidSignature($request, $signature)) { throw new AccessDeniedHttpException('Invalid webhook signature.'); }
-    protected function isInvalidSignature(Request $request, $signature)
+    // the signature is not $signature[0] it's $signature
+    // the true it's false and false it's true when if ($this->isInvalidSignature($request, $signature)) { throw new AccessDeniedHttpException('Invalid webhook signature.'); }
+    protected function isInvalidSignature(Request $request, string $signature): bool
     {
         if (empty($signature)) {
             return true;
@@ -79,9 +75,6 @@ class VerifyPaddleWebhookSignature
 
     /**
      * Parse the signature header.
-     *
-     * @param  string  $header
-     * @return array
      */
     public function parseSignature(string $header): array
     {

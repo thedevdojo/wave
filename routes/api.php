@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return auth()->user();
 });
@@ -21,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Wave::api();
 
 // Posts Example API Route
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('/posts', '\App\Http\Controllers\Api\ApiController@posts');
+Route::middleware('auth:api')->group(function () {
+    Route::get('/posts', [\App\Http\Controllers\Api\ApiController::class, 'posts']);
 });

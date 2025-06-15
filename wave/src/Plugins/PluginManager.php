@@ -2,13 +2,15 @@
 
 namespace Wave\Plugins;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PluginManager
 {
     protected $app;
+
     protected $plugins = [];
 
     public function __construct(Application $app)
@@ -20,30 +22,30 @@ class PluginManager
     public function loadPlugins()
     {
         $installedPlugins = $this->getInstalledPlugins();
-        
-        \Log::info("Installed plugins: " . json_encode($installedPlugins));
+
+        Log::info('Installed plugins: '.json_encode($installedPlugins));
 
         foreach ($installedPlugins as $pluginName) {
             $studlyPluginName = Str::studly($pluginName);
             $pluginClass = "Wave\\Plugins\\{$studlyPluginName}\\{$studlyPluginName}Plugin";
-            
-            \Log::info("Attempting to load plugin: {$pluginClass}");
-            
+
+            Log::info("Attempting to load plugin: {$pluginClass}");
+
             $expectedPath = $this->findPluginFile($pluginName);
             if ($expectedPath) {
-                \Log::info("File found at: {$expectedPath}, attempting to include it.");
+                Log::info("File found at: {$expectedPath}, attempting to include it.");
                 include_once $expectedPath;
-                
+
                 if (class_exists($pluginClass)) {
                     $plugin = new $pluginClass($this->app);
                     $this->plugins[$pluginName] = $plugin;
                     $this->app->register($plugin);
-                    \Log::info("Successfully loaded plugin: {$pluginClass}");
+                    Log::info("Successfully loaded plugin: {$pluginClass}");
                 } else {
-                    \Log::warning("Plugin class not found after including file: {$pluginClass}");
+                    Log::warning("Plugin class not found after including file: {$pluginClass}");
                 }
             } else {
-                \Log::warning("Plugin file not found for: {$pluginName}");
+                Log::warning("Plugin file not found for: {$pluginName}");
             }
         }
     }
@@ -52,13 +54,13 @@ class PluginManager
     {
         $basePath = resource_path('plugins');
         $studlyName = Str::studly($pluginName);
-        
+
         // Check for exact case match
         $exactPath = "{$basePath}/{$studlyName}/{$studlyName}Plugin.php";
         if (File::exists($exactPath)) {
             return $exactPath;
         }
-        
+
         // Check for case-insensitive match
         $directories = File::directories($basePath);
         foreach ($directories as $directory) {
@@ -69,14 +71,14 @@ class PluginManager
                 }
             }
         }
-        
+
         return null;
     }
 
     protected function runPostActivationCommands(Plugin $plugin)
     {
         $commands = $plugin->getPostActivationCommands();
-        
+
         foreach ($commands as $command) {
             if (is_string($command)) {
                 Artisan::call($command);
@@ -89,10 +91,12 @@ class PluginManager
     protected function getInstalledPlugins()
     {
         $path = resource_path('plugins/installed.json');
-        if (!File::exists($path)) {
-            \Log::warning("installed.json does not exist at: {$path}");
+        if (! File::exists($path)) {
+            Log::warning("installed.json does not exist at: {$path}");
+
             return [];
         }
+
         return File::json($path);
     }
 }
