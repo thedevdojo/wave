@@ -2,11 +2,11 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
 use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Artisan;
 
 class Plugins extends Page
 {
@@ -33,18 +33,20 @@ class Plugins extends Page
         $plugins = [];
         $plugins_folder = resource_path('plugins');
 
-        if (!file_exists($plugins_folder)) {
+        if (! file_exists($plugins_folder)) {
             mkdir($plugins_folder);
         }
 
         $scandirectory = scandir($plugins_folder);
 
         foreach ($scandirectory as $folder) {
-            if ($folder === '.' || $folder === '..') continue;
+            if ($folder === '.' || $folder === '..') {
+                continue;
+            }
 
             $studlyFolderName = Str::studly($folder);
-            $pluginFile = $plugins_folder . '/' . $folder . '/' . $studlyFolderName . 'Plugin.php';
-            
+            $pluginFile = $plugins_folder.'/'.$folder.'/'.$studlyFolderName.'Plugin.php';
+
             if (file_exists($pluginFile)) {
                 $pluginClass = "Wave\\Plugins\\{$studlyFolderName}\\{$studlyFolderName}Plugin";
                 if (class_exists($pluginClass) && method_exists($pluginClass, 'getPluginInfo')) {
@@ -63,12 +65,14 @@ class Plugins extends Page
     private function isPluginActive($folder)
     {
         $installedPlugins = $this->getInstalledPlugins();
+
         return in_array($folder, $installedPlugins);
     }
 
     private function getInstalledPlugins()
     {
         $path = resource_path('plugins/installed.json');
+
         return File::exists($path) ? File::json($path) : [];
     }
 
@@ -81,14 +85,14 @@ class Plugins extends Page
     public function activate($pluginFolder)
     {
         $installedPlugins = $this->getInstalledPlugins();
-        if (!in_array($pluginFolder, $installedPlugins)) {
+        if (! in_array($pluginFolder, $installedPlugins)) {
             $installedPlugins[] = $pluginFolder;
             $this->updateInstalledPlugins($installedPlugins);
 
             $this->runPostActivationCommands($pluginFolder);
 
             Notification::make()
-                ->title('Successfully activated ' . $pluginFolder . ' plugin')
+                ->title('Successfully activated '.$pluginFolder.' plugin')
                 ->success()
                 ->send();
         }
@@ -100,13 +104,13 @@ class Plugins extends Page
     {
         $studlyFolderName = Str::studly($pluginFolder);
         $pluginClass = "Wave\\Plugins\\{$studlyFolderName}\\{$studlyFolderName}Plugin";
-        
+
         if (class_exists($pluginClass)) {
             $plugin = new $pluginClass(app());
-            
+
             if (method_exists($plugin, 'getPostActivationCommands')) {
                 $commands = $plugin->getPostActivationCommands();
-                
+
                 foreach ($commands as $command) {
                     if (is_string($command)) {
                         Artisan::call($command);
@@ -134,7 +138,7 @@ class Plugins extends Page
         $this->updateInstalledPlugins($installedPlugins);
 
         Notification::make()
-            ->title('Successfully deactivated ' . $pluginFolder . ' plugin')
+            ->title('Successfully deactivated '.$pluginFolder.' plugin')
             ->success()
             ->send();
 
@@ -145,13 +149,13 @@ class Plugins extends Page
     {
         $this->deactivate($pluginFolder);
 
-        $pluginPath = resource_path('plugins') . '/' . $pluginFolder;
+        $pluginPath = resource_path('plugins').'/'.$pluginFolder;
         if (file_exists($pluginPath)) {
             File::deleteDirectory($pluginPath);
         }
 
         Notification::make()
-            ->title('Successfully deleted ' . $pluginFolder . ' plugin')
+            ->title('Successfully deleted '.$pluginFolder.' plugin')
             ->success()
             ->send();
 
