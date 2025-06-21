@@ -7,8 +7,19 @@ use Illuminate\Support\Str;
 
 class PluginAutoloader
 {
+    /**
+     * Indicates if the autoloader has been registered.
+     *
+     * @var bool
+     */
+    protected static $registered = false;
+
     public static function register()
     {
+        if (self::$registered) {
+            return;
+        }
+
         spl_autoload_register(function ($class) {
             $prefix = 'Wave\\Plugins\\';
             $base_dir = resource_path('plugins/');
@@ -43,5 +54,7 @@ class PluginAutoloader
                 return;
             }
         });
+
+        self::$registered = true;
     }
 }
