@@ -3,14 +3,15 @@
 namespace Wave\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Factory as Auth;
-// use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Auth;
+use Wave\ApiKey;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Wave\ApiToken;
+
+use Illuminate\Contracts\Auth\Factory as Auth;
 
 class TokenMiddleware
 {
+
     protected $auth;
 
     public function __construct(Auth $auth)
@@ -21,21 +22,25 @@ class TokenMiddleware
     /**
      * Handle an incoming request.
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, ?string $guard = null)
+    public function handle($request, Closure $next, $guard = null)
     {
         if ($request->token && strlen($request->token) <= 60) {
-            $api_token = ApiToken::where('token', '=', $request->token)->first();
-            if (isset($api_token->id)) {
-                $token = JWTAuth::fromUser($api_token->user);
+            $apiKey = ApiKey::where('key', $request->token)->first();
+            if (isset($apiKey->id)) {
+                $token = JWTAuth::fromUser($apiKey->user);
             }
 
         } else {
             $this->auth->authenticate();
         }
 
-        // Then process the next request if every tests passed.
+
+        //Then process the next request if every tests passed.
         return $next($request);
     }
 }
