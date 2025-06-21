@@ -36,6 +36,6 @@ dataset('authroutes', function () {
         '/admin/themes',
         '/admin/plugins',
         '/admin/settings',
-        '/admin/settings/1/edit'
+        '/admin/settings/1/edit',
     ];
 });

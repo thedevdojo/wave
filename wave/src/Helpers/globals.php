@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Cache;
 
-if (!function_exists('setting')) {
+if (! function_exists('setting')) {
     function setting($key, $default = null)
     {
         static $settingsCache = null;
@@ -20,29 +20,31 @@ if (!function_exists('setting')) {
     }
 }
 
-if (!function_exists('blade')) {
-    function blade($string){
+if (! function_exists('blade')) {
+    function blade($string)
+    {
         return \Illuminate\Support\Facades\Blade::render($string);
     }
 }
 
-if (!function_exists('getMorphAlias')) {
+if (! function_exists('getMorphAlias')) {
     /**
      * Get the morph alias for a given class.
      *
-     * @param string $class
+     * @param  string  $class
      * @return string|null
      */
     function getMorphAlias($class)
     {
         $morphMap = Relation::morphMap();
         $alias = array_search($class, $morphMap);
+
         return $alias ?: null;
     }
 }
 
-if (!function_exists('has_monthly_yearly_toggle')){
-    function has_monthly_yearly_toggle() : bool
+if (! function_exists('has_monthly_yearly_toggle')) {
+    function has_monthly_yearly_toggle(): bool
     {
         $plans = Wave\Plan::where('active', 1)->get();
         $hasMonthly = false;
@@ -50,10 +52,10 @@ if (!function_exists('has_monthly_yearly_toggle')){
 
         foreach ($plans as $plan) {
             if ($plan->active) {
-                if (!empty($plan->monthly_price_id)) {
+                if (! empty($plan->monthly_price_id)) {
                     $hasMonthly = true;
                 }
-                if (!empty($plan->yearly_price_id)) {
+                if (! empty($plan->yearly_price_id)) {
                     $hasYearly = true;
                 }
             }
@@ -69,23 +71,24 @@ if (!function_exists('has_monthly_yearly_toggle')){
     }
 }
 
-if (!function_exists('get_default_billing_cycle')){
-    function get_default_billing_cycle(){
+if (! function_exists('get_default_billing_cycle')) {
+    function get_default_billing_cycle()
+    {
         $plans = Wave\Plan::where('active', 1)->get();
         $hasMonthly = false;
         $hasYearly = false;
 
         foreach ($plans as $plan) {
-            if (!empty($plan->monthly_price_id)) {
+            if (! empty($plan->monthly_price_id)) {
                 $hasMonthly = true;
             }
-            if (!empty($plan->yearly_price_id)) {
+            if (! empty($plan->yearly_price_id)) {
                 $hasYearly = true;
             }
         }
 
         // Return 'Yearly' if only yearly ID is present
-        if ($hasYearly && !$hasMonthly) {
+        if ($hasYearly && ! $hasMonthly) {
             return 'Yearly';
         }
 

@@ -4,6 +4,7 @@ namespace Wave;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Form extends Model
 {
@@ -22,22 +23,22 @@ class Form extends Model
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'fields' => 'array', // Cast the fields attribute to an array
-        'is_active' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'fields' => 'array', // Cast the fields attribute to an array
+            'is_active' => 'boolean',
+        ];
+    }
 
     /**
      * Get a specific field's configuration.
-     *
-     * @param string $fieldKey
-     * @return array|null
      */
-    public function getFieldConfig($fieldKey)
+    public function getFieldConfig(string $fieldKey): ?array
     {
         $fields = $this->fields;
 
@@ -47,7 +48,7 @@ class Form extends Model
     /**
      * Get the form entries for the form.
      */
-    public function entries()
+    public function entries(): HasMany
     {
         return $this->hasMany(FormEntry::class);
     }
