@@ -98,7 +98,7 @@ class AdminPanelProvider extends PanelProvider
     private function renderAnalyticsIfCredentialsExist()
     {
         if (is_array(config('analytics.service_account_credentials_json')) || 
-            file_exists(storage_path('app/analytics/service-account-credentials.json'))) {
+            file_exists(config('analytics.service_account_credentials_json'))) {
             Config::set('filament-google-analytics.page_views.filament_dashboard', true);
             Config::set('filament-google-analytics.active_users_one_day.filament_dashboard', true);
             Config::set('filament-google-analytics.active_users_seven_day.filament_dashboard', true);
