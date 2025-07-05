@@ -11,8 +11,7 @@
                 </a>
 
                 <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                    Show Version Here.
-                    {{-- {{ \Composer\InstalledVersions::getPrettyVersion('devdojo/wave') }} --}}
+                    {{ wave_version() }}
                 </p>
             </div>
 

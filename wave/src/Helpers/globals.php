@@ -96,3 +96,22 @@ if (! function_exists('get_default_billing_cycle')) {
         return 'Monthly'; // or any default value you prefer
     }
 }
+
+if (!function_exists('wave_version')) {
+    /**
+     * Get the current Wave version
+     *
+     * @return string
+     */
+    function wave_version()
+    {
+        $waveJsonPath = base_path('wave/wave.json');
+
+        if (file_exists($waveJsonPath)) {
+            $waveData = json_decode(file_get_contents($waveJsonPath), true);
+            return $waveData['version'] ?? 'Unknown';
+        }
+
+        return 'Unknown';
+    }
+}
