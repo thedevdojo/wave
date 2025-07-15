@@ -91,13 +91,28 @@ class PluginManager
 
     protected function getInstalledPlugins()
     {
-        return Cache::remember('wave_installed_plugins', 3600, function () {
-            $path = resource_path('plugins/installed.json');
-            if (! File::exists($path)) {
-                return [];
-            }
+        // Check if cache is available (not during package discovery)
+        if ($this->app->bound('cache')) {
+            try {
+                return Cache::remember('wave_installed_plugins', 3600, function () {
+                    $path = resource_path('plugins/installed.json');
+                    if (! File::exists($path)) {
+                        return [];
+                    }
 
-            return File::json($path);
-        });
+                    return File::json($path);
+                });
+            } catch (\Exception $e) {
+                // Fallback to direct file access if cache fails
+            }
+        }
+
+        // Direct file access when cache is not available
+        $path = resource_path('plugins/installed.json');
+        if (! File::exists($path)) {
+            return [];
+        }
+
+        return File::json($path);
     }
 }

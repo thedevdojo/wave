@@ -21,9 +21,18 @@ class Plan extends Model
      */
     public static function getActivePlans()
     {
-        return Cache::remember('wave_active_plans', 1800, function () {
-            return self::where('active', 1)->with('role')->get();
-        });
+        // Use cache if available, otherwise direct query
+        if (app()->bound('cache')) {
+            try {
+                return Cache::remember('wave_active_plans', 1800, function () {
+                    return self::where('active', 1)->with('role')->get();
+                });
+            } catch (\Exception $e) {
+                // Fallback to direct query if cache fails
+            }
+        }
+
+        return self::where('active', 1)->with('role')->get();
     }
 
     /**
@@ -31,9 +40,18 @@ class Plan extends Model
      */
     public static function getByName($name)
     {
-        return Cache::remember("wave_plan_{$name}", 1800, function () use ($name) {
-            return self::where('name', $name)->with('role')->first();
-        });
+        // Use cache if available, otherwise direct query
+        if (app()->bound('cache')) {
+            try {
+                return Cache::remember("wave_plan_{$name}", 1800, function () use ($name) {
+                    return self::where('name', $name)->with('role')->first();
+                });
+            } catch (\Exception $e) {
+                // Fallback to direct query if cache fails
+            }
+        }
+
+        return self::where('name', $name)->with('role')->first();
     }
 
     /**
@@ -41,10 +59,17 @@ class Plan extends Model
      */
     public static function clearCache()
     {
-        Cache::forget('wave_active_plans');
-        $plans = self::pluck('name');
-        foreach ($plans as $planName) {
-            Cache::forget("wave_plan_{$planName}");
+        // Only clear cache if it's available
+        if (app()->bound('cache')) {
+            try {
+                Cache::forget('wave_active_plans');
+                $plans = self::pluck('name');
+                foreach ($plans as $planName) {
+                    Cache::forget("wave_plan_{$planName}");
+                }
+            } catch (\Exception $e) {
+                // Silently handle cache clearing failures
+            }
         }
     }
 }

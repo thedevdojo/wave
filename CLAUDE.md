@@ -124,3 +124,8 @@ The application uses Pest for testing with PHPUnit as the underlying framework. 
 - Use `Plan::getByName($name)` instead of `Plan::where('name', $name)->first()`
 - Use `Category::getAllCached()` instead of `Category::all()`
 - Always clear relevant caches when updating user roles, plans, or categories
+
+### Installation & CI Compatibility
+- All caching methods include fallbacks for when cache service is unavailable
+- Service provider guards against cache binding issues during package discovery
+- Compatible with automated testing environments and CI/CD pipelines

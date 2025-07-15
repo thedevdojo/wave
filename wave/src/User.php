@@ -80,21 +80,44 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     public function subscriber()
     {
-        return Cache::remember("user_subscriber_{$this->id}", 300, function () {
-            return $this->subscriptions()->where('status', 'active')->exists();
-        });
+        // Use cache if available, otherwise direct query
+        if (app()->bound('cache')) {
+            try {
+                return Cache::remember("user_subscriber_{$this->id}", 300, function () {
+                    return $this->subscriptions()->where('status', 'active')->exists();
+                });
+            } catch (\Exception $e) {
+                // Fallback to direct query if cache fails
+            }
+        }
+
+        return $this->subscriptions()->where('status', 'active')->exists();
     }
 
     public function subscribedToPlan($planSlug)
     {
-        return Cache::remember("user_plan_{$this->id}_{$planSlug}", 300, function () use ($planSlug) {
-            $plan = Plan::getByName($planSlug);
-            if (! $plan) {
-                return false;
-            }
+        // Use cache if available, otherwise direct query
+        if (app()->bound('cache')) {
+            try {
+                return Cache::remember("user_plan_{$this->id}_{$planSlug}", 300, function () use ($planSlug) {
+                    $plan = Plan::getByName($planSlug);
+                    if (! $plan) {
+                        return false;
+                    }
 
-            return $this->subscriptions()->where('plan_id', $plan->id)->where('status', 'active')->exists();
-        });
+                    return $this->subscriptions()->where('plan_id', $plan->id)->where('status', 'active')->exists();
+                });
+            } catch (\Exception $e) {
+                // Fallback to direct query if cache fails
+            }
+        }
+
+        $plan = Plan::where('name', $planSlug)->first();
+        if (! $plan) {
+            return false;
+        }
+
+        return $this->subscriptions()->where('plan_id', $plan->id)->where('status', 'active')->exists();
     }
 
     public function plan()
@@ -177,9 +200,18 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     public function isAdmin(): bool
     {
-        return Cache::remember("user_admin_{$this->id}", 600, function () {
-            return $this->hasRole('admin');
-        });
+        // Use cache if available, otherwise direct query
+        if (app()->bound('cache')) {
+            try {
+                return Cache::remember("user_admin_{$this->id}", 600, function () {
+                    return $this->hasRole('admin');
+                });
+            } catch (\Exception $e) {
+                // Fallback to direct query if cache fails
+            }
+        }
+
+        return $this->hasRole('admin');
     }
 
     public function canBeImpersonated(): bool
@@ -225,13 +257,20 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
      */
     public function clearUserCache()
     {
-        Cache::forget("user_subscriber_{$this->id}");
-        Cache::forget("user_admin_{$this->id}");
-        
-        // Clear plan-specific caches
-        $plans = Plan::pluck('name');
-        foreach ($plans as $planName) {
-            Cache::forget("user_plan_{$this->id}_{$planName}");
+        // Only clear cache if it's available
+        if (app()->bound('cache')) {
+            try {
+                Cache::forget("user_subscriber_{$this->id}");
+                Cache::forget("user_admin_{$this->id}");
+                
+                // Clear plan-specific caches
+                $plans = Plan::pluck('name');
+                foreach ($plans as $planName) {
+                    Cache::forget("user_plan_{$this->id}_{$planName}");
+                }
+            } catch (\Exception $e) {
+                // Silently handle cache clearing failures
+            }
         }
     }
 
