@@ -10,6 +10,7 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Vite as BaseVite;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -114,7 +115,11 @@ class WaveServiceProvider extends ServiceProvider
 
     protected function loadHelpers()
     {
-        foreach (glob(__DIR__.'/Helpers/*.php') as $filename) {
+        $helpers = Cache::rememberForever('wave_helpers', function () {
+            return glob(__DIR__.'/Helpers/*.php');
+        });
+
+        foreach ($helpers as $filename) {
             require_once $filename;
         }
     }
@@ -190,32 +195,40 @@ class WaveServiceProvider extends ServiceProvider
     protected function setDefaultThemeColors()
     {
         if (config('wave.demo')) {
-            $theme = $this->getActiveTheme();
+            $cacheKey = 'wave_theme_color_' . Cookie::get('theme', 'default');
+            $color = Cache::remember($cacheKey, 3600, function () {
+                $theme = $this->getActiveTheme();
 
-            if (isset($theme->id)) {
-                if (Cookie::get('theme')) {
-                    $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
-                    if (isset($theme_cookied->id)) {
-                        $theme = $theme_cookied;
+                if (isset($theme->id)) {
+                    if (Cookie::get('theme')) {
+                        $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+                        if (isset($theme_cookied->id)) {
+                            $theme = $theme_cookied;
+                        }
                     }
+
+                    return match ($theme->folder) {
+                        'anchor' => '#000000',
+                        'blank' => '#090909',
+                        'cove' => '#0069ff',
+                        'drift' => '#000000',
+                        'fusion' => '#0069ff',
+                        default => '#000000'
+                    };
                 }
 
-                $default_theme_color = match ($theme->folder) {
-                    'anchor' => '#000000',
-                    'blank' => '#090909',
-                    'cove' => '#0069ff',
-                    'drift' => '#000000',
-                    'fusion' => '#0069ff'
-                };
+                return '#000000';
+            });
 
-                Config::set('wave.primary_color', $default_theme_color);
-            }
+            Config::set('wave.primary_color', $color);
         }
     }
 
     protected function getActiveTheme()
     {
-        return \Wave\Theme::where('active', 1)->first();
+        return Cache::remember('wave_active_theme', 3600, function () {
+            return \Wave\Theme::where('active', 1)->first();
+        });
     }
 
     protected function hasDBConnection()

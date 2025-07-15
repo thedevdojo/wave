@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -79,17 +80,21 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     public function subscriber()
     {
-        return $this->subscriptions()->where('status', 'active')->exists();
+        return Cache::remember("user_subscriber_{$this->id}", 300, function () {
+            return $this->subscriptions()->where('status', 'active')->exists();
+        });
     }
 
     public function subscribedToPlan($planSlug)
     {
-        $plan = Plan::where('name', $planSlug)->first();
-        if (! $plan) {
-            return false;
-        }
+        return Cache::remember("user_plan_{$this->id}_{$planSlug}", 300, function () use ($planSlug) {
+            $plan = Plan::getByName($planSlug);
+            if (! $plan) {
+                return false;
+            }
 
-        return $this->subscriptions()->where('plan_id', $plan->id)->where('status', 'active')->exists();
+            return $this->subscriptions()->where('plan_id', $plan->id)->where('status', 'active')->exists();
+        });
     }
 
     public function plan()
@@ -172,8 +177,9 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     public function isAdmin(): bool
     {
-        // return if the user has a role of admin
-        return $this->hasRole('admin');
+        return Cache::remember("user_admin_{$this->id}", 600, function () {
+            return $this->hasRole('admin');
+        });
     }
 
     public function canBeImpersonated(): bool
@@ -212,6 +218,21 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     public function apiKeys(): HasMany
     {
         return $this->hasMany('Wave\ApiKey')->orderByDesc('created_at');
+    }
+
+    /**
+     * Clear user-related caches when data changes
+     */
+    public function clearUserCache()
+    {
+        Cache::forget("user_subscriber_{$this->id}");
+        Cache::forget("user_admin_{$this->id}");
+        
+        // Clear plan-specific caches
+        $plans = Plan::pluck('name');
+        foreach ($plans as $planName) {
+            Cache::forget("user_plan_{$this->id}_{$planName}");
+        }
     }
 
     public function avatar()
