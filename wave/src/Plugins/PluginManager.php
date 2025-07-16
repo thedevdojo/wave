@@ -3,6 +3,7 @@
 namespace Wave\Plugins;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -23,17 +24,17 @@ class PluginManager
     {
         $installedPlugins = $this->getInstalledPlugins();
 
-        Log::info('Installed plugins: '.json_encode($installedPlugins));
+        // Only log when there are actually plugins to load
+        if (!empty($installedPlugins)) {
+            Log::info('Loading plugins: '.json_encode($installedPlugins));
+        }
 
         foreach ($installedPlugins as $pluginName) {
             $studlyPluginName = Str::studly($pluginName);
             $pluginClass = "Wave\\Plugins\\{$studlyPluginName}\\{$studlyPluginName}Plugin";
 
-            Log::info("Attempting to load plugin: {$pluginClass}");
-
             $expectedPath = $this->findPluginFile($pluginName);
             if ($expectedPath) {
-                Log::info("File found at: {$expectedPath}, attempting to include it.");
                 include_once $expectedPath;
 
                 if (class_exists($pluginClass)) {
@@ -90,10 +91,25 @@ class PluginManager
 
     protected function getInstalledPlugins()
     {
+        // Check if cache is available (not during package discovery)
+        if ($this->app->bound('cache')) {
+            try {
+                return Cache::remember('wave_installed_plugins', 3600, function () {
+                    $path = resource_path('plugins/installed.json');
+                    if (! File::exists($path)) {
+                        return [];
+                    }
+
+                    return File::json($path);
+                });
+            } catch (\Exception $e) {
+                // Fallback to direct file access if cache fails
+            }
+        }
+
+        // Direct file access when cache is not available
         $path = resource_path('plugins/installed.json');
         if (! File::exists($path)) {
-            Log::warning("installed.json does not exist at: {$path}");
-
             return [];
         }
 

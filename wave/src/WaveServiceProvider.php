@@ -10,6 +10,7 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Vite as BaseVite;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +37,7 @@ class WaveServiceProvider extends ServiceProvider
             return new Wave;
         });
 
-        $this->loadHelpers();
+        // Move helper loading to boot method to avoid cache service dependency
 
         $this->loadLivewireComponents();
 
@@ -73,6 +74,7 @@ class WaveServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'wave');
         $this->loadMigrationsFrom(realpath(__DIR__.'/../database/migrations'));
         $this->loadBladeDirectives();
+        $this->loadHelpers();
         $this->setDefaultThemeColors();
 
         FilamentColor::register([
@@ -114,7 +116,22 @@ class WaveServiceProvider extends ServiceProvider
 
     protected function loadHelpers()
     {
-        foreach (glob(__DIR__.'/Helpers/*.php') as $filename) {
+        // Check if cache service is available (not during package discovery)
+        if ($this->app->bound('cache') && $this->app->make('cache')->getStore()) {
+            try {
+                $helpers = Cache::rememberForever('wave_helpers', function () {
+                    return glob(__DIR__.'/Helpers/*.php');
+                });
+            } catch (\Exception $e) {
+                // Fallback to direct file loading if cache fails
+                $helpers = glob(__DIR__.'/Helpers/*.php');
+            }
+        } else {
+            // Direct file loading during package discovery or when cache is not available
+            $helpers = glob(__DIR__.'/Helpers/*.php');
+        }
+
+        foreach ($helpers as $filename) {
             require_once $filename;
         }
     }
@@ -190,32 +207,64 @@ class WaveServiceProvider extends ServiceProvider
     protected function setDefaultThemeColors()
     {
         if (config('wave.demo')) {
-            $theme = $this->getActiveTheme();
+            $color = '#000000'; // Default color
 
-            if (isset($theme->id)) {
-                if (Cookie::get('theme')) {
-                    $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
-                    if (isset($theme_cookied->id)) {
-                        $theme = $theme_cookied;
-                    }
+            // Only use cache if available
+            if ($this->app->bound('cache') && $this->hasDBConnection()) {
+                try {
+                    $cacheKey = 'wave_theme_color_' . Cookie::get('theme', 'default');
+                    $color = Cache::remember($cacheKey, 3600, function () {
+                        $theme = $this->getActiveTheme();
+
+                        if (isset($theme->id)) {
+                            if (Cookie::get('theme')) {
+                                $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+                                if (isset($theme_cookied->id)) {
+                                    $theme = $theme_cookied;
+                                }
+                            }
+
+                            return match ($theme->folder) {
+                                'anchor' => '#000000',
+                                'blank' => '#090909',
+                                'cove' => '#0069ff',
+                                'drift' => '#000000',
+                                'fusion' => '#0069ff',
+                                default => '#000000'
+                            };
+                        }
+
+                        return '#000000';
+                    });
+                } catch (\Exception $e) {
+                    // Fallback to default color if cache or DB fails
+                    $color = '#000000';
                 }
-
-                $default_theme_color = match ($theme->folder) {
-                    'anchor' => '#000000',
-                    'blank' => '#090909',
-                    'cove' => '#0069ff',
-                    'drift' => '#000000',
-                    'fusion' => '#0069ff'
-                };
-
-                Config::set('wave.primary_color', $default_theme_color);
             }
+
+            Config::set('wave.primary_color', $color);
         }
     }
 
     protected function getActiveTheme()
     {
-        return \Wave\Theme::where('active', 1)->first();
+        if ($this->app->bound('cache') && $this->hasDBConnection()) {
+            try {
+                return Cache::remember('wave_active_theme', 3600, function () {
+                    return \Wave\Theme::where('active', 1)->first();
+                });
+            } catch (\Exception $e) {
+                // Fallback to direct DB query if cache fails
+                return \Wave\Theme::where('active', 1)->first();
+            }
+        }
+
+        // Direct DB query when cache is not available
+        if ($this->hasDBConnection()) {
+            return \Wave\Theme::where('active', 1)->first();
+        }
+
+        return null;
     }
 
     protected function hasDBConnection()
