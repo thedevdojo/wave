@@ -1,8 +1,8 @@
 <section>
     <x-marketing.elements.heading
         level="h2"
-        title="Chart Your Course"
-        description="Set sail and discover the riches of our value-packed plans, meticulously designed to offer you the very best features for less on your SaaS expedition. " 
+        title="Alte informatii care sa apara pe prima pagina"
+        description="Obiective de viitor pe scurt. " 
     />
 
     <div x-data="{ on: false, billing: '{{ get_default_billing_cycle() }}',
