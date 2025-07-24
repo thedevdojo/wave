@@ -28,22 +28,22 @@
                             <span class="block text-xs font-medium leading-5 text-slate-500">Descrierea modului de a deveni membru</span>
                         </a>
                     </li>
-                    <!--
+                    
                     <li class="w-full border-l border-zinc-100 md:w-1/5">
                         <a href="#_" class="block p-6 h-full text-lg font-semibold transition duration-300 hover:bg-zinc-50 lg:p-7 lg:py-10">
                             <svg class="mb-4 w-auto h-7" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20.101 40.323c11.046 0 20-8.954 20-20 0-11.045-8.954-20-20-20-11.045 0-20 8.955-20 20 0 11.046 8.955 20 20 20Zm3.087-24.547a4.366 4.366 0 1 0-6.173 0l3.086 3.087 3.087-3.087Zm1.46 7.634a4.366 4.366 0 1 0 0-6.174l-3.086 3.087 3.087 3.087Zm-1.46 7.635a4.366 4.366 0 0 0 0-6.174l-3.087-3.087-3.086 3.087a4.366 4.366 0 0 0 6.173 6.174ZM9.38 23.41a4.366 4.366 0 0 1 6.174-6.174l3.087 3.087-3.087 3.087a4.366 4.366 0 0 1-6.174 0Z" fill="#7F57F1"></path></svg>
-                            <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Four</span>
-                            <span class="block text-xs font-medium leading-5 text-slate-500">Add a fourth feature or even a resource here</span>
+                            <span class="block my-2 text-xs font-bold uppercase text-slate-800">Servicii</span>
+                            <span class="block text-xs font-medium leading-5 text-slate-500">Serviciile si evenimentele clubului</span>
                         </a>
                     </li>
                     <li class="w-full border-r border-l border-zinc-100 md:w-1/5">
                         <a href="#_" class="block p-6 h-full text-lg font-semibold transition duration-300 hover:bg-zinc-50 lg:p-7 lg:py-10">
                             <svg class="mb-4 w-auto h-7" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.654 3.891c-1.43 1-2.724 2.184-3.847 3.515 4.59-.426 10.42.27 17.189 3.654 7.228 3.614 13.05 3.737 17.1 2.955a19.888 19.888 0 0 0-1.378-3.199c-4.638.49-10.583-.158-17.511-3.622-4.4-2.2-8.278-3.106-11.553-3.303Zm26.355 3.07A19.95 19.95 0 0 0 20.1.293c-1.74 0-3.427.222-5.036.64 2.18.594 4.494 1.464 6.93 2.682 5.073 2.536 9.453 3.353 13.014 3.344Zm4.953 10.96c-4.894.967-11.652.769-19.755-3.283-7.576-3.788-13.605-3.74-17.672-2.836-.21.046-.415.095-.615.146a19.85 19.85 0 0 0-1.262 3.64c.326-.087.662-.17 1.01-.247 4.933-1.096 11.904-1.048 20.328 3.164 7.576 3.788 13.605 3.74 17.672 2.836.139-.03.276-.063.411-.096a20.296 20.296 0 0 0-.117-3.323Zm-.536 7.545c-4.846.847-11.408.522-19.219-3.384-7.576-3.787-13.605-3.74-17.672-2.836-.902.2-1.714.445-2.43.703-.003.114-.004.23-.004.345 0 11.045 8.955 20 20 20 9.258 0 17.046-6.29 19.325-14.828Z" fill="#1E5DFF"></path></svg>
-                            <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Five</span>
-                            <span class="block text-xs font-medium leading-5 text-slate-500">Add another feature highlight or link to a page</span>
+                            <span class="block my-2 text-xs font-bold uppercase text-slate-800">Contact</span>
+                            <span class="block text-xs font-medium leading-5 text-slate-500">Trimite-ne un mesaj și te vom contacta în curând</span>
                         </a>
                     </li>
-                    -->
+                    
                 </ul>
             </div>
         </li>

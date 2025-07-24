@@ -27,7 +27,7 @@
                             </a>
                             <a href="https://devdojo.com/course/wave" target="_blank" class="block px-5 py-3 -m-3 space-y-1 rounded-xl transition duration-150 ease-in-out hover:bg-zinc-100">
                                 <p class="text-base font-medium leading-6 text-zinc-900">
-                                    Videouri
+                                    Video
                                 </p>
                                 <p class="text-xs leading-5 text-zinc-500">
                                     Urmărește videouri pentru a învăța cum să folosești CCB.

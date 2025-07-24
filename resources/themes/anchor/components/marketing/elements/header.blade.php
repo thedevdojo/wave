@@ -85,22 +85,22 @@
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Descrierea modului de a deveni membru</span>
                                     </a>
                                 </li>
-                                <!--
+                                
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/lighthouse.png" class="w-12 h-auto" alt="feature 4 icon" />
-                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Four</span>
-                                        <span class="block text-xs font-medium leading-5 text-slate-500">Add a fourth feature or even a resource here</span>
+                                        <img src="/wave/img/icons/Services.png" class="w-12 h-auto" alt="feature 4 icon" />
+                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Servicii</span>
+                                        <span class="block text-xs font-medium leading-5 text-slate-500">Servicii si evenimente oferite de club</span>
                                     </a>
                                 </li>
                                 <li class="w-full border-l border-r border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/chest.png" class="w-12 h-auto" alt="feature 5 icon" />
-                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Five</span>
-                                        <span class="block text-xs font-medium leading-5 text-slate-500">Add another feature highlight or link to a page</span>
+                                        <img src="/wave/img/icons/Contact.png" class="w-12 h-auto" alt="feature 5 icon" />
+                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Contact</span>
+                                        <span class="block text-xs font-medium leading-5 text-slate-500">Trimite-ne un mesaj și te vom contacta în curând</span>
                                     </a>
                                 </li>
-                                -->
+                                
                             </ul>
                         </div>
                     </li>
@@ -150,11 +150,11 @@
                     </li>
                     <li class="flex-shrink-0 h-16 border-b border-gray-100 md:border-b-0 md:h-full">
                         <a href="{{ route('pricing') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">
-                            Pricing
+                            Documente
                         </a>
                     </li>
                     <li class="flex-shrink-0 h-16 border-b border-gray-100 md:border-b-0 md:h-full">
-                        <a href="{{ route('blog') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">Blog</a>
+                        <a href="{{ route('blog') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">Evenimente</a>
                     </li>
 
                     @guest
