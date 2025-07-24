@@ -48,7 +48,8 @@ try {
     if (App\Models\User::first()) {
         /***** Dynamic Page Routes *****/
         foreach (Wave\Page::all() as $page) {
-            Route::view($page->slug, 'theme::page', ['page' => $page->toArray()])->name($page->slug);
+            // Use a prefix like 'page/' to avoid route conflicts and allow route('page.show', ['slug' => ...])
+            Route::view('page/' . $page->slug, 'theme::page', ['page' => $page->toArray()])->name('page.show')->defaults('slug', $page->slug);
         }
     }
 
