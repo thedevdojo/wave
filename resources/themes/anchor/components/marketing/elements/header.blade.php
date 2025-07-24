@@ -65,7 +65,7 @@
                             class="top-0 left-0 w-screen space-y-3 transition-transform duration-300 ease-out bg-white border-t border-b border-gray-100 md:shadow-md md:-translate-y-2 md:mt-24 md:block md:group-hover:block md:group-hover:visible md:group-hover:opacity-100 md:group-hover:translate-y-0" x-cloak>
                             <ul class="flex flex-col justify-between mx-auto max-w-7xl md:px-16 md:flex-row">
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
-                                    <a href="{{ route('page.show', ['slug' => 'istoria-clubului']) }}" onclick="demoButtonClickMessage(event)" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
+                                    <a href="{{ route('page.show', ['slug' => 'istoria-clubului']) }}" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/history.png" class="w-12 h-auto" alt="feature 1 icon" />
                                         <span class="block my-2 text-xs font-bold uppercase text-slate-800">Istoria Clubului</span>
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Câteva relatări cronologice despre Club</span>
