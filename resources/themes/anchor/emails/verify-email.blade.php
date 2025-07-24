@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Welcome Email</title>
+    <title>E-mail de Bun Venit</title>
 </head>
 
 <body>
-<h2>Welcome to the site {{$user['name']}}</h2>
+<h2>Bine ai venit pe site {{$user['name']}}</h2>
 <br/>
-Your registered email-id is {{$user['email']}} , Please click on the below link to verify your email account
+Adresa ta de e-mail înregistrată este {{$user['email']}} , Te rugăm să faci clic pe linkul de mai jos pentru a-ți verifica contul de e-mail
 <br/>
-<a href="{{ url('user/verify/', $user['verification_code']) }}">Verify Email</a>
+<a href="{{ url('user/verify/', $user['verification_code']) }}">Verifică E-mail</a>
 </body>
 
 </html>

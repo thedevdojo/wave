@@ -30,30 +30,30 @@
                 </div>
 
                 <div class="flex flex-col justify-start items-center px-4 space-y-1.5 w-full h-full text-slate-600 dark:text-zinc-400">
-                    <x-app.sidebar-link href="/dashboard" icon="phosphor-house" :active="Request::is('dashboard')">Dashboard</x-app.sidebar-link>
-                    <x-app.sidebar-dropdown text="Projects" icon="phosphor-stack" id="projects_dropdown" :active="(Request::is('projects'))" :open="(Request::is('project_a') || Request::is('project_b') || Request::is('project_c')) ? '1' : '0'">
-                        <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-cube" :active="(Request::is('project_a'))">Project A</x-app.sidebar-link>
-                        <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-cube" :active="(Request::is('project_b'))">Project B</x-app.sidebar-link>
-                        <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-cube" :active="(Request::is('project_c'))">Project C</x-app.sidebar-link>
+                    <x-app.sidebar-link href="/dashboard" icon="phosphor-house" :active="Request::is('dashboard')">Panou de control</x-app.sidebar-link>
+                    <x-app.sidebar-dropdown text="Proiecte" icon="phosphor-stack" id="projects_dropdown" :active="(Request::is('projects'))" :open="(Request::is('project_a') || Request::is('project_b') || Request::is('project_c')) ? '1' : '0'">
+                        <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modifică acest buton în sidebar.blade.php').send()" icon="phosphor-cube" :active="(Request::is('project_a'))">Proiect A</x-app.sidebar-link>
+                        <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modifică acest buton în sidebar.blade.php').send()" icon="phosphor-cube" :active="(Request::is('project_b'))">Proiect B</x-app.sidebar-link>
+                        <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modifică acest buton în sidebar.blade.php').send()" icon="phosphor-cube" :active="(Request::is('project_c'))">Proiect C</x-app.sidebar-link>
                     </x-app.sidebar-dropdown>
-                    <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-pencil-line" active="false">Stories</x-app.sidebar-link>
-                    <x-app.sidebar-link  onclick="event.preventDefault(); new FilamentNotification().title('Modify this button inside of sidebar.blade.php').send()" icon="phosphor-users" active="false">Users</x-app.sidebar-link>
+                    <x-app.sidebar-link onclick="event.preventDefault(); new FilamentNotification().title('Modifică acest buton în sidebar.blade.php').send()" icon="phosphor-pencil-line" active="false">Povești</x-app.sidebar-link>
+                    <x-app.sidebar-link  onclick="event.preventDefault(); new FilamentNotification().title('Modifică acest buton în sidebar.blade.php').send()" icon="phosphor-users" active="false">Utilizatori</x-app.sidebar-link>
                 </div>
             </div>
 
             <div class="relative px-2.5 space-y-1.5 text-zinc-700 dark:text-zinc-400">
                 
-                <x-app.sidebar-link href="https://devdojo.com/wave/docs" target="_blank" icon="phosphor-book-bookmark-duotone" active="false">Documentation</x-app.sidebar-link>
-                <x-app.sidebar-link href="https://devdojo.com/questions" target="_blank" icon="phosphor-chat-duotone" active="false">Questions</x-app.sidebar-link>
-                <x-app.sidebar-link :href="route('changelogs')" icon="phosphor-book-open-text-duotone" :active="Request::is('changelog') || Request::is('changelog/*')">Changelog</x-app.sidebar-link>
+                <x-app.sidebar-link href="https://devdojo.com/wave/docs" target="_blank" icon="phosphor-book-bookmark-duotone" active="false">Documentație</x-app.sidebar-link>
+                <x-app.sidebar-link href="https://devdojo.com/questions" target="_blank" icon="phosphor-chat-duotone" active="false">Întrebări</x-app.sidebar-link>
+                <x-app.sidebar-link :href="route('changelogs')" icon="phosphor-book-open-text-duotone" :active="Request::is('changelog') || Request::is('changelog/*')">Jurnal modificări</x-app.sidebar-link>
 
                 <div x-show="sidebarTip" x-data="{ sidebarTip: $persist(true) }" class="px-1 py-3" x-collapse x-cloak>
                     <div class="relative w-full px-4 py-3 space-y-1 border rounded-lg bg-zinc-50 text-zinc-700 dark:text-zinc-100 dark:bg-zinc-800 border-zinc-200/60 dark:border-zinc-700">
                         <button @click="sidebarTip=false" class="absolute top-0 right-0 z-50 p-1.5 mt-2.5 mr-2.5 rounded-full opacity-80 cursor-pointer hover:opacity-100 hover:bg-zinc-100 hover:dark:bg-zinc-700 hover:dark:text-zinc-300 text-zinc-500 dark:text-zinc-400">
                             <x-phosphor-x-bold class="w-3 h-3" />
                         </button>
-                        <h5 class="pb-1 text-sm font-bold -translate-y-0.5">Edit This Section</h5>
-                        <p class="block pb-1 text-xs opacity-80 text-balance">You can edit any aspect of your user dashboard. This section can be found inside your theme component/app/sidebar file.</p>
+                        <h5 class="pb-1 text-sm font-bold -translate-y-0.5">Editează această secțiune</h5>
+                        <p class="block pb-1 text-xs opacity-80 text-balance">Poți edita orice aspect al panoului de utilizator. Această secțiune se găsește în componenta theme/app/sidebar.</p>
                     </div>
                 </div>
 

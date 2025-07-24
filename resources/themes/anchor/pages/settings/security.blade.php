@@ -79,7 +79,7 @@
                 <form wire:submit="save" class="w-full max-w-lg">
                     {{ $this->form }}
                     <div class="w-full pt-6 text-right">
-                        <x-button type="submit">Save</x-button>
+                        <x-button type="submit">Salvare</x-button>
                     </div>
                 </form>
 

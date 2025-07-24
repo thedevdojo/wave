@@ -20,23 +20,23 @@
 					</div>
 					<div class="mt-3 text-center sm:ml-4">
 						<h3 class="text-lg font-medium leading-6 text-zinc-900" id="modal-headline">
-							Cancel Subscription
+							Anulează abonamentul
 						</h3>
 						<div class="mt-1">
-							<p class="text-sm leading-5 text-zinc-500">Are you sure you want to cancel?</p>
+							<p class="text-sm leading-5 text-zinc-500">Sigur dorești să anulezi?</p>
 						</div>
 					</div>
 				</div>
 				<div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
 					<span class="flex flex-1 w-full rounded-md shadow-sm sm:ml-3 sm:w-full">
 					<div data-url="{{ auth()->user()->subscription->cancel_url }}" @click="$store.confirmCancel.open=false" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-md shadow-sm cursor-pointer checkout-cancel hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red sm:text-sm sm:leading-5">
-						Cancel Subscription
+						Anulează abonamentul
 					</div>
 
 					</span>
 					<span class="flex flex-1 w-full mt-3 rounded-md shadow-sm sm:mt-0 sm:w-full">
 						<button onclick="closeCancelModal()" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-zinc-700 transition duration-150 ease-in-out bg-white border border-zinc-300 rounded-md shadow-sm hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5">
-							Close
+							Închide
 						</button>
 					</span>
 				</div>

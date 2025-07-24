@@ -57,7 +57,7 @@
                 <ul :class="{ 'hidden md:flex' : !mobileMenuOpen, 'flex flex-col absolute md:relative md:w-auto w-screen h-full md:h-full md:overflow-auto overflow-scroll md:pt-0 mt-24 md:pb-0 pb-48 bg-white md:bg-transparent' : mobileMenuOpen }" id="menu" class="flex items-stretch justify-start flex-1 w-full h-full ml-0 border-t border-gray-100 pointer-events-auto md:items-center md:justify-center gap-x-8 md:w-auto md:border-t-0 md:flex-row">
                     <li x-data="{ open: false }" @mouseenter="showOverlay=true" @mouseleave="showOverlay=false" class="z-30 flex flex-col items-start h-auto border-b border-gray-100 md:h-full md:border-b-0 group md:flex-row md:items-center">
                         <a href="#_" x-on:click="open=!open" class="flex items-center w-full h-16 gap-1 text-sm font-semibold text-gray-700 transition duration-300 hover:bg-gray-100 md:hover:bg-transparent px-7 md:h-full md:px-0 md:w-auto hover:text-gray-900">
-                            <span class="">Platform</span>
+                            <span class="">Despre noi</span>
                             <svg :class="{ 'group-hover:-rotate-180' : !mobileMenuOpen, '-rotate-180' : mobileMenuOpen && open }" class="w-5 h-5 transition-all duration-300 ease-out" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
                         </a>
                         <div 
@@ -67,24 +67,25 @@
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="demoButtonClickMessage(event)" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/anchor.png" class="w-12 h-auto" alt="feature 1 icon" />
-                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature One</span>
-                                        <span class="block text-xs font-medium leading-5 text-slate-500">Highlight your main feature here</span>
+                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Istoria Clubului</span>
+                                        <span class="block text-xs font-medium leading-5 text-slate-500">Câteva relatări cronologice despre Club</span>
                                     </a>
                                 </li>
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/turtle.png" class="w-12 h-auto" alt="feature 2 icon" />
-                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Two</span>
-                                        <span class="block text-xs font-medium leading-5 text-slate-500">Brief description of another feature</span>
+                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Echipa</span>
+                                        <span class="block text-xs font-medium leading-5 text-slate-500">Membrii echipei</span>
                                     </a>
                                 </li>
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/compass.png" class="w-12 h-auto" alt="feature 3 icon" />
-                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Feature Three</span>
-                                        <span class="block text-xs font-medium leading-5 text-slate-500">Describe another one of your features here</span>
+                                        <span class="block my-2 text-xs font-bold uppercase text-slate-800">Cum sa devii membru</span>
+                                        <span class="block text-xs font-medium leading-5 text-slate-500">Descrierea modului de a deveni membru</span>
                                     </a>
                                 </li>
+                                <!--
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
                                         <img src="/wave/img/icons/lighthouse.png" class="w-12 h-auto" alt="feature 4 icon" />
@@ -99,12 +100,13 @@
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Add another feature highlight or link to a page</span>
                                     </a>
                                 </li>
+                                -->
                             </ul>
                         </div>
                     </li>
                     <li x-data="{ open: false }" @mouseenter="showOverlay=true" @mouseleave="showOverlay=false" class="z-30 flex flex-col items-start h-auto border-b border-gray-100 md:h-full md:border-b-0 group md:flex-row md:items-center">
                         <a href="#_" x-on:click="open=!open" class="flex items-center w-full h-16 gap-1 text-sm font-semibold text-gray-700 transition duration-300 hover:bg-gray-100 md:hover:bg-transparent px-7 md:h-full md:px-0 md:w-auto hover:text-gray-900">
-                            <span class="">Resources</span>
+                            <span class="">Despre rasa</span>
                             <svg :class="{ 'group-hover:-rotate-180' : !mobileMenuOpen, '-rotate-180' : mobileMenuOpen && open }" class="w-5 h-5 transition-all duration-300 ease-out" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
                         </a>
                         <div 
@@ -114,32 +116,32 @@
                                 <div class="flex flex-col w-full border-l border-r divide-x md:flex-row divide-zinc-100 border-zinc-100">
                                     <div class="w-auto divide-y divide-zinc-100">
                                         <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-neutral-100 group">
-                                            <span class="block mb-1 font-medium text-black">Authentication</span>
-                                            <span class="block font-light leading-5 opacity-50">Configure the login, register, and forgot password for your app</span>
+                                            <span class="block mb-1 font-medium text-black">Istoria Ciobanescului belgian</span>
+                                            <span class="block font-light leading-5 opacity-50">Cateva detalii despre istoria ciobănescului belgian</span>
                                         </a>
                                         <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-neutral-100 group">
-                                            <span class="block mb-1 font-medium text-black">Roles and Permissions</span>
-                                            <span class="block leading-5 opacity-50">We utilize the bullet-proof Spatie Permissions package</span>
+                                            <span class="block mb-1 font-medium text-black">Confirmarea rasei</span>
+                                            <span class="block leading-5 opacity-50">Cand si cum se face confirmarea rasei</span>
                                         </a>
                                     </div>
                                     <div class="w-auto divide-y divide-zinc-100">
                                         <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-neutral-100">
-                                            <span class="block mb-1 font-medium text-black">Posts and Pages</span>
-                                            <span class="block font-light leading-5 opacity-50">Easily write blog articles and create pages for your application</span>
+                                            <span class="block mb-1 font-medium text-black">Groenendael</span>
+                                            <span class="block font-light leading-5 opacity-50">Descriere generala a rasei Groenendael</span>
                                         </a>
                                         <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-neutral-100">
-                                            <span class="block mb-1 font-medium text-black">Themes</span>
-                                            <span class="block leading-5 opacity-50">Kick-start your app with a pre-built theme or create your own</span>
+                                            <span class="block mb-1 font-medium text-black">Laekenois</span>
+                                            <span class="block leading-5 opacity-50">Descriere generala a rasei Laekenois</span>
                                         </a>
                                     </div>
                                     <div class="w-auto divide-y divide-zinc-100">
                                         <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-neutral-100">
-                                            <span class="block mb-1 font-medium text-black">Settings and More</span>
-                                            <span class="block leading-5 opacity-50">Easily create and update app settings. And so much more</span>
+                                            <span class="block mb-1 font-medium text-black">Malinois</span>
+                                            <span class="block leading-5 opacity-50">Descriere generala a rasei Malinois</span>
                                         </a>
                                         <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-neutral-100">
-                                            <span class="block mb-1 font-medium text-black">Subscriptions</span>
-                                            <span class="block leading-5 opacity-50">Integration payments and let users subscribe to a plan</span>
+                                            <span class="block mb-1 font-medium text-black">Tervueren</span>
+                                            <span class="block leading-5 opacity-50">Descriere generala a rasei Tervueren</span>
                                         </a>
                                     </div>
                                 </div>
@@ -157,12 +159,12 @@
 
                     @guest
                         <li class="relative z-30 flex flex-col items-center justify-center flex-shrink-0 w-full h-auto pt-3 space-y-3 text-sm md:hidden px-7">
-                            <x-button href="{{ route('login') }}" tag="a" class="w-full text-sm" color="secondary">Login</x-button>
-                            <x-button href="{{ route('register') }}" tag="a" class="w-full text-sm">Sign Up</x-button>
+                            <x-button href="{{ route('login') }}" tag="a" class="w-full text-sm" color="secondary">Logare</x-button>
+                            <x-button href="{{ route('register') }}" tag="a" class="w-full text-sm">Inregistrare</x-button>
                         </li>
                     @else
                         <li class="flex items-center justify-center w-full pt-3 md:hidden px-7">
-                            <x-button href="{{ route('login') }}" tag="a" class="w-full text-sm">View Dashboard</x-button>
+                            <x-button href="{{ route('login') }}" tag="a" class="w-full text-sm">Vezi Dashboard</x-button>
                         </li>
                     @endguest
 
@@ -171,11 +173,11 @@
             
             @guest
                 <div class="relative z-30 items-center justify-center flex-shrink-0 hidden h-full space-x-3 text-sm md:flex">
-                    <x-button href="{{ route('login') }}" tag="a" class="text-sm" color="secondary">Login</x-button>
-                    <x-button href="{{ route('register') }}" tag="a" class="text-sm">Sign Up</x-button>
+                    <x-button href="{{ route('login') }}" tag="a" class="text-sm" color="secondary">Logare</x-button>
+                    <x-button href="{{ route('register') }}" tag="a" class="text-sm">Inregistrare</x-button>
                 </div>
             @else
-                <x-button href="{{ route('login') }}" tag="a" class="text-sm" class="relative z-20 flex-shrink-0 hidden ml-2 md:block">View Dashboard</x-button>
+                <x-button href="{{ route('login') }}" tag="a" class="text-sm" class="relative z-20 flex-shrink-0 hidden ml-2 md:block">Vezi Dashboard</x-button>
             @endguest
 
         </div>

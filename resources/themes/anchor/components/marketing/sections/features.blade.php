@@ -1,8 +1,8 @@
 <section>
     <x-marketing.elements.heading
         level="h2"
-        title="Master the Seas of <br> Product Development"
-        description="Harness the power of Wave's extensive features to fast-track your SaaS projects. Get ready to fall in love with the future of SaaS development, today." 
+        title="Stăpânește mările dezvoltării de produs"
+        description="Valorifică puterea funcționalităților extinse CCB pentru a accelera proiectele tale." 
     />
     <div class="text-center">
         <div class="grid grid-cols-2 gap-x-6 gap-y-12 mt-12 text-center lg:mt-16 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-16">
@@ -11,9 +11,9 @@
                     <x-phosphor-users-three class="w-6 h-6" />
                 </div>
                 <div class="mt-6">
-                    <h3 class="font-medium text-zinc-900">User Management</h3>
+                    <h3 class="font-medium text-zinc-900">Management utilizatori</h3>
                     <p class="mt-2 text-sm text-zinc-500">
-                        Effortlessly manage users with Wave's intuitive dashboard.
+                        Gestionează cu ușurință utilizatorii cu panoul intuitiv CCB.
                     </p>
                 </div>
             </div>
@@ -22,9 +22,9 @@
                     <x-phosphor-shield-check class="w-6 h-6" />
                 </div>
                 <div class="mt-6">
-                    <h3 class="font-medium text-zinc-900">Secure Authentication</h3>
+                    <h3 class="font-medium text-zinc-900">Autentificare securizată</h3>
                     <p class="mt-2 text-sm text-zinc-500">
-                        Implement secure login, registration, and two-factor authentication.
+                        Implementează login, înregistrare și autentificare cu doi factori în siguranță.
                     </p>
                 </div>
             </div>
@@ -33,9 +33,9 @@
                     <x-phosphor-puzzle-piece class="w-6 h-6" />
                 </div>
                 <div class="mt-6">
-                    <h3 class="font-medium text-zinc-900">Third-Party Integrations</h3>
+                    <h3 class="font-medium text-zinc-900">Integrări terțe</h3>
                     <p class="mt-2 text-sm text-zinc-500">
-                        Easily integrate with popular third-party services.
+                        Integrează cu ușurință servicii terțe populare.
                     </p>
                 </div>
             </div>
@@ -44,9 +44,9 @@
                     <x-phosphor-chart-bar class="w-6 h-6" />
                 </div>
                 <div class="mt-6">
-                    <h3 class="font-medium text-zinc-900">Analytics</h3>
+                    <h3 class="font-medium text-zinc-900">Analitice</h3>
                     <p class="mt-2 text-sm text-zinc-500">
-                        Gain insights into user behavior with built-in analytics.
+                        Obține informații despre comportamentul utilizatorilor cu analitice integrate.
                     </p>
                 </div>
             </div>
@@ -55,9 +55,9 @@
                     <x-phosphor-paint-bucket class="w-6 h-6" />
                 </div>
                 <div class="mt-6">
-                    <h3 class="font-medium text-zinc-900">Customizable Themes</h3>
+                    <h3 class="font-medium text-zinc-900">Teme personalizabile</h3>
                     <p class="mt-2 text-sm text-zinc-500">
-                        Personalize your app with easy-to-use themes.
+                        Personalizează aplicația cu teme ușor de folosit.
                     </p>
                 </div>
             </div>
@@ -66,9 +66,9 @@
                     <x-phosphor-gear-fine class="w-6 h-6" />
                 </div>
                 <div class="mt-6">
-                    <h3 class="font-medium text-zinc-900">Easy Setup</h3>
+                    <h3 class="font-medium text-zinc-900">Configurare rapidă</h3>
                     <p class="mt-2 text-sm text-zinc-500">
-                        Get started quickly with Wave's straightforward setup process.
+                        Începe rapid cu procesul simplu de configurare Wave.
                     </p>
                 </div>
             </div>
@@ -77,9 +77,9 @@
                     <x-phosphor-lifebuoy class="w-6 h-6" />
                 </div>
                 <div class="mt-6">
-                    <h3 class="font-medium text-zinc-900">Community Support</h3>
+                    <h3 class="font-medium text-zinc-900">Suport comunitate</h3>
                     <p class="mt-2 text-sm text-zinc-500">
-                        Join a vibrant community of developers for support and collaboration.
+                        Alătură-te unei comunități vibrante de dezvoltatori pentru suport și colaborare.
                     </p>
                 </div>
             </div>
@@ -88,9 +88,9 @@
                     <x-phosphor-images-square class="w-6 h-6" />
                 </div>
                 <div class="mt-6">
-                    <h3 class="font-medium text-zinc-900">File Management</h3>
+                    <h3 class="font-medium text-zinc-900">Management fișiere</h3>
                     <p class="mt-2 text-sm text-zinc-500">
-                        Manage your files efficiently with Wave's built-in file manager.
+                        Gestionează eficient fișierele cu managerul integrat Wave.
                     </p>
                 </div>
             </div>

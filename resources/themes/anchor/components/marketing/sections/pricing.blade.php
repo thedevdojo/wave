@@ -79,7 +79,7 @@
 
                             <div class="mt-8">
                                 <x-button class="w-full" tag="a" href="/settings/subscription">
-                                    Get Started
+                                    Începe acum
                                 </x-button>
                             </div>
                         </div>
@@ -89,5 +89,5 @@
         </div>
     </div>
 
-    <p class="w-full mt-0 mb-8 text-center text-zinc-500 sm:my-10">All plans are fully configurable in the Admin Area.</p>
+    <p class="w-full mt-0 mb-8 text-center text-zinc-500 sm:my-10">Toate planurile pot fi configurate complet din zona de administrare.</p>
 </section>

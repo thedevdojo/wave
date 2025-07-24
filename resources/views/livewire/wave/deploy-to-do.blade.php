@@ -6,7 +6,7 @@
             <span class="overflow-hidden absolute left-0 w-4 h-4 transition duration-150 ease-out transform translate-x-0 group-hover:-translate-x-0.5 group-hover:w-4">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
             </span>
-            <span class="mx-auto ml-1 text-sm font-bold leading-none select-none text-zinc-900">Back to Admin</span>
+            <span class="mx-auto ml-1 text-sm font-bold leading-none select-none text-zinc-900">Înapoi la Admin</span>
         </a>
 
         <div id="notification" class="flex hidden justify-between items-center px-8 py-5 mb-10 w-full max-w-lg text-white rounded-lg bg-zinc-500">
@@ -20,17 +20,17 @@
                     <img src="{{ Storage::url('/settings/April2021/deploy-to-do.png') }}" class="w-10 h-10">
 
                     <div class="relative pl-3">
-                        <h3 class="text-base font-bold leading-tight text-white">Deploy Your App to Digital Ocean</h3>
-                        <p class="text-xs">Easily deploy your Wave app to DigitalOcean.</p>
+                        <h3 class="text-base font-bold leading-tight text-white">Publică aplicația ta pe Digital Ocean</h3>
+                        <p class="text-xs">Publică rapid aplicația CCB pe DigitalOcean.</p>
                     </div>
 
                 </div>
                 <div class="p-10">
-                <p class="pb-10 text-sm text-zinc-500">Deploy to the <a href="https://www.digitalocean.com/products/app-platform/" target="_blank" class="underline">DigitalOcean App platform</a> in 3 simple steps.</p>
+                <p class="pb-10 text-sm text-zinc-500">Publică pe <a href="https://www.digitalocean.com/products/app-platform/" target="_blank" class="underline">platforma DigitalOcean App</a> în 3 pași simpli.</p>
 
                 <div class="relative mb-8">
                         <label for="api_key" class="block pb-3 text-sm font-medium text-zinc-700">
-                            1. Enter your Github Repo <span class="font-normal">(exclude https://github.com/)</span>
+                            1. Introdu repo-ul tău Github <span class="font-normal">(fără https://github.com/)</span>
                         </label>
                         <input type="text" wire:model.live="repo" placeholder="thedevdojo/wave" class="block px-4 py-3 mb-4 w-full rounded-lg border-2 border border-transparent border-zinc-200 focus:ring focus:ring-blue-500 focus:outline-none" name="repo">
                     </div>
@@ -46,11 +46,11 @@
                     </div>
 
                     <label for="api_key" class="block pb-3 text-sm font-medium text-zinc-700">
-                        3. Enter Your <a href="https://cloud.digitalocean.com/api_access" class="underline" target="_blank">DigitalOcean API Key</a>
+                        3. Introdu cheia ta <a href="https://cloud.digitalocean.com/api_access" class="underline" target="_blank">API DigitalOcean</a>
                     </label>
                 <input type="password" wire:model.live="api_key" class="block px-4 py-3 mb-4 w-full rounded-lg border-2 border border-transparent border-zinc-200 focus:ring focus:ring-blue-500 focus:outline-none" name="api_key">
                 <div class="block">
-                        <button wire:click="deploy" class="px-3 py-4 w-full font-medium text-white bg-blue-600 rounded-lg">Deploy</button>
+                        <button wire:click="deploy" class="px-3 py-4 w-full font-medium text-white bg-blue-600 rounded-lg">Publică</button>
                     </div>
                 </div>
             </div>
@@ -63,8 +63,8 @@
                         <img src="{{ Storage::url('/settings/April2021/deploy-to-do.png') }}" class="w-10 h-10">
 
                         <div class="relative pl-3">
-                            <h3 class="text-base font-bold leading-tight text-white">Your App on Digital Ocean</h3>
-                            <p class="block text-xs">Deployed to the <a href="https://www.digitalocean.com/products/app-platform/" target="_blank" class="underline">DO App Platform</a></p>
+                            <h3 class="text-base font-bold leading-tight text-white">Aplicația ta pe Digital Ocean</h3>
+                            <p class="block text-xs">Publicată pe <a href="https://www.digitalocean.com/products/app-platform/" target="_blank" class="underline">DO App Platform</a></p>
                         </div>
 
                     </div>
@@ -72,12 +72,12 @@
 
                     <div class="flex relative flex-col p-8 h-full">
                         <h2 class="font-bold text-black">{{ $app['app']['spec']['name'] }}</h2>
-                        <a href="{{ $app['app']['live_url_base'] ?? '#' }}" target="_blank" class="text-sm font-medium text-blue-500 underline">{{ $app['app']['live_url_base'] ?? 'Deploying...' }}</a>
+                        <a href="{{ $app['app']['live_url_base'] ?? '#' }}" target="_blank" class="text-sm font-medium text-blue-500 underline">{{ $app['app']['live_url_base'] ?? 'Se publică...' }}</a>
                         <a href="https://cloud.digitalocean.com/apps/{{ $app_id }}" target="_blank" class="inline-block px-5 py-3 mt-5 w-full text-sm font-bold text-center text-white bg-blue-600 rounded-lg">Configure on DigitalOcean</a>
                     </div>
                 </div>
 
-                <h3 class="my-5 text-sm font-bold text-zinc-500">Deployments</h3>
+                <h3 class="my-5 text-sm font-bold text-zinc-500">Publicări</h3>
                 @foreach($deployments['deployments'] as $deployment)
                     @php
                         $success = false;

@@ -8,12 +8,12 @@
 	<x-app.container x-data class="space-y-6" x-cloak>
         <div class="w-full">
             <x-app.heading
-                title="Successfully Purchased 🎉"
-                description="Thanks for upgrading to a subscription plan."
+                title="Achiziție realizată cu succes 🎉"
+                description="Mulțumim că ați trecut la un plan de abonament."
             />
             <div class="py-5 space-y-5">
-                <p>This is your customer's successful purchase welcome screen. After a user upgrades their account they will be redirected to this page after a successful transaction.</p>
-                <p>You can modify this view inside your theme folder at <x-code-inline>pages/subscription/welcome</x-code-inline>.</p>
+                <p>Aceasta este pagina de bun venit după achiziția cu succes a unui abonament. După ce un utilizator își upgradează contul, va fi redirecționat către această pagină după tranzacția reușită.</p>
+                <p>Puteți modifica această vizualizare în folderul temei la <x-code-inline>pages/subscription/welcome</x-code-inline>.</p>
             </div>
         </div>
     </x-app.container>

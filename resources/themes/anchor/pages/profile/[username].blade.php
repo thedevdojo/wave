@@ -45,8 +45,8 @@
                 </x-card>
 
                 <x-card class="lg:p-10 lg:text-left text-center lg:w-2/3 lg:flex-2">
-                    <p class="text-sm text-zinc-600">This is the application user profile page.</p>
-                    <p class="mt-2 text-sm text-zinc-600">You can modify this file from your template <strong>resources/themes/anchor</strong> at:</p>
+                    <p class="text-sm text-zinc-600"> Aceasta este pagina de profil a utilizatorului aplicației.</p>
+                    <p class="mt-2 text-sm text-zinc-600">Poți modifica acest fișier din șablonul tău <strong>resources/themes/anchor</strong> la:</p>
                     <code class="inline-block px-2 py-1 mt-2 font-mono text-sm font-medium bg-gray-100 rounded-md text-zinc-600">{{ 'pages/profile/[username].blade.php' }}</code>
                 </x-card>
             </div>

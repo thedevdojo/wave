@@ -2,7 +2,7 @@
 
     <x-elements.back-button
         class="max-w-3xl mx-auto mt-4 md:mt-8"
-        text="Return Back Home"
+        text="Înapoi la pagina principală"
         :href="route('home')"
     />
     
@@ -17,7 +17,7 @@
 
             <h1 class="flex flex-col leading-none">
                 <span>{{ $page['title'] }}</span>
-                {{-- <span class="mt-0 mt-10 text-base font-normal">Written on <time datetime="{{ Carbon\Carbon::parse($page->created_at)->toIso8601String() }}">{{ Carbon\Carbon::parse($page->created_at)->toFormattedDateString() }}</time>. Posted in <a href="{{ route('blog.category', $page->category->slug) }}" rel="category">{{ $page->category->name }}</a>.</span> --}}
+                {{-- <span class="mt-0 mt-10 text-base font-normal">Scris la <time datetime="{{ Carbon\Carbon::parse($page->created_at)->toIso8601String() }}">{{ Carbon\Carbon::parse($page->created_at)->toFormattedDateString() }}</time>. Posted in <a href="{{ route('blog.category', $page->category->slug) }}" rel="category">{{ $page->category->name }}</a>.</span> --}}
             </h1>
 
         </div>

@@ -25,12 +25,12 @@
     @volt('settings.subscription') 
         <div class="relative">
             <x-app.settings-layout
-                title="Subscriptions"
-                description="Your subscription details"
+                title="Abonamente"
+                description="Detaliile abonamentului tău"
             >
                 @role('admin')
                     <x-app.alert id="no_subscriptions" :dismissable="false" type="info">
-                        You are logged in as an admin and have full access. Authenticate with a different user and visit this page to see the subscription checkout process.
+                        Sunteți conectat ca administrator și aveți acces complet. Autentificați-vă cu un alt utilizator și vizitați această pagină pentru a vedea procesul de plată pentru abonament.
                     </x-app.alert>
                 @else
                     @subscriber
@@ -39,12 +39,12 @@
                             <x-app.alert id="no_subscriptions" :dismissable="false" type="success">
                                 <div class="flex items-center w-full">
                                     <x-phosphor-seal-check-duotone class="flex-shrink-0 mr-1.5 -ml-1.5 w-6 h-6" /> 
-                                    <span>You are currently subscribed to the {{ auth()->user()->plan()->name }} {{ auth()->user()->planInterval() }} Plan.</span>
+                                    <span>Sunteți în prezent abonat la planul {{ auth()->user()->plan()->name }} {{ auth()->user()->planInterval() }}.</span>
                                 </div>
                             </x-app.alert>
-                            <p class="my-4">Manage your subscription by clicking below. Edit this page from the following file:  <x-code-inline>resources/views/{{ $theme->folder }}/pages/settings/subscription.blade.php</x-code-inline></p>
+                            <p class="my-4">Gestionează-ți abonamentul apăsând mai jos. Editează această pagină din fișierul:  <x-code-inline>resources/views/{{ $theme->folder }}/pages/settings/subscription.blade.php</x-code-inline></p>
                             @if (session('update'))
-                                <div class="my-4 text-sm text-green-600">Successfully updated your subscription</div>
+                                <div class="my-4 text-sm text-green-600">Abonamentul a fost actualizat cu succes</div>
                             @endif
                             <livewire:billing.update />
                         </div>
@@ -55,14 +55,14 @@
                             <x-app.alert id="no_subscriptions" :dismissable="false" type="info">
                                 <div class="flex items-center space-x-1.5">
                                     <x-phosphor-shopping-bag-open-duotone class="flex-shrink-0 mr-1.5 -ml-1.5 w-6 h-6" />
-                                    <span>No active subscriptions found. Please select a plan below.</span>
+                                    <span>Nu există abonamente active. Vă rugăm să selectați un plan mai jos.</span>
                                 </div>
                             </x-app.alert>
                         </div>
                         <livewire:billing.checkout />
                         <p class="flex items-center mt-3 mb-4">
                             <x-phosphor-shield-check-duotone class="w-4 h-4 mr-1" />
-                            <span class="mr-1">Billing is securely managed via </span><strong>{{ ucfirst(config('wave.billing_provider')) }} Payment Platform</strong>.
+                            <span class="mr-1">Facturarea este gestionată în siguranță prin </span><strong>{{ ucfirst(config('wave.billing_provider')) }} Platforma de Plăți</strong>.
                         </p>
                     @endnotsubscriber
                 @endrole

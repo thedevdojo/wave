@@ -18,10 +18,10 @@
 					</div>
 					<div class="mt-3 text-center sm:ml-4">
 						<h3 class="text-lg font-medium leading-6 text-zinc-900" id="modal-headline">
-							Switch Plans Here
+							Schimbă planul aici
 						</h3>
 						<div class="mt-1">
-							<p class="text-sm leading-5 text-zinc-500">Are you sure you want to switch to the <span x-text="plan_name"></span> plan?</p>
+							<p class="text-sm leading-5 text-zinc-500">Sigur dorești să treci la planul <span x-text="plan_name"></span>?</p>
 						</div>
 					</div>
 				</div>
@@ -30,14 +30,14 @@
                         <form id="form" action="{{ route('wave.switch-plans') }}" method="POST" class="w-full">
                             @csrf
                             <button type="submit" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out border border-transparent rounded-md shadow-sm cursor-pointer bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-wave sm:text-sm sm:leading-5">
-                                Yes, Switch My Plan
+                                Da, schimbă planul meu
                             </button>
                             <input type="hidden" name="plan_id" :value="plan_id">
                         </form>
 					</div>
 					<span class="flex flex-1 w-full mt-3 rounded-md shadow-sm sm:mt-0 sm:w-full">
 						<button @click="$store.plan_modal.close();" type="button" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-6 text-zinc-700 transition duration-150 ease-in-out bg-white border border-zinc-300 rounded-md shadow-sm hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue sm:text-sm sm:leading-5">
-							No Thanks
+							Nu, mulțumesc
 						</button>
 					</span>
 				</div>

@@ -1,11 +1,11 @@
 <section class="w-full">
-    <x-marketing.elements.heading level="h2" title="Oceans of Approval" description="Find out why users are on board with Wave, through their own words and success tales." />
+    <x-marketing.elements.heading level="h2" title="Oceane de apreciere" description="Află de ce utilizatorii aleg CCB, prin propriile lor cuvinte și povești de succes." />
     <ul role="list" class="grid grid-cols-1 gap-12 py-12 mx-auto max-w-2xl lg:max-w-none lg:grid-cols-3">
         <li>
             <figure class="flex flex-col justify-between h-full">
                 <blockquote class="">
                     <p class="text-sm sm:text-base font-medium text-zinc-500">
-                        Wave's ready-to-use features sped up our launch significantly. Its authentication and subscription tools are particularly impressive and user-friendly.
+                        Funcționalitățile gata de utilizare ale CCB ne-au accelerat semnificativ lansarea. Instrumentele de autentificare și abonamente sunt deosebit de impresionante și ușor de folosit.
                     </p>
                 </blockquote>
                 <figcaption class="flex flex-col justify-between mt-6">
@@ -13,7 +13,7 @@
                     <div class="mt-4">
                         <div class="font-medium text-zinc-900">Adam Wathan</div>
                         <div class="mt-1 text-sm text-zinc-500">
-                            Creator of Tailwind CSS
+                            Creatorul Tailwind CSS
                         </div>
                     </div>
                 </figcaption>
@@ -23,7 +23,7 @@
             <figure class="flex flex-col justify-between h-full">
                 <blockquote class="">
                     <p class="text-sm sm:text-base font-medium text-zinc-500">
-                        Wave transformed our development workflow with its excellent API and profile management, saving us valuable time.
+                        CCB ne-a transformat fluxul de dezvoltare cu API-ul excelent și managementul profilului, economisindu-ne timp prețios.
                     </p>
                 </blockquote>
                 <figcaption class="flex flex-col justify-between mt-6">
@@ -31,7 +31,7 @@
                     <div class="mt-4">
                         <div class="font-medium text-zinc-900">Caleb Porzio</div>
                         <div class="mt-1 text-sm text-zinc-500">
-                            Creator of Livewire & Alpine
+                            Creatorul Livewire & Alpine
                         </div>
                     </div>
                 </figcaption>
@@ -41,7 +41,7 @@
             <figure class="flex flex-col justify-between h-full">
                 <blockquote class="">
                     <p class="text-sm sm:text-base font-medium text-zinc-500">
-                        Wave is an amazing SaaS Starter kit. The team here are Laravel leverages Wave all the time for many projects.
+                        CCB este un kit de pornire SaaS uimitor. Echipa noastră folosește CCB tot timpul pentru multe proiecte.
                     </p>
                 </blockquote>
                 <figcaption class="flex flex-col justify-between mt-6">
@@ -49,7 +49,7 @@
                     <div class="mt-4">
                         <div class="font-medium text-zinc-900">Taylor Otwell</div>
                         <div class="mt-1 text-sm text-zinc-500">
-                            Founder and Creator of Laravel
+                            Fondator și creator Laravel
                         </div>
                     </div>
                 </figcaption>

@@ -4,7 +4,7 @@
             {{ $this->form }}
         </div>
         <div class="pt-6 w-full text-right">
-            <x-button type="submit">Save</x-button>
+            <x-button type="submit">Salvare</x-button>
         </div>
     </form>
 </div>

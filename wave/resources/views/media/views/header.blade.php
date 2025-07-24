@@ -7,7 +7,7 @@
                         <input type="file" wire:model="upload" id="upload-button" class="hidden absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                     </label>
                     <svg class="w-4 h-4 md:mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M12.0005 11.7495L12.0005 20.2495M12.0005 11.7495L15.2505 15.2495M12.0005 11.7495L8.75049 15.2495" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.25 15.25C2.96461 14.2882 2.75 13.1762 2.75 12C2.75 9.94957 4.20204 8.23828 6.13392 7.83831C7.01365 5.45184 9.30808 3.75 12 3.75C15.3711 3.75 18.1189 6.41898 18.2454 9.75913C19.9257 9.8846 21.25 11.2876 21.25 13C21.25 14.0407 20.5 15 19.75 15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
-                    <span class="hidden md:inline">Upload</span>
+                    <span class="hidden md:inline">Încarcă</span>
                 </button>
             </div>
             @include('wave::media.views.header.add-folder')

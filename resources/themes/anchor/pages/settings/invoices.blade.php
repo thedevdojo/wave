@@ -15,8 +15,8 @@
                 description="Your past plan invoices"
             >
                 @empty($invoices)
-                    <x-app.alert id="dashboard_alert">No invoices available.</x-app.alert>
-                    <p class="mt-3">You do not have any past invoices. When you subscribe to a plan you'll see your past invoices here.</p>
+                    <x-app.alert id="dashboard_alert">Nici o factură disponibilă.</x-app.alert>
+                    <p class="mt-3">Nu ai nicio factură anterioară. Când te abonezi la un plan, vei vedea facturile tale anterioare aici.</p>
                 @else
                     <div class="overflow-hidden border border-gray-200 rounded-lg">
                         <table class="min-w-full divide-y divide-zinc-200">

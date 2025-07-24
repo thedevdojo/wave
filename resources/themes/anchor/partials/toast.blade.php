@@ -36,10 +36,10 @@
                     </div>
                     <div class="flex-1 w-0 pl-3.5 ml-1 border-l border-zinc-100">
                         <p class="text-sm font-medium leading-5 text-zinc-900">
-                            <template x-if="$store.toast.type == 'info'"><span>Notice</span></template>
-                            <template x-if="$store.toast.type == 'warning'"><span>Warning</span></template>
-                            <template x-if="$store.toast.type == 'success'"><span>Success</span></template>
-                            <template x-if="$store.toast.type == 'danger'"><span>Something went wrong</span></template>
+                            <template x-if="$store.toast.type == 'info'"><span>Notificare</span></template>
+                            <template x-if="$store.toast.type == 'warning'"><span>Avertizare</span></template>
+                            <template x-if="$store.toast.type == 'success'"><span>Succes</span></template>
+                            <template x-if="$store.toast.type == 'danger'"><span>Ceva nu a funcționat</span></template>
                         </p>
                         <p class="text-sm leading-5 text-zinc-500" x-text="$store.toast.message"></p>
                     </div>

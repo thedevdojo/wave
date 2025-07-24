@@ -27,29 +27,28 @@
             </div>
             <div class="w-full h-px my-2 bg-slate-100 dark:bg-zinc-700"></div>
             <div class="relative flex flex-col p-2 space-y-1">
-                <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('notifications') }}" icon="phosphor-bell-duotone" active="false">Notifications</x-app.sidebar-link>
-                <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ '/profile/' . auth()->user()->username }}" icon="phosphor-planet-duotone" active="false">Public Profile</x-app.sidebar-link>
+                <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('notifications') }}" icon="phosphor-bell-duotone" active="false">Notificări</x-app.sidebar-link>
+                <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ '/profile/' . auth()->user()->username }}" icon="phosphor-planet-duotone" active="false">Profil Public</x-app.sidebar-link>
                 {{-- @subscriber
-                                <x-app.sidebar-link href="{{ '/profile/' . auth()->user()->username }}" icon="phosphor-credit-card">Manage Subscription</x-app.sidebar-link>
+                                <x-app.sidebar-link href="{{ '/profile/' . auth()->user()->username }}" icon="phosphor-credit-card">Administrare abonament</x-app.sidebar-link>
                 @endsubscriber --}}
 
-
-                <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('settings.profile') }}" icon="phosphor-gear-duotone" active="false">Settings</x-app.sidebar-link>
+                <x-app.sidebar-link :hideUntilGroupHover="false" href="{{ route('settings.profile') }}" icon="phosphor-gear-duotone" active="false">Setări</x-app.sidebar-link>
                 @notsubscriber
                 <x-app.sidebar-link href="/settings/subscription" icon="phosphor-sparkle-duotone">Upgrade</x-app.sidebar-link>
                 @endnotsubscriber
                 @if(auth()->user()->isAdmin())
-                <x-app.sidebar-link :hideUntilGroupHover="false" :ajax="false" href="/admin" icon="phosphor-crown-duotone" active="false">View Admin</x-app.sidebar-link>
+                <x-app.sidebar-link :hideUntilGroupHover="false" :ajax="false" href="/admin" icon="phosphor-crown-duotone" active="false">Vizualizare Admin</x-app.sidebar-link>
                 @endif
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
                     <button onclick="event.preventDefault(); this.closest('form').submit();" class="relative w-full flex cursor-pointer hover:text-zinc-700 dark:hover:text-zinc-100 select-none hover:bg-zinc-200 dark:hover:bg-zinc-700/60 items-center rounded-lg p-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                         <x-phosphor-sign-out-duotone class="flex-shrink-0 w-auto h-5 ml-1 mr-2" />
-                        <span>Log out</span>
+                        <span>Deconectare</span>
                     </button>
                 </form>
                 @impersonating
-                <x-app.sidebar-link href="{{ route('impersonate.leave') }}" icon="phosphor-user-circle-duotone" active="false">Leave impersonation</x-app.sidebar-link>
+                <x-app.sidebar-link href="{{ route('impersonate.leave') }}" icon="phosphor-user-circle-duotone" active="false">Părăsește impersonarea</x-app.sidebar-link>
                 @endImpersonating
             </div>
         </div>
