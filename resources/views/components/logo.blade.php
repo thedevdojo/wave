@@ -3,7 +3,7 @@
 <link rel="icon" href="{{ setting('site.favicon_dark', '/wave/favicon-dark.png') }}" type="image/png" media="(prefers-color-scheme: dark)">
 {{-- Optionally, you can use the favicon as an image: --}}
 <img 
-    {{ $attributes->merge(['class' => 'text-gray-900 dark:text-white', 'style' => 'width:128px;height:128px;margin-top:16px;']) }} 
+    {{ $attributes->merge(['class' => 'text-gray-900 dark:text-white', 'style' => 'width:132px;height:132px;margin-top:32px;']) }} 
     src="{{ setting('site.favicon', '/wave/favicon.png') }}" 
     alt="Logo" 
 />
