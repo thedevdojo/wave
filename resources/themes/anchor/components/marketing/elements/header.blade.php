@@ -80,7 +80,7 @@
                                 </li>
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/compass.png" class="w-12 h-auto" alt="feature 3 icon" />
+                                        <img src="/wave/img/icons/member-card.png" class="w-12 h-auto" alt="Membru icon" />
                                         <span class="block my-2 text-xs font-bold uppercase text-slate-800">Cum sa devii membru</span>
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Descrierea modului de a deveni membru</span>
                                     </a>
