@@ -66,14 +66,14 @@
                             <ul class="flex flex-col justify-between mx-auto max-w-7xl md:px-16 md:flex-row">
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="demoButtonClickMessage(event)" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/anchor.png" class="w-12 h-auto" alt="feature 1 icon" />
+                                        <img src="/wave/img/icons/history.png" class="w-12 h-auto" alt="feature 1 icon" />
                                         <span class="block my-2 text-xs font-bold uppercase text-slate-800">Istoria Clubului</span>
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Câteva relatări cronologice despre Club</span>
                                     </a>
                                 </li>
                                 <li class="w-full border-l border-gray-100 md:w-1/5">
                                     <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-50 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/turtle.png" class="w-12 h-auto" alt="feature 2 icon" />
+                                        <img src="/wave/img/icons/team.png" class="w-12 h-auto" alt="feature 2 icon" />
                                         <span class="block my-2 text-xs font-bold uppercase text-slate-800">Echipa</span>
                                         <span class="block text-xs font-medium leading-5 text-slate-500">Membrii echipei</span>
                                     </a>
