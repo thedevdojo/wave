@@ -47,10 +47,11 @@ Route::redirect('billing', 'settings/subscription')->name('billing');
 try {
     if (App\Models\User::first()) {
         /***** Dynamic Page Routes *****/
-        foreach (Wave\Page::all() as $page) {
-            // Use a prefix like 'page/' to avoid route conflicts and allow route('page.show', ['slug' => ...])
-            Route::view('page/' . $page->slug, 'theme::page', ['page' => $page->toArray()])->name('page.show')->defaults('slug', $page->slug);
-        }
+        // Register a single route with a slug parameter for all pages
+        Route::get('page/{slug}', function ($slug) {
+            $page = \Wave\Page::where('slug', $slug)->firstOrFail();
+            return view('theme::page', ['page' => $page->toArray()]);
+        })->name('page.show');
     }
 
     // If no users are found, redirect to the installer or dummy page
