@@ -2,7 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Form;
+use BackedEnum;
+use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\TextColumn;
@@ -24,13 +25,13 @@ class ChangelogResource extends Resource
 {
     protected static ?string $model = Changelog::class;
 
-    protected static ?string $navigationIcon = 'phosphor-book-open-text-duotone';
+    protected static BackedEnum|string|null $navigationIcon = 'phosphor-book-open-text-duotone';
 
     protected static ?int $navigationSort = 7;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 TextInput::make('title')
                     ->required()

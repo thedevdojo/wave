@@ -2,7 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Form;
+use BackedEnum;
+use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -30,13 +31,13 @@ class PlanResource extends Resource
 {
     protected static ?string $model = Plan::class;
 
-    protected static ?string $navigationIcon = 'phosphor-credit-card-duotone';
+    protected static BackedEnum|string|null $navigationIcon = 'phosphor-credit-card-duotone';
 
     protected static ?int $navigationSort = 3;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->components([
                 Section::make('Plan Details')
                     ->description('Below are the basic details for each plan including name, description, and features')

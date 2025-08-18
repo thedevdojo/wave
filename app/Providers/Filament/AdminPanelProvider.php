@@ -6,17 +6,6 @@ use Wave\Widgets\WaveInfoWidget;
 use Wave\Widgets\WelcomeWidget;
 use Wave\Widgets\UsersWidget;
 use Wave\Widgets\PostsPagesWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\PageViewsWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\VisitorsWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\ActiveUsersOneDayWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\ActiveUsersSevenDayWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\ActiveUsersTwentyEightDayWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsDurationWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsByCountryWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsByDeviceWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\MostVisitedPagesWidget;
-use BezhanSalleh\FilamentGoogleAnalytics\Widgets\TopReferrersListWidget;
 use Wave\Widgets\AnalyticsPlaceholderWidget;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
@@ -76,18 +65,7 @@ class AdminPanelProvider extends PanelProvider
                 PostsPagesWidget::class,
                 ...$this->dynamicWidgets,
 
-                // Google Analytics Widgets that are available here: https://filamentphp.com/plugins/bezhansalleh-google-analytics
-                PageViewsWidget::class,
-                VisitorsWidget::class,
-                ActiveUsersOneDayWidget::class,
-                ActiveUsersSevenDayWidget::class,
-                ActiveUsersTwentyEightDayWidget::class,
-                SessionsWidget::class,
-                SessionsDurationWidget::class,
-                SessionsByCountryWidget::class,
-                SessionsByDeviceWidget::class,
-                MostVisitedPagesWidget::class,
-                TopReferrersListWidget::class,
+                // Google Analytics widgets removed
             ])
             ->middleware([
                 EncryptCookies::class,

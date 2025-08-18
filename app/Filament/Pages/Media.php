@@ -2,19 +2,20 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Support\Enums\MaxWidth;
+use BackedEnum;
+use Filament\Support\Enums\Width;
 use Filament\Pages\Page;
 
 class Media extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-photo';
+    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-photo';
 
-    protected static string $view = 'wave::media.index';
+    protected string $view = 'wave::media.index';
 
     protected static ?int $navigationSort = 5;
 
-    public function getMaxContentWidth(): MaxWidth|string|null
+    public function getMaxContentWidth(): Width|string|null
     {
-        return MaxWidth::Full;
+        return Width::Full;
     }
 }
