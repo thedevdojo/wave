@@ -2,14 +2,21 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Form;
+use Filament\Forms\Set;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\FormsResource\Pages\ListForms;
+use App\Filament\Resources\FormsResource\Pages\CreateForms;
+use App\Filament\Resources\FormsResource\Pages\EditForms;
 use App\Filament\Resources\FormsResource\Pages;
 use App\Models\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -30,7 +37,7 @@ class FormsResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->components([
                 TextInput::make('name')
                     ->label('Name')
                     ->required()
@@ -76,13 +83,13 @@ class FormsResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -97,9 +104,9 @@ class FormsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListForms::route('/'),
-            'create' => Pages\CreateForms::route('/create'),
-            'edit' => Pages\EditForms::route('/{record}/edit'),
+            'index' => ListForms::route('/'),
+            'create' => CreateForms::route('/create'),
+            'edit' => EditForms::route('/{record}/edit'),
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Wave\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
+use Wave\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -60,7 +62,7 @@ class SubscriptionController extends Controller
                 'effective_from' => 'immediately',
             ]);
 
-        \Illuminate\Support\Facades\Log::info($response->body());
+        Log::info($response->body());
 
         // Check if the request was successful
         if ($response->successful()) {
@@ -104,7 +106,7 @@ class SubscriptionController extends Controller
         for ($i = 0; $i < $retryCount; $i++) {
             $response = Http::withToken($this->api_key)->get($this->paddle_url.'/transactions/'.$request->checkout_id);
 
-            \Illuminate\Support\Facades\Log::info($response->body());
+            Log::info($response->body());
             if ($response->successful()) {
                 $resBody = json_decode($response->body());
                 if (isset($resBody->data->status) && ! is_null($resBody->data->subscription_id)) {
@@ -137,7 +139,7 @@ class SubscriptionController extends Controller
                     if (User::where('email', $customerEmail)->exists()) {
                         $user = User::where('email', $customerEmail)->first();
                     } else {
-                        $registration = new \Wave\Http\Controllers\Auth\RegisterController;
+                        $registration = new RegisterController;
                         $user_data = [
                             'name' => $customerName,
                             'email' => $customerEmail,

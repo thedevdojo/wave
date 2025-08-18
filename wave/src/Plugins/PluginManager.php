@@ -2,6 +2,7 @@
 
 namespace Wave\Plugins;
 
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -102,7 +103,7 @@ class PluginManager
 
                     return File::json($path);
                 });
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Fallback to direct file access if cache fails
             }
         }

@@ -2,10 +2,24 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Form;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\BooleanColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\PlanResource\Pages\ListPlans;
+use App\Filament\Resources\PlanResource\Pages\CreatePlan;
+use App\Filament\Resources\PlanResource\Pages\EditPlan;
 use App\Filament\Resources\PlanResource\Pages;
 use Filament\Forms;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -23,20 +37,20 @@ class PlanResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->components([
                 Section::make('Plan Details')
                     ->description('Below are the basic details for each plan including name, description, and features')
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->required()
                             ->maxLength(191)
                             ->columnSpan(2),
-                        Forms\Components\Textarea::make('description')
+                        Textarea::make('description')
                             ->columnSpan([
                                 'default' => 2,
                                 'lg' => 1,
                             ]),
-                        Forms\Components\TagsInput::make('features')
+                        TagsInput::make('features')
                             ->reorderable()
                             ->separator(',')
                             ->placeholder('New feature')
@@ -48,37 +62,37 @@ class PlanResource extends Resource
                 Section::make('Plan Pricing')
                     ->description('Add the pricing details for your plans below')
                     ->schema([
-                        Forms\Components\TextInput::make('monthly_price_id')
+                        TextInput::make('monthly_price_id')
                             ->label('Monthly Price ID')
                             ->hint('Stripe/Paddle ID')
                             ->maxLength(191),
-                        Forms\Components\TextInput::make('monthly_price')
+                        TextInput::make('monthly_price')
                             ->maxLength(191),
-                        Forms\Components\TextInput::make('yearly_price_id')
+                        TextInput::make('yearly_price_id')
                             ->label('Yearly Price ID')
                             ->hint('Stripe/Paddle ID')
                             ->maxLength(191),
-                        Forms\Components\TextInput::make('yearly_price')
+                        TextInput::make('yearly_price')
                             ->maxLength(191),
-                        Forms\Components\TextInput::make('onetime_price_id')
+                        TextInput::make('onetime_price_id')
                             ->label('One-time Price ID')
                             ->hint('Stripe/Paddle ID')
                             ->maxLength(191),
-                        Forms\Components\TextInput::make('onetime_price')
+                        TextInput::make('onetime_price')
                             ->maxLength(191),
                     ])->columns(2),
                 Section::make('Plan Status')
                     ->description('Make the plan default or active/inactive')
                     ->schema([
-                        Forms\Components\Toggle::make('active')
+                        Toggle::make('active')
                             ->required(),
-                        Forms\Components\Toggle::make('default')
+                        Toggle::make('default')
                             ->required(),
                     ])->columns(2),
                 Section::make('Associated Role')
                     ->description('When the user subscribes to this plan, what role should they be assigned?')
                     ->schema([
-                        Forms\Components\Select::make('role_id')
+                        Select::make('role_id')
                             ->label('Role')
                             ->options(Role::all()->pluck('name', 'id'))
                             ->searchable()
@@ -91,18 +105,18 @@ class PlanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('role_id')
+                TextColumn::make('role_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\BooleanColumn::make('active')
+                BooleanColumn::make('active')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -110,13 +124,13 @@ class PlanResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -131,9 +145,9 @@ class PlanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPlans::route('/'),
-            'create' => Pages\CreatePlan::route('/create'),
-            'edit' => Pages\EditPlan::route('/{record}/edit'),
+            'index' => ListPlans::route('/'),
+            'create' => CreatePlan::route('/create'),
+            'edit' => EditPlan::route('/{record}/edit'),
         ];
     }
 }

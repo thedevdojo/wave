@@ -2,8 +2,8 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
 use Filament\Support\Enums\MaxWidth;
+use Filament\Pages\Page;
 
 class Media extends Page
 {
@@ -13,7 +13,7 @@ class Media extends Page
 
     protected static ?int $navigationSort = 5;
 
-    public function getMaxContentWidth(): MaxWidth
+    public function getMaxContentWidth(): MaxWidth|string|null
     {
         return MaxWidth::Full;
     }

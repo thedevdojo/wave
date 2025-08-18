@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ChangelogResource\Pages;
 
+use Filament\Actions\CreateAction;
 use App\Filament\Resources\ChangelogResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
@@ -13,7 +14,7 @@ class ListChangelogs extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

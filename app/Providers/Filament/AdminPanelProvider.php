@@ -2,6 +2,22 @@
 
 namespace App\Providers\Filament;
 
+use Wave\Widgets\WaveInfoWidget;
+use Wave\Widgets\WelcomeWidget;
+use Wave\Widgets\UsersWidget;
+use Wave\Widgets\PostsPagesWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\PageViewsWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\VisitorsWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\ActiveUsersOneDayWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\ActiveUsersSevenDayWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\ActiveUsersTwentyEightDayWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsDurationWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsByCountryWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsByDeviceWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\MostVisitedPagesWidget;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets\TopReferrersListWidget;
+use Wave\Widgets\AnalyticsPlaceholderWidget;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -54,24 +70,24 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             // ->discoverWidgets(in: app_path('BezhanSalleh\FilamentGoogleAnalytics\Widgets'), for: 'BezhanSalleh\\FilamentGoogleAnalytics\\Widgets')
             ->widgets([
-                Widgets\WaveInfoWidget::class,
-                Widgets\WelcomeWidget::class,
-                Widgets\UsersWidget::class,
-                Widgets\PostsPagesWidget::class,
+                WaveInfoWidget::class,
+                WelcomeWidget::class,
+                UsersWidget::class,
+                PostsPagesWidget::class,
                 ...$this->dynamicWidgets,
 
                 // Google Analytics Widgets that are available here: https://filamentphp.com/plugins/bezhansalleh-google-analytics
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\PageViewsWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\VisitorsWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\ActiveUsersOneDayWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\ActiveUsersSevenDayWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\ActiveUsersTwentyEightDayWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsDurationWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsByCountryWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\SessionsByDeviceWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\MostVisitedPagesWidget::class,
-                \BezhanSalleh\FilamentGoogleAnalytics\Widgets\TopReferrersListWidget::class,
+                PageViewsWidget::class,
+                VisitorsWidget::class,
+                ActiveUsersOneDayWidget::class,
+                ActiveUsersSevenDayWidget::class,
+                ActiveUsersTwentyEightDayWidget::class,
+                SessionsWidget::class,
+                SessionsDurationWidget::class,
+                SessionsByCountryWidget::class,
+                SessionsByDeviceWidget::class,
+                MostVisitedPagesWidget::class,
+                TopReferrersListWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -106,7 +122,7 @@ class AdminPanelProvider extends PanelProvider
             Config::set('filament-google-analytics.most_visited_pages.filament_dashboard', true);
             Config::set('filament-google-analytics.top_referrers_list.filament_dashboard', true);
         } else {
-            $this->dynamicWidgets = [Widgets\AnalyticsPlaceholderWidget::class];
+            $this->dynamicWidgets = [AnalyticsPlaceholderWidget::class];
         }
     }
 }
