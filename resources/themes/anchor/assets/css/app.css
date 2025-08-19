@@ -1,8 +1,6 @@
 @import './component-styles.css' layer(base);
 @import 'tailwindcss';
 
-@config '../../../../../tailwind.config.js';
-
 @source '../../../../../**/*.blade.php';
 @source '../../../../../app/Filament/**/*.php';
 @source '../../../../../resources/views/filament/**/*.blade.php';
@@ -22,14 +20,11 @@
   display:none;
 }
 
-svg {
-    width:100%;
-  }
-  .wave {
-    animation: wave 3s linear;
-    animation-iteration-count:infinite;
-    fill: #4e80ee;
-  }
+.wave {
+  animation: wave 3s linear;
+  animation-iteration-count:infinite;
+  fill: #4e80ee;
+}
 
   #wave2 {
     animation-duration:5s;
