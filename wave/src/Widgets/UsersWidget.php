@@ -13,5 +13,5 @@ class UsersWidget extends Widget
     /**
      * @var view-string
      */
-    protected static string $view = 'wave::widgets.users-widget';
+    protected string $view = 'wave::widgets.users-widget';
 }

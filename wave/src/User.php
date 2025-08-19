@@ -2,6 +2,9 @@
 
 namespace Wave;
 
+use Exception;
+use Stripe\StripeClient;
+use Carbon\Carbon;
 use Devdojo\Auth\Models\User as AuthUser;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
@@ -86,7 +89,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
                 return Cache::remember("user_subscriber_{$this->id}", 300, function () {
                     return $this->subscriptions()->where('status', 'active')->exists();
                 });
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Fallback to direct query if cache fails
             }
         }
@@ -107,7 +110,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
                     return $this->subscriptions()->where('plan_id', $plan->id)->where('status', 'active')->exists();
                 });
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Fallback to direct query if cache fails
             }
         }
@@ -159,7 +162,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         }
 
         if (config('wave.billing_provider') == 'stripe') {
-            $stripe = new \Stripe\StripeClient(config('wave.stripe.secret_key'));
+            $stripe = new StripeClient(config('wave.stripe.secret_key'));
             $subscriptions = $this->subscriptions()->get();
             foreach ($subscriptions as $subscription) {
                 $invoices = $stripe->invoices->all(['customer' => $subscription->vendor_customer_id, 'limit' => 100]);
@@ -167,7 +170,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
                 foreach ($invoices as $invoice) {
                     array_push($user_invoices, (object) [
                         'id' => $invoice->id,
-                        'created' => \Carbon\Carbon::parse($invoice->created)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
+                        'created' => Carbon::parse($invoice->created)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
                         'total' => number_format(($invoice->total / 100), 2, '.', ' '),
                         'download' => $invoice->invoice_pdf,
                     ]);
@@ -182,7 +185,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
             foreach ($responseJson->data as $invoice) {
                 array_push($user_invoices, (object) [
                     'id' => $invoice->id,
-                    'created' => \Carbon\Carbon::parse($invoice->created_at)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
+                    'created' => Carbon::parse($invoice->created_at)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
                     'total' => number_format(($invoice->details->totals->subtotal / 100), 2, '.', ' '),
                     'download' => '/settings/invoices/'.$invoice->id,
                 ]);
@@ -206,7 +209,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
                 return Cache::remember("user_admin_{$this->id}", 600, function () {
                     return $this->hasRole('admin');
                 });
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Fallback to direct query if cache fails
             }
         }
@@ -262,13 +265,13 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
             try {
                 Cache::forget("user_subscriber_{$this->id}");
                 Cache::forget("user_admin_{$this->id}");
-                
+
                 // Clear plan-specific caches
                 $plans = Plan::pluck('name');
                 foreach ($plans as $planName) {
                     Cache::forget("user_plan_{$this->id}_{$planName}");
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Silently handle cache clearing failures
             }
         }

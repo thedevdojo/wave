@@ -1,5 +1,8 @@
 <?php
 
+use Wave\Setting;
+use Illuminate\Support\Facades\Blade;
+use Wave\Plan;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Cache;
 
@@ -11,7 +14,7 @@ if (! function_exists('setting')) {
         // Fetch all settings from cache or database
         if ($settingsCache === null) {
             $settingsCache = Cache::rememberForever('wave_settings', function () {
-                return Wave\Setting::pluck('value', 'key')->toArray();
+                return Setting::pluck('value', 'key')->toArray();
             });
         }
 
@@ -23,7 +26,7 @@ if (! function_exists('setting')) {
 if (! function_exists('blade')) {
     function blade($string)
     {
-        return \Illuminate\Support\Facades\Blade::render($string);
+        return Blade::render($string);
     }
 }
 
@@ -46,7 +49,7 @@ if (! function_exists('getMorphAlias')) {
 if (! function_exists('has_monthly_yearly_toggle')) {
     function has_monthly_yearly_toggle(): bool
     {
-        $plans = Wave\Plan::where('active', 1)->get();
+        $plans = Plan::where('active', 1)->get();
         $hasMonthly = false;
         $hasYearly = false;
 
@@ -74,7 +77,7 @@ if (! function_exists('has_monthly_yearly_toggle')) {
 if (! function_exists('get_default_billing_cycle')) {
     function get_default_billing_cycle()
     {
-        $plans = Wave\Plan::where('active', 1)->get();
+        $plans = Plan::where('active', 1)->get();
         $hasMonthly = false;
         $hasYearly = false;
 

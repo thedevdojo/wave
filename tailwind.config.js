@@ -1,6 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
-import preset from './vendor/filament/support/tailwind.config.preset';
 import fs from 'fs';
 import path from 'path';
 
@@ -9,7 +8,6 @@ const activeTheme = fs.existsSync(themeFilePath) ? JSON.parse(fs.readFileSync(th
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    presets: [preset],
     content: [
         './app/Filament/**/*.php',
         './resources/views/filament/**/*.blade.php',

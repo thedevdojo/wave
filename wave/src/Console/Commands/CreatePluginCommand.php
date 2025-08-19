@@ -2,6 +2,7 @@
 
 namespace Wave\Console\Commands;
 
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -168,7 +169,7 @@ EOT;
             $response = $client->get($imageUrl);
             File::put($imagePath, $response->getBody());
             $this->info('Placeholder image downloaded successfully.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->warn('Failed to download placeholder image: '.$e->getMessage());
         }
     }

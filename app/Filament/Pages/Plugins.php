@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use BackedEnum;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Artisan;
@@ -10,9 +11,9 @@ use Illuminate\Support\Str;
 
 class Plugins extends Page
 {
-    protected static ?string $navigationIcon = 'phosphor-plugs-duotone';
+    protected static BackedEnum|string|null $navigationIcon = 'phosphor-plugs-duotone';
 
-    protected static string $view = 'filament.pages.plugins';
+    protected string $view = 'filament.pages.plugins';
 
     protected static ?int $navigationSort = 9;
 

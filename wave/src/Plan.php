@@ -2,6 +2,7 @@
 
 namespace Wave;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Cache;
@@ -27,7 +28,7 @@ class Plan extends Model
                 return Cache::remember('wave_active_plans', 1800, function () {
                     return self::where('active', 1)->with('role')->get();
                 });
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Fallback to direct query if cache fails
             }
         }
@@ -46,7 +47,7 @@ class Plan extends Model
                 return Cache::remember("wave_plan_{$name}", 1800, function () use ($name) {
                     return self::where('name', $name)->with('role')->first();
                 });
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Fallback to direct query if cache fails
             }
         }
@@ -67,7 +68,7 @@ class Plan extends Model
                 foreach ($plans as $planName) {
                     Cache::forget("wave_plan_{$planName}");
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Silently handle cache clearing failures
             }
         }

@@ -1,5 +1,9 @@
 <?php
 
+use Wave\Actions\Reset;
+use App\Models\User;
+use Wave\Page;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Route;
 
 Route::impersonate();
@@ -36,7 +40,7 @@ Route::get('wave/theme/image/{theme_name}', '\Wave\Http\Controllers\ThemeImageCo
 Route::get('wave/plugin/image/{plugin_name}', '\Wave\Http\Controllers\PluginImageController@show');
 Route::redirect('admin/login', '/auth/login');
 
-Route::get('reset', \Wave\Actions\Reset::class);
+Route::get('reset', Reset::class);
 
 /***** Billing Routes *****/
 Route::post('webhook/paddle', '\Wave\Http\Controllers\Billing\Webhooks\PaddleWebhook@handler')->middleware('paddle-webhook-signature');
@@ -45,17 +49,17 @@ Route::get('stripe/portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_c
 Route::redirect('billing', 'settings/subscription')->name('billing');
 
 try {
-    if (App\Models\User::first()) {
+    if (User::first()) {
         /***** Dynamic Page Routes *****/
-        foreach (Wave\Page::all() as $page) {
+        foreach (Page::all() as $page) {
             Route::view($page->slug, 'theme::page', ['page' => $page->toArray()])->name($page->slug);
         }
     }
 
     // If no users are found, redirect to the installer or dummy page
-    if (! App\Models\User::first()) {
+    if (! User::first()) {
         Route::view('/', 'wave::welcome');
     }
-} catch (\Illuminate\Database\QueryException $e) {
+} catch (QueryException $e) {
     // Handle the exception or log it if needed
 }

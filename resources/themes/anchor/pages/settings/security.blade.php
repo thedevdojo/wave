@@ -5,6 +5,7 @@
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
     use Filament\Forms\Form;
+    use Filament\Schemas\Schema;
     use Filament\Notifications\Notification;
     
     middleware('auth');
@@ -21,10 +22,10 @@
             $this->form->fill();
         }
 
-        public function form(Form $form): Form
+        public function form(Schema $schema): Schema
         {
-            return $form
-                ->schema([
+            return $schema
+                ->components([
                     TextInput::make('current_password')
                         ->label('Current Password')
                         ->required()

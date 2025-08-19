@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use BackedEnum;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Artisan;
@@ -14,11 +15,11 @@ class Themes extends Page
 
     private $themes_folder = '';
 
-    protected static ?string $navigationIcon = 'phosphor-paint-bucket-duotone';
+    protected static BackedEnum|string|null $navigationIcon = 'phosphor-paint-bucket-duotone';
 
     protected static ?int $navigationSort = 8;
 
-    protected static string $view = 'filament.pages.themes';
+    protected string $view = 'filament.pages.themes';
 
     public function mount()
     {

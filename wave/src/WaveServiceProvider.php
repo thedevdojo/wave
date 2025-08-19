@@ -2,6 +2,18 @@
 
 namespace Wave;
 
+use Wave\Http\Middleware\VerifyPaddleWebhookSignature;
+use Wave\Http\Middleware\Subscribed;
+use Wave\Http\Middleware\TokenMiddleware;
+use Wave\Http\Middleware\InstallMiddleware;
+use Wave\Http\Middleware\ThemeDemoMiddleware;
+use Exception;
+use Wave\Console\Commands\CancelExpiredSubscriptions;
+use Wave\Console\Commands\CreatePluginCommand;
+use App\Models\Forms;
+use Wave\Http\Livewire\Billing\Checkout;
+use Wave\Http\Livewire\Billing\Update;
+use DevDojo\Themes\Models\Theme;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -41,16 +53,16 @@ class WaveServiceProvider extends ServiceProvider
 
         $this->loadLivewireComponents();
 
-        $this->app->router->aliasMiddleware('paddle-webhook-signature', \Wave\Http\Middleware\VerifyPaddleWebhookSignature::class);
-        $this->app->router->aliasMiddleware('subscribed', \Wave\Http\Middleware\Subscribed::class);
-        $this->app->router->aliasMiddleware('token_api', \Wave\Http\Middleware\TokenMiddleware::class);
+        $this->app->router->aliasMiddleware('paddle-webhook-signature', VerifyPaddleWebhookSignature::class);
+        $this->app->router->aliasMiddleware('subscribed', Subscribed::class);
+        $this->app->router->aliasMiddleware('token_api', TokenMiddleware::class);
 
         if (! $this->hasDBConnection()) {
-            $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\InstallMiddleware::class);
+            $this->app->router->pushMiddlewareToGroup('web', InstallMiddleware::class);
         }
 
         if (config('wave.demo')) {
-            $this->app->router->pushMiddlewareToGroup('web', \Wave\Http\Middleware\ThemeDemoMiddleware::class);
+            $this->app->router->pushMiddlewareToGroup('web', ThemeDemoMiddleware::class);
             // Overwrite the Vite asset helper so we can use the demo folder as opposed to the build folder
             $this->app->singleton(BaseVite::class, function ($app) {
                 // Replace the default Vite instance with the custom one
@@ -91,22 +103,22 @@ class WaveServiceProvider extends ServiceProvider
                 ImageManagerStatic::make($value);
 
                 return true;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return false;
             }
         });
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Wave\Console\Commands\CancelExpiredSubscriptions::class,
-                \Wave\Console\Commands\CreatePluginCommand::class,
+                CancelExpiredSubscriptions::class,
+                CreatePluginCommand::class,
             ]);
             // $this->excludeInactiveThemes();
         }
 
         Relation::morphMap([
             'user' => config('auth.providers.model'),
-            'form' => \App\Models\Forms::class,
+            'form' => Forms::class,
             // Add other mappings as needed
         ]);
 
@@ -122,7 +134,7 @@ class WaveServiceProvider extends ServiceProvider
                 $helpers = Cache::rememberForever('wave_helpers', function () {
                     return glob(__DIR__.'/Helpers/*.php');
                 });
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Fallback to direct file loading if cache fails
                 $helpers = glob(__DIR__.'/Helpers/*.php');
             }
@@ -200,8 +212,8 @@ class WaveServiceProvider extends ServiceProvider
 
     private function loadLivewireComponents()
     {
-        Livewire::component('billing.checkout', \Wave\Http\Livewire\Billing\Checkout::class);
-        Livewire::component('billing.update', \Wave\Http\Livewire\Billing\Update::class);
+        Livewire::component('billing.checkout', Checkout::class);
+        Livewire::component('billing.update', Update::class);
     }
 
     protected function setDefaultThemeColors()
@@ -218,7 +230,7 @@ class WaveServiceProvider extends ServiceProvider
 
                         if (isset($theme->id)) {
                             if (Cookie::get('theme')) {
-                                $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+                                $theme_cookied = Theme::where('folder', '=', Cookie::get('theme'))->first();
                                 if (isset($theme_cookied->id)) {
                                     $theme = $theme_cookied;
                                 }
@@ -236,7 +248,7 @@ class WaveServiceProvider extends ServiceProvider
 
                         return '#000000';
                     });
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     // Fallback to default color if cache or DB fails
                     $color = '#000000';
                 }
@@ -253,7 +265,7 @@ class WaveServiceProvider extends ServiceProvider
                 return Cache::remember('wave_active_theme', 3600, function () {
                     return \Wave\Theme::where('active', 1)->first();
                 });
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Fallback to direct DB query if cache fails
                 return \Wave\Theme::where('active', 1)->first();
             }
@@ -273,7 +285,7 @@ class WaveServiceProvider extends ServiceProvider
 
         try {
             DB::connection()->getPdo();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $hasDatabaseConnection = false;
         }
 

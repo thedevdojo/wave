@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Exception;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -75,7 +76,7 @@ class AppServiceProvider extends ServiceProvider
     {
         try {
             Schema::defaultStringLength(191);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
         }
     }
 

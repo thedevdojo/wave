@@ -2,6 +2,7 @@
 
 namespace Wave;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
@@ -26,7 +27,7 @@ class Category extends Model
                 return Cache::remember('wave_all_categories', 3600, function () {
                     return self::all();
                 });
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Fallback to direct query if cache fails
             }
         }
@@ -43,7 +44,7 @@ class Category extends Model
         if (app()->bound('cache')) {
             try {
                 Cache::forget('wave_all_categories');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Silently handle cache clearing failures
             }
         }

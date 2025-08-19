@@ -2,6 +2,12 @@
 
 namespace Wave\Http\Controllers\Billing\Webhooks;
 
+use Stripe\Webhook;
+use UnexpectedValueException;
+use Stripe\Exception\SignatureVerificationException;
+use Carbon\Carbon;
+use Stripe\Stripe;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -19,16 +25,16 @@ class StripeWebhook extends Controller
         $event = null;
 
         try {
-            $event = \Stripe\Webhook::constructEvent(
+            $event = Webhook::constructEvent(
                 $payload,
                 $sig_header,
                 config('wave.stripe.webhook_secret')
             );
-        } catch (\UnexpectedValueException $e) {
+        } catch (UnexpectedValueException $e) {
             // Invalid payload
             http_response_code(400);
             exit();
-        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+        } catch (SignatureVerificationException $e) {
             // Invalid signature
             http_response_code(400);
             exit();
@@ -61,7 +67,7 @@ class StripeWebhook extends Controller
                 if (is_null($stripeSubscription->cancel_at)) {
                     $subscription->ends_at = null;
                 } else {
-                    $subscription->ends_at = \Carbon\Carbon::createFromTimestamp($stripeSubscription->cancel_at)->toDateTimeString();
+                    $subscription->ends_at = Carbon::createFromTimestamp($stripeSubscription->cancel_at)->toDateTimeString();
                 }
 
                 $subscription->save();
@@ -83,7 +89,7 @@ class StripeWebhook extends Controller
 
     public function fulfill_checkout($session_id, $event): void
     {
-        $stripe = \Stripe\Stripe::setApiKey(config('wave.stripe.secret_key'));
+        $stripe = Stripe::setApiKey(config('wave.stripe.secret_key'));
 
         // Make this function safe to run multiple times,
         // even concurrently, with the same session ID
@@ -112,7 +118,7 @@ class StripeWebhook extends Controller
             $plan_id = $checkout_session->metadata->plan_id;
             $billing_cycle = $checkout_session->metadata->billing_cycle;
 
-            $user = \App\Models\User::find($billable_id);
+            $user = User::find($billable_id);
 
             $plan = Plan::find($plan_id);
             $user->syncRoles([]);

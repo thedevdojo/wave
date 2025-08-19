@@ -13,5 +13,5 @@ class WelcomeWidget extends Widget
     /**
      * @var view-string
      */
-    protected static string $view = 'wave::widgets.welcome-widget';
+    protected string $view = 'wave::widgets.welcome-widget';
 }
