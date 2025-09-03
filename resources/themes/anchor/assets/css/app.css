@@ -1,20 +1,30 @@
-@import './component-styles.css';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './component-styles.css' layer(base);
+@import 'tailwindcss';
+
+@source '../../../../../**/*.blade.php';
+@source '../../../../../app/Filament/**/*.php';
+@source '../../../../../resources/views/filament/**/*.blade.php';
+@source '../../../../../vendor/filament/**/*.blade.php';
+@source '../../../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../../../../storage/framework/views/*.php';
+@source '../../../../../resources/views/**/*.blade.php';
+@source '../../../../../resources/views/components/**/*.blade.php';
+@source '../../../../../resources/views/components/blade.php';
+@source '../../../../../wave/resources/views/**/*.blade.php';
+@source '../../../../../resources/themes/anchor/**/*.blade.php';
+@source '../../../../../resources/plugins/**/*.php';
+@source '../../../../../config/*.php';
+
 
 [x-cloak]{
   display:none;
 }
 
-svg {
-    width:100%;
-  }
-  .wave {
-    animation: wave 3s linear;
-    animation-iteration-count:infinite;
-    fill: #4e80ee;
-  }
+.wave {
+  animation: wave 3s linear;
+  animation-iteration-count:infinite;
+  fill: #4e80ee;
+}
 
   #wave2 {
     animation-duration:5s;
@@ -54,9 +64,7 @@ svg {
 
 /****** Form Input CLASSES **********/
 
-.form-input, .form-textarea, .form-select {
-    @apply px-3 py-2 text-base leading-normal transition duration-150 ease-in-out bg-white border rounded-md appearance-none border-zinc-400 focus:outline-none focus:ring focus:ring-opacity-30 focus:ring-blue-500 focus:border-blue-400;
-}
+
 
 .form-select{
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M7 7l3-3 3 3m0 6l-3 3-3-3' stroke='%239fa6b2' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");

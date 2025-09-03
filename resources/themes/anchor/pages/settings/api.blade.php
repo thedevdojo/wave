@@ -4,15 +4,18 @@
     use function Laravel\Folio\{middleware, name};
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
+    use Filament\Actions\Concerns\InteractsWithActions;
+    use Filament\Actions\Contracts\HasActions;
     use Filament\Forms\Form;
+    use Filament\Schemas\Schema;
     use Filament\Notifications\Notification;
     use Filament\Tables;
     use Filament\Tables\Table;
     use Filament\Tables\Actions\Action;
     use Filament\Tables\Columns\TextColumn;
-    use Filament\Tables\Actions\DeleteAction;
-    use Filament\Tables\Actions\EditAction;
-    use Filament\Tables\Actions\ViewAction;
+    use Filament\Actions\DeleteAction;
+    use Filament\Actions\EditAction;
+    use Filament\Actions\ViewAction;
 
     use Illuminate\Support\Str;
     use Wave\ApiKey;
@@ -20,9 +23,9 @@
     middleware('auth');
     name('settings.api');
 
-	new class extends Component implements HasForms, Tables\Contracts\HasTable
+	new class extends Component implements HasForms, HasActions, Tables\Contracts\HasTable
 	{
-        use InteractsWithForms, Tables\Concerns\InteractsWithTable;
+        use InteractsWithForms, InteractsWithActions, Tables\Concerns\InteractsWithTable;
         
         // variables for (b)rowing keys
         public $keys = [];
@@ -35,10 +38,10 @@
             $this->refreshKeys();
         }
 
-        public function form(Form $form): Form
+        public function form(Schema $schema): Schema
         {
-            return $form
-                ->schema([
+            return $schema
+                ->components([
                     TextInput::make('key')
                         ->label('Create a new API Key')
                         ->required()

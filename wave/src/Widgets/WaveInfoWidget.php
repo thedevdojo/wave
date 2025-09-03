@@ -13,5 +13,5 @@ class WaveInfoWidget extends Widget
     /**
      * @var view-string
      */
-    protected static string $view = 'wave::widgets.wave-info-widget';
+    protected string $view = 'wave::widgets.wave-info-widget';
 }

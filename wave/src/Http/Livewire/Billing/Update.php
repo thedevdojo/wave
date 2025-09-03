@@ -2,6 +2,7 @@
 
 namespace Wave\Http\Livewire\Billing;
 
+use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
@@ -48,7 +49,7 @@ class Update extends Component
                     $response = Http::withToken(config('wave.paddle.api_key'))->get($this->paddle_url.'/subscriptions/'.$subscription->vendor_subscription_id, []);
                     $paddle_subscription = json_decode($response->body());
                     $paddle_subscription = $paddle_subscription->data;
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->error_retrieving_data = true;
 
                     return;

@@ -2,6 +2,7 @@
 
 namespace Wave;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -51,7 +52,7 @@ class Subscription extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(config('wave.user_model', \App\Models\User::class), 'billable_id');
+        return $this->belongsTo(config('wave.user_model', User::class), 'billable_id');
     }
 
     public function cancel()

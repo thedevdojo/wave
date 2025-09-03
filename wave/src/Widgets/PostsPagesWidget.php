@@ -13,5 +13,5 @@ class PostsPagesWidget extends Widget
     /**
      * @var view-string
      */
-    protected static string $view = 'wave::widgets.posts-pages-widget';
+    protected string $view = 'wave::widgets.posts-pages-widget';
 }

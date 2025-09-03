@@ -15,5 +15,5 @@ class AnalyticsPlaceholderWidget extends Widget
     /**
      * @var view-string
      */
-    protected static string $view = 'wave::widgets.analytics-placeholder-widget';
+    protected string $view = 'wave::widgets.analytics-placeholder-widget';
 }
