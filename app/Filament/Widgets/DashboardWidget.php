@@ -4,7 +4,7 @@ namespace App\Filament\Widgets;
 
 use Filament\Widgets\Widget;
 
-class DashboardPlaceholderWidget extends Widget
+class DashboardWidget extends Widget
 {
     protected static ?int $sort = 10;
 
@@ -15,5 +15,5 @@ class DashboardPlaceholderWidget extends Widget
     /**
      * @var view-string
      */
-    protected string $view = 'filament.widgets.dashboard-placeholder-widget';
+    protected string $view = 'filament.widgets.dashboard-widget';
 }

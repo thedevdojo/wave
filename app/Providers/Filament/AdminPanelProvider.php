@@ -2,11 +2,7 @@
 
 namespace App\Providers\Filament;
 
-use Wave\Widgets\WaveInfoWidget;
-use Wave\Widgets\WelcomeWidget;
-use Wave\Widgets\UsersWidget;
-use Wave\Widgets\PostsPagesWidget;
-use App\Filament\Widgets\DashboardPlaceholderWidget;
+use App\Filament\Widgets\DashboardWidget;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -56,11 +52,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             // ->discoverWidgets(in: app_path('BezhanSalleh\FilamentGoogleAnalytics\Widgets'), for: 'BezhanSalleh\\FilamentGoogleAnalytics\\Widgets')
             ->widgets([
-                WaveInfoWidget::class,
-                WelcomeWidget::class,
-                UsersWidget::class,
-                PostsPagesWidget::class,
-                DashboardPlaceholderWidget::class,
+                DashboardWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
