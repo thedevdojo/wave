@@ -6,7 +6,7 @@ use Wave\Widgets\WaveInfoWidget;
 use Wave\Widgets\WelcomeWidget;
 use Wave\Widgets\UsersWidget;
 use Wave\Widgets\PostsPagesWidget;
-use Wave\Widgets\DashboardPlaceholderWidget;
+use App\Filament\Widgets\DashboardPlaceholderWidget;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;

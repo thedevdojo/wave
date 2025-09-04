@@ -1,6 +1,6 @@
 <?php
 
-namespace Wave\Widgets;
+namespace App\Filament\Widgets;
 
 use Filament\Widgets\Widget;
 
