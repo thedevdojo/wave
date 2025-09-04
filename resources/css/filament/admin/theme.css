@@ -1,4 +1,13 @@
-@import '/vendor/filament/filament/resources/css/theme.css';
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+@source '../../../../wave/resources/views/**/*.blade.php';
+
+@source '../../../../resources/views/filament/**/*.blade.php';
+@source '../../../../vendor/filament/**/*.blade.php';
+@source '../../../../resources/views/**/*.blade.php';
+@source '../../../../resources/views/components/**/*.blade.php';
+@source '../../../../wave/resources/views/**/*.blade.php';
+@source '../../../../resources/plugins/**/*.php';
+
 /* 
 .fi-topbar nav{
     background:none !important;
@@ -88,6 +97,3 @@
 .fi-sidebar-header .fi-icon-btn:hover::after {
     color: #ff0000; /* Hover color */
 }
-
-
-@config 'tailwind.config.js';

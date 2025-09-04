@@ -1,1 +1,1 @@
-<p><strong>Admin</strong></p>
+<p class="mt-0.5"><strong>Admin</strong></p>

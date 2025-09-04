@@ -2,11 +2,7 @@
 
 namespace App\Providers\Filament;
 
-use Wave\Widgets\WaveInfoWidget;
-use Wave\Widgets\WelcomeWidget;
-use Wave\Widgets\UsersWidget;
-use Wave\Widgets\PostsPagesWidget;
-use Wave\Widgets\AnalyticsPlaceholderWidget;
+use App\Filament\Widgets\DashboardWidget;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -36,11 +32,8 @@ class AdminPanelProvider extends PanelProvider
         return 'heroicon-o-presentation-chart-line';
     }
 
-    private $dynamicWidgets = [];
-
     public function panel(Panel $panel): Panel
     {
-        $this->renderAnalyticsIfCredentialsExist();
 
         Blade::component('wave::admin.components.label', 'label');
 
@@ -59,13 +52,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             // ->discoverWidgets(in: app_path('BezhanSalleh\FilamentGoogleAnalytics\Widgets'), for: 'BezhanSalleh\\FilamentGoogleAnalytics\\Widgets')
             ->widgets([
-                WaveInfoWidget::class,
-                WelcomeWidget::class,
-                UsersWidget::class,
-                PostsPagesWidget::class,
-                ...$this->dynamicWidgets,
-
-                // Google Analytics widgets removed
+                DashboardWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -84,23 +71,5 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->brandLogo(fn () => view('wave::admin.logo'))
             ->darkModeBrandLogo(fn () => view('wave::admin.logo-dark'));
-    }
-
-    // This function will render if user has account crenditals file
-    // located at storage/app/analytics/service-account-credentials.json
-    // Find More details here: https://github.com/spatie/laravel-analytics
-    private function renderAnalyticsIfCredentialsExist()
-    {
-        if (is_array(config('analytics.service_account_credentials_json')) || 
-            file_exists(config('analytics.service_account_credentials_json'))) {
-            Config::set('filament-google-analytics.page_views.filament_dashboard', true);
-            Config::set('filament-google-analytics.active_users_one_day.filament_dashboard', true);
-            Config::set('filament-google-analytics.active_users_seven_day.filament_dashboard', true);
-            Config::set('filament-google-analytics.active_users_twenty_eight_day.filament_dashboard', true);
-            Config::set('filament-google-analytics.most_visited_pages.filament_dashboard', true);
-            Config::set('filament-google-analytics.top_referrers_list.filament_dashboard', true);
-        } else {
-            $this->dynamicWidgets = [AnalyticsPlaceholderWidget::class];
-        }
     }
 }

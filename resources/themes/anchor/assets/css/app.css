@@ -1,12 +1,13 @@
-@import './component-styles.css' layer(base);
 @import 'tailwindcss';
+@import './component-styles.css';
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
 
-@source '../../../../../**/*.blade.php';
 @source '../../../../../app/Filament/**/*.php';
 @source '../../../../../resources/views/filament/**/*.blade.php';
 @source '../../../../../vendor/filament/**/*.blade.php';
 @source '../../../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../../../../storage/framework/views/*.php';
 @source '../../../../../resources/views/**/*.blade.php';
 @source '../../../../../resources/views/components/**/*.blade.php';
 @source '../../../../../resources/views/components/blade.php';
@@ -95,3 +96,45 @@ html, body{
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+:root {
+  --primary-50:  #111827;
+  --primary-100: #111827;
+  --primary-200: #111827;
+  --primary-300: #111827;
+  --primary-400: #111827;
+  --primary-500: #111827;
+  --primary-600: #111827;
+  --primary-700: #111827;
+  --primary-800: #111827;
+  --primary-900: #111827;
+  --primary-950: #111827;
+}
+
+/** The following are CSS files needed by Filament for components, table builder, etc. 
+https://github.com/filamentphp/filament/blob/4.x/docs/01-introduction/02-installation.md#configuring-styles
+**/
+
+/* Required by all components */
+@import '../../../../../vendor/filament/support/resources/css/index.css';
+
+/* Required by actions and tables */
+@import '../../../../../vendor/filament/actions/resources/css/index.css';
+
+/* Required by actions, forms and tables */
+@import '../../../../../vendor/filament/forms/resources/css/index.css';
+
+/* Required by actions and infolists */
+@import '../../../../../vendor/filament/infolists/resources/css/index.css';
+
+/* Required by notifications */
+@import '../../../../../vendor/filament/notifications/resources/css/index.css';
+
+/* Required by actions, infolists, forms, schemas and tables */
+@import '../../../../../vendor/filament/schemas/resources/css/index.css';
+
+/* Required by tables */
+@import '../../../../../vendor/filament/tables/resources/css/index.css';
+
+/* Required by widgets */
+@import '../../../../../vendor/filament/widgets/resources/css/index.css';
