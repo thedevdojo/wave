@@ -52,8 +52,8 @@ return [
         'image' => '/themes/tailwind/images/api.png',
     ],
     (object) [
-        'title' => 'Voyager Admin',
-        'description' => 'Wave has been crafted using Laravel & Voyager, which makes administering your app a breeze!',
+        'title' => 'Filament Admin',
+        'description' => 'Wave utilizes Filament to provide a beautiful admin panel.',
         'image' => '/themes/tailwind/images/admin.png',
     ],
     (object) [
