@@ -1,6 +1,6 @@
 <x-filament-widgets::widget class="fi-filament-info-widget">
     <x-filament::section>
-        <div class="flex gap-x-3 items-center">
+        <div class="flex gap-x-3 items-center w-full">
             <div class="flex-1">
                 <a
                     href="/"

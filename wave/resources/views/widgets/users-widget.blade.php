@@ -1,6 +1,6 @@
 <x-filament-widgets::widget class="flex gap-x-5 fi-filament-info-widget">
     <x-filament::section class="w-full">
-        <div class="flex gap-x-5 items-center">
+        <div class="flex gap-x-5 items-center w-full">
             <div class="flex-">
                 <x-phosphor-users-duotone class="h-10 text-blue-600 fill-current" />
             </div>

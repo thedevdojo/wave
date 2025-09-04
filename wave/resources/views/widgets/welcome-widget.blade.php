@@ -4,7 +4,7 @@
 
 <x-filament-widgets::widget class="fi-account-widget">
     <x-filament::section>
-        <div class="flex gap-x-3 items-center">
+        <div class="flex gap-x-3 items-center w-full">
 
             <div class="flex-1">
                 <h2
