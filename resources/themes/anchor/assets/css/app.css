@@ -82,11 +82,11 @@
 }
 
 @layer base {
-html, body{
-  p{
-    @apply text-gray-500 dark:text-gray-400;
+  html, body{
+    p{
+      @apply text-gray-500 dark:text-gray-400;
+    }
   }
-}
 }
 
 .scrollbar-hidden::-webkit-scrollbar {
