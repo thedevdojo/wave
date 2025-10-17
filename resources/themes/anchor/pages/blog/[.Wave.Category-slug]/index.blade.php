@@ -6,7 +6,9 @@
 <x-layouts.marketing>
 
     @php
-        $posts = $category->posts()->paginate(6);
+        $posts = $category->posts()
+            ->where('status', 'PUBLISHED')
+            ->paginate(6);
     @endphp
 
     <x-container>
