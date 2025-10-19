@@ -30,7 +30,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Intervention\Image\ImageManagerStatic;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 use Laravel\Folio\Folio;
 use Livewire\Livewire;
 use Wave\Facades\Wave as WaveFacade;
@@ -47,6 +48,11 @@ class WaveServiceProvider extends ServiceProvider
 
         $this->app->singleton('wave', function () {
             return new Wave;
+        });
+
+        // Register Intervention Image Manager
+        $this->app->singleton('image', function () {
+            return new ImageManager(new Driver());
         });
 
         // Move helper loading to boot method to avoid cache service dependency
@@ -100,7 +106,8 @@ class WaveServiceProvider extends ServiceProvider
 
         Validator::extend('imageable', function ($attribute, $value, $params, $validator) {
             try {
-                ImageManagerStatic::make($value);
+                $manager = new ImageManager(new Driver());
+                $manager->read($value);
 
                 return true;
             } catch (Exception $e) {
