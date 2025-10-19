@@ -43,7 +43,7 @@
             </div>
         @endif
 
-        <div class="flex flex-col flex-wrap lg:flex-row lg:space-x-5">
+        <div class="flex flex-col flex-wrap gap-x-5 lg:flex-row lg:space-x-5">
 
             @foreach(Wave\Plan::where('active', 1)->get() as $plan)
                 @php $features = explode(',', $plan->features); @endphp
