@@ -54,4 +54,4 @@
 
 @filamentStyles
 @livewireStyles
-@vite(['resources/themes/smartelevate/assets/css/app.css', 'resources/themes/smartelevate/assets/js/app.js'])
+@vite(['resources/themes/drift/assets/css/app.css', 'resources/themes/drift/assets/js/app.js'])

@@ -12,7 +12,7 @@
 
     <x-app.container class="mt-5">
         <x-app.alert title="Example Page">
-            This is an example page that you can modify from the `resources/themes/smartelevate/pages/projects/index.blade.php` file.
+            This is an example page that you can modify from the `resources/themes/drift/pages/projects/index.blade.php` file.
         </x-app.alert>
         <div class="grid w-full grid-cols-1 gap-5 py-5 sm:grid-cols-2 lg:grid-cols-3">
             <x-app.project
