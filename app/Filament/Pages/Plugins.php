@@ -32,30 +32,50 @@ class Plugins extends Page
     private function getPluginsFromFolder()
     {
         $plugins = [];
-        $plugins_folder = resource_path('plugins');
+        $pluginsFolder = resource_path('plugins');
 
-        if (! file_exists($plugins_folder)) {
-            mkdir($plugins_folder);
+        // Sicherstellen, dass der Plugins-Ordner existiert und ein Verzeichnis ist
+        if (! is_dir($pluginsFolder)) {
+            // versuche, das Verzeichnis anzulegen
+            @mkdir($pluginsFolder, 0755, true);
+            return $plugins;
         }
 
-        $scandirectory = scandir($plugins_folder);
+        $items = scandir($pluginsFolder);
+        if (! is_array($items)) {
+            return $plugins;
+        }
 
-        foreach ($scandirectory as $folder) {
-            if ($folder === '.' || $folder === '..') {
+        foreach ($items as $item) {
+            if ($item === '.' || $item === '..') {
                 continue;
             }
 
-            $studlyFolderName = Str::studly($folder);
-            $pluginFile = $plugins_folder.'/'.$folder.'/'.$studlyFolderName.'Plugin.php';
+            $itemPath = $pluginsFolder . DIRECTORY_SEPARATOR . $item;
 
-            if (file_exists($pluginFile)) {
+            // WICHTIG: nur Verzeichnisse als Plugin-Ordner behandeln
+            if (! is_dir($itemPath)) {
+                continue;
+            }
+
+            $studlyFolderName = Str::studly($item);
+            $pluginFile = $itemPath . DIRECTORY_SEPARATOR . $studlyFolderName . 'Plugin.php';
+
+            // Falls die erwartete Plugin-Datei existiert, versuchen wir, die Klasse zu benutzen
+            if (is_file($pluginFile)) {
                 $pluginClass = "Wave\\Plugins\\{$studlyFolderName}\\{$studlyFolderName}Plugin";
-                if (class_exists($pluginClass) && method_exists($pluginClass, 'getPluginInfo')) {
-                    $plugin = new $pluginClass(app());
-                    $info = $plugin->getPluginInfo();
-                    $info['folder'] = $folder;
-                    $info['active'] = $this->isPluginActive($folder);
-                    $plugins[$folder] = $info;
+                try {
+                    if (class_exists($pluginClass) && method_exists($pluginClass, 'getPluginInfo')) {
+                        $plugin = new $pluginClass(app());
+                        $info = $plugin->getPluginInfo();
+                        $info['folder'] = $item;
+                        $info['active'] = $this->isPluginActive($item);
+                        $plugins[$item] = $info;
+                    }
+                } catch (\Throwable $e) {
+                    // Bei Fehlern im Plugin nicht die gesamte Seite zerstören
+                    // Optional: loggen oder $plugins[$item] = ['error' => $e->getMessage()];
+                    continue;
                 }
             }
         }
@@ -74,12 +94,19 @@ class Plugins extends Page
     {
         $path = resource_path('plugins/installed.json');
 
-        return File::exists($path) ? File::json($path) : [];
+        // Nur lesen, wenn es eine Datei ist
+        if (is_file($path)) {
+            $content = File::get($path);
+            $decoded = json_decode($content, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+
+        return [];
     }
 
     private function updateInstalledPlugins($plugins)
     {
-        $json = json_encode($plugins);
+        $json = json_encode(array_values($plugins));
         file_put_contents(resource_path('plugins/installed.json'), $json);
     }
 
@@ -123,7 +150,7 @@ class Plugins extends Page
 
             // Run migrations if they exist
             $migrationPath = resource_path("plugins/{$pluginFolder}/database/migrations");
-            if (File::isDirectory($migrationPath)) {
+            if (is_dir($migrationPath)) {
                 Artisan::call('migrate', [
                     '--path' => "resources/plugins/{$pluginFolder}/database/migrations",
                     '--force' => true,
@@ -151,7 +178,7 @@ class Plugins extends Page
         $this->deactivate($pluginFolder);
 
         $pluginPath = resource_path('plugins').'/'.$pluginFolder;
-        if (file_exists($pluginPath)) {
+        if (is_dir($pluginPath)) {
             File::deleteDirectory($pluginPath);
         }
 

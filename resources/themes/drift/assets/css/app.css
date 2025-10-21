@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source '../../../../../app/Filament/**/*.php';
+@source '../../../../../vendor/filament/**/*.blade.php';
+@source '../../../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../../../../resources/views/**/*.blade.php';
+@source '../../../../../resources/views/components/blade.php';
+@source '../../../../../wave/resources/views/**/*.blade.php';
+@source '../../../../../resources/themes/drift/**/*.blade.php';
+@source '../../../../../resources/plugins/**/*.php';
+@source '../../../../../config/*.php';
+
+.fi-avatar.header-avatar{
+    @apply w-7 h-7;
+}
+
+.fi-dropdown-panel{
+    @apply rounded-xl;
+}
+
+#user-dropdown .fi-dropdown-panel{
+    @apply w-72;
+}
+
+.fi-btn{
+    @apply !rounded-md;
+}
+
+.fi-btn .fi-btn-label{
+    @apply flex gap-1 items-center;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+.animate-marquee {
+    animation: marquee 20s linear infinite;
+}
+
+.dark .fi-btn.fi-btn-color-primary{
+    @apply text-black bg-white;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hidden {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+@media (max-width: 768px){
+    #user-dropdown .fi-dropdown-panel{
+        width: 100vw;
+        max-width: 100vw !important;
+        right: 0px;
+        left: 0px !important;
+        border-radius: 0px !important;
+        top: 66px !important;
+    }
+}
+
+.fi-btn.fi-color-primary{
+    color:#ffffff;
+}
+
+:root {
+    --primary-50:  #000000;
+    --primary-100: #000000;
+    --primary-200: #000000;
+    --primary-300: #000000;
+    --primary-400: #000000;
+    --primary-500: #000000;
+    --primary-600: #000000;
+    --primary-700: #000000;
+    --primary-800: #000000;
+    --primary-900: #000000;
+    --primary-950: #000000;
+  }
+
+/** The following are CSS files needed by Filament for components, table builder, etc. 
+https://github.com/filamentphp/filament/blob/4.x/docs/01-introduction/02-installation.md#configuring-styles
+**/
+
+/* Required by all components */
+@import '../../../../../vendor/filament/support/resources/css/index.css';
+
+/* Required by actions and tables */
+@import '../../../../../vendor/filament/actions/resources/css/index.css';
+
+/* Required by actions, forms and tables */
+@import '../../../../../vendor/filament/forms/resources/css/index.css';
+
+/* Required by actions and infolists */
+@import '../../../../../vendor/filament/infolists/resources/css/index.css';
+
+/* Required by notifications */
+@import '../../../../../vendor/filament/notifications/resources/css/index.css';
+
+/* Required by actions, infolists, forms, schemas and tables */
+@import '../../../../../vendor/filament/schemas/resources/css/index.css';
+
+/* Required by tables */
+@import '../../../../../vendor/filament/tables/resources/css/index.css';
+
+/* Required by widgets */
+@import '../../../../../vendor/filament/widgets/resources/css/index.css';

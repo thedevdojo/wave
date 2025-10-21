@@ -1,0 +1,1 @@
+<div class="h-px mx-auto my-10 bg-gradient-to-r dark:from-gray-900 dark:via-gray-700 dark:opacity-80 dark:to-gray-900 from-gray-50 via-gray-200 to-gray-50 max-w-7xl"></div>

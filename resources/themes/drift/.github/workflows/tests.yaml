@@ -1,0 +1,77 @@
+name: Wave Theme Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Theme Repository
+      uses: actions/checkout@v2
+      with:
+        path: ${{ github.event.repository.name }}
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, xml, ctype, iconv, mysql, imagick
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Clone Wave Repository
+      run: |
+        git clone https://github.com/thedevdojo/wave.git
+        cd wave
+        git checkout 3.x
+
+    - name: Install Composer Dependencies
+      run: composer install
+      working-directory: ./wave
+
+    - name: Copy Theme Files
+      run: |
+        cp -R ${{ github.event.repository.name }} wave/resources/themes/
+
+    - name: Update theme.json with Theme Name
+      run: |
+        theme_name="${{ github.event.repository.name }}"
+        theme_json_path="wave/theme.json"
+        echo "Updating theme.json with name: $theme_name"
+        sed -i 's/"name": "anchor"/"name": "'"$theme_name"'"/' "$theme_json_path"
+        echo "Updated theme.json contents:"
+        cat "$theme_json_path"
+        echo "Updating ThemesTableSeeder.php with name: $theme_name"
+        sed -i 's/anchor/'"$theme_name"'/' wave/database/seeders/ThemesTableSeeder.php
+
+    - name: Clear Cache and Config
+      run: |
+        php artisan config:clear
+        php artisan view:clear
+        php artisan route:clear
+      working-directory: ./wave
+
+    - name: Install NPM Dependencies and Build Assets
+      run: |
+        npm ci
+        npm run build
+      working-directory: ./wave
+
+    - name: Prepare Laravel Environment
+      run: |
+        cp .env.example .env
+        php artisan key:generate
+        php artisan migrate --seed
+      working-directory: ./wave
+
+    - name: Run Pest Tests
+      run: vendor/bin/pest
+      working-directory: ./wave
