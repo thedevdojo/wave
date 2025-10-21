@@ -1,0 +1,38 @@
+.fi-btn{
+    @apply text-sm rounded-md;
+}
+
+.fi-btn.fi-size-lg{
+    @apply px-5 py-2.5;
+}
+
+.fi-btn.fi-size-md{
+    @apply px-4 py-2;
+}
+
+.fi-btn.fi-size-sm{
+    @apply px-3 py-1.5;
+}
+
+
+.fi-btn.fi-color-secondary{
+    @apply inline-flex items-center justify-center gap-3 font-medium duration-200 bg-gray-100 text-zinc-800 hover:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-zinc-200;
+}
+
+label{
+    @apply space-x-1 text-sm leading-none;
+}
+
+.fi-btn-color-secondary svg{
+    @apply text-neutral-700;
+}
+
+.fi-modal-close-overlay{
+    z-index:100 !important;
+}
+
+
+.fi-modal-close-overlay + div{
+    z-index:101 !important;
+}
+

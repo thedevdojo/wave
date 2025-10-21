@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.fi-avatar.header-avatar{
+    @apply w-7 h-7;
+}
+
+.fi-dropdown-panel{
+    @apply rounded-xl;
+}
+
+#user-dropdown .fi-dropdown-panel{
+    @apply w-72;
+}
+
+.fi-btn{
+    @apply !rounded-md;
+}
+
+.fi-btn .fi-btn-label{
+    @apply flex items-center gap-1;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+.animate-marquee {
+    animation: marquee 20s linear infinite;
+}
+
+.dark .fi-btn.fi-btn-color-primary{
+    @apply bg-white text-black !important;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hidden {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+@media (max-width: 768px){
+    #user-dropdown .fi-dropdown-panel{
+        width: 100vw;
+        max-width: 100vw !important;
+        right: 0px;
+        left: 0px !important;
+        border-radius: 0px !important;
+        top: 66px !important;
+    }
+}
