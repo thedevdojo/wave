@@ -4,15 +4,11 @@
     use function Laravel\Folio\{middleware, name};
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
-    use Filament\Forms\Form;
     use Filament\Notifications\Notification;
     use Filament\Tables;
     use Filament\Tables\Table;
     use Filament\Tables\Actions\Action;
     use Filament\Tables\Columns\TextColumn;
-    use Filament\Tables\Actions\DeleteAction;
-    use Filament\Tables\Actions\EditAction;
-    use Filament\Tables\Actions\ViewAction;
 
     use Illuminate\Support\Str;
     use Wave\ApiKey;
@@ -20,8 +16,9 @@
     middleware('auth');
     name('settings.api');
 
-	new class extends Component implements HasForms, Tables\Contracts\HasTable
+	new class extends Component implements HasForms, Tables\Contracts\HasTable, \Filament\Actions\Contracts\HasActions
 	{
+        use \Filament\Actions\Concerns\InteractsWithActions;
         use InteractsWithForms, Tables\Concerns\InteractsWithTable;
         
         // variables for (b)rowing keys
@@ -35,10 +32,10 @@
             $this->refreshKeys();
         }
 
-        public function form(Form $form): Form
+        public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
         {
-            return $form
-                ->schema([
+            return $schema
+                ->components([
                     TextInput::make('key')
                         ->label('Create a new API Key')
                         ->required()
@@ -70,25 +67,25 @@
                     TextColumn::make('name'),
                     TextColumn::make('created_at')->label('Created'),
                 ])
-                ->actions([
-                    ViewAction::make()
+                ->recordActions([
+                    \Filament\Actions\ViewAction::make()
                         ->slideOver()
                         ->modalWidth('md')
-                        ->form([
+                        ->schema([
                             TextInput::make('name'),
                             TextInput::make('key')
                             // ...
                         ]),
-                    EditAction::make()
+                    \Filament\Actions\EditAction::make()
                         ->slideOver()
                         ->modalWidth('md')
-                        ->form([
+                        ->schema([
                             TextInput::make('name')
                                 ->required()
                                 ->maxLength(255),
                             // ...
                         ]),
-                    DeleteAction::make(),
+                    \Filament\Actions\DeleteAction::make(),
             ]);
         }
 

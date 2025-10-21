@@ -4,7 +4,6 @@
     use function Laravel\Folio\{middleware, name};
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
-    use Filament\Forms\Form;
     use Filament\Notifications\Notification;
     
     middleware('auth');
@@ -21,10 +20,10 @@
             $this->form->fill();
         }
 
-        public function form(Form $form): Form
+        public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
         {
-            return $form
-                ->schema([
+            return $schema
+                ->components([
                     TextInput::make('current_password')
                         ->label('Current Password')
                         ->required()

@@ -3,7 +3,6 @@
     use function Laravel\Folio\{middleware, name};
     use Filament\Forms\Concerns\InteractsWithForms;
     use Filament\Forms\Contracts\HasForms;
-    use Filament\Forms\Form;
     use Filament\Notifications\Notification;
 	use Livewire\Volt\Component;
 	use Wave\Traits\HasDynamicFields;
@@ -24,10 +23,10 @@
             $this->form->fill();
         }
 
-       public function form(Form $form): Form
+       public function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
         {
-            return $form
-                ->schema([
+            return $schema
+                ->components([
                     \Filament\Forms\Components\TextInput::make('name')
                         ->label('Name')
                         ->required()

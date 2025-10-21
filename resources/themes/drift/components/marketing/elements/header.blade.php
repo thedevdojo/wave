@@ -1,190 +1,223 @@
-<header
-    x-data="{
-        mobileMenuOpen: false,
-        scrolled: false,
-        showOverlay: false,
+<header 
+    x-data="{ 
+        mobileMenuOpen: false, 
+        scrolled: false, 
+        showOverlay: false, 
         topOffset: '5',
+        navigationMenuOpen: false,
+        navigationMenu: '',
+        navigationMenuCloseDelay: 200,
+        navigationMenuCloseTimeout: null,
+        navigationMegaMenuActiveElement: null,
+        navElementButton: null,
+        isMobile: false,
+        navigationMenuLeave() {
+            let that = this;
+            this.navigationMenuCloseTimeout = setTimeout(() => {
+                that.navigationMenuClose();
+            }, this.navigationMenuCloseDelay);
+        },
+        navigationMenuReposition(navElement) {
+            this.navigationMenuClearCloseTimeout();
+            this.navElementButton = navElement;
+            this.navigationMegaMenuActiveElement = $refs[navElement.dataset.ref];
+
+            this.$refs.navigationDropdown.style.left = navElement.offsetLeft + 'px';
+
+            let that = this;
+            setTimeout(function(){
+                that.calculateMegMenuWidthAndHeight();
+            }, 10);
+
+            this.calculateMegMenuWidthAndHeight();
+        },
+        calculateMegMenuWidthAndHeight(){
+            if(this.navigationMegaMenuActiveElement){
+                let newWidth = parseInt(getComputedStyle(this.navigationMegaMenuActiveElement).width);
+                let newHeight = parseInt(getComputedStyle(this.navigationMegaMenuActiveElement).height);
+
+                if(this.isMobile){
+                    //this.$refs.navigationDropdown.style.top = '0px';//this.navElementButton.offsetTop + 'px';
+                    this.$refs.navigationDropdown.style.width = '100%';
+                    this.$refs.navigationDropdown.style.height = '100vh';
+                } else {
+                    console.log(this.navElementButton.offsetTop);
+                    this.$refs.navigationDropdown.style.width = newWidth + 'px';
+                    this.$refs.navigationDropdown.style.height = newHeight + 20 + 'px';
+                }
+            }
+        },
+        navigationMenuClearCloseTimeout(){
+            console.log('clearing');
+            clearTimeout(this.navigationMenuCloseTimeout);
+        },
+        navigationMenuClose(){
+            console.log('menu closed');
+            this.navigationMenuOpen = false;
+        },
         evaluateScrollPosition(){
             if(window.pageYOffset > this.topOffset){
                 this.scrolled = true;
             } else {
                 this.scrolled = false;
             }
-        }
-    }"
-    x-init="
-        window.addEventListener('resize', function() {
-            if(window.innerWidth > 768) {
-                mobileMenuOpen = false;
+        },
+        evaluateMobileSize(){
+             if(window.innerWidth >= 768){
+                this.isMobile = false;
+            } else {
+                this.isMobile = true;
             }
-        });
-        $watch('mobileMenuOpen', function(value){
-            if(value){ document.body.classList.add('overflow-hidden'); } else { document.body.classList.remove('overflow-hidden'); }
-        });
+        },
+        openMegaMenu(element, menuName){
+            this.navigationMenuOpen=true; 
+            this.navigationMenuReposition(element); 
+            this.navigationMenu=menuName;
+        }
+    }" 
+    
+    x-init="
         evaluateScrollPosition();
         window.addEventListener('scroll', function() {
-            evaluateScrollPosition();
+            evaluateScrollPosition(); 
         })
-    "
-    :class="{ 'border-gray-200/60 bg-white/90 dark:bg-black backdrop-blur-lg h-16' : scrolled, 'border-transparent border-b bg-transparent translate-y-0' : !scrolled }"
-    class="box-content sticky top-0 z-50 w-full h-16"
->
-    <div
-        x-show="showOverlay"
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        class="absolute inset-0 w-full h-screen pt-16" x-cloak>
-        <div class="w-screen h-full bg-black/50"></div>
-    </div>
-    <x-container>
-        <div class="z-30 flex items-center justify-between h-16 md:space-x-8">
-            <div class="z-20 flex items-center justify-between w-full md:w-auto">
-                <div class="relative z-20 inline-flex">
-                    <a href="{{ route('home') }}" class="flex items-center justify-center space-x-3 font-bold text-zinc-900">
-                    <x-logo class="w-auto h-8 md:h-9"></x-logo>
-                    </a>
-                </div>
-                <div class="relative flex space-x-1.5 lg:space-x-3 items-center">
-                    <div class="relative flex items-center pl-5 space-x-1">
-                        <x-marketing.elements.light-dark-button />
+
+        window.addEventListener('resize', function() {
+           evaluateMobileSize();
+        });
+        evaluateMobileSize();
+
+        $watch('mobileMenuOpen', function(value){
+            if(value){ document.body.classList.add('overflow-hidden'); }
+            else{ document.body.classList.remove('overflow-hidden'); }
+        })
+    " 
+    :class="{ 'border-gray-600/10 dark:border-white/10 duration-300 ease-out backdrop-blur-md ' : scrolled, 'border-transparent dark:border-transparent bg-transparent' : !scrolled }" class="sticky top-0 z-50 w-full h-16 border-b border-transparent bg-white/95 dark:bg-black/90">
+    <div class="relative flex items-center justify-between px-5 md:px-8 py-4 mx-auto @if(!Request::is('/')){{ 'max-w-7xl' }}@else{{ '2xl:container' }}@endif">
+        <div class="flex items-center">
+            <a href="{{ route('home') }}" class="text-xl font-semibold text-gray-800">
+                <x-logo class="w-auto h-7" />
+            </a>
+            <div 
+                :class="{ 'block' : mobileMenuOpen, 'md:block hidden' : !mobileMenuOpen }"
+                class="z-10 hidden w-auto md:ml-3 lg:ml-5 md:block">
+                <div :class="{ 'fixed md:relative bg-white dark:bg-black md:bg-transparent md:min-h-0 min-h-screen md:w-auto w-screen left-0 ease-out border-t border-gray-200 md:border-t-0 dark:border-gray-800 overflow-scroll md:overflow-auto duration-300 top-16 md:top-0 p-3 md:p-0' : mobileMenuOpen, 'h-0 md:h-auto' : !mobileMenuOpen }">
+                    <div class="block md:hidden">
+                        <x-marketing.elements.header-auth-dashboard-buttons />
                     </div>
-                    <div class="relative flex items-center space-x-1">
-                        <button x-on:click="mobileMenuOpen=!mobileMenuOpen" class="relative flex items-center justify-center w-8 h-8 rounded-lg dark:text-gray-200 md:hidden">
-                            <x-phosphor-x-bold x-show="mobileMenuOpen" class="w-4 h-4" />
-                            <svg x-show="!mobileMenuOpen" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" /></svg>
-                        </button>
+                    <nav class="relative">
+                        <ul class="flex flex-col space-x-0 md:space-y-0 space-y-0.5 md:flex-row lg:space-x-1 group dark:text-neutral-300">
+                            <li><x-marketing.elements.nav-item dropdown="true" dropdown-ref="products">Products</x-marketing.elements.nav-item></li>
+                            <li><x-marketing.elements.nav-item dropdown="true" dropdown-ref="solutions">Solutions</x-marketing.elements.nav-item></li>
+                            <li><x-marketing.elements.nav-item dropdown="true" dropdown-ref="resources">Resources</x-marketing.elements.nav-item></li>
+                            <li><x-marketing.elements.nav-item href="{{ route('blog') }}">Blog</x-marketing.elements.nav-item></li>
+                            <li><x-marketing.elements.nav-item href="/pricing">Pricing</x-marketing.elements.nav-item></li>
+                        </ul>
+                    </nav>
+                    <div x-show="navigationMenuOpen" class="fixed inset-0 top-0 left-0 block w-screen h-screen md:hidden bg-black/20"></div>
+                    <div 
+                        x-on:click="navigationMenuClose()"
+                        x-show="navigationMenuOpen"
+                        x-transition:enter="transition ease-out delay-300 duration-100" 
+                        x-transition:enter-start="opacity-0 h-0 md:scale-90" 
+                        x-transition:enter-end="opacity-100 h-7 scale-100" 
+                         class="fixed top-0 right-0 z-40 flex items-center justify-center w-8 h-8 mt-5 mr-5 space-x-1 text-sm text-gray-500 rounded-lg cursor-pointer hover:text-gray-800 dark:hover:text-gray-300 md:hidden hover:bg-black/10">
+                        <x-phosphor-x-bold class="w-4 h-4" />
+                    </div>
+                    <div x-ref="navigationDropdown" x-show="navigationMenuOpen" 
+                        x-transition:enter="transition ease-out origin-top duration-100" 
+                        x-transition:enter-start="opacity-0 md:translate-y-12 translate-y-full -mt-1 md:scale-90" 
+                        x-transition:enter-end="opacity-100 mt-1.5 md:mt-0 scale-100" 
+                        x-transition:leave="transition ease-out origin-bottom md:origin-top duration-100" 
+                        x-transition:leave-start="opacity-100 scale-100" 
+                        x-transition:leave-end="opacity-0 md:scale-90" 
+                        @mouseover="if(!isMobile){ navigationMenuClearCloseTimeout(); }" 
+                        @mouseleave="if(!isMobile){ navigationMenuLeave(); }" 
+                        :class="{ 'fixed h-full' : mobileMenuOpen, 'absolute' : !mobileMenuOpen }" 
+                        class="top-0 left-0 flex items-stretch w-screen px-2 py-2 overflow-hidden duration-300 md:pt-3 md:pb-0 md:px-0 md:translate-y-12 md:translate-x-2 lg:translate-x-4 md:block justify-stretch md:w-auto" x-cloak>
+                        <div x-show="navigationMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0" x-transition:leave="transition ease-out duration-200" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full" class="absolute top-0 left-0 z-40 hidden w-4 h-4 mt-2 -translate-y-px md:block ml-36">
+                            <div class="w-4 h-4 rotate-45 bg-white border border-gray-200 rounded dark:bg-gradient-to-b dark:from-gray-950 dark:to-black dark:border-gray-800"></div>
+                        </div>
+                        <div x-show="navigationMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0" x-transition:leave="transition ease-out duration-200" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full" class="absolute md:block hidden top-0 left-0 z-50 mt-2 ml-36 w-[18px] h-[18px] -translate-y-px">
+                            <div class="w-[18px] h-[18px] bg-white dark:bg-gray-900 rounded border border-transparent rotate-45 -translate-x-px translate-y-0.5"></div>
+                        </div>
+                        
+                        <div class="relative z-40 flex justify-center w-full h-auto overflow-scroll overflow-x-hidden bg-white border border-gray-200 shadow-sm dark:border-gray-700 dark:bg-gray-900 scrollbar-hidden md:overflow-hidden md:w-auto rounded-xl">
+                            <div x-ref="products" :class="{ 'translate-x-0 z-20' : navigationMenu == 'products', 'md:-translate-x-1/2 opacity-0 z-10 absolute' : navigationMenu != 'products' }" class="flex flex-col duration-300 ease-out w-full md:w-[628px] p-7 md:p-5 pb-0 md:pb-[138px]">
+                                <div class="flex flex-col items-stretch justify-center md:flex-row md:gap-x-3">
+                                    <div class="flex-shrink-0 pb-1 w-72">
+                                        <h3 class="mb-4 text-xs font-semibold leading-6 text-gray-900 uppercase dark:text-gray-300">User Management</h3>
+                                        <div class="space-y-5">
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-lock-key" title="Authentication" description="User login, registration, and more" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-key" title="Roles & Permissions" description="Define roles and permission" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-user-switch" title="User Impersonations" description="Impersonate users in your app" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0 pb-1 mt-6 w-72 md:mt-0">
+                                        <h3 class="mb-4 text-xs font-semibold leading-6 text-gray-900 uppercase dark:text-gray-300">Billing</h3>
+                                        <div class="space-y-5">
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-bank" title="Payments" description="User login, registration, and more" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-credit-card" title="Subscriptions" description="Define roles and permission" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-shopping-bag-open" title="Plans" description="Impersonate users in your app" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute bottom-0 left-0 flex-shrink-0 hidden w-full px-8 py-6 mt-0 md:block bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:border-t dark:border-gray-700 dark:to-gray-800">
+                                    <div class="flex items-center gap-x-3">
+                                        <h3 class="text-sm font-semibold leading-5 text-gray-900 dark:text-gray-100">Advanced Features</h3>
+                                        <p class="px-2.5 py-1 text-xs font-semibold text-indigo-600 dark:bg-indigo-600 dark:text-white rounded-full bg-indigo-600/10">New</p>
+                                    </div>
+                                    <p class="mt-2 text-xs leading-5 text-gray-500 dark:text-gray-500">Subscribe to any plan and gain access to all our advanced features, which provide you with next-level capabilities, elite performance, and top-class reliability.</p>
+                                </div>
+                            </div>
+                            <div x-ref="solutions" :class="{ 'translate-x-0 z-20' : navigationMenu == 'solutions', 'md:translate-x-1/2 opacity-0 z-10 absolute' : navigationMenu == 'products', 'md:-translate-x-1/2 opacity-0 z-10 absolute' : navigationMenu == 'resources' }" class="flex justify-center items-stretch p-7 pb-10 md:pb-7 md:p-5 w-full md:w-[552px] duration-300 ease-out">
+                                <div class="relative flex flex-col items-stretch justify-start w-full sm:justify-center md:flex-row">
+                                    <div class="flex-shrink-0 w-full pb-1 md:w-64">
+                                        <h3 class="mb-4 text-xs font-semibold leading-6 text-gray-900 uppercase dark:text-gray-300">SaaS Apps</h3>
+                                        <div class="space-y-5">
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-pencil-line" title="Form Builder" description="Custom form creation" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-check-square-offset" title="Project Hub" description="Project management app" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-video" title="Video Platform" description="Video subscription platform" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-lifebuoy" title="Help Desk" description="Help desk system" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0 w-full pb-1 mt-6 md:mt-0 md:w-64">
+                                        <h3 class="mb-4 text-xs font-semibold leading-6 text-gray-900 uppercase dark:text-gray-300">AI SaaS Apps</h3>
+                                        <div class="space-y-5">
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-code-block" title="Code Review" description="Automated Code Review" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-note" title="Blog/Post Writer" description="Write Posts with AI" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-envelope-simple" title="Email Organizer" description="Organize Email with AI" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                            <x-marketing.elements.mega-menu-link icon="phosphor-layout" title="Design AI" description="Create Designs with AI" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div :class="{ 'translate-x-0 z-20' : navigationMenu == 'resources', 'md:translate-x-1/2 opacity-0 z-10 absolute' : navigationMenu != 'resources' }" x-ref="resources" class="flex justify-start md:justify-center w-full md:w-[328px] items-stretch p-5 duration-300 ease-out">
+                                <div class="flex-shrink-0 w-full pb-1 md:w-72">
+                                    <div class="space-y-5">
+                                        <x-marketing.elements.mega-menu-link icon="phosphor-newspaper" title="Documentation" description="View our developer docs" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                        <x-marketing.elements.mega-menu-link icon="phosphor-chat-circle-text" title="Community" description="Visit our community" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                        <x-marketing.elements.mega-menu-link icon="phosphor-notebook" title="Changelog" description="See what's happening" onclick="demoButtonClickMessage(event)"></x-marketing.elements.mega-menu-link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <nav :class="{ 'hidden' : !mobileMenuOpen, 'block md:relative absolute top-0 left-0 md:w-auto w-screen md:h-auto h-screen pointer-events-none md:z-10 z-10' : mobileMenuOpen }" class="h-full md:flex">
-                <ul :class="{ 'hidden md:flex' : !mobileMenuOpen, 'flex flex-col absolute md:relative md:w-auto w-screen h-full md:h-full md:overflow-auto overflow-scroll md:pt-0 mt-16 md:pb-0 pb-48 bg-white dark:bg-black md:bg-transparent' : mobileMenuOpen }" id="menu" class="flex items-stretch justify-start flex-1 w-full h-full ml-0 pointer-events-auto md:items-center md:justify-center gap-x-8 md:w-auto md:border-t-0 md:flex-row">
-                    <li x-data="{ open: false }" @mouseenter="showOverlay=true" @mouseleave="showOverlay=false" class="z-30 flex flex-col items-start h-auto md:h-full group md:flex-row md:items-center">
-                        <a href="#_" x-on:click="open=!open" class="flex items-center w-full h-16 gap-1 text-sm font-semibold text-gray-700 transition duration-300 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 md:hover:bg-transparent md:dark:hover:bg-transparent px-7 md:h-full md:px-0 md:w-auto hover:text-gray-900">
-                            <span class="">Platform</span>
-                            <svg :class="{ 'group-hover:-rotate-180' : !mobileMenuOpen, '-rotate-180' : mobileMenuOpen && open }" class="w-5 h-5 transition-all duration-300 ease-out" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
-                        </a>
-                        <div
-                            :class="{ 'hidden md:block opacity-0 invisible md:absolute' : !open, 'md:invisible md:opacity-0 md:hidden md:absolute' : open }"
-                            class="top-0 left-0 w-screen space-y-3 transition-transform duration-300 ease-out bg-white border-gray-100 dark:bg-black md:border-t md:border-b dark:border-gray-700 md:shadow-md md:-translate-y-2 md:mt-16 md:block md:group-hover:block md:group-hover:visible md:group-hover:opacity-100 md:group-hover:translate-y-0" x-cloak>
-                            <ul class="flex flex-col justify-between mx-auto max-w-7xl md:px-16 md:flex-row">
-                                <li class="w-full border-gray-100 md:border-l dark:border-gray-700 md:w-1/5">
-                                    <a href="#_" onclick="demoButtonClickMessage(event)" class="block h-full p-6 text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/anchor.png" class="w-12 h-auto" alt="feature 1 icon" />
-                                        <span class="block my-2 text-xs font-bold text-gray-700 uppercase dark:text-gray-300">Feature One</span>
-                                        <span class="block text-xs font-medium leading-5 text-gray-700 dark:text-gray-300">Highlight your main feature here</span>
-                                    </a>
-                                </li>
-                                <li class="w-full border-gray-100 md:border-l dark:border-gray-700 md:w-1/5">
-                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/turtle.png" class="w-12 h-auto" alt="feature 2 icon" />
-                                        <span class="block my-2 text-xs font-bold text-gray-700 uppercase dark:text-gray-300">Feature Two</span>
-                                        <span class="block text-xs font-medium leading-5 text-gray-700 dark:text-gray-300">Brief description of another feature</span>
-                                    </a>
-                                </li>
-                                <li class="w-full border-gray-100 md:border-l dark:border-gray-700 md:w-1/5">
-                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/compass.png" class="w-12 h-auto" alt="feature 3 icon" />
-                                        <span class="block my-2 text-xs font-bold text-gray-700 uppercase dark:text-gray-300">Feature Three</span>
-                                        <span class="block text-xs font-medium leading-5 text-gray-700 dark:text-gray-300">Describe another one of your features here</span>
-                                    </a>
-                                </li>
-                                <li class="w-full border-gray-100 md:border-l dark:border-gray-700 md:w-1/5">
-                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/lighthouse.png" class="w-12 h-auto" alt="feature 4 icon" />
-                                        <span class="block my-2 text-xs font-bold text-gray-700 uppercase dark:text-gray-300">Feature Four</span>
-                                        <span class="block text-xs font-medium leading-5 text-gray-700 dark:text-gray-300">Add a fourth feature or even a resource here</span>
-                                    </a>
-                                </li>
-                                <li class="w-full border-gray-100 md:border-l md:border-r dark:border-gray-700 md:w-1/5">
-                                    <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block h-full p-6 text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 lg:p-7 lg:py-10">
-                                        <img src="/wave/img/icons/chest.png" class="w-12 h-auto" alt="feature 5 icon" />
-                                        <span class="block my-2 text-xs font-bold text-gray-700 uppercase dark:text-gray-300">Feature Five</span>
-                                        <span class="block text-xs font-medium leading-5 text-gray-700 dark:text-gray-300">Add another feature highlight or link to a page</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li x-data="{ open: false }" @mouseenter="showOverlay=true" @mouseleave="showOverlay=false" class="z-30 flex flex-col items-start h-auto border-gray-100 dark:border-gray-700 md:h-full md:border-b-0 group md:flex-row md:items-center">
-                        <a href="#_" x-on:click="open=!open" class="flex items-center w-full h-16 gap-1 text-sm font-semibold text-gray-700 transition duration-300 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 md:hover:bg-transparent md:dark:hover:bg-transparent px-7 md:h-full md:px-0 md:w-auto hover:text-gray-900">
-                            <span class="">Resources</span>
-                            <svg :class="{ 'group-hover:-rotate-180' : !mobileMenuOpen, '-rotate-180' : mobileMenuOpen && open }" class="w-5 h-5 transition-all duration-300 ease-out" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
-                        </a>
-                        <div
-                            :class="{ 'hidden md:block opacity-0 invisible md:absolute' : !open, 'md:invisible md:opacity-0 md:hidden md:absolute' : open }"
-                            class="top-0 left-0 w-screen space-y-3 transition-transform duration-300 ease-out bg-white border-gray-100 dark:bg-black md:border-t md:border-b md:dark:border-gray-700 md:shadow-md md:-translate-y-2 md:mt-16 md:block md:group-hover:block md:group-hover:visible md:group-hover:opacity-100 md:group-hover:translate-y-0" x-cloak>
-                            <ul class="flex flex-col justify-between mx-auto max-w-7xl md:flex-row md:px-12">
-                                <div class="flex flex-col w-full md:border-l md:border-r md:divide-x md:flex-row divide-zinc-100 dark:divide-gray-700 border-zinc-100 dark:border-gray-700">
-                                    <div class="w-auto md:divide-y divide-zinc-100 dark:divide-gray-700">
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-gray-100 dark:hover:bg-gray-800 group">
-                                            <span class="block mb-1 font-medium text-gray-700 dark:text-gray-300">Authentication</span>
-                                            <span class="block font-light leading-5 text-gray-700 opacity-50 dark:text-gray-300">Configure the login, register, and forgot password for your app</span>
-                                        </a>
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-gray-100 dark:hover:bg-gray-800 group">
-                                            <span class="block mb-1 font-medium text-gray-700 dark:text-gray-300">Roles and Permissions</span>
-                                            <span class="block leading-5 text-gray-700 opacity-50 dark:text-gray-300">We utilize the bullet-proof Spatie Permissions package</span>
-                                        </a>
-                                    </div>
-                                    <div class="w-auto md:divide-y divide-zinc-100 dark:divide-gray-700">
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-gray-100 dark:hover:bg-gray-800">
-                                            <span class="block mb-1 font-medium text-gray-700 dark:text-gray-300">Posts and Pages</span>
-                                            <span class="block font-light leading-5 text-gray-700 opacity-50 dark:text-gray-300">Easily write blog articles and create pages for your application</span>
-                                        </a>
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-gray-100 dark:hover:bg-gray-800">
-                                            <span class="block mb-1 font-medium text-gray-700 dark:text-gray-300">Themes</span>
-                                            <span class="block leading-5 text-gray-700 opacity-50 dark:text-gray-300">Kick-start your app with a pre-built theme or create your own</span>
-                                        </a>
-                                    </div>
-                                    <div class="w-auto md:divide-y divide-zinc-100 dark:divide-gray-700">
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-gray-100 dark:hover:bg-gray-800">
-                                            <span class="block mb-1 font-medium text-gray-700 dark:text-gray-300">Settings and More</span>
-                                            <span class="block leading-5 text-gray-700 opacity-50 dark:text-gray-300">Easily create and update app settings. And so much more</span>
-                                        </a>
-                                        <a href="#_" onclick="event.preventDefault(); new FilamentNotification().title('Modify this button in your theme folder').icon('heroicon-o-pencil-square').iconColor('info').send()" class="block text-sm p-7 hover:bg-gray-100 dark:hover:bg-gray-800">
-                                            <span class="block mb-1 font-medium text-gray-700 dark:text-gray-300">Subscriptions</span>
-                                            <span class="block leading-5 text-gray-700 opacity-50 dark:text-gray-300">Integration payments and let users subscribe to a plan</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
-
-                    </li>
-                    <li class="flex-shrink-0 h-16 border-gray-100 dark:border-gray-700 md:border-b-0 md:h-full">
-                        <a href="{{ route('pricing') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 dark:text-gray-300 md:px-0 px-7 hover:bg-gray-100 dark:hover:bg-gray-800 md:hover:bg-transparent md:dark:hover:bg-transparent hover:text-gray-900">
-                            Pricing
-                        </a>
-                    </li>
-                    <li class="flex-shrink-0 h-16 border-gray-100 dark:border-gray-700 md:border-b-0 md:h-full">
-                        <a href="{{ route('blog') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 dark:text-gray-300 md:px-0 px-7 hover:bg-gray-100 dark:hover:bg-gray-800 md:hover:bg-transparent md:dark:hover:bg-transparent hover:text-gray-900">Blog</a>
-                    </li>
-
-                    @guest
-                        <li class="relative z-30 flex flex-col items-center justify-center flex-shrink-0 w-full h-auto pt-3 space-y-3 text-sm md:hidden px-7">
-                            <x-button href="{{ route('login') }}" tag="a" class="w-full text-sm" color="secondary">Login</x-button>
-                            <x-button href="{{ route('register') }}" tag="a" class="w-full text-sm">Sign Up</x-button>
-                        </li>
-                    @else
-                        <li class="flex items-center justify-center w-full pt-3 md:hidden px-7">
-                            <x-button href="{{ route('login') }}" tag="a" class="w-full text-sm">View Dashboard</x-button>
-                        </li>
-                    @endguest
-
-                </ul>
-            </nav>
-
-            @guest
-                <div class="relative z-30 items-center justify-center flex-shrink-0 hidden h-full space-x-3 text-sm md:flex">
-                    <x-button href="{{ route('login') }}" tag="a" class="text-sm" color="secondary">Login</x-button>
-                    <x-button href="{{ route('register') }}" tag="a" class="text-sm">Sign Up</x-button>
-                </div>
-            @else
-                <x-button href="{{ route('login') }}" tag="a" class="text-sm" class="relative z-20 flex-shrink-0 hidden ml-2 md:block">View Dashboard</x-button>
-            @endguest
-
         </div>
-    </x-container>
-
+        <div class="relative flex space-x-1.5 lg:space-x-3 items-center">
+            <div class="relative flex items-center space-x-1">
+                <x-marketing.elements.light-dark-button />
+                <button x-on:click="mobileMenuOpen=!mobileMenuOpen" class="relative flex items-center justify-center w-8 h-8 rounded-lg dark:text-gray-200 dark:hover:bg-gray-800 hover:bg-gray-100 md:hidden">
+                    <x-phosphor-x-bold x-show="mobileMenuOpen" class="w-4 h-4" />
+                    <svg x-show="!mobileMenuOpen" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" /></svg>
+                </button>
+            </div>
+            
+            <div class="items-center hidden md:flex">
+                <x-marketing.elements.header-auth-dashboard-buttons />
+            </div>
+        </div>
+    </div>
 </header>
