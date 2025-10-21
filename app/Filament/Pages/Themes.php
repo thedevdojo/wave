@@ -168,3 +168,4 @@ class Themes extends Page
         $this->refreshThemes();
     }
 }
+
