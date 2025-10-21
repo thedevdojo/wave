@@ -8,7 +8,6 @@ use Filament\Pages\Page;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Wave\Theme;
-use Illuminate\Support\Str;
 
 class Themes extends Page
 {
@@ -35,88 +34,58 @@ class Themes extends Page
         $all_themes = Theme::all();
         $this->themes = [];
         foreach ($all_themes as $theme) {
-            if (is_dir(resource_path('themes/'.$theme->folder))) {
+            if (file_exists(resource_path('themes/'.$theme->folder))) {
                 array_push($this->themes, $theme);
             }
         }
     }
 
-    /**
-     * Safely scan theme folders in resources/themes (or configured folder).
-     * Only directories are treated as theme candidates.
-     */
-    private function getThemesFromFolder(): array
+    private function getThemesFromFolder()
     {
         $themes = [];
 
-        $folder = $this->themes_folder;
-
-        if (! is_dir($folder)) {
-            // Try to create the directory; if it fails, return empty
-            @mkdir($folder, 0755, true);
-            return $themes;
+        if (! file_exists($this->themes_folder)) {
+            mkdir($this->themes_folder);
         }
 
-        $items = scandir($folder);
-        if (! is_array($items)) {
-            return $themes;
-        }
+        $scandirectory = scandir($this->themes_folder);
 
-        foreach ($items as $entry) {
-            if ($entry === '.' || $entry === '..') {
-                continue;
-            }
+        if (isset($scandirectory)) {
 
-            $entryPath = $folder . DIRECTORY_SEPARATOR . $entry;
-
-            // IMPORTANT: only directories are considered themes
-            if (! is_dir($entryPath)) {
-                continue;
-            }
-
-            // look for a theme.json metadata file
-            $jsonFile = $entryPath . DIRECTORY_SEPARATOR . 'theme.json';
-            $themeMeta = [
-                'name' => $entry,
-                'folder' => $entry,
-                'version' => null,
-            ];
-
-            if (is_file($jsonFile)) {
-                try {
-                    $content = File::get($jsonFile);
-                    $decoded = json_decode($content, true);
-                    if (is_array($decoded)) {
-                        $themeMeta = array_merge($themeMeta, $decoded);
-                    }
-                } catch (\Throwable $e) {
-                    // ignore invalid json and continue
-                    continue;
+            foreach ($scandirectory as $folder) {
+                // dd($theme_folder . '/' . $folder . '/' . $folder . '.json');
+                $json_file = $this->themes_folder.'/'.$folder.'/theme.json';
+                if (file_exists($json_file)) {
+                    $themes[$folder] = json_decode(file_get_contents($json_file), true);
+                    $themes[$folder]['folder'] = $folder;
+                    $themes[$folder] = (object) $themes[$folder];
                 }
             }
 
-            $themes[$entry] = (object) $themeMeta;
         }
 
-        return $themes;
+        return (object) $themes;
     }
 
     private function installThemes()
     {
+
         $themes = $this->getThemesFromFolder();
 
         foreach ($themes as $theme) {
             if (isset($theme->folder)) {
                 $theme_exists = Theme::where('folder', '=', $theme->folder)->first();
-                $version = $theme->version ?? '';
+                // If the theme does not exist in the database, then update it.
                 if (! isset($theme_exists->id)) {
+                    $version = isset($theme->version) ? $theme->version : '';
                     Theme::create(['name' => $theme->name, 'folder' => $theme->folder, 'version' => $version]);
                     if (config('themes.publish_assets', true)) {
                         $this->publishAssets($theme->folder);
                     }
                 } else {
+                    // If it does exist, let's make sure it's been updated
                     $theme_exists->name = $theme->name;
-                    $theme_exists->version = $version;
+                    $theme_exists->version = isset($theme->version) ? $theme->version : '';
                     $theme_exists->save();
                     if (config('themes.publish_assets', true)) {
                         $this->publishAssets($theme->folder);
@@ -126,11 +95,9 @@ class Themes extends Page
         }
     }
 
-    /**
-     * Activate a theme by folder name.
-     */
     public function activate($theme_folder)
     {
+
         $theme = Theme::where('folder', '=', $theme_folder)->first();
 
         if (isset($theme->id)) {
@@ -144,6 +111,7 @@ class Themes extends Page
                 ->title('Successfully activated '.$theme_folder.' theme')
                 ->success()
                 ->send();
+
         } else {
             Notification::make()
                 ->title('Could not find theme folder. Please confirm this theme has been installed.')
@@ -151,27 +119,19 @@ class Themes extends Page
                 ->send();
         }
 
-        // clear caches and refresh
         Artisan::call('config:clear');
         Artisan::call('view:clear');
         Artisan::call('route:clear');
 
         $this->refreshThemes();
+
     }
 
-    /**
-     * Write a simple theme.json in the project root to indicate active theme.
-     */
     private function writeThemeJson($themeName)
     {
         $themeJsonPath = base_path('theme.json');
-
-        try {
-            $themeJsonContent = json_encode(['name' => $themeName], JSON_PRETTY_PRINT);
-            File::put($themeJsonPath, $themeJsonContent);
-        } catch (\Throwable $e) {
-            // optional: log error, but don't break UI
-        }
+        $themeJsonContent = json_encode(['name' => $themeName], JSON_PRETTY_PRINT);
+        File::put($themeJsonPath, $themeJsonContent);
     }
 
     private function deactivateThemes()
@@ -179,25 +139,22 @@ class Themes extends Page
         Theme::query()->update(['active' => 0]);
     }
 
-    /**
-     * Delete a theme folder and DB entry, safe checks included.
-     */
     public function deleteTheme($theme_folder)
     {
         $theme = Theme::where('folder', '=', $theme_folder)->first();
-        if (! isset($theme->id)) {
+        if (! isset($theme)) {
             Notification::make()
                 ->title('Theme not found, please make sure this theme exists in the database.')
                 ->danger()
                 ->send();
-
-            return;
         }
 
-        $theme_location = rtrim(config('themes.folder', resource_path('themes')), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $theme->folder;
+        $theme_name = $theme->name;
 
-        // only delete if it's inside the expected folder
-        if (is_dir($theme_location) && Str::startsWith(realpath($theme_location), realpath(base_path()))) {
+        $theme_location = config('themes.folder').'/'.$theme->folder;
+
+        // if the folder exists delete it
+        if (file_exists($theme_location)) {
             File::deleteDirectory($theme_location, false);
         }
 
@@ -209,38 +166,5 @@ class Themes extends Page
             ->send();
 
         $this->refreshThemes();
-    }
-
-    /**
-     * Publish assets helper (tries to copy theme public assets into public/themes/<folder>)
-     */
-    private function publishAssets($themeFolder)
-    {
-        $source = rtrim($this->themes_folder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $themeFolder . DIRECTORY_SEPARATOR . 'public';
-        $destination = public_path('themes' . DIRECTORY_SEPARATOR . $themeFolder);
-
-        try {
-            if (is_dir($source)) {
-                // ensure destination exists
-                if (! is_dir($destination)) {
-                    @mkdir($destination, 0755, true);
-                }
-                // copy files (simple recursive)
-                $files = new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS),
-                    \RecursiveIteratorIterator::SELF_FIRST
-                );
-                foreach ($files as $file) {
-                    $targetPath = $destination . DIRECTORY_SEPARATOR . $files->getSubPathName();
-                    if ($file->isDir()) {
-                        @mkdir($targetPath, 0755, true);
-                    } else {
-                        @copy($file->getRealPath(), $targetPath);
-                    }
-                }
-            }
-        } catch (\Throwable $e) {
-            // ignore publish errors (do not break activation)
-        }
     }
 }
