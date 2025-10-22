@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Page title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.cdnfonts.com/css/inter?styles=135009,135005,135007,135002,135000" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="shuffle-for-tailwind.png">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
+</head>
+<body class="antialiased bg-body text-body font-body">
+    <div class="">
+                
+      <section class="relative pb-8 overflow-y-hidden bg-gradient-to-r from-neutral-950 via-neutral-900 to-neutral-950 overflow-hidden" x-data="{ mobileNavOpen: false }">
+        <div class="hidden lg:block absolute top-0 left-0 bottom-0 w-2/5">
+          <div class="relative h-full">
+            <div class="absolute inset-0 opacity-20 bg-gradient-to-br from-purple-400 to-purple-900 rounded-2xl filter blur-3xl"></div>
+            <div class="pr-1 pb-1 border border-white border-opacity-20 h-full rounded-br-2xl">
+              <img class="relative object-cover w-full h-full border-r border-neutral-800 rounded-br-xl" src="https://images.unsplash.com/photo-1535957998253-26ae1ef29506?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wzMzIzMzB8MHwxfHNlYXJjaHwxfHx3b3JrfGVufDB8MXx8fDE3NTAwNjA4NTV8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=960" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="relative container px-4 mx-auto">
+          <div class="w-full lg:w-3/5 lg:pl-16 ml-auto mb-12">
+            <nav class="flex justify-between items-center py-8">
+                <a href="#" class="lg:hidden">
+                    <img src="darkpro-assets/darkpro-logo.png" alt="" class="h-8">
+                </a>
+                <div class="lg:hidden ml-auto">
+                  <button x-on:click="mobileNavOpen = !mobileNavOpen" class="block hover:text-white text-neutral-300 focus:outline-none transition-colors duration-200">
+                      <svg class="h-6 w-6" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                          <title>Mobile menu</title>
+                          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                      </svg>
+                  </button>
+                </div>
+                <ul class="hidden lg:flex mr-auto mr-8 items-center w-auto space-x-8">
+                    <li><a class="text-sm hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Product</a></li>
+                    <li><a class="text-sm hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Solutions</a></li>
+                    <li><a class="text-sm hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Resources</a></li>
+                    <li><a class="text-sm hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Company</a></li>
+                </ul>
+                <a class="hidden lg:block lg:ml-auto px-4 py-2 text-sm font-semibold text-neutral-950 bg-white hover:bg-neutral-100 rounded-full transition-all duration-200 hover:shadow-lg" href="#">Get Started</a>
+            </nav>
+            <div class="mt-10 lg:mt-20 mb-16 lg:mb-20 max-w-xl">
+              <div class="mb-6">
+                  <span class="text-sm text-neutral-400 font-medium">Frequent authentication</span>
+              </div>
+              
+              <h1 class="mb-6 text-4xl md:text-5xl lg:text-6xl font-medium leading-none text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">
+                  Build products that users will really love
+              </h1>
+              
+              <p class="mb-10 text-lg leading-relaxed text-neutral-300">
+                  Transform your workflow with our intuitive platform designed for high-performing teams. Ship faster, collaborate better, and scale with confidence of a professional.
+              </p>
+              
+              <div class="relative flex flex-col sm:flex-row gap-4">
+                  <div class="lg:hidden absolute inset-0 opacity-20 bg-gradient-to-r from-purple-950 via-purple-900 to-purple-950 rounded-2xl filter blur-3xl"></div>
+                  <a class="relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-neutral-950 bg-white hover:bg-neutral-100 rounded-full transition-all duration-200 hover:shadow-lg group" href="#">
+                      Get Started
+                      <svg class="ml-1 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                      </svg>
+                  </a>
+                  <a class="relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white hover:text-white border border-neutral-700 hover:border-white hover:border-opacity-50 rounded-full transition-all duration-200" href="#">
+                      Watch Demo
+                  </a>
+              </div>
+            </div>
+            <div class="flex flex-wrap justify-center lg:justify-start -m-4 -mx-6">
+              <div class="w-1/2 md:w-1/4 p-4 px-6">
+                  <img class="mx-auto sm:mx-0 h-8 filter brightness-0 invert" src="darkpro-assets/logos/jiggle-color.svg" alt="">
+              </div>
+              <div class="w-1/2 md:w-1/4 p-4 px-6">
+                  <img class="mx-auto sm:mx-0 h-8 filter brightness-0 invert" src="darkpro-assets/logos/symtric-color.svg" alt="">
+              </div>
+              <div class="w-1/2 md:w-1/4 p-4 px-6">
+                  <img class="mx-auto sm:mx-0 h-8 filter brightness-0 invert" src="darkpro-assets/logos/wishelp-color.svg" alt="">
+              </div>
+              <div class="w-1/2 md:w-1/4 p-4 px-6">
+                  <img class="mx-auto sm:mx-0 h-8 filter brightness-0 invert" src="darkpro-assets/logos/resecurb-color.svg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div :class="{'block': mobileNavOpen, 'hidden': !mobileNavOpen}" class="hidden fixed top-0 left-0 bottom-0 w-5/6 max-w-sm z-50">
+            <div x-on:click="mobileNavOpen = !mobileNavOpen" class="fixed inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 opacity-75 filter blur-3xl"></div>
+            <nav class="relative flex flex-col py-6 px-6 w-full h-full bg-neutral-900 border-r border-neutral-800 overflow-y-auto">
+                <div class="flex items-center mb-12">
+                  <a href="#" class="mr-auto">
+                      <img src="darkpro-assets/darkpro-logo.png" alt="" class="h-8">
+                  </a>
+                  <button x-on:click="mobileNavOpen = !mobileNavOpen">
+                      <svg class="h-6 w-6 cursor-pointer hover:text-white text-neutral-400 transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                  </button>
+                </div>
+                <div>
+                    <ul>
+                        <li class="mb-1"><a class="block p-4 text-sm font-semibold hover:bg-neutral-800 hover:text-white rounded-lg text-neutral-300 transition-all duration-200" href="#">Product</a></li>
+                        <li class="mb-1"><a class="block p-4 text-sm font-semibold hover:bg-neutral-800 hover:text-white rounded-lg text-neutral-300 transition-all duration-200" href="#">Solutions</a></li>
+                        <li class="mb-1"><a class="block p-4 text-sm font-semibold hover:bg-neutral-800 hover:text-white rounded-lg text-neutral-300 transition-all duration-200" href="#">Resources</a></li>
+                        <li class="mb-1"><a class="block p-4 text-sm font-semibold hover:bg-neutral-800 hover:text-white rounded-lg text-neutral-300 transition-all duration-200" href="#">Company</a></li>
+                    </ul>
+                </div>
+                <div class="mt-auto">
+                    <div class="pt-6">
+                        <a class="block px-6 py-3 text-sm text-center font-semibold text-neutral-950 bg-white hover:bg-neutral-100 rounded-lg transition-all duration-200" href="#">Get Started</a>
+                    </div>
+                    <p class="mt-6 mb-4 text-sm text-center text-neutral-500">
+                        <span>© 2025 All rights reserved.</span>
+                    </p>
+                </div>
+            </nav>
+        </div>
+      </section>
+                
+      <section class="py-20 bg-gradient-to-r from-neutral-950 via-neutral-900 to-neutral-950">
+        <div class="container px-4 mx-auto">
+          <h2 class="mb-12 text-center text-3xl md:text-2xl md:leading-tight font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Trusted by brand all over the world</h2>
+          <div class="max-w-5xl mx-auto">
+              <div class="relative flex flex-wrap justify-center -m-4 -mx-6">
+                  <div class="absolute inset-0 opacity-20 bg-gradient-to-r from-purple-950 via-purple-800 to-purple-950 rounded-2xl filter blur-3xl"></div>
+                  <div class="w-1/2 md:w-1/3 lg:w-1/5 p-4 px-6">
+                      <img class="mx-auto h-8 filter brightness-0 invert" src="darkpro-assets/logos/jiggle-color.svg" alt="">
+                  </div>
+                  <div class="w-1/2 md:w-1/3 lg:w-1/5 p-4 px-6">
+                      <img class="mx-auto h-8 filter brightness-0 invert" src="darkpro-assets/logos/symtric-color.svg" alt="">
+                  </div>
+                  <div class="w-1/2 md:w-1/3 lg:w-1/5 p-4 px-6">
+                      <img class="mx-auto h-8 filter brightness-0 invert" src="darkpro-assets/logos/wishelp-color.svg" alt="">
+                  </div>
+                  <div class="w-1/2 md:w-1/3 lg:w-1/5 p-4 px-6">
+                      <img class="mx-auto h-8 filter brightness-0 invert" src="darkpro-assets/logos/resecurb-color.svg" alt="">
+                  </div>
+                  <div class="w-1/2 md:w-1/3 lg:w-1/5 p-4 px-6">
+                      <img class="mx-auto h-8 filter brightness-0 invert" src="darkpro-assets/logos/jiggle-color.svg" alt="">
+                  </div>
+              </div>
+          </div>
+        </div>
+      </section>
+                
+      <section class="relative pb-20 lg:pt-24 bg-gradient-to-r from-neutral-950 via-neutral-900 to-neutral-950">
+        <div class="h-96 lg:h-auto lg:absolute top-0 right-0 bottom-0 lg:w-1/2 bg-no-repeat bg-cover bg-center relative overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1702471897388-5d9c50ea434e?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wzMzIzMzB8MHwxfHNlYXJjaHwzMXx8d29ya3xlbnwwfDJ8fHwxNzQ4OTYzODEzfDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;h=640&amp;w=640');">
+        </div>
+        <div class="container px-4 mx-auto">
+          <div class="w-full lg:w-1/2 mt-16 lg:mt-0">
+            <div class="lg:max-w-md">
+              <h2 class="mb-4 text-3xl md:text-4xl lg:text-5xl leading-tight font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Security in saving</h2>
+              <p class="text-neutral-300 mb-8 max-w-lg">Take care to develop resources continually and integrity them with previous projects. More interesting writings for your customers.</p>
+              <div class="flex items-center py-4 px-2 -mx-2">
+                <div class="flex-shrink-0 mr-5 text-white">
+                  <svg class="w-10 h-10 group-hover:scale-110 transition-transform duration-200" viewbox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25.6 22.9C25.7 23 25.8 23 26 23H33C33.6 23 34 22.6 34 22C34 21.8 34 21.7 33.9 21.6L30.4 14.6C30.1 14.1 29.5 13.9 29 14.2C28.9 14.3 28.7 14.4 28.6 14.6L25.1 21.6C24.9 22 25.1 22.6 25.6 22.9ZM29.5 17.2L31.4 21H27.6L29.5 17.2ZM18.5 14C16 14 14 16 14 18.5C14 21 16 23 18.5 23C21 23 23 21 23 18.5C23 16 21 14 18.5 14ZM18.5 21C17.1 21 16 19.9 16 18.5C16 17.1 17.1 16 18.5 16C19.9 16 21 17.1 21 18.5C21 19.9 19.9 21 18.5 21ZM22.7 25.3C22.3 24.9 21.7 24.9 21.3 25.3L18.5 28.1L15.7 25.3C15.3 24.9 14.7 24.9 14.3 25.3C13.9 25.7 13.9 26.3 14.3 26.7L17.1 29.5L14.3 32.3C13.9 32.7 13.9 33.3 14.3 33.7C14.7 34.1 15.3 34.1 15.7 33.7L18.5 30.9L21.3 33.7C21.7 34.1 22.3 34.1 22.7 33.7C23.1 33.3 23.1 32.7 22.7 32.3L19.9 29.5L22.7 26.7C23.1 26.3 23.1 25.7 22.7 25.3ZM33 25H26C25.4 25 25 25.4 25 26V33C25 33.6 25.4 34 26 34H33C33.6 34 34 33.6 34 33V26C34 25.4 33.6 25 33 25ZM32 32H27V27H32V32Z" fill="currentColor"></path>
+                    <circle cx="24" cy="24" r="23.5" stroke="currentColor"></circle>
+                  </svg>
+                </div>
+                <div class="max-w-sm">
+                  <h3 class="text-xl md:text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Quick problem-solving contact</h3>
+                </div>
+              </div>
+              <div class="flex items-center py-4 px-2 -mx-2">
+                <div class="flex-shrink-0 mr-5 text-white">
+                  <svg class="w-10 h-10 group-hover:scale-110 transition-transform duration-200" viewbox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25.6 22.9C25.7 23 25.8 23 26 23H33C33.6 23 34 22.6 34 22C34 21.8 34 21.7 33.9 21.6L30.4 14.6C30.1 14.1 29.5 13.9 29 14.2C28.9 14.3 28.7 14.4 28.6 14.6L25.1 21.6C24.9 22 25.1 22.6 25.6 22.9ZM29.5 17.2L31.4 21H27.6L29.5 17.2ZM18.5 14C16 14 14 16 14 18.5C14 21 16 23 18.5 23C21 23 23 21 23 18.5C23 16 21 14 18.5 14ZM18.5 21C17.1 21 16 19.9 16 18.5C16 17.1 17.1 16 18.5 16C19.9 16 21 17.1 21 18.5C21 19.9 19.9 21 18.5 21ZM22.7 25.3C22.3 24.9 21.7 24.9 21.3 25.3L18.5 28.1L15.7 25.3C15.3 24.9 14.7 24.9 14.3 25.3C13.9 25.7 13.9 26.3 14.3 26.7L17.1 29.5L14.3 32.3C13.9 32.7 13.9 33.3 14.3 33.7C14.7 34.1 15.3 34.1 15.7 33.7L18.5 30.9L21.3 33.7C21.7 34.1 22.3 34.1 22.7 33.7C23.1 33.3 23.1 32.7 22.7 32.3L19.9 29.5L22.7 26.7C23.1 26.3 23.1 25.7 22.7 25.3ZM33 25H26C25.4 25 25 25.4 25 26V33C25 33.6 25.4 34 26 34H33C33.6 34 34 33.6 34 33V26C34 25.4 33.6 25 33 25ZM32 32H27V27H32V32Z" fill="currentColor"></path>
+                    <circle cx="24" cy="24" r="23.5" stroke="currentColor"></circle>
+                  </svg>
+                </div>
+                <div class="max-w-sm">
+                  <h3 class="text-xl md:text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Making changes simple and easy</h3>
+                </div>
+              </div>
+              <div class="flex items-center py-4 px-2 -mx-2">
+                <div class="flex-shrink-0 mr-5 text-white">
+                  <svg class="w-10 h-10 group-hover:scale-110 transition-transform duration-200" viewbox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25.6 22.9C25.7 23 25.8 23 26 23H33C33.6 23 34 22.6 34 22C34 21.8 34 21.7 33.9 21.6L30.4 14.6C30.1 14.1 29.5 13.9 29 14.2C28.9 14.3 28.7 14.4 28.6 14.6L25.1 21.6C24.9 22 25.1 22.6 25.6 22.9ZM29.5 17.2L31.4 21H27.6L29.5 17.2ZM18.5 14C16 14 14 16 14 18.5C14 21 16 23 18.5 23C21 23 23 21 23 18.5C23 16 21 14 18.5 14ZM18.5 21C17.1 21 16 19.9 16 18.5C16 17.1 17.1 16 18.5 16C19.9 16 21 17.1 21 18.5C21 19.9 19.9 21 18.5 21ZM22.7 25.3C22.3 24.9 21.7 24.9 21.3 25.3L18.5 28.1L15.7 25.3C15.3 24.9 14.7 24.9 14.3 25.3C13.9 25.7 13.9 26.3 14.3 26.7L17.1 29.5L14.3 32.3C13.9 32.7 13.9 33.3 14.3 33.7C14.7 34.1 15.3 34.1 15.7 33.7L18.5 30.9L21.3 33.7C21.7 34.1 22.3 34.1 22.7 33.7C23.1 33.3 23.1 32.7 22.7 32.3L19.9 29.5L22.7 26.7C23.1 26.3 23.1 25.7 22.7 25.3ZM33 25H26C25.4 25 25 25.4 25 26V33C25 33.6 25.4 34 26 34H33C33.6 34 34 33.6 34 33V26C34 25.4 33.6 25 33 25ZM32 32H27V27H32V32Z" fill="currentColor"></path>
+                    <circle cx="24" cy="24" r="23.5" stroke="currentColor"></circle>
+                  </svg>
+                </div>
+                <div class="max-w-sm">
+                  <h3 class="text-xl md:text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Exchangeable at any time</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+                
+      <section class="py-20 bg-gradient-to-r from-neutral-950 via-neutral-900 to-neutral-950" x-data="{ activeSlide: 1, slideCount: 4 }">
+            <div class="container px-4 mx-auto">
+              <div class="flex items-center">
+                <button x-on:click="activeSlide = activeSlide &gt; 1 ? activeSlide - 1 : slideCount" class="flex-shrink-0 hidden lg:block w-16 h-16 p-5 rounded-full border border-white border-opacity-20 hover:border-opacity-50 transition-all duration-200 group">
+                  <svg class="text-white group-hover:text-white transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+                </button>
+                <div class="overflow-hidden">
+                  <div :style="'transform: translateX(-' + (activeSlide - 1) * 100.5 + '%)'" class="whitespace-nowrap transition-transform duration-500 ease-in-out">
+                      <div class="inline-block w-full whitespace-normal">
+                        <div class="max-w-3xl mb-12 mx-auto text-center">
+                          <h2 class="mb-4 text-3xl md:text-4xl lg:text-5xl leading-tight font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Take quick action that increases your brand's regular profit.</h2>
+                          <p class="text-lg leading-relaxed text-neutral-300 mb-8">If you have ever wondered how to develop your brand, this is the place for you. Take a big step forward in growing your business with this great tool.</p>
+                          <div class="relative">
+                            <div class="absolute inset-0 opacity-20 bg-gradient-to-r from-purple-950 via-purple-800 to-purple-950 rounded-2xl filter blur-3xl"></div>
+                            <a class="relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-neutral-950 bg-white hover:bg-neutral-100 rounded-full transition-all duration-200 hover:shadow-lg group" href="#">
+                              Try Demo
+                              <svg class="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="inline-block w-full whitespace-normal">
+                        <div class="max-w-3xl mb-12 mx-auto text-center">
+                          <h2 class="mb-4 text-3xl md:text-4xl lg:text-5xl leading-tight font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Take quick action that increases your brand's regular profit.</h2>
+                          <p class="text-lg leading-relaxed text-neutral-300 mb-8">If you have ever wondered how to develop your brand, this is the place for you. Take a big step forward in growing your business with this great tool.</p>
+                          <div class="relative">
+                            <div class="absolute inset-0 opacity-20 bg-gradient-to-r from-purple-950 via-purple-800 to-purple-950 rounded-2xl filter blur-3xl"></div>
+                            <a class="relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-neutral-950 bg-white hover:bg-neutral-100 rounded-full transition-all duration-200 hover:shadow-lg group" href="#">
+                              Try Demo
+                              <svg class="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="inline-block w-full whitespace-normal">
+                        <div class="max-w-3xl mb-12 mx-auto text-center">
+                          <h2 class="mb-4 text-3xl md:text-4xl lg:text-5xl leading-tight font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Take quick action that increases your brand's regular profit.</h2>
+                          <p class="text-lg leading-relaxed text-neutral-300 mb-8">If you have ever wondered how to develop your brand, this is the place for you. Take a big step forward in growing your business with this great tool.</p>
+                          <div class="relative">
+                            <div class="absolute inset-0 opacity-20 bg-gradient-to-r from-purple-950 via-purple-800 to-purple-950 rounded-2xl filter blur-3xl"></div>
+                            <a class="relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-neutral-950 bg-white hover:bg-neutral-100 rounded-full transition-all duration-200 hover:shadow-lg group" href="#">
+                              Try Demo
+                              <svg class="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="inline-block w-full whitespace-normal">
+                        <div class="max-w-3xl mb-12 mx-auto text-center">
+                          <h2 class="mb-4 text-3xl md:text-4xl lg:text-5xl leading-tight font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Take quick action that increases your brand's regular profit.</h2>
+                          <p class="text-lg leading-relaxed text-neutral-300 mb-8">If you have ever wondered how to develop your brand, this is the place for you. Take a big step forward in growing your business with this great tool.</p>
+                          <div class="relative">
+                            <div class="absolute inset-0 opacity-20 bg-gradient-to-r from-purple-950 via-purple-800 to-purple-950 rounded-2xl filter blur-3xl"></div>
+                            <a class="relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-neutral-950 bg-white hover:bg-neutral-100 rounded-full transition-all duration-200 hover:shadow-lg group" href="#">
+                              Try Demo
+                              <svg class="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <button x-on:click="activeSlide = activeSlide &lt; slideCount ? activeSlide + 1 : 1" class="flex-shrink-0 hidden lg:block w-16 h-16 p-5 rounded-full border border-white border-opacity-20 hover:border-opacity-50 transition-all duration-200 group">
+                  <svg class="text-white group-hover:text-white transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="relative w-full text-center">
+                <div class="absolute inset-0 opacity-20 bg-gradient-to-r from-purple-950 via-purple-800 to-purple-950 rounded-2xl filter blur-3xl"></div>
+                <button x-on:click="activeSlide=1" class="relative w-3 h-3 mr-2 rounded-full border border-white border-opacity-20 hover:border-opacity-50 transition-all duration-200" :class="{ 'bg-white': activeSlide==1, 'bg-white bg-opacity-20': activeSlide!=1 }"></button>
+                <button x-on:click="activeSlide=2" class="relative w-3 h-3 mr-2 rounded-full border border-white border-opacity-20 hover:border-opacity-50 transition-all duration-200" :class="{ 'bg-white': activeSlide==2, 'bg-white bg-opacity-20': activeSlide!=2 }"></button>
+                <button x-on:click="activeSlide=3" class="relative w-3 h-3 mr-2 rounded-full border border-white border-opacity-20 hover:border-opacity-50 transition-all duration-200" :class="{ 'bg-white': activeSlide==3, 'bg-white bg-opacity-20': activeSlide!=3 }"></button>
+                <button x-on:click="activeSlide=4" class="relative w-3 h-3 rounded-full border border-white border-opacity-20 hover:border-opacity-50 transition-all duration-200" :class="{ 'bg-white': activeSlide==4, 'bg-white bg-opacity-20': activeSlide!=4 }"></button>
+              </div>
+            </div>
+          </section>
+                
+      <footer class="py-20 bg-gradient-to-r from-neutral-950 via-neutral-900 to-neutral-950">
+        <div class="container px-4 mx-auto">
+          <div class="flex flex-wrap -mx-4 mb-8 lg:mb-16">
+            <div class="w-full lg:w-1/3 px-4 mb-12 lg:mb-0">
+              <a class="flex items-center text-white text-xl leading-none font-semibold" href="#">
+                <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center mr-3">
+                  <span class="text-neutral-950 font-medium text-sm">D</span>
+                </div>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-300 to-gray-100">DarkPro</span>
+              </a>
+              <p class="mt-5 mb-6 max-w-xs text-neutral-300 leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <div class="flex items-center space-x-6">
+                <a class="inline-block h-6 text-neutral-400 hover:text-white transition-colors duration-200" href="#">
+                  <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+                    <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"></path>
+                  </svg>
+                </a>
+                <a class="inline-block h-6 text-neutral-400 hover:text-white transition-colors duration-200" href="#">
+                  <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+                  </svg>
+                </a>
+                <a class="inline-block h-6 text-neutral-400 hover:text-white transition-colors duration-200" href="#">
+                  <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path>
+                  </svg>
+                </a>
+                <a class="inline-block h-6 text-neutral-400 hover:text-white transition-colors duration-200" href="#">
+                  <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="w-full lg:w-2/3 px-4">
+              <div class="flex flex-wrap justify-between">
+                <div class="w-1/2 lg:w-1/4 mb-8 lg:mb-0">
+                  <h3 class="mb-6 text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Company</h3>
+                  <ul class="text-sm">
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">About Us</a></li>
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Careers</a></li>
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Press</a></li>
+                    <li><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Blog</a></li>
+                  </ul>
+                </div>
+                <div class="w-1/2 lg:w-1/4 mb-8 lg:mb-0">
+                  <h3 class="mb-6 text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Pages</h3>
+                  <ul class="text-sm">
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Login</a></li>
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Register</a></li>
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Add list</a></li>
+                    <li><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Contact</a></li>
+                  </ul>
+                </div>
+                <div class="w-1/2 lg:w-1/4 mb-8 lg:mb-0">
+                  <h3 class="mb-6 text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Legal</h3>
+                  <ul class="text-sm">
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Terms</a></li>
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">About Us</a></li>
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Team</a></li>
+                    <li><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Privacy</a></li>
+                  </ul>
+                </div>
+                <div class="w-1/2 lg:w-1/4">
+                  <h3 class="mb-6 text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">Resources</h3>
+                  <ul class="text-sm">
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Blog</a></li>
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Service</a></li>
+                    <li class="mb-4"><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Product</a></li>
+                    <li><a class="hover:text-white font-medium text-neutral-300 transition-colors duration-200" href="#">Pricing</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="border-t border-neutral-700 pt-8">
+            <p class="lg:text-center text-sm text-neutral-400">All rights reserved. © DarkPro Inc.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+</body>
+</html>
+

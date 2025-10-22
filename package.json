@@ -1,0 +1,34 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": "",
+  "description": "",
+  "scripts": {
+    "browsersync": "browser-sync start --directory --server ./public --files ./public/* --startPath index.html",
+    "clean": "rimraf public/*",
+    "copy-assets": "cpx \"src/assets/**/*.*\" public/",
+    "copy-html": "cpx \"src/html/*.html\" public/",
+    "css-compile": "tailwindcss build -i src/tailwind/tailwind.css -c src/tailwind/tailwind.config.js -o public/css/tailwind/tailwind.css",
+    "css-minified": "tailwindcss build -i src/tailwind/tailwind.css -c src/tailwind/tailwind.config.js -o public/css/tailwind/tailwind.min.css --minify",
+    "css": "npm-run-all --sequential css-*",
+    "build": "npm-run-all --sequential clean copy-* css",
+    "watch": "npm-run-all build --parallel watch-templates watch-css browsersync",
+    "watch-templates": "nodemon --watch ./src/html/ -e html -x \"cpx \"src/html/*.html\" public/\"",
+    "watch-css": "tailwindcss build -i src/tailwind/tailwind.css -c src/tailwind/tailwind.config.js -o public/css/tailwind/tailwind.min.css --minify --watch"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.0.7"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "browser-sync": "^2.27.7",
+    "cpx": "^1.5.0",
+    "npm-run-all": "^4.1.5",
+    "pug": "^3.0.2",
+    "pug-cli": "^1.0.0-alpha6",
+    "nodemon": "^2.0.14",
+    "rimraf": "^3.0.2"    
+  }
+}
