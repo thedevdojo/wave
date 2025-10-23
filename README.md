@@ -9,7 +9,7 @@
 
 Wave is a SaaS framework, built with <a href="https://laravel.com">Laravel</a>, that will make building your SaaS application fun and easier than ever before. <a href="https://devdojo.com/wave/docs" target="_blank">View the full docs here</a>.
 
-Wave provides you with all the essential features found in many popular SaaS platforms, allowing you to quickly transform your idea into a profitable SaaS product. Here are a handful of features that Wave Provides:
+Wave provides you with all the essential features found in many popular SaaS platforms, allowing you to quickly transform your idea into a profitable SaaS product. Here are a handful of features that Wave provides:
 
  - <a href="https://devdojo.com/wave/docs/features/auth" target="_blank">Authentication</a>
  - <a href="https://devdojo.com/wave/docs/features/user-profiles" target="_blank">User Profiles</a>
@@ -32,7 +32,7 @@ Be sure to view a list of <a href="https://devdojo.com/wave/docs/features/auth" 
 
 You can view a <a href="https://devdojo.com/wave/demo" target="_blank">live demo here</a>, which will also allow you to preview all the <a href="https://devdojo.com/wave/themes" target="_blank">available themes</a>.
 
-<a href="https://devdojo.com/wave/demo" target="_blank"><img src="https://cdn.devdojo.com/images/august2024/wave-anchor-theme.jpeg"></a>
+<a href="https://devdojo.com/wave/demo" target="_blank"><img src="https://cdn.devdojo.com/images/august2024/wave-anchor-theme.jpeg" alt="Wave Anchor Theme Preview"></a>
 
 ## Installation
 
