@@ -81,6 +81,8 @@ class PlanResource extends Resource
                             ->maxLength(191),
                         TextInput::make('onetime_price')
                             ->maxLength(191),
+                        TextInput::make('currency')
+                            ->maxLength(191),
                     ])->columns(2),
                 Section::make('Plan Status')
                     ->description('Make the plan default or active/inactive')
@@ -113,6 +115,8 @@ class PlanResource extends Resource
                     ->sortable(),
                 BooleanColumn::make('active')
                     ->sortable(),
+                TextColumn::make('currency')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
