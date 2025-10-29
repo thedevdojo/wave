@@ -26,14 +26,14 @@ class Plan extends Model
         if (app()->bound('cache')) {
             try {
                 return Cache::remember('wave_active_plans', 1800, function () {
-                    return self::where('active', 1)->orderBy('sort_order')->with('role')->get();
+                    return self::where('active', 1)->orderBy('sort_order')->orderBy('id')->with('role')->get();
                 });
             } catch (Exception $e) {
                 // Fallback to direct query if cache fails
             }
         }
 
-        return self::where('active', 1)->orderBy('sort_order')->with('role')->get();
+        return self::where('active', 1)->orderBy('sort_order')->orderBy('id')->with('role')->get();
     }
 
     /**
