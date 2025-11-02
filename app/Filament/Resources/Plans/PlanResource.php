@@ -83,11 +83,16 @@ class PlanResource extends Resource
                             ->maxLength(191),
                     ])->columns(2),
                 Section::make('Plan Status')
-                    ->description('Make the plan default or active/inactive')
+                    ->description('Make the plan default or active/inactive and set the sort order')
                     ->schema([
                         Toggle::make('active')
                             ->required(),
                         Toggle::make('default')
+                            ->required(),
+                        TextInput::make('sort_order')
+                            ->integer()
+                            ->default(0)
+                            ->minValue(0)
                             ->required(),
                     ])->columns(2),
                 Section::make('Associated Role')
@@ -108,6 +113,9 @@ class PlanResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
+                TextColumn::make('sort_order')
+                    ->numeric()
+                    ->sortable(),
                 TextColumn::make('role_id')
                     ->numeric()
                     ->sortable(),
@@ -122,6 +130,7 @@ class PlanResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('sort_order')
             ->filters([
                 //
             ])
