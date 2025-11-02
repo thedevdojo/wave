@@ -44,6 +44,8 @@ class Subscription extends Model
             'cancelled_at' => 'datetime',
             'last_payment_at' => 'datetime',
             'next_payment_at' => 'datetime',
+            'trial_ends_at' => 'datetime',
+            'ends_at' => 'datetime',
         ];
     }
 
