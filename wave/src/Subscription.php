@@ -41,7 +41,6 @@ class Subscription extends Model
     protected function casts(): array
     {
         return [
-            'cancelled_at' => 'datetime',
             'last_payment_at' => 'datetime',
             'next_payment_at' => 'datetime',
             'trial_ends_at' => 'datetime',
