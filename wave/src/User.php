@@ -157,7 +157,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     {
         $user_invoices = [];
 
-        if (is_null($this->subscription)) {
+        if ($this->subscriptions()->doesntExist()) {
             return null;
         }
 
