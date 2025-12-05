@@ -133,25 +133,47 @@ class WaveServiceProvider extends ServiceProvider
         $this->registerWaveComponentDirectory();
     }
 
-    protected function loadHelpers()
+    protected function loadHelpers(): void
     {
-        // Check if cache service is available (not during package discovery)
-        if ($this->app->bound('cache') && $this->app->make('cache')->getStore()) {
-            try {
-                $helpers = Cache::rememberForever('wave_helpers', function () {
-                    return glob(__DIR__.'/Helpers/*.php');
+        $helperPattern = __DIR__ . '/Helpers/*.php';
+        $helpers = [];
+
+        try {
+            // Only use cache if it's safe and available
+            if ($this->app->bound('cache') && $this->app->make('cache')->getStore()) {
+                $helpers = Cache::rememberForever('wave_helpers', function () use ($helperPattern) {
+                    // Store only filenames, not absolute paths
+                    return array_map('basename', glob($helperPattern));
                 });
-            } catch (Exception $e) {
-                // Fallback to direct file loading if cache fails
-                $helpers = glob(__DIR__.'/Helpers/*.php');
+
+                // Validate cached filenames (not absolute paths)
+                $helpers = array_filter($helpers, function ($filename) {
+                    $fullPath = __DIR__ . '/Helpers/' . $filename;
+                    return file_exists($fullPath);
+                });
+
+                // If no valid helpers remain (e.g., after deployment), repopulate
+                if (empty($helpers)) {
+                    Cache::forget('wave_helpers');
+                    $helpers = array_map('basename', glob($helperPattern));
+                    Cache::forever('wave_helpers', $helpers);
+                }
+            } else {
+                // Fallback: load directly without cache
+                $helpers = array_map('basename', glob($helperPattern));
             }
-        } else {
-            // Direct file loading during package discovery or when cache is not available
-            $helpers = glob(__DIR__.'/Helpers/*.php');
+
+        } catch (\Throwable $e) {
+            // Fallback to direct loading if cache fails
+            $helpers = array_map('basename', glob($helperPattern));
         }
 
+        // Require each helper safely
         foreach ($helpers as $filename) {
-            require_once $filename;
+            $fullPath = __DIR__ . '/Helpers/' . $filename;
+            if (file_exists($fullPath)) {
+                require_once $fullPath;
+            }
         }
     }
 
