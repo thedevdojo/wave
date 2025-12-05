@@ -71,6 +71,7 @@ class StripeWebhook extends Controller
                 }
 
                 $subscription->save();
+                $subscription->user->clearUserCache();
             }
         }
 
@@ -81,6 +82,7 @@ class StripeWebhook extends Controller
             $subscription = Subscription::where('vendor_subscription_id', $stripeSubscription->id)->first();
             if (isset($subscription)) {
                 $subscription->cancel();
+                $subscription->user->clearUserCache();
             }
         }
 
@@ -135,6 +137,8 @@ class StripeWebhook extends Controller
                 'status' => 'active',
                 'seats' => 1,
             ]);
+
+            $user->clearUserCache();
         }
     }
 }
