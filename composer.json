@@ -10,7 +10,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.2",
+        "php": "^8.5",
         "ext-exif": "*",
         "ext-gd": "*",
         "codeat3/blade-phosphor-icons": "^2.0",
