@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Wave\Traits\HasProfileKeyValues;
@@ -9,7 +10,7 @@ use Wave\User as WaveUser;
 
 class User extends WaveUser
 {
-    use HasProfileKeyValues, Notifiable;
+    use HasFactory, HasProfileKeyValues, Notifiable;
 
     public $guard_name = 'web';
 
@@ -63,8 +64,12 @@ class User extends WaveUser
         static::created(function ($user) {
             // Remove all roles
             $user->syncRoles([]);
-            // Assign the default role
-            $user->assignRole(config('wave.default_user_role', 'registered'));
+
+            // Assign the default role if it exists
+            $defaultRole = config('wave.default_user_role', 'registered');
+            if (\Spatie\Permission\Models\Role::where('name', $defaultRole)->where('guard_name', 'web')->exists()) {
+                $user->assignRole($defaultRole);
+            }
         });
     }
 }
