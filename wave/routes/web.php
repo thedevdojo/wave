@@ -40,7 +40,10 @@ Route::get('wave/theme/image/{theme_name}', '\Wave\Http\Controllers\ThemeImageCo
 Route::get('wave/plugin/image/{plugin_name}', '\Wave\Http\Controllers\PluginImageController@show');
 Route::redirect('admin/login', '/auth/login');
 
-Route::get('reset', Reset::class);
+// Reset sqlite database - only in local environment
+if (app()->environment('local')) {
+    Route::get('reset', Reset::class)->middleware('auth');
+}
 
 /***** Billing Routes *****/
 Route::post('webhook/paddle', '\Wave\Http\Controllers\Billing\Webhooks\PaddleWebhook@handler')->middleware('paddle-webhook-signature');
