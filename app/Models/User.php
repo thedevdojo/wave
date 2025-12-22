@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Wave\Traits\HasProfileKeyValues;
@@ -9,7 +10,7 @@ use Wave\User as WaveUser;
 
 class User extends WaveUser
 {
-    use HasProfileKeyValues, Notifiable;
+    use HasFactory, HasProfileKeyValues, Notifiable;
 
     public $guard_name = 'web';
 
