@@ -49,13 +49,10 @@ jobs:
       run: touch database/database.sqlite
 
     - name: Run the migrations
-      run: php artisan migrate
+      run: php artisan migrate --force
 
     - name: Run the Auth Migrations
-      run: php artisan migrate --path=vendor/devdojo/auth/database/migrations
-
-    - name: Seed the database
-      run: php artisan db:seed
+      run: php artisan migrate --path=vendor/devdojo/auth/database/migrations --force
 
     - name: Install PestPHP
       run: composer require pestphp/pest --dev --with-all-dependencies
