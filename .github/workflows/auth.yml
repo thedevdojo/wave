@@ -54,6 +54,9 @@ jobs:
     - name: Run the Auth Migrations
       run: php artisan migrate --path=vendor/devdojo/auth/database/migrations
 
+    - name: Seed the database
+      run: php artisan db:seed
+
     - name: Install PestPHP
       run: composer require pestphp/pest --dev --with-all-dependencies
 
