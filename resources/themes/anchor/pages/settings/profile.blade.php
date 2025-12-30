@@ -34,6 +34,12 @@
                         ->required()
 						->rules('required|string')
 						->default(auth()->user()->name),
+					\Filament\Forms\Components\TextInput::make('username')
+                        ->label('Username')
+                        ->required()
+						->rules('sometimes|required|string|alpha_dash|max:255|unique:users,username,' . auth()->user()->id)
+						->helperText('Your unique username used in your profile URL')
+						->default(auth()->user()->username),
 					\Filament\Forms\Components\TextInput::make('email')
                         ->label('Email Address')
                         ->required()
@@ -77,6 +83,7 @@
 
 		private function saveFormFields($state){
 			auth()->user()->name = $state['name'];
+			auth()->user()->username = $state['username'];
 			auth()->user()->email = $state['email'];
 			auth()->user()->save();
 			$fieldsToSave = config('profile.fields');
