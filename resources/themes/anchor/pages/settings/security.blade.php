@@ -35,7 +35,7 @@
                     TextInput::make('password')
                         ->label('New Password')
                         ->required()
-                        ->minLength(4)
+                        ->minLength(config('wave.auth.min_password_length'))
                         ->password()
                         ->revealable(),
                     TextInput::make('password_confirmation')
