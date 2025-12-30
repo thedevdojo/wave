@@ -41,6 +41,18 @@ class User extends WaveUser
         'remember_token',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'notification_preferences' => 'array',
+        ];
+    }
+
     protected static function boot()
     {
         parent::boot();
