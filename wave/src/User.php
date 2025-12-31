@@ -2,10 +2,9 @@
 
 namespace Wave;
 
-use Exception;
-use Stripe\StripeClient;
 use Carbon\Carbon;
 use Devdojo\Auth\Models\User as AuthUser;
+use Exception;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -19,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasRoles;
+use Stripe\StripeClient;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
@@ -158,7 +158,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         $user_invoices = [];
 
         if ($this->subscriptions()->doesntExist()) {
-            return null;
+            return;
         }
 
         if (config('wave.billing_provider') == 'stripe') {

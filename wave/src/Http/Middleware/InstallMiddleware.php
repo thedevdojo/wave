@@ -2,9 +2,9 @@
 
 namespace Wave\Http\Middleware;
 
-use Illuminate\Http\Request;
-use Illuminate\Database\QueryException;
 use Closure;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Wave\User;
 
 class InstallMiddleware

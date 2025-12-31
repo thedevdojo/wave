@@ -2,27 +2,24 @@
 
 namespace App\Filament\Resources\Plans;
 
-use BackedEnum;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BooleanColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\Plans\Pages\ListPlans;
 use App\Filament\Resources\Plans\Pages\CreatePlan;
 use App\Filament\Resources\Plans\Pages\EditPlan;
-use App\Filament\Resources\PlanResource\Pages;
-use Filament\Forms;
+use App\Filament\Resources\Plans\Pages\ListPlans;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\BooleanColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Spatie\Permission\Models\Role;
 use Wave\Plan;
@@ -83,11 +80,16 @@ class PlanResource extends Resource
                             ->maxLength(191),
                     ])->columns(2),
                 Section::make('Plan Status')
-                    ->description('Make the plan default or active/inactive')
+                    ->description('Make the plan default or active/inactive and set the sort order')
                     ->schema([
                         Toggle::make('active')
                             ->required(),
                         Toggle::make('default')
+                            ->required(),
+                        TextInput::make('sort_order')
+                            ->integer()
+                            ->default(0)
+                            ->minValue(0)
                             ->required(),
                     ])->columns(2),
                 Section::make('Associated Role')
@@ -108,6 +110,9 @@ class PlanResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
+                TextColumn::make('sort_order')
+                    ->numeric()
+                    ->sortable(),
                 TextColumn::make('role_id')
                     ->numeric()
                     ->sortable(),
@@ -122,6 +127,7 @@ class PlanResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('sort_order')
             ->filters([
                 //
             ])

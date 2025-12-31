@@ -129,3 +129,116 @@ The application uses Pest for testing with PHPUnit as the underlying framework. 
 - All caching methods include fallbacks for when cache service is unavailable
 - Service provider guards against cache binding issues during package discovery
 - Compatible with automated testing environments and CI/CD pipelines
+
+## Activity Log Feature
+
+A simple, performant activity logging system for tracking user actions.
+
+### Configuration
+
+Edit `config/activity.php`:
+
+```php
+return [
+    // Enable/disable activity logging
+    'enabled' => env('ACTIVITY_LOG_ENABLED', true),
+
+    // Queue logs for better performance (recommended for busy apps)
+    'queue' => env('ACTIVITY_LOG_QUEUE', false),
+
+    // Queue connection to use
+    'queue_connection' => env('ACTIVITY_LOG_QUEUE_CONNECTION', 'database'),
+
+    // How many days to keep logs before auto-deletion
+    'retention_days' => env('ACTIVITY_LOG_RETENTION_DAYS', 90),
+];
+```
+
+### Environment Variables
+
+```env
+# Disable activity logging
+ACTIVITY_LOG_ENABLED=false
+
+# Enable queued logging (recommended for production)
+ACTIVITY_LOG_QUEUE=true
+ACTIVITY_LOG_QUEUE_CONNECTION=redis
+
+# Keep logs for 30 days instead of default 90
+ACTIVITY_LOG_RETENTION_DAYS=30
+```
+
+### Usage
+
+#### Basic Logging
+
+```php
+use App\Models\ActivityLog;
+
+// Simple log
+ActivityLog::log('action_name', 'Description of what happened');
+
+// With metadata
+ActivityLog::log('profile_updated', 'User updated their email', [
+    'old_email' => 'old@example.com',
+    'new_email' => 'new@example.com'
+]);
+```
+
+### Cleanup & Maintenance
+
+Activity logs are automatically cleaned up daily to prevent database bloat:
+
+```bash
+# Manually clean logs older than configured retention period
+php artisan activity:clean
+
+# Clean logs older than specific number of days
+php artisan activity:clean --days=30
+
+# Force cleanup without confirmation
+php artisan activity:clean --no-interaction
+```
+
+The cleanup command runs automatically every day via Laravel's scheduler.
+
+#### Queued (Recommended for Production)
+```env
+ACTIVITY_LOG_QUEUE=true
+ACTIVITY_LOG_QUEUE_CONNECTION=redis
+```
+
+### Disabling
+
+To completely disable activity logging:
+
+```env
+ACTIVITY_LOG_ENABLED=false
+```
+
+## Account Deletion Feature
+
+A scheduled account deletion system that gives users a grace period before permanent deletion.
+
+### Scheduled Command
+
+The system automatically processes scheduled deletions daily:
+
+```bash
+# Manually process scheduled deletions
+php artisan accounts:process-deletions
+```
+
+This command:
+1. Finds all users with `deletion_scheduled_at` <= current time
+2. Permanently deletes those accounts (force delete)
+3. Logs results (success/failure for each account)
+4. Returns count of deleted accounts
+
+### Automatic Scheduling
+
+The deletion processor runs automatically every day via Laravel's scheduler (configured in `routes/console.php`):
+
+```php
+Schedule::command('accounts:process-deletions')->daily();
+```

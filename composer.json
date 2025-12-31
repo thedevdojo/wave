@@ -39,6 +39,7 @@
         "fakerphp/faker": "^1.23",
         "filament/upgrade": "^4.0",
         "laravel/dusk": "^8.2",
+        "laravel/pint": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^4.1.6",

@@ -49,6 +49,5 @@ class AddSubscriptionIdFromTransaction
 
         }
 
-        return null;
     }
 }

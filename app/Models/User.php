@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Wave\Traits\HasProfileKeyValues;
@@ -9,7 +11,7 @@ use Wave\User as WaveUser;
 
 class User extends WaveUser
 {
-    use HasProfileKeyValues, Notifiable;
+    use HasFactory, HasProfileKeyValues, Notifiable, SoftDeletes;
 
     public $guard_name = 'web';
 
@@ -40,6 +42,26 @@ class User extends WaveUser
         'remember_token',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'notification_preferences' => 'array',
+            'social_links' => 'array',
+            'privacy_settings' => 'array',
+            'deletion_scheduled_at' => 'datetime',
+        ];
+    }
+
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -63,8 +85,12 @@ class User extends WaveUser
         static::created(function ($user) {
             // Remove all roles
             $user->syncRoles([]);
-            // Assign the default role
-            $user->assignRole(config('wave.default_user_role', 'registered'));
+
+            // Assign the default role if it exists
+            $defaultRole = config('wave.default_user_role', 'registered');
+            if (\Spatie\Permission\Models\Role::where('name', $defaultRole)->where('guard_name', 'web')->exists()) {
+                $user->assignRole($defaultRole);
+            }
         });
     }
 }
