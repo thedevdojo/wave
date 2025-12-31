@@ -52,6 +52,7 @@ class User extends WaveUser
         return [
             'notification_preferences' => 'array',
             'social_links' => 'array',
+            'privacy_settings' => 'array',
             'deletion_scheduled_at' => 'datetime',
         ];
     }
