@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\Changelogs\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\Changelogs\ChangelogResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListChangelogs extends ListRecords

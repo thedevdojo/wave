@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\ActivityLog;
+use Illuminate\Console\Command;
 
 class CleanOldActivityLogs extends Command
 {
@@ -26,8 +26,9 @@ class CleanOldActivityLogs extends Command
      */
     public function handle()
     {
-        if (!config('activity.enabled', true)) {
+        if (! config('activity.enabled', true)) {
             $this->info('Activity logging is disabled.');
+
             return 0;
         }
 
@@ -35,20 +36,22 @@ class CleanOldActivityLogs extends Command
 
         if (is_null($days)) {
             $this->info('No retention period set. Logs will be kept indefinitely.');
+
             return 0;
         }
 
         $cutoffDate = now()->subDays($days);
-        
+
         $count = ActivityLog::where('created_at', '<', $cutoffDate)->count();
 
         if ($count === 0) {
             $this->info('No old activity logs to clean up.');
+
             return 0;
         }
 
         // Skip confirmation if non-interactive
-        $shouldDelete = $this->option('no-interaction') 
+        $shouldDelete = $this->option('no-interaction')
             || $this->confirm("Delete {$count} activity logs older than {$days} days?", true);
 
         if ($shouldDelete) {

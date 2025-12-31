@@ -2,8 +2,6 @@
 
 namespace Wave\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
-use Wave\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -12,7 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use TCG\Voyager\Models\Role;
+use Wave\Http\Controllers\Auth\RegisterController;
 use Wave\Plan;
 use Wave\Subscription;
 use Wave\User;
@@ -139,7 +139,7 @@ class SubscriptionController extends Controller
                     if (User::where('email', $customerEmail)->exists()) {
                         $user = User::where('email', $customerEmail)->first();
                     } else {
-                        $registration = new RegisterController;
+                        $registration = new RegisterController();
                         $user_data = [
                             'name' => $customerName,
                             'email' => $customerEmail,

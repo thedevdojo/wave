@@ -33,12 +33,12 @@ class ActivityLog extends Model
     public static function log(string $action, ?string $description = null, ?array $metadata = null): ?self
     {
         // Check if activity logging is enabled
-        if (!config('activity.enabled', true)) {
+        if (! config('activity.enabled', true)) {
             return null;
         }
 
         // Skip if no authenticated user
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return null;
         }
 
@@ -56,6 +56,7 @@ class ActivityLog extends Model
             dispatch(function () use ($data) {
                 static::create($data);
             })->onConnection(config('activity.queue_connection', 'sync'));
+
             return null;
         }
 

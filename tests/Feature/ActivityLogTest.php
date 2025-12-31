@@ -20,9 +20,9 @@ test('activity log can be created', function () {
 test('activity log respects enabled config', function () {
     // Clear any existing logs first
     ActivityLog::query()->delete();
-    
+
     config(['activity.enabled' => false]);
-    
+
     $user = User::factory()->create();
     $this->actingAs($user);
 
@@ -30,7 +30,7 @@ test('activity log respects enabled config', function () {
 
     expect($log)->toBeNull();
     expect(ActivityLog::count())->toBe(0);
-    
+
     config(['activity.enabled' => true]);
 });
 

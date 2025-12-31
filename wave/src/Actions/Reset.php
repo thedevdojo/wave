@@ -10,19 +10,19 @@ class Reset
     public function __invoke()
     {
         // Only allow in local environment
-        if (!app()->environment('local')) {
+        if (! app()->environment('local')) {
             abort(403, 'Reset is only available in local development.');
         }
 
         // Require authentication
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             abort(403, 'Authentication required.');
         }
 
         $databasePath = database_path('database.sqlite');
 
         // Check if database exists
-        if (!File::exists($databasePath)) {
+        if (! File::exists($databasePath)) {
             abort(404, 'Database file not found.');
         }
 

@@ -2,18 +2,9 @@
 
 namespace Wave;
 
-use Wave\Http\Middleware\VerifyPaddleWebhookSignature;
-use Wave\Http\Middleware\Subscribed;
-use Wave\Http\Middleware\TokenMiddleware;
-use Wave\Http\Middleware\InstallMiddleware;
-use Wave\Http\Middleware\ThemeDemoMiddleware;
-use Exception;
-use Wave\Console\Commands\CancelExpiredSubscriptions;
-use Wave\Console\Commands\CreatePluginCommand;
 use App\Models\Forms;
-use Wave\Http\Livewire\Billing\Checkout;
-use Wave\Http\Livewire\Billing\Update;
 use DevDojo\Themes\Models\Theme;
+use Exception;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -30,11 +21,20 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 use Laravel\Folio\Folio;
 use Livewire\Livewire;
+use Wave\Console\Commands\CancelExpiredSubscriptions;
+use Wave\Console\Commands\CreatePluginCommand;
 use Wave\Facades\Wave as WaveFacade;
+use Wave\Http\Livewire\Billing\Checkout;
+use Wave\Http\Livewire\Billing\Update;
+use Wave\Http\Middleware\InstallMiddleware;
+use Wave\Http\Middleware\Subscribed;
+use Wave\Http\Middleware\ThemeDemoMiddleware;
+use Wave\Http\Middleware\TokenMiddleware;
+use Wave\Http\Middleware\VerifyPaddleWebhookSignature;
 use Wave\Overrides\Vite;
 use Wave\Plugins\PluginServiceProvider;
 
@@ -47,7 +47,7 @@ class WaveServiceProvider extends ServiceProvider
         $loader->alias('Wave', WaveFacade::class);
 
         $this->app->singleton('wave', function () {
-            return new Wave;
+            return new Wave();
         });
 
         // Register Intervention Image Manager
@@ -72,7 +72,7 @@ class WaveServiceProvider extends ServiceProvider
             // Overwrite the Vite asset helper so we can use the demo folder as opposed to the build folder
             $this->app->singleton(BaseVite::class, function ($app) {
                 // Replace the default Vite instance with the custom one
-                return new Vite;
+                return new Vite();
             });
         }
 
@@ -135,7 +135,7 @@ class WaveServiceProvider extends ServiceProvider
 
     protected function loadHelpers(): void
     {
-        $helperPattern = __DIR__ . '/Helpers/*.php';
+        $helperPattern = __DIR__.'/Helpers/*.php';
         $helpers = [];
 
         try {
@@ -148,7 +148,8 @@ class WaveServiceProvider extends ServiceProvider
 
                 // Validate cached filenames (not absolute paths)
                 $helpers = array_filter($helpers, function ($filename) {
-                    $fullPath = __DIR__ . '/Helpers/' . $filename;
+                    $fullPath = __DIR__.'/Helpers/'.$filename;
+
                     return file_exists($fullPath);
                 });
 
@@ -170,7 +171,7 @@ class WaveServiceProvider extends ServiceProvider
 
         // Require each helper safely
         foreach ($helpers as $filename) {
-            $fullPath = __DIR__ . '/Helpers/' . $filename;
+            $fullPath = __DIR__.'/Helpers/'.$filename;
             if (file_exists($fullPath)) {
                 require_once $fullPath;
             }
@@ -253,7 +254,7 @@ class WaveServiceProvider extends ServiceProvider
             // Only use cache if available
             if ($this->app->bound('cache') && $this->hasDBConnection()) {
                 try {
-                    $cacheKey = 'wave_theme_color_' . Cookie::get('theme', 'default');
+                    $cacheKey = 'wave_theme_color_'.Cookie::get('theme', 'default');
                     $color = Cache::remember($cacheKey, 3600, function () {
                         $theme = $this->getActiveTheme();
 
@@ -305,7 +306,6 @@ class WaveServiceProvider extends ServiceProvider
             return \Wave\Theme::where('active', 1)->first();
         }
 
-        return null;
     }
 
     protected function hasDBConnection()

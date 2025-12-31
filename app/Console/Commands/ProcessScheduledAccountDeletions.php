@@ -35,6 +35,7 @@ class ProcessScheduledAccountDeletions extends Command
 
         if ($usersToDelete->isEmpty()) {
             $this->info('No accounts scheduled for deletion.');
+
             return Command::SUCCESS;
         }
 
@@ -50,7 +51,7 @@ class ProcessScheduledAccountDeletions extends Command
                 $this->info("Deleted account: {$email}");
                 $count++;
             } catch (\Exception $e) {
-                $this->error("Failed to delete account {$user->email}: " . $e->getMessage());
+                $this->error("Failed to delete account {$user->email}: ".$e->getMessage());
             }
         }
 

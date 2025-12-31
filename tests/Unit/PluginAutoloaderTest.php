@@ -14,8 +14,10 @@ it('registers the plugin autoloader only once', function () {
     $pluginClosures = array_filter($after, function ($loader) {
         if ($loader instanceof Closure) {
             $ref = new ReflectionFunction($loader);
+
             return str_contains($ref->getFileName(), 'PluginAutoloader.php');
         }
+
         return false;
     });
 
