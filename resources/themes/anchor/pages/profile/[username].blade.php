@@ -12,13 +12,30 @@
         #[Computed]
         public function user()
         {
-            return config('wave.user_model')::where('username', '=', $this->username)->with('roles')->firstOrFail();
+            $user = config('wave.user_model')::where('username', '=', $this->username)->with('roles')->firstOrFail();
+            
+            // Check privacy settings
+            $privacySettings = $user->privacy_settings ?? ['profile_visibility' => 'public'];
+            
+            // If profile is private and viewer is not the owner, abort
+            if ($privacySettings['profile_visibility'] === 'private' && (!auth()->check() || auth()->id() !== $user->id)) {
+                abort(404);
+            }
+            
+            return $user;
         }
     }
 ?>
 
+@php
+    $privacySettings = null;
+@endphp
+
 <x-dynamic-component :component="((auth()->guest()) ? 'layouts.marketing' : 'layouts.app')" bodyClass="bg-zinc-50">
     @volt('wave.profile')
+        @php
+            $privacySettings = $this->user->privacy_settings ?? ['allow_search_engines' => true, 'show_email' => false];
+        @endphp
 
         <x-dynamic-component :component="((auth()->guest()) ? 'container' : 'app.container')">
 
@@ -37,6 +54,9 @@
                         <img src="{{ $this->user->avatar() }}" class="w-24 h-24 rounded-full border-4 border-zinc-200">
                         <h2 class="mt-8 text-2xl font-bold dark:text-zinc-100">{{ $this->user->name }}</h2>
                         <p class="my-1 font-medium text-blue-blue">{{ '@' . $this->user->username }}</p>
+                        @if($privacySettings['show_email'] ?? false)
+                            <p class="text-sm text-zinc-500">{{ $this->user->email }}</p>
+                        @endif
 
                         @if (auth()->check() && auth()->user()->isAdmin())
                             <a href="{{ route('impersonate', $this->user->id) }}" class="px-3 py-1 my-2 text-xs font-medium text-white rounded text-zinc-600 bg-zinc-200">Impersonate</a>
