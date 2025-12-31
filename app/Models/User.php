@@ -56,6 +56,11 @@ class User extends WaveUser
         ];
     }
 
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

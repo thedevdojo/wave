@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Hash;
 
 beforeEach(function () {
     $this->user = User::where('email', 'admin@admin.com')->first();
+    // Ensure user starts with no scheduled deletion
+    $this->user->deletion_scheduled_at = null;
+    $this->user->save();
 });
 
 it('can schedule account deletion', function () {

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+use App\Listeners\LogSuccessfulLogin;
+use App\Listeners\LogSuccessfulLogout;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -40,6 +45,10 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->setSchemaDefaultLength();
+
+        // Register activity log event listeners
+        Event::listen(Login::class, LogSuccessfulLogin::class);
+        Event::listen(Logout::class, LogSuccessfulLogout::class);
 
         Validator::extend('base64image', function ($attribute, $value, $parameters, $validator) {
             $explode = explode(',', $value);
