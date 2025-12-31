@@ -138,3 +138,65 @@ test('privacy settings can use default values from config', function () {
     expect($defaults)->toHaveKey('show_email');
     expect($defaults)->toHaveKey('allow_search_engines');
 });
+
+test('private profile returns 404 for non-owners', function () {
+    $user = User::factory()->create([
+        'privacy_settings' => ['profile_visibility' => 'private']
+    ]);
+    
+    // Guest user trying to view private profile
+    $response = $this->get('/profile/' . $user->username);
+    $response->assertStatus(404);
+    
+    // Different authenticated user trying to view
+    $otherUser = User::where('email', 'admin@admin.com')->first();
+    $this->actingAs($otherUser);
+    $response = $this->get('/profile/' . $user->username);
+    $response->assertStatus(404);
+});
+
+test('private profile is accessible to owner', function () {
+    $user = User::factory()->create([
+        'privacy_settings' => ['profile_visibility' => 'private']
+    ]);
+    
+    $this->actingAs($user);
+    $response = $this->get('/profile/' . $user->username);
+    $response->assertStatus(200);
+});
+
+test('public profile is accessible to everyone', function () {
+    $user = User::factory()->create([
+        'privacy_settings' => ['profile_visibility' => 'public']
+    ]);
+    
+    // Guest can view
+    $response = $this->get('/profile/' . $user->username);
+    $response->assertStatus(200);
+    
+    // Authenticated user can view
+    $otherUser = User::where('email', 'admin@admin.com')->first();
+    $this->actingAs($otherUser);
+    $response = $this->get('/profile/' . $user->username);
+    $response->assertStatus(200);
+});
+
+test('email is shown on profile when show_email is enabled', function () {
+    $user = User::factory()->create([
+        'privacy_settings' => ['show_email' => true, 'profile_visibility' => 'public']
+    ]);
+    
+    $response = $this->get('/profile/' . $user->username);
+    $response->assertStatus(200);
+    $response->assertSee($user->email);
+});
+
+test('email is hidden on profile when show_email is disabled', function () {
+    $user = User::factory()->create([
+        'privacy_settings' => ['show_email' => false, 'profile_visibility' => 'public']
+    ]);
+    
+    $response = $this->get('/profile/' . $user->username);
+    $response->assertStatus(200);
+    $response->assertDontSee($user->email);
+});
