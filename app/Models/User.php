@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Wave\Traits\HasProfileKeyValues;
@@ -10,7 +11,7 @@ use Wave\User as WaveUser;
 
 class User extends WaveUser
 {
-    use HasFactory, HasProfileKeyValues, Notifiable;
+    use HasFactory, HasProfileKeyValues, Notifiable, SoftDeletes;
 
     public $guard_name = 'web';
 
@@ -51,6 +52,7 @@ class User extends WaveUser
         return [
             'notification_preferences' => 'array',
             'social_links' => 'array',
+            'deletion_scheduled_at' => 'datetime',
         ];
     }
 
