@@ -4,7 +4,7 @@ use App\Models\User;
 
 it('allows user to update notification preferences', function () {
     $user = User::where('email', 'admin@admin.com')->first();
-    
+
     $this->actingAs($user);
 
     $preferences = [
@@ -19,7 +19,7 @@ it('allows user to update notification preferences', function () {
     $user->save();
 
     $user->refresh();
-    
+
     expect($user->notification_preferences)->toBe($preferences);
     expect($user->notification_preferences['email_notifications'])->toBe(false);
     expect($user->notification_preferences['marketing_emails'])->toBe(false);
@@ -28,7 +28,7 @@ it('allows user to update notification preferences', function () {
 
 it('security alerts preference is always enabled', function () {
     $user = User::where('email', 'admin@admin.com')->first();
-    
+
     $this->actingAs($user);
 
     // Try to set security_alerts to false
@@ -50,20 +50,20 @@ it('security alerts preference is always enabled', function () {
 
 it('returns default preferences when none are set', function () {
     $user = User::where('email', 'admin@admin.com')->first();
-    
+
     // Clear preferences
     $user->notification_preferences = null;
     $user->save();
 
     $user->refresh();
-    
+
     expect($user->notification_preferences)->toBeNull();
 });
 
 it('can update individual preference settings', function () {
     $user = User::where('email', 'admin@admin.com')->first();
     $originalPreferences = $user->notification_preferences;
-    
+
     $this->actingAs($user);
 
     // Update only marketing emails
@@ -74,14 +74,14 @@ it('can update individual preference settings', function () {
         'blog_notifications' => false,
         'security_alerts' => true,
     ];
-    
+
     $preferences['marketing_emails'] = false;
-    
+
     $user->notification_preferences = $preferences;
     $user->save();
 
     $user->refresh();
-    
+
     expect($user->notification_preferences['marketing_emails'])->toBe(false);
     expect($user->notification_preferences['email_notifications'])->toBe(true);
 
@@ -93,7 +93,7 @@ it('can update individual preference settings', function () {
 it('notification preferences can be stored as json', function () {
     $user = User::where('email', 'admin@admin.com')->first();
     $originalPreferences = $user->notification_preferences;
-    
+
     $preferences = [
         'email_notifications' => true,
         'marketing_emails' => false,
@@ -107,7 +107,7 @@ it('notification preferences can be stored as json', function () {
 
     // Verify it's stored properly and can be retrieved
     $freshUser = User::find($user->id);
-    
+
     expect($freshUser->notification_preferences)->toBeArray();
     expect($freshUser->notification_preferences['marketing_emails'])->toBe(false);
     expect($freshUser->notification_preferences['blog_notifications'])->toBe(true);
@@ -120,10 +120,10 @@ it('notification preferences can be stored as json', function () {
 it('multiple users can have different notification preferences', function () {
     // Get admin user and ensure we have a second user
     $user1 = User::where('email', 'admin@admin.com')->first();
-    
+
     // Get or create a second user
     $user2 = User::where('email', '!=', 'admin@admin.com')->first();
-    if (!$user2) {
+    if (! $user2) {
         $user2 = User::factory()->create(['avatar' => 'demo/default.png']);
     }
 
@@ -167,7 +167,7 @@ it('multiple users can have different notification preferences', function () {
 it('can retrieve notification preferences for checking before sending notifications', function () {
     $user = User::where('email', 'admin@admin.com')->first();
     $originalPreferences = $user->notification_preferences;
-    
+
     $user->notification_preferences = [
         'email_notifications' => false,
         'marketing_emails' => false,
@@ -182,7 +182,7 @@ it('can retrieve notification preferences for checking before sending notificati
     // Simulate checking preferences before sending
     $shouldSendEmail = $user->notification_preferences['email_notifications'] ?? true;
     $shouldSendMarketing = $user->notification_preferences['marketing_emails'] ?? true;
-    
+
     expect($shouldSendEmail)->toBe(false);
     expect($shouldSendMarketing)->toBe(false);
 

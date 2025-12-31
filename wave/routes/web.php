@@ -1,10 +1,10 @@
 <?php
 
-use Wave\Actions\Reset;
 use App\Models\User;
-use Wave\Page;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Route;
+use Wave\Actions\Reset;
+use Wave\Page;
 
 Route::impersonate();
 

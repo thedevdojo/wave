@@ -2,18 +2,19 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\ActivityLog;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class ActivityLogSeeder extends Seeder
 {
     public function run(): void
     {
         $user = User::first();
-        
-        if (!$user) {
+
+        if (! $user) {
             $this->command->error('No users found. Please create a user first.');
+
             return;
         }
 
@@ -41,7 +42,7 @@ class ActivityLogSeeder extends Seeder
         for ($i = 0; $i < 100; $i++) {
             $action = array_rand($actions);
             $daysAgo = rand(0, 89);
-            
+
             ActivityLog::create([
                 'user_id' => $user->id,
                 'action' => $action,
@@ -53,6 +54,6 @@ class ActivityLogSeeder extends Seeder
         }
 
         $this->command->info("Created 100 activity log events for user: {$user->name}");
-        $this->command->info('Total activity logs: ' . ActivityLog::count());
+        $this->command->info('Total activity logs: '.ActivityLog::count());
     }
 }

@@ -10,7 +10,7 @@ it('allows user to update their username', function () {
     $this->actingAs($user);
 
     // Update the username
-    $newUsername = 'updated_username_' . time();
+    $newUsername = 'updated_username_'.time();
     $user->username = $newUsername;
     $user->save();
 
@@ -32,8 +32,8 @@ it('validates username is unique when updating', function () {
 
     // Attempt to update to user2's username should fail
     $user1->username = $user2->username;
-    
-    expect(function() use ($user1) {
+
+    expect(function () use ($user1) {
         $user1->save();
     })->toThrow(\Illuminate\Database\QueryException::class);
 });
@@ -85,10 +85,10 @@ it('multiple users can update their usernames independently', function () {
     $original2 = $user2->username;
 
     // Both users update their usernames
-    $user1->username = 'temp-user1-' . time();
+    $user1->username = 'temp-user1-'.time();
     $user1->save();
 
-    $user2->username = 'temp-user2-' . time();
+    $user2->username = 'temp-user2-'.time();
     $user2->save();
 
     $user1->refresh();
@@ -106,7 +106,7 @@ it('multiple users can update their usernames independently', function () {
 
 it('username field is included in user model fillable attributes', function () {
     $user = new User();
-    
+
     expect($user->getFillable())->toContain('username');
 });
 
@@ -114,7 +114,7 @@ it('username can be updated through mass assignment', function () {
     $user = User::where('email', 'admin@admin.com')->first();
     $originalUsername = $user->username;
 
-    $newUsername = 'mass_assigned_' . time();
+    $newUsername = 'mass_assigned_'.time();
     $user->fill(['username' => $newUsername]);
     $user->save();
 

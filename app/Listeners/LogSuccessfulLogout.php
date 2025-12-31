@@ -3,9 +3,6 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Logout;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use App\Models\ActivityLog;
 
 class LogSuccessfulLogout
 {
@@ -22,7 +19,7 @@ class LogSuccessfulLogout
      */
     public function handle(Logout $event): void
     {
-        if (!config('activity.enabled', true) || !$event->user) {
+        if (! config('activity.enabled', true) || ! $event->user) {
             return;
         }
 
@@ -32,7 +29,7 @@ class LogSuccessfulLogout
             ->where('created_at', '>=', now()->subMinutes(5))
             ->exists();
 
-        if (!$recentLogout) {
+        if (! $recentLogout) {
             \App\Models\ActivityLog::create([
                 'user_id' => $event->user->id,
                 'action' => 'logout',

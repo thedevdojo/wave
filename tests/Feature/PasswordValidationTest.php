@@ -6,7 +6,7 @@ use Livewire\Volt\Volt;
 
 it('respects minimum password length from config when changing password', function () {
     $minLength = config('wave.auth.min_password_length');
-    
+
     $user = User::factory()->create([
         'password' => Hash::make('oldpassword123'),
     ]);
@@ -15,7 +15,7 @@ it('respects minimum password length from config when changing password', functi
 
     // Test with password shorter than minimum length
     $shortPassword = str_repeat('a', $minLength - 1);
-    
+
     Volt::test('settings.security')
         ->set('data.current_password', 'oldpassword123')
         ->set('data.password', $shortPassword)
@@ -26,7 +26,7 @@ it('respects minimum password length from config when changing password', functi
 
 it('allows password change with valid length', function () {
     $minLength = config('wave.auth.min_password_length');
-    
+
     $user = User::factory()->create([
         'password' => Hash::make('oldpassword123'),
     ]);
@@ -35,7 +35,7 @@ it('allows password change with valid length', function () {
 
     // Test with password meeting minimum length
     $validPassword = str_repeat('a', $minLength);
-    
+
     Volt::test('settings.security')
         ->set('data.current_password', 'oldpassword123')
         ->set('data.password', $validPassword)

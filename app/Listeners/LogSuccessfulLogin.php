@@ -3,9 +3,6 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use App\Models\ActivityLog;
 
 class LogSuccessfulLogin
 {
@@ -22,7 +19,7 @@ class LogSuccessfulLogin
      */
     public function handle(Login $event): void
     {
-        if (!config('activity.enabled', true) || !$event->user) {
+        if (! config('activity.enabled', true) || ! $event->user) {
             return;
         }
 
@@ -32,7 +29,7 @@ class LogSuccessfulLogin
             ->where('created_at', '>=', now()->subMinutes(5))
             ->exists();
 
-        if (!$recentLogin) {
+        if (! $recentLogin) {
             \App\Models\ActivityLog::log('login', 'User logged in successfully');
         }
     }

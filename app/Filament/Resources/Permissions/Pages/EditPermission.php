@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\Permissions\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\Permissions\PermissionResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditPermission extends EditRecord
