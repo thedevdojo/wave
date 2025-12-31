@@ -12,13 +12,9 @@ return [
     */
 
     'defaults' => [
-        'profile_visibility' => 'public', // public, private, contacts
+        'profile_visibility' => 'public', // public, private
         'show_email' => false,
-        'show_activity' => true,
         'allow_search_engines' => true,
-        'show_online_status' => true,
-        'allow_data_collection' => true,
-        'allow_personalization' => true,
     ],
 
     /*
@@ -33,7 +29,6 @@ return [
     'visibility_options' => [
         'public' => 'Public - Anyone can view your profile',
         'private' => 'Private - Only you can view your profile',
-        'contacts' => 'Contacts Only - Only approved contacts can view',
     ],
 
 ];

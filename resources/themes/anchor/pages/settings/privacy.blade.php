@@ -35,7 +35,6 @@
                         ->options([
                             'public' => 'Public - Anyone can view your profile',
                             'private' => 'Private - Only you can view your profile',
-                            'contacts' => 'Contacts Only - Only approved contacts can view',
                         ])
                         ->default('public')
                         ->inline(false),
@@ -43,25 +42,9 @@
                         ->label('Show Email on Profile')
                         ->helperText('Display your email address on your public profile')
                         ->default(false),
-                    Toggle::make('show_activity')
-                        ->label('Show Activity Status')
-                        ->helperText('Let others see when you were last active')
-                        ->default(true),
-                    Toggle::make('show_online_status')
-                        ->label('Show Online Status')
-                        ->helperText('Display when you are currently online')
-                        ->default(true),
                     Toggle::make('allow_search_engines')
                         ->label('Allow Search Engine Indexing')
-                        ->helperText('Let search engines like Google index your profile')
-                        ->default(true),
-                    Toggle::make('allow_data_collection')
-                        ->label('Allow Analytics & Data Collection')
-                        ->helperText('Help us improve by collecting anonymous usage data')
-                        ->default(true),
-                    Toggle::make('allow_personalization')
-                        ->label('Allow Personalized Content')
-                        ->helperText('Receive personalized recommendations and content')
+                        ->helperText('Add noindex meta tag to prevent search engines from indexing your profile')
                         ->default(true),
                 ])
                 ->statePath('data');
@@ -103,11 +86,7 @@
             return config('privacy.defaults', [
                 'profile_visibility' => 'public',
                 'show_email' => false,
-                'show_activity' => true,
                 'allow_search_engines' => true,
-                'show_online_status' => true,
-                'allow_data_collection' => true,
-                'allow_personalization' => true,
             ]);
         }
 
