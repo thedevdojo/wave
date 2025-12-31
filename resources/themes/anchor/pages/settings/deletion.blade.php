@@ -5,6 +5,7 @@ use Livewire\Volt\Component;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ActivityLog;
 
 middleware('auth');
 name('settings.deletion');
@@ -46,6 +47,11 @@ new class extends Component
         $user->deletion_scheduled_at = now()->addDays(30);
         $user->save();
 
+        // Log account deletion scheduling
+        ActivityLog::log('account_deletion_scheduled', 'Account deletion scheduled for 30 days from now', [
+            'scheduled_date' => $user->deletion_scheduled_at->toDateTimeString()
+        ]);
+
         // Reset form
         $this->password = '';
         $this->confirmDeletion = false;
@@ -62,6 +68,9 @@ new class extends Component
         $user = auth()->user();
         $user->deletion_scheduled_at = null;
         $user->save();
+
+        // Log account deletion cancellation
+        ActivityLog::log('account_deletion_cancelled', 'Account deletion was cancelled');
 
         Notification::make()
             ->title('Account deletion cancelled')

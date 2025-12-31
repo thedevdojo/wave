@@ -19,6 +19,7 @@
 
     use Illuminate\Support\Str;
     use Wave\ApiKey;
+    use App\Models\ActivityLog;
     
     middleware('auth');
     name('settings.api');
@@ -56,6 +57,11 @@
 
             $apiKey = auth()->user()->createApiKey(Str::slug($state['key']));
 
+            // Log API key creation
+            ActivityLog::log('api_key_created', 'API key created: ' . $state['key'], [
+                'key_name' => $state['key']
+            ]);
+
             Notification::make()
                 ->title('Successfully created new API Key')
                 ->success()
@@ -90,8 +96,18 @@
                                 ->required()
                                 ->maxLength(255),
                             // ...
-                        ]),
-                    DeleteAction::make(),
+                        ])
+                        ->after(function($record) {
+                            ActivityLog::log('api_key_updated', 'API key updated: ' . $record->name, [
+                                'key_name' => $record->name
+                            ]);
+                        }),
+                    DeleteAction::make()
+                        ->after(function($record) {
+                            ActivityLog::log('api_key_deleted', 'API key deleted: ' . $record->name, [
+                                'key_name' => $record->name
+                            ]);
+                        }),
             ]);
         }
 

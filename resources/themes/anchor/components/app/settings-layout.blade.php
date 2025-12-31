@@ -17,6 +17,7 @@
                     <x-settings-sidebar-link :href="route('settings.notifications')" icon="phosphor-bell-duotone">Notifications</x-settings-sidebar-link>
                     <x-settings-sidebar-link :href="route('settings.social')" icon="phosphor-share-network-duotone">Social Media</x-settings-sidebar-link>
                     <x-settings-sidebar-link :href="route('settings.api')" icon="phosphor-code-duotone">API Keys</x-settings-sidebar-link>
+                    <x-settings-sidebar-link :href="route('settings.activity')" icon="phosphor-clock-counter-clockwise-duotone">Activity Log</x-settings-sidebar-link>
                 </div>
                 <div class="px-2.5 pt-3.5 pb-1.5 text-xs lg:block hidden font-semibold leading-6 text-zinc-500">Billing</div>
                 <div class="flex items-center w-full ml-2 space-x-2 lg:items-stretch lg:flex-col lg:ml-0 lg:space-y-1 lg:space-x-0">
