@@ -50,6 +50,7 @@ class User extends WaveUser
     {
         return [
             'notification_preferences' => 'array',
+            'social_links' => 'array',
         ];
     }
 
