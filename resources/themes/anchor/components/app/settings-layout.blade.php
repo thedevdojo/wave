@@ -23,6 +23,10 @@
                     <x-settings-sidebar-link :href="route('settings.subscription')" icon="phosphor-credit-card-duotone">Subscription</x-settings-sidebar-link>
                     <x-settings-sidebar-link :href="route('settings.invoices')" icon="phosphor-invoice-duotone">Invoices</x-settings-sidebar-link>
                 </div>
+                <div class="px-2.5 pt-3.5 pb-1.5 text-xs lg:block hidden font-semibold leading-6 text-zinc-500">Privacy</div>
+                <div class="flex items-center w-full ml-2 space-x-2 lg:items-stretch lg:flex-col lg:ml-0 lg:space-y-1 lg:space-x-0">
+                    <x-settings-sidebar-link :href="route('settings.deletion')" icon="phosphor-trash-duotone">Account Deletion</x-settings-sidebar-link>
+                </div>
             </nav>
         </aside>
 
