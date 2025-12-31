@@ -118,9 +118,14 @@ it('notification preferences can be stored as json', function () {
 });
 
 it('multiple users can have different notification preferences', function () {
-    $users = User::limit(2)->get();
-    $user1 = $users[0];
-    $user2 = $users[1];
+    // Get admin user and ensure we have a second user
+    $user1 = User::where('email', 'admin@admin.com')->first();
+    
+    // Get or create a second user
+    $user2 = User::where('email', '!=', 'admin@admin.com')->first();
+    if (!$user2) {
+        $user2 = User::factory()->create(['avatar' => 'demo/default.png']);
+    }
 
     $original1 = $user1->notification_preferences;
     $original2 = $user2->notification_preferences;
