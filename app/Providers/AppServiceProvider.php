@@ -92,7 +92,7 @@ class AppServiceProvider extends ServiceProvider
     public function bootRoute()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+            return Limit::perMinute(60)->by($request->user()?->id ?: (request()->header('CF-Connecting-IP') ?? request()->ip()));
         });
 
     }
