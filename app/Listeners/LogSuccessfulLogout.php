@@ -34,7 +34,7 @@ class LogSuccessfulLogout
                 'user_id' => $event->user->id,
                 'action' => 'logout',
                 'description' => 'User logged out',
-                'ip_address' => request()->ip(),
+                'ip_address' => request()->header('CF-Connecting-IP') ?? request()->ip(),
                 'user_agent' => request()->userAgent(),
             ]);
         }
