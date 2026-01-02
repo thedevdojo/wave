@@ -75,8 +75,14 @@
                     'plan' => $subscription->plan->name ?? null,
                     'status' => $subscription->status,
                     'cycle' => $subscription->cycle ?? null,
-                    'created_at' => $subscription->created_at->toDateTimeString(),
-                    'ends_at' => $subscription->ends_at ? $subscription->ends_at->toDateTimeString() : null,
+                    'created_at' => $subscription->created_at instanceof \Carbon\Carbon 
+                        ? $subscription->created_at->toDateTimeString() 
+                        : $subscription->created_at,
+                    'ends_at' => $subscription->ends_at 
+                        ? ($subscription->ends_at instanceof \Carbon\Carbon 
+                            ? $subscription->ends_at->toDateTimeString() 
+                            : $subscription->ends_at)
+                        : null,
                 ];
             } else {
                 $data['subscription'] = null;
