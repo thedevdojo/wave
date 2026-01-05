@@ -51,11 +51,22 @@ class PostResource extends Resource
                     ->maxLength(191),
                 RichEditor::make('body')
                     ->required()
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDirectory('attachments')
+                    ->fileAttachmentsVisibility('public')
                     ->columnSpanFull(),
                 Textarea::make('excerpt')
                     ->columnSpanFull(),
                 FileUpload::make('image')
-                    ->image(),
+                    ->image()
+                    ->disk('public')
+                    ->directory('posts'),
+                FileUpload::make('video')
+                    ->label('Video (optional)')
+                    ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/ogg'])
+                    ->disk('public')
+                    ->directory('videos')
+                    ->maxSize(102400),
                 TextInput::make('seo_title')
                     ->maxLength(191),
                 Select::make('author_id')

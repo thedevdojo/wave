@@ -25,6 +25,11 @@ class Post extends Model
         return Storage::disk(config('filament.default_filesystem_disk'))->url($this->image);
     }
 
+    public function video()
+    {
+        return $this->video ? Storage::disk(config('filament.default_filesystem_disk'))->url($this->video) : null;
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo('Wave\Category');
