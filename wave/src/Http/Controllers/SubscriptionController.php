@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use TCG\Voyager\Models\Role;
+use Spatie\Permission\Models\Role;
 use Wave\Http\Controllers\Auth\RegisterController;
 use Wave\Plan;
 use Wave\Subscription;
@@ -75,11 +75,11 @@ class SubscriptionController extends Controller
                 $localSubscription->status = 'cancelled';
                 $localSubscription->save();
 
-                // Update user's role to "cancelled"
+                // Update user's role to default registered role (same as Subscription::cancel())
                 $user = User::find($localSubscription->user_id);
-                $cancelledRole = Role::where('name', '=', 'cancelled')->first();
-                $user->role_id = $cancelledRole->id;
-                $user->save();
+                $user->syncRoles([]);
+                $user->assignRole(config('wave.default_user_role', 'registered'));
+                $user->clearUserCache();
 
                 return redirect()->back()->with(['message' => 'Your subscription has been successfully canceled.', 'message_type' => 'success']);
             } else {
