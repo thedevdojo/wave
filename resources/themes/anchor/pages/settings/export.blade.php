@@ -181,7 +181,7 @@
                         <h4 class="text-sm font-medium text-zinc-900 dark:text-zinc-100">Need to delete your account?</h4>
                         <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
                             If you'd like to permanently delete your account and all associated data, visit the 
-                            <a href="{{ route('settings.deletion') }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">Account Security</a> page.
+                            <a href="{{ route('settings.deletion') }}" wire:navigate class="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">Account Security</a> page.
                         </p>
                     </div>
                 </div>

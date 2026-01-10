@@ -47,7 +47,7 @@
 						@php $notification_data = (object)$notification->data; @endphp
 						<div id="notification-li-{{ $index + 1 }}" class="flex flex-col pb-5 @if(!$loop->last){{ 'border-b' }}@endif border-zinc-200">
 
-							<a href="{{ @$notification_data->link }}" class="flex items-start p-5 pb-2">
+							<a href="{{ @$notification_data->link }}" wire:navigate class="flex items-start p-5 pb-2">
 								<div class="flex-shrink-0 pt-1">
 									<img class="w-10 h-10 rounded-full" src="{{ @$notification_data->icon }}" alt="">
 								</div>
