@@ -10,8 +10,8 @@ beforeEach(function () {
 
     // Use an existing plan from the seeder (premium plan has role_id 4)
     $this->premiumPlan = Plan::where('role_id', 4)->first();
-    
-    if (!$this->premiumPlan) {
+
+    if (! $this->premiumPlan) {
         // Fallback: create a basic plan structure if no plan exists
         $this->premiumPlan = Plan::create([
             'name' => 'Premium Plan',
@@ -38,8 +38,8 @@ test('subscription cancel method changes user role to registered', function () {
         'billable_id' => $this->user->id,
         'plan_id' => $this->premiumPlan->id,
         'vendor_slug' => 'paddle',
-        'vendor_customer_id' => 'cust_test_' . uniqid(),
-        'vendor_subscription_id' => 'sub_test_' . uniqid(),
+        'vendor_customer_id' => 'cust_test_'.uniqid(),
+        'vendor_subscription_id' => 'sub_test_'.uniqid(),
         'cycle' => 'month',
         'status' => 'active',
         'seats' => 1,
@@ -73,7 +73,7 @@ test('subscription cancellation clears all roles and assigns default role', func
         'billable_id' => $this->user->id,
         'plan_id' => $this->premiumPlan->id,
         'vendor_slug' => 'paddle',
-        'vendor_subscription_id' => 'sub_test_' . uniqid(),
+        'vendor_subscription_id' => 'sub_test_'.uniqid(),
         'cycle' => 'year',
         'status' => 'active',
         'seats' => 1,
@@ -97,8 +97,8 @@ test('user subscription helper returns null after cancellation', function () {
         'billable_id' => $this->user->id,
         'plan_id' => $this->premiumPlan->id,
         'vendor_slug' => 'stripe',
-        'vendor_customer_id' => 'cus_stripe_' . uniqid(),
-        'vendor_subscription_id' => 'sub_stripe_' . uniqid(),
+        'vendor_customer_id' => 'cus_stripe_'.uniqid(),
+        'vendor_subscription_id' => 'sub_stripe_'.uniqid(),
         'cycle' => 'month',
         'status' => 'active',
         'seats' => 1,
@@ -121,7 +121,7 @@ test('subscriber helper returns false after cancellation', function () {
         'billable_id' => $this->user->id,
         'plan_id' => $this->premiumPlan->id,
         'vendor_slug' => 'paddle',
-        'vendor_subscription_id' => 'sub_test_' . uniqid(),
+        'vendor_subscription_id' => 'sub_test_'.uniqid(),
         'cycle' => 'month',
         'status' => 'active',
         'seats' => 1,
@@ -150,7 +150,7 @@ test('multiple subscriptions only cancel the specific one', function () {
         'billable_id' => $this->user->id,
         'plan_id' => $this->premiumPlan->id,
         'vendor_slug' => 'paddle',
-        'vendor_subscription_id' => 'sub_old_' . uniqid(),
+        'vendor_subscription_id' => 'sub_old_'.uniqid(),
         'cycle' => 'month',
         'status' => 'active',
         'seats' => 1,
@@ -161,7 +161,7 @@ test('multiple subscriptions only cancel the specific one', function () {
         'billable_id' => $this->user->id,
         'plan_id' => $this->premiumPlan->id,
         'vendor_slug' => 'paddle',
-        'vendor_subscription_id' => 'sub_new_' . uniqid(),
+        'vendor_subscription_id' => 'sub_new_'.uniqid(),
         'cycle' => 'year',
         'status' => 'active',
         'seats' => 1,
