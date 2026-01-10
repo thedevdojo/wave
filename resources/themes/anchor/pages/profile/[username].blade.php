@@ -59,7 +59,7 @@
                         @endif
 
                         @if (auth()->check() && auth()->user()->isAdmin())
-                            <a href="{{ route('impersonate', $this->user->id) }}" class="px-3 py-1 my-2 text-xs font-medium text-white rounded text-zinc-600 bg-zinc-200">Impersonate</a>
+                            <a href="{{ route('impersonate', $this->user->id) }}" wire:navigate class="px-3 py-1 my-2 text-xs font-medium text-white rounded text-zinc-600 bg-zinc-200">Impersonate</a>
                         @endif
                         <p class="mx-auto max-w-lg text-base text-center text-zinc-500">{{ $this->user->profile('about') }}</p>
 

@@ -41,7 +41,7 @@
         <div class="z-30 flex items-center justify-between h-24 md:space-x-8">
             <div class="z-20 flex items-center justify-between w-full md:w-auto">
                 <div class="relative z-20 inline-flex">
-                    <a href="{{ route('home') }}" class="flex items-center justify-center space-x-3 font-bold text-zinc-900">
+                    <a href="{{ route('home') }}" wire:navigate class="flex items-center justify-center space-x-3 font-bold text-zinc-900">
                     <x-logo class="w-auto h-8 md:h-9"></x-logo>
                     </a>
                 </div>
@@ -147,12 +147,12 @@
                         </div>
                     </li>
                     <li class="flex-shrink-0 h-16 border-b border-gray-100 md:border-b-0 md:h-full">
-                        <a href="{{ route('pricing') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">
+                        <a href="{{ route('pricing') }}" wire:navigate class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">
                             Pricing
                         </a>
                     </li>
                     <li class="flex-shrink-0 h-16 border-b border-gray-100 md:border-b-0 md:h-full">
-                        <a href="{{ route('blog') }}" class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">Blog</a>
+                        <a href="{{ route('blog') }}" wire:navigate class="flex items-center h-full text-sm font-semibold text-gray-700 transition duration-300 md:px-0 px-7 hover:bg-gray-100 md:hover:bg-transparent hover:text-gray-900">Blog</a>
                     </li>
 
                     @guest
