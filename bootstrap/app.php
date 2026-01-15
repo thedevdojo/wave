@@ -10,7 +10,6 @@ return Application::configure(basePath: dirname(__DIR__))
         \Lab404\Impersonate\ImpersonateServiceProvider::class,
         \Wave\WaveServiceProvider::class,
         \DevDojo\Themes\ThemesServiceProvider::class,
-        \DevDojo\Themes\ThemesServiceProvider::class,
     ])
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
