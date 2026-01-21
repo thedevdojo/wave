@@ -8,7 +8,7 @@
     use Filament\Forms\Form;
     use Filament\Schemas\Schema;
     use Filament\Notifications\Notification;
-    use App\Models\ActivityLog;
+    use Wave\ActivityLog;
     
     middleware('auth');
     name('settings.privacy');

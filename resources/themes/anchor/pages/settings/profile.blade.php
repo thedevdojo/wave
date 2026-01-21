@@ -9,7 +9,7 @@
 	use Livewire\Volt\Component;
 	use Wave\Traits\HasDynamicFields;
     use Wave\ApiKey;
-    use App\Models\ActivityLog;
+    use Wave\ActivityLog;
 
 	middleware('auth');
     name('settings.profile');
