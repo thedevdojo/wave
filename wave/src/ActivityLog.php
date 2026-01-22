@@ -5,7 +5,6 @@ namespace Wave;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Wave\Contracts\ActivityLoggerInterface;
 use Wave\Jobs\CreateActivityLog;
 
 /**
@@ -23,7 +22,7 @@ use Wave\Jobs\CreateActivityLog;
  * @method static ActivityLog|null find(int $id)
  * @method static Collection<int, ActivityLog> where(string $column, mixed $operator = null, mixed $value = null)
  */
-class ActivityLog extends Model implements ActivityLoggerInterface
+class ActivityLog extends Model
 {
     protected $fillable = [
         'user_id',
