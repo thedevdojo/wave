@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Wave\Console\Commands;
 
 use Illuminate\Console\Command;
 use Wave\ActivityLog;
@@ -24,12 +24,12 @@ class CleanOldActivityLogs extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         if (! config('activity.enabled', true)) {
             $this->info('Activity logging is disabled.');
 
-            return 0;
+            return self::SUCCESS;
         }
 
         $days = $this->option('days') ?? config('activity.retention_days', 90);
@@ -37,20 +37,19 @@ class CleanOldActivityLogs extends Command
         if (is_null($days)) {
             $this->info('No retention period set. Logs will be kept indefinitely.');
 
-            return 0;
+            return self::SUCCESS;
         }
 
-        $cutoffDate = now()->subDays($days);
+        $cutoffDate = now()->subDays((int) $days);
 
         $count = ActivityLog::where('created_at', '<', $cutoffDate)->count();
 
         if ($count === 0) {
             $this->info('No old activity logs to clean up.');
 
-            return 0;
+            return self::SUCCESS;
         }
 
-        // Skip confirmation if non-interactive
         $shouldDelete = $this->option('no-interaction')
             || $this->confirm("Delete {$count} activity logs older than {$days} days?", true);
 
@@ -61,6 +60,6 @@ class CleanOldActivityLogs extends Command
             $this->info('Cleanup cancelled.');
         }
 
-        return 0;
+        return self::SUCCESS;
     }
 }

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Wave\Console\Commands;
 
-use App\Models\User;
 use Illuminate\Console\Command;
 
 class ProcessScheduledAccountDeletions extends Command
@@ -24,19 +23,21 @@ class ProcessScheduledAccountDeletions extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info('Processing scheduled account deletions...');
 
+        $userModel = config('wave.user_model');
+
         // Find all users with deletion_scheduled_at in the past
-        $usersToDelete = User::whereNotNull('deletion_scheduled_at')
+        $usersToDelete = $userModel::whereNotNull('deletion_scheduled_at')
             ->where('deletion_scheduled_at', '<=', now())
             ->get();
 
         if ($usersToDelete->isEmpty()) {
             $this->info('No accounts scheduled for deletion.');
 
-            return Command::SUCCESS;
+            return self::SUCCESS;
         }
 
         $count = 0;
@@ -57,6 +58,6 @@ class ProcessScheduledAccountDeletions extends Command
 
         $this->info("Successfully deleted {$count} account(s).");
 
-        return Command::SUCCESS;
+        return self::SUCCESS;
     }
 }

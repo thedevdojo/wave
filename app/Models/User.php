@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -31,7 +32,7 @@ class User extends WaveUser
         ];
     }
 
-    public function activityLogs()
+    public function activityLogs(): HasMany
     {
         return $this->hasMany(ActivityLog::class);
     }
