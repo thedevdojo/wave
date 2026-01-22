@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\ActivityLog;
 use App\Models\User;
+use Wave\ActivityLog;
 
 test('activity log can be created', function () {
     $user = User::factory()->create();

@@ -2,7 +2,7 @@
     use Filament\Notifications\Notification;
     use Livewire\Volt\Component;
     use function Laravel\Folio\{middleware, name};
-    use App\Models\ActivityLog;
+    use Wave\ActivityLog;
     use Wave\Post;
     use Wave\ApiKey;
     

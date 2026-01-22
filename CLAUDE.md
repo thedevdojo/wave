@@ -173,7 +173,7 @@ ACTIVITY_LOG_RETENTION_DAYS=30
 #### Basic Logging
 
 ```php
-use App\Models\ActivityLog;
+use Wave\ActivityLog;
 
 // Simple log
 ActivityLog::log('action_name', 'Description of what happened');

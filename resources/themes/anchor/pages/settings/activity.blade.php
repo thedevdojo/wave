@@ -3,7 +3,7 @@
 use function Laravel\Folio\{middleware, name};
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
-use App\Models\ActivityLog;
+use Wave\ActivityLog;
 
 middleware('auth');
 name('settings.activity');

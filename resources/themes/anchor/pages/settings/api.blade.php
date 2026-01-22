@@ -19,7 +19,7 @@
 
     use Illuminate\Support\Str;
     use Wave\ApiKey;
-    use App\Models\ActivityLog;
+    use Wave\ActivityLog;
     
     middleware('auth');
     name('settings.api');

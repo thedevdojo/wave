@@ -5,7 +5,7 @@ use Livewire\Volt\Component;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Models\ActivityLog;
+use Wave\ActivityLog;
 
 middleware('auth');
 name('settings.deletion');
