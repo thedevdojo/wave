@@ -60,8 +60,8 @@ class ProcessReferralConversion
         $plan = $subscription->plan;
 
         // Calculate commission (20% of first payment)
-        $basePrice = $subscription->cycle === 'month' 
-            ? (float) $plan->monthly_price 
+        $basePrice = $subscription->cycle === 'month'
+            ? (float) $plan->monthly_price
             : (float) $plan->yearly_price;
 
         $commissionAmount = $basePrice * 0.20;

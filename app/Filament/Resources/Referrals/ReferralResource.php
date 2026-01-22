@@ -44,7 +44,7 @@ class ReferralResource extends Resource
                             ->searchable()
                             ->preload()
                             ->required(),
-                        
+
                         TextInput::make('code')
                             ->label('Referral Code')
                             ->required()
@@ -52,7 +52,7 @@ class ReferralResource extends Resource
                             ->unique(ignoreRecord: true)
                             ->alphaDash()
                             ->helperText('Leave empty to auto-generate'),
-                        
+
                         Select::make('status')
                             ->options([
                                 'active' => 'Active',
@@ -63,26 +63,26 @@ class ReferralResource extends Resource
                             ->required(),
                     ])
                     ->columnSpan(1),
-                
+
                 Section::make('Performance Metrics')
                     ->description('Real-time referral statistics')
                     ->schema([
                         Placeholder::make('clicks')
                             ->label('Total Clicks')
                             ->content(fn (?Referral $record): string => $record ? number_format($record->clicks) : '0'),
-                        
+
                         Placeholder::make('conversions')
                             ->label('Conversions')
                             ->content(fn (?Referral $record): string => $record ? number_format($record->conversions) : '0'),
-                        
+
                         Placeholder::make('conversion_rate')
                             ->label('Conversion Rate')
-                            ->content(fn (?Referral $record): string => $record && $record->clicks > 0 
-                                ? number_format(($record->conversions / $record->clicks) * 100, 2) . '%'
+                            ->content(fn (?Referral $record): string => $record && $record->clicks > 0
+                                ? number_format(($record->conversions / $record->clicks) * 100, 2).'%'
                                 : 'N/A'),
                     ])
                     ->columnSpan(1),
-                
+
                 Section::make('Conversion Details')
                     ->description('Information about the referred user and conversion')
                     ->schema([
@@ -92,7 +92,7 @@ class ReferralResource extends Resource
                             ->searchable()
                             ->preload()
                             ->disabled(),
-                        
+
                         DateTimePicker::make('converted_at')
                             ->label('Conversion Date')
                             ->disabled(),
