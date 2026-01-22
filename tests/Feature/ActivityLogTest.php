@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\ActivityLog;
+use Wave\ActivityLog;
 use App\Models\User;
 
 test('activity log can be created', function () {

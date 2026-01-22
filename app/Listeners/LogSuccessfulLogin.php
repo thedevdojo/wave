@@ -24,13 +24,13 @@ class LogSuccessfulLogin
         }
 
         // Prevent duplicate login logs within the same session
-        $recentLogin = \App\Models\ActivityLog::where('user_id', $event->user->id)
+        $recentLogin = \Wave\ActivityLog::where('user_id', $event->user->id)
             ->where('action', 'login')
             ->where('created_at', '>=', now()->subMinutes(5))
             ->exists();
 
         if (! $recentLogin) {
-            \App\Models\ActivityLog::log('login', 'User logged in successfully');
+            \Wave\ActivityLog::log('login', 'User logged in successfully');
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\ActivityLog;
+use Wave\ActivityLog;
 use App\Models\User;
 
 test('user can access export data page', function () {
