@@ -216,6 +216,21 @@ class WaveServiceProvider extends ServiceProvider
             return request()->is('/');
         });
 
+        // @canUseFeature directives - check if user can use more of a feature
+        Blade::if('canUseFeature', function (string $feature, int $amount = 1) {
+            return ! auth()->guest() && auth()->user()->canUseFeature($feature, $amount);
+        });
+
+        // @featureNearLimit directives - check if user is approaching limit
+        Blade::if('featureNearLimit', function (string $feature, float $threshold = 0.8) {
+            return ! auth()->guest() && auth()->user()->featureNearLimit($feature, $threshold);
+        });
+
+        // @featureLimitReached directives - check if limit has been reached
+        Blade::if('featureLimitReached', function (string $feature) {
+            return ! auth()->guest() && auth()->user()->featureLimitReached($feature);
+        });
+
     }
 
     protected function registerFilamentComponentsFriendlyNames()

@@ -405,3 +405,145 @@ test('undefined feature in plan returns unlimited', function () {
     expect($this->user->featureLimit('undefined_feature'))->toBeNull()
         ->and($this->user->canUseFeature('undefined_feature'))->toBeTrue();
 });
+
+test('featureUsagePercent returns correct percentage', function () {
+    Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->proPlan->id,
+        'vendor_slug' => 'stripe',
+        'vendor_customer_id' => 'cus_'.uniqid(),
+        'vendor_subscription_id' => 'sub_'.uniqid(),
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    // Pro plan has limit of 10
+    ApiKey::create(['user_id' => $this->user->id, 'name' => 'Key 1', 'key' => 'test_key_1']);
+    ApiKey::create(['user_id' => $this->user->id, 'name' => 'Key 2', 'key' => 'test_key_2']);
+    ApiKey::create(['user_id' => $this->user->id, 'name' => 'Key 3', 'key' => 'test_key_3']);
+
+    expect($this->user->featureUsagePercent('api_keys'))->toBe(30.0);
+});
+
+test('featureUsagePercent returns null for unlimited', function () {
+    Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->unlimitedPlan->id,
+        'vendor_slug' => 'stripe',
+        'vendor_customer_id' => 'cus_'.uniqid(),
+        'vendor_subscription_id' => 'sub_'.uniqid(),
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    expect($this->user->featureUsagePercent('api_keys'))->toBeNull();
+});
+
+test('featureUsagePercent caps at 100', function () {
+    Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->freePlan->id,
+        'vendor_slug' => 'stripe',
+        'vendor_customer_id' => 'cus_'.uniqid(),
+        'vendor_subscription_id' => 'sub_'.uniqid(),
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    // Free plan has limit of 1, create 2
+    ApiKey::create(['user_id' => $this->user->id, 'name' => 'Key 1', 'key' => 'test_key_1']);
+    ApiKey::create(['user_id' => $this->user->id, 'name' => 'Key 2', 'key' => 'test_key_2']);
+
+    expect($this->user->featureUsagePercent('api_keys'))->toBe(100.0);
+});
+
+test('featureNearLimit returns true when approaching limit', function () {
+    Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->proPlan->id,
+        'vendor_slug' => 'stripe',
+        'vendor_customer_id' => 'cus_'.uniqid(),
+        'vendor_subscription_id' => 'sub_'.uniqid(),
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    // Pro plan has limit of 10, create 8 (80%)
+    for ($i = 1; $i <= 8; $i++) {
+        ApiKey::create(['user_id' => $this->user->id, 'name' => "Key {$i}", 'key' => "test_key_{$i}"]);
+    }
+
+    expect($this->user->featureNearLimit('api_keys'))->toBeTrue()
+        ->and($this->user->featureNearLimit('api_keys', 0.9))->toBeFalse();
+});
+
+test('featureNearLimit returns false when well under limit', function () {
+    Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->proPlan->id,
+        'vendor_slug' => 'stripe',
+        'vendor_customer_id' => 'cus_'.uniqid(),
+        'vendor_subscription_id' => 'sub_'.uniqid(),
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    // Pro plan has limit of 10, create 2 (20%)
+    ApiKey::create(['user_id' => $this->user->id, 'name' => 'Key 1', 'key' => 'test_key_1']);
+    ApiKey::create(['user_id' => $this->user->id, 'name' => 'Key 2', 'key' => 'test_key_2']);
+
+    expect($this->user->featureNearLimit('api_keys'))->toBeFalse();
+});
+
+test('featureNearLimit returns false for unlimited', function () {
+    Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->unlimitedPlan->id,
+        'vendor_slug' => 'stripe',
+        'vendor_customer_id' => 'cus_'.uniqid(),
+        'vendor_subscription_id' => 'sub_'.uniqid(),
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    for ($i = 1; $i <= 100; $i++) {
+        ApiKey::create(['user_id' => $this->user->id, 'name' => "Key {$i}", 'key' => "test_key_{$i}"]);
+    }
+    $this->user->clearFeatureUsageCache();
+
+    expect($this->user->featureNearLimit('api_keys'))->toBeFalse();
+});
+
+test('featureNearLimit with custom threshold', function () {
+    Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->proPlan->id,
+        'vendor_slug' => 'stripe',
+        'vendor_customer_id' => 'cus_'.uniqid(),
+        'vendor_subscription_id' => 'sub_'.uniqid(),
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    // Pro plan has limit of 10, create 5 (50%)
+    for ($i = 1; $i <= 5; $i++) {
+        ApiKey::create(['user_id' => $this->user->id, 'name' => "Key {$i}", 'key' => "test_key_{$i}"]);
+    }
+
+    expect($this->user->featureNearLimit('api_keys', 0.5))->toBeTrue()
+        ->and($this->user->featureNearLimit('api_keys', 0.6))->toBeFalse();
+});

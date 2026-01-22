@@ -129,6 +129,40 @@ trait HasPlanFeatures
     }
 
     /**
+     * Get usage as a percentage (0-100).
+     * Returns null if unlimited.
+     */
+    public function featureUsagePercent(string $feature): ?float
+    {
+        $limit = $this->featureLimit($feature);
+
+        if ($limit === null || $limit === 0) {
+            return null;
+        }
+
+        $usage = $this->featureUsage($feature);
+
+        return min(100, round(($usage / $limit) * 100, 1));
+    }
+
+    /**
+     * Check if user is approaching the feature limit.
+     * Default threshold is 80% (0.8).
+     */
+    public function featureNearLimit(string $feature, float $threshold = 0.8): bool
+    {
+        $limit = $this->featureLimit($feature);
+
+        if ($limit === null || $limit === 0) {
+            return false;
+        }
+
+        $usage = $this->featureUsage($feature);
+
+        return ($usage / $limit) >= $threshold;
+    }
+
+    /**
      * Get all feature limits for the user's current plan.
      */
     public function allFeatureLimits(): array
