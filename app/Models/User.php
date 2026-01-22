@@ -17,33 +17,6 @@ class User extends WaveUser
     public $guard_name = 'web';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'username',
-        'avatar',
-        'password',
-        'role_id',
-        'verification_code',
-        'verified',
-        'trial_ends_at',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
