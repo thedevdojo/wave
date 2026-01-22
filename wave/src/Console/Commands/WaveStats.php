@@ -152,61 +152,43 @@ class WaveStats extends Command
     protected function displayStats(array $stats): void
     {
         $this->newLine();
-        $this->info('═══════════════════════════════════════════════════════════');
-        $this->info('                    WAVE STATISTICS');
-        $this->info('═══════════════════════════════════════════════════════════');
+        $this->components->info('Wave Statistics');
         $this->newLine();
 
         // Users Section
-        $this->line('<fg=cyan>👥 USERS</>');
-        $this->table(
-            ['Metric', 'Value'],
-            [
-                ['Total Users', number_format($stats['users']['total'])],
-                ['New Users (Last '.$stats['period_days'].' days)', number_format($stats['users']['new'])],
-                ['Verified Users', number_format($stats['users']['verified'])],
-                ['User Growth Rate', $this->formatGrowth($stats['users']['growth_rate'])],
-            ]
-        );
+        $this->components->twoColumnDetail('<fg=cyan>👥 Users</>');
+        $this->components->twoColumnDetail('Total Users', number_format($stats['users']['total']));
+        $this->components->twoColumnDetail('New Users (Last '.$stats['period_days'].' days)', number_format($stats['users']['new']));
+        $this->components->twoColumnDetail('Verified Users', number_format($stats['users']['verified']));
+        $this->components->twoColumnDetail('User Growth Rate', $this->formatGrowth($stats['users']['growth_rate']));
+
+        $this->newLine();
 
         // Subscriptions Section
+        $this->components->twoColumnDetail('<fg=cyan>💳 Subscriptions</>');
+        $this->components->twoColumnDetail('Active Subscriptions', number_format($stats['subscriptions']['active']));
+        $this->components->twoColumnDetail('Trial Subscriptions', number_format($stats['subscriptions']['trial']));
+        $this->components->twoColumnDetail('Cancelled (Active)', number_format($stats['subscriptions']['cancelled']));
+        $this->components->twoColumnDetail('New Subscriptions (Last '.$stats['period_days'].' days)', number_format($stats['subscriptions']['new']));
+        $this->components->twoColumnDetail('Subscription Growth Rate', $this->formatGrowth($stats['subscriptions']['growth_rate']));
+        $this->components->twoColumnDetail('Churn Rate', '<fg='.($stats['subscriptions']['churn_rate'] > 5 ? 'red' : 'green').'>'.$stats['subscriptions']['churn_rate'].'%</>');
+
         $this->newLine();
-        $this->line('<fg=cyan>💳 SUBSCRIPTIONS</>');
-        $this->table(
-            ['Metric', 'Value'],
-            [
-                ['Active Subscriptions', number_format($stats['subscriptions']['active'])],
-                ['Trial Subscriptions', number_format($stats['subscriptions']['trial'])],
-                ['Cancelled (Active)', number_format($stats['subscriptions']['cancelled'])],
-                ['New Subscriptions (Last '.$stats['period_days'].' days)', number_format($stats['subscriptions']['new'])],
-                ['Subscription Growth Rate', $this->formatGrowth($stats['subscriptions']['growth_rate'])],
-                ['Churn Rate', '<fg='.($stats['subscriptions']['churn_rate'] > 5 ? 'red' : 'green').'>'.$stats['subscriptions']['churn_rate'].'%</>'],
-            ]
-        );
 
         // Revenue Section
-        $this->newLine();
-        $this->line('<fg=cyan>💰 REVENUE</>');
-        $this->table(
-            ['Metric', 'Value'],
-            [
-                ['MRR (Monthly Recurring Revenue)', '$'.number_format($stats['revenue']['mrr'], 2)],
-                ['ARR (Annual Recurring Revenue)', '$'.number_format($stats['revenue']['arr'], 2)],
-            ]
-        );
+        $this->components->twoColumnDetail('<fg=cyan>💰 Revenue</>');
+        $this->components->twoColumnDetail('MRR (Monthly Recurring Revenue)', '$'.number_format($stats['revenue']['mrr'], 2));
+        $this->components->twoColumnDetail('ARR (Annual Recurring Revenue)', '$'.number_format($stats['revenue']['arr'], 2));
 
         // Plans Breakdown
         if (! empty($stats['plans'])) {
             $this->newLine();
-            $this->line('<fg=cyan>📊 PLAN BREAKDOWN</>');
-            $planRows = array_map(function ($plan) {
-                return [$plan['name'], number_format($plan['active_subscriptions'])];
-            }, $stats['plans']);
-            $this->table(['Plan', 'Active Subscriptions'], $planRows);
+            $this->components->twoColumnDetail('<fg=cyan>📊 Plan Breakdown</>');
+            foreach ($stats['plans'] as $plan) {
+                $this->components->twoColumnDetail($plan['name'], number_format($plan['active_subscriptions']).' active');
+            }
         }
 
-        $this->newLine();
-        $this->info('═══════════════════════════════════════════════════════════');
         $this->newLine();
     }
 

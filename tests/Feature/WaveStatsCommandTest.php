@@ -52,7 +52,7 @@ beforeEach(function () {
 it('displays statistics successfully', function () {
     artisan('wave:stats')
         ->assertSuccessful()
-        ->expectsOutput('                    WAVE STATISTICS');
+        ->expectsOutputToContain('Wave Statistics');
 });
 
 it('calculates MRR correctly for monthly subscriptions', function () {
