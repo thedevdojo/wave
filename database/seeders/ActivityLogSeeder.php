@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Wave\ActivityLog;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Wave\ActivityLog;
 
 class ActivityLogSeeder extends Seeder
 {

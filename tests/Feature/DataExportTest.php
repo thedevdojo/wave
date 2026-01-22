@@ -1,7 +1,7 @@
 <?php
 
-use Wave\ActivityLog;
 use App\Models\User;
+use Wave\ActivityLog;
 
 test('user can access export data page', function () {
     $user = User::where('email', 'admin@admin.com')->first();

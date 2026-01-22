@@ -1,7 +1,7 @@
 <?php
 
-use Wave\ActivityLog;
 use App\Models\User;
+use Wave\ActivityLog;
 
 test('cleanup command deletes old activity logs', function () {
     // Disable activity logging for test setup

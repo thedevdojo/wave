@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Wave\ActivityLog;
 use Illuminate\Console\Command;
+use Wave\ActivityLog;
 
 class CleanOldActivityLogs extends Command
 {
