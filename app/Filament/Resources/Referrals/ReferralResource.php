@@ -12,6 +12,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
@@ -32,19 +33,26 @@ class ReferralResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(2)
             ->components([
-                Section::make('Referral Details')
-                    ->description('Manage referral codes and track conversions')
+                Section::make('Referral Information')
+                    ->description('Configure the referral code and status')
                     ->schema([
                         Select::make('user_id')
                             ->label('Referrer')
                             ->relationship('user', 'name')
                             ->searchable()
+                            ->preload()
                             ->required(),
+                        
                         TextInput::make('code')
+                            ->label('Referral Code')
                             ->required()
                             ->maxLength(20)
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->alphaDash()
+                            ->helperText('Leave empty to auto-generate'),
+                        
                         Select::make('status')
                             ->options([
                                 'active' => 'Active',
@@ -53,26 +61,46 @@ class ReferralResource extends Resource
                             ])
                             ->default('active')
                             ->required(),
-                    ])->columns(3),
-                Section::make('Statistics')
-                    ->description('View referral performance metrics')
+                    ])
+                    ->columnSpan(1),
+                
+                Section::make('Performance Metrics')
+                    ->description('Real-time referral statistics')
                     ->schema([
-                        TextInput::make('clicks')
-                            ->numeric()
-                            ->default(0)
-                            ->disabled(),
-                        TextInput::make('conversions')
-                            ->numeric()
-                            ->default(0)
-                            ->disabled(),
+                        Placeholder::make('clicks')
+                            ->label('Total Clicks')
+                            ->content(fn (?Referral $record): string => $record ? number_format($record->clicks) : '0'),
+                        
+                        Placeholder::make('conversions')
+                            ->label('Conversions')
+                            ->content(fn (?Referral $record): string => $record ? number_format($record->conversions) : '0'),
+                        
+                        Placeholder::make('conversion_rate')
+                            ->label('Conversion Rate')
+                            ->content(fn (?Referral $record): string => $record && $record->clicks > 0 
+                                ? number_format(($record->conversions / $record->clicks) * 100, 2) . '%'
+                                : 'N/A'),
+                    ])
+                    ->columnSpan(1),
+                
+                Section::make('Conversion Details')
+                    ->description('Information about the referred user and conversion')
+                    ->schema([
                         Select::make('referred_user_id')
                             ->label('Referred User')
                             ->relationship('referredUser', 'name')
                             ->searchable()
+                            ->preload()
                             ->disabled(),
+                        
                         DateTimePicker::make('converted_at')
+                            ->label('Conversion Date')
                             ->disabled(),
-                    ])->columns(2),
+                    ])
+                    ->columnSpan(2)
+                    ->columns(2)
+                    ->collapsed()
+                    ->visible(fn (?Referral $record): bool => $record?->conversions > 0),
             ]);
     }
 
