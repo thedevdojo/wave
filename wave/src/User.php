@@ -147,6 +147,57 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
         return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderByDesc('created_at');
     }
 
+    public function referrals(): HasMany
+    {
+        return $this->hasMany(Referral::class);
+    }
+
+    public function referredBy(): BelongsTo
+    {
+        return $this->belongsTo(Referral::class, 'id', 'referred_user_id');
+    }
+
+    public function referralRewards(): HasMany
+    {
+        return $this->hasMany(ReferralReward::class);
+    }
+
+    public function getReferralCode(): ?string
+    {
+        $referral = $this->referrals()->where('status', 'active')->first();
+
+        return $referral ? $referral->code : null;
+    }
+
+    public function getOrCreateReferralCode(): string
+    {
+        $referral = $this->referrals()->where('status', 'active')->first();
+
+        if (! $referral) {
+            $referral = $this->referrals()->create([
+                'code' => Referral::generateUniqueCode(),
+                'status' => 'active',
+            ]);
+        }
+
+        return $referral->code;
+    }
+
+    public function totalReferralEarnings(): float
+    {
+        return $this->referralRewards()->sum('amount');
+    }
+
+    public function pendingReferralEarnings(): float
+    {
+        return $this->referralRewards()->where('status', 'pending')->sum('amount');
+    }
+
+    public function paidReferralEarnings(): float
+    {
+        return $this->referralRewards()->where('status', 'paid')->sum('amount');
+    }
+
     public function switchPlans(Plan $plan)
     {
         $this->syncRoles([]);
