@@ -2,7 +2,6 @@
 
 namespace Wave\Traits;
 
-use Illuminate\Support\Facades\Cache;
 use Wave\Plan;
 
 trait HasPlanFeatures
@@ -11,6 +10,13 @@ trait HasPlanFeatures
      * In-memory cache for usage counts within a single request.
      */
     protected array $featureUsageCache = [];
+
+    /**
+     * In-memory cache for the user's plan within a single request.
+     */
+    protected ?Plan $cachedPlan = null;
+
+    protected bool $planLookupDone = false;
 
     /**
      * Get the limit for a specific feature based on the user's plan.
@@ -23,13 +29,7 @@ trait HasPlanFeatures
             return null;
         }
 
-        $subscription = $this->latestSubscription();
-
-        if (! $subscription) {
-            return $this->getDefaultLimit($feature);
-        }
-
-        $plan = Plan::find($subscription->plan_id);
+        $plan = $this->getUserPlan();
 
         if (! $plan) {
             return $this->getDefaultLimit($feature);
@@ -167,13 +167,7 @@ trait HasPlanFeatures
      */
     public function allFeatureLimits(): array
     {
-        $subscription = $this->latestSubscription();
-
-        if (! $subscription) {
-            return config('limits.defaults', []);
-        }
-
-        $plan = Plan::find($subscription->plan_id);
+        $plan = $this->getUserPlan();
 
         if (! $plan) {
             return config('limits.defaults', []);
@@ -183,11 +177,30 @@ trait HasPlanFeatures
     }
 
     /**
-     * Clear the in-memory feature usage cache.
+     * Clear the in-memory caches (usage and plan).
      */
     public function clearFeatureUsageCache(): void
     {
         $this->featureUsageCache = [];
+        $this->cachedPlan = null;
+        $this->planLookupDone = false;
+    }
+
+    /**
+     * Get the user's current plan with in-memory caching.
+     * Avoids redundant DB queries within a single request.
+     */
+    protected function getUserPlan(): ?Plan
+    {
+        if (! $this->planLookupDone) {
+            $subscription = $this->latestSubscription();
+            $this->cachedPlan = $subscription
+                ? Plan::find($subscription->plan_id)
+                : null;
+            $this->planLookupDone = true;
+        }
+
+        return $this->cachedPlan;
     }
 
     /**
