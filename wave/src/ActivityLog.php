@@ -2,10 +2,28 @@
 
 namespace Wave;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Wave\Contracts\ActivityLoggerInterface;
+use Wave\Jobs\CreateActivityLog;
 
-class ActivityLog extends Model
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property string $action
+ * @property string|null $description
+ * @property string|null $ip_address
+ * @property string|null $user_agent
+ * @property array<string, mixed>|null $metadata
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ *
+ * @method static ActivityLog create(array $attributes = [])
+ * @method static ActivityLog|null find(int $id)
+ * @method static Collection<int, ActivityLog> where(string $column, mixed $operator = null, mixed $value = null)
+ */
+class ActivityLog extends Model implements ActivityLoggerInterface
 {
     protected $fillable = [
         'user_id',
@@ -28,11 +46,15 @@ class ActivityLog extends Model
     }
 
     /**
-     * Log an activity for a user
+     * Log an activity for the current authenticated user.
+     *
+     * @param string $action The action identifier (e.g., 'password_changed', 'login')
+     * @param string|null $description Human-readable description
+     * @param array<string, mixed>|null $metadata Additional context data
+     * @return self|null Returns the created log or null if logging is disabled/queued
      */
-    public static function log(string $action, ?string $description = null, ?array $metadata = null): ?self
+    public static function log(string $action, ?string $description = null, ?array $metadata = null): ?static
     {
-        // Check if activity logging is enabled
         if (! config('activity.enabled', true)) {
             return null;
         }
@@ -53,9 +75,8 @@ class ActivityLog extends Model
 
         // If queueing is enabled, dispatch to queue
         if (config('activity.queue', false)) {
-            dispatch(function () use ($data) {
-                static::create($data);
-            })->onConnection(config('activity.queue_connection', 'sync'));
+            CreateActivityLog::dispatch($data)
+                ->onConnection(config('activity.queue_connection', 'database'));
 
             return null;
         }

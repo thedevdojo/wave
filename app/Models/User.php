@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Wave\ActivityLog;
 use Wave\Traits\HasProfileKeyValues;
 use Wave\User as WaveUser;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends WaveUser
 {
@@ -58,7 +59,7 @@ class User extends WaveUser
         ];
     }
 
-    public function activityLogs()
+    public function activityLogs(): HasMany
     {
         return $this->hasMany(ActivityLog::class);
     }
