@@ -28,6 +28,7 @@ use Livewire\Livewire;
 use Wave\Console\Commands\CancelExpiredSubscriptions;
 use Wave\Console\Commands\CleanOldActivityLogs;
 use Wave\Console\Commands\CreatePluginCommand;
+use Wave\Console\Commands\ProcessScheduledAccountDeletions;
 use Wave\Console\Commands\WaveStats;
 use Wave\Facades\Wave as WaveFacade;
 use Wave\Http\Livewire\Billing\Checkout;
@@ -123,6 +124,7 @@ class WaveServiceProvider extends ServiceProvider
                 CreatePluginCommand::class,
                 WaveStats::class,
                 CleanOldActivityLogs::class,
+                ProcessScheduledAccountDeletions::class,
             ]);
             // $this->excludeInactiveThemes();
         }
