@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Wave\ActivityLog;
 use Wave\Traits\HasProfileKeyValues;
 use Wave\User as WaveUser;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends WaveUser
 {
