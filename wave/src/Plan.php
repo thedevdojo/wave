@@ -13,6 +13,11 @@ class Plan extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'limits' => 'array',
+        'features' => 'array',
+    ];
+
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
@@ -78,5 +83,35 @@ class Plan extends Model
                 // Silently handle cache clearing failures
             }
         }
+    }
+
+    /**
+     * Get the limit for a specific feature.
+     * Returns null if unlimited, int if limited.
+     */
+    public function getLimit(string $feature): ?int
+    {
+        $limits = $this->limits ?? [];
+
+        if (! array_key_exists($feature, $limits)) {
+            return null;
+        }
+
+        $limit = $limits[$feature];
+
+        // -1 means explicitly unlimited
+        if ($limit === -1) {
+            return null;
+        }
+
+        return (int) $limit;
+    }
+
+    /**
+     * Check if plan has a limit defined for a feature.
+     */
+    public function hasLimit(string $feature): bool
+    {
+        return array_key_exists($feature, $this->limits ?? []);
     }
 }

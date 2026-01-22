@@ -10,6 +10,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
@@ -92,6 +93,17 @@ class PlanResource extends Resource
                             ->minValue(0)
                             ->required(),
                     ])->columns(2),
+                Section::make('Feature Limits')
+                    ->description('Set usage limits for this plan. Leave empty for unlimited. Use -1 for explicitly unlimited, 0 to disable.')
+                    ->schema([
+                        KeyValue::make('limits')
+                            ->keyLabel('Feature')
+                            ->valueLabel('Limit')
+                            ->keyPlaceholder('e.g., api_keys')
+                            ->valuePlaceholder('e.g., 10')
+                            ->reorderable()
+                            ->columnSpanFull(),
+                    ]),
                 Section::make('Associated Role')
                     ->description('When the user subscribes to this plan, what role should they be assigned?')
                     ->schema([
