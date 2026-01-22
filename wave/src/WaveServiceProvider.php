@@ -27,6 +27,7 @@ use Laravel\Folio\Folio;
 use Livewire\Livewire;
 use Wave\Console\Commands\CancelExpiredSubscriptions;
 use Wave\Console\Commands\CreatePluginCommand;
+use Wave\Console\Commands\WaveStats;
 use Wave\Facades\Wave as WaveFacade;
 use Wave\Http\Livewire\Billing\Checkout;
 use Wave\Http\Livewire\Billing\Update;
@@ -119,6 +120,7 @@ class WaveServiceProvider extends ServiceProvider
             $this->commands([
                 CancelExpiredSubscriptions::class,
                 CreatePluginCommand::class,
+                WaveStats::class,
             ]);
             // $this->excludeInactiveThemes();
         }
