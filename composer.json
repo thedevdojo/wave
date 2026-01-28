@@ -15,7 +15,7 @@
         "ext-gd": "*",
         "codeat3/blade-phosphor-icons": "^2.0",
         "devdojo/app": "0.11.0",
-        "devdojo/auth": "^1.0",
+        "devdojo/auth": "^2.2.0",
         "devdojo/themes": "0.0.11",
         "filament/filament": "^4.0",
         "filament/tables": "^4.0",
