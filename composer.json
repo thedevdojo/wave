@@ -28,7 +28,7 @@
         "laravel/pail": "^1.2.2",
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
-        "livewire/livewire": "^3.5",
+        "livewire/livewire": "^3.6.4",
         "ralphjsmit/livewire-urls": "^1.5",
         "spatie/laravel-permission": "^6.12",
         "stripe/stripe-php": "^17.3",
