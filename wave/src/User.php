@@ -20,10 +20,11 @@ use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasRoles;
 use Stripe\StripeClient;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Wave\Traits\HasPlanFeatures;
 
 class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 {
-    use HasRoles, Impersonate, Notifiable;
+    use HasPlanFeatures, HasRoles, Impersonate, Notifiable;
 
     /**
      * The attributes that are mass assignable.
