@@ -79,6 +79,14 @@ class PlanResource extends Resource
                             ->maxLength(191),
                         TextInput::make('onetime_price')
                             ->maxLength(191),
+                        Select::make('currency')
+                            ->default('$')
+                            ->options([
+                                '$' => '$',
+                                '€' => '€',
+                                '£' => '£',     
+                                '¥' => '¥',
+                            ]),
                     ])->columns(2),
                 Section::make('Plan Status')
                     ->description('Make the plan default or active/inactive and set the sort order')
@@ -130,6 +138,8 @@ class PlanResource extends Resource
                     ->sortable(),
                 BooleanColumn::make('active')
                     ->sortable(),
+                TextColumn::make('currency')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
