@@ -32,7 +32,7 @@ new class extends Component
         }
 
         return [
-            'activities' => $query->paginate(15),
+            'activities' => $query->paginate(15)->onEachSide(1),
             'actionTypes' => auth()->user()->activityLogs()
                 ->select('action')
                 ->distinct()
