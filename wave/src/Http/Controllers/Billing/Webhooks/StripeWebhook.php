@@ -12,6 +12,7 @@ use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
 use Stripe\Webhook;
 use UnexpectedValueException;
+use Wave\Actions\Referrals\ProcessReferralConversion;
 use Wave\Plan;
 use Wave\Subscription;
 
@@ -126,7 +127,7 @@ class StripeWebhook extends Controller
             $user->syncRoles([]);
             $user->assignRole($plan->role->name);
 
-            Subscription::create([
+            $subscription = Subscription::create([
                 'billable_type' => $billable_type,
                 'billable_id' => $billable_id,
                 'plan_id' => $plan_id,
@@ -137,6 +138,9 @@ class StripeWebhook extends Controller
                 'status' => 'active',
                 'seats' => 1,
             ]);
+
+            // Process referral conversion
+            app(ProcessReferralConversion::class)->handle($user, $subscription);
 
             $user->clearUserCache();
         }

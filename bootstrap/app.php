@@ -34,6 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(\Filament\Http\Middleware\DisableBladeIconComponents::class);
 
         $middleware->web(\RalphJSmit\Livewire\Urls\Middleware\LivewireUrlsMiddleware::class);
+        $middleware->web(\Wave\Http\Middleware\TrackReferrals::class);
 
         $middleware->throttleApi();
     })
