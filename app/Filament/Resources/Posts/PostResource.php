@@ -51,7 +51,7 @@ class PostResource extends Resource
                     ->maxLength(191),
                 RichEditor::make('body')
                     ->required()
-                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDisk(config('filament.default_filesystem_disk'))
                     ->fileAttachmentsDirectory('attachments')
                     ->fileAttachmentsVisibility('public')
                     ->columnSpanFull(),
@@ -59,7 +59,7 @@ class PostResource extends Resource
                     ->columnSpanFull(),
                 FileUpload::make('image')
                     ->image()
-                    ->disk('public')
+                    ->disk(config('filament.default_filesystem_disk'))
                     ->directory('posts'),
                 TextInput::make('seo_title')
                     ->maxLength(191),
