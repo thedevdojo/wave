@@ -43,9 +43,9 @@
             </div>
         @endif
 
-        <div class="flex flex-col flex-wrap lg:flex-row lg:space-x-5">
+        <div class="flex flex-col flex-wrap gap-x-5 lg:flex-row lg:space-x-5">
 
-            @foreach(Wave\Plan::where('active', 1)->get() as $plan)
+            @foreach(Wave\Plan::getActivePlans() as $plan)
                 @php $features = explode(',', $plan->features); @endphp
                 <div
                     {{--  Say that you have a monthly plan that doesn't have a yearly plan, in that case we will hide the place that doesn't have a price_id --}}

@@ -1,6 +1,6 @@
 <?php
 
-//use Filament\Support\Commands\FileGenerators\FileGenerationFlag;
+// use Filament\Support\Commands\FileGenerators\FileGenerationFlag;
 
 return [
 

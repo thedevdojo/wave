@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\Posts\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\Posts\PostResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditPost extends EditRecord

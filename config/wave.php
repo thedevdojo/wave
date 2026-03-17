@@ -2,21 +2,13 @@
 
 return [
 
-    'profile_fields' => [
-        'about' => [
-            'label' => 'About',
-            'field' => 'textarea',
-            'validation' => 'required',
-        ],
-    ],
-
     'api' => [
         'auth_token_expires' => 60,
         'key_token_expires' => 1,
     ],
 
     'auth' => [
-        'min_password_length' => 5,
+        'min_password_length' => 8,
     ],
 
     'primary_color' => '#000000',

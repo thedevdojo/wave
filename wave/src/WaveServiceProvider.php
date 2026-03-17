@@ -2,18 +2,9 @@
 
 namespace Wave;
 
-use Wave\Http\Middleware\VerifyPaddleWebhookSignature;
-use Wave\Http\Middleware\Subscribed;
-use Wave\Http\Middleware\TokenMiddleware;
-use Wave\Http\Middleware\InstallMiddleware;
-use Wave\Http\Middleware\ThemeDemoMiddleware;
-use Exception;
-use Wave\Console\Commands\CancelExpiredSubscriptions;
-use Wave\Console\Commands\CreatePluginCommand;
 use App\Models\Forms;
-use Wave\Http\Livewire\Billing\Checkout;
-use Wave\Http\Livewire\Billing\Update;
 use DevDojo\Themes\Models\Theme;
+use Exception;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -30,10 +21,23 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Intervention\Image\ImageManagerStatic;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 use Laravel\Folio\Folio;
 use Livewire\Livewire;
+use Wave\Console\Commands\CancelExpiredSubscriptions;
+use Wave\Console\Commands\CleanOldActivityLogs;
+use Wave\Console\Commands\CreatePluginCommand;
+use Wave\Console\Commands\ProcessScheduledAccountDeletions;
+use Wave\Console\Commands\WaveStats;
 use Wave\Facades\Wave as WaveFacade;
+use Wave\Http\Livewire\Billing\Checkout;
+use Wave\Http\Livewire\Billing\Update;
+use Wave\Http\Middleware\InstallMiddleware;
+use Wave\Http\Middleware\Subscribed;
+use Wave\Http\Middleware\ThemeDemoMiddleware;
+use Wave\Http\Middleware\TokenMiddleware;
+use Wave\Http\Middleware\VerifyPaddleWebhookSignature;
 use Wave\Overrides\Vite;
 use Wave\Plugins\PluginServiceProvider;
 
@@ -46,7 +50,12 @@ class WaveServiceProvider extends ServiceProvider
         $loader->alias('Wave', WaveFacade::class);
 
         $this->app->singleton('wave', function () {
-            return new Wave;
+            return new Wave();
+        });
+
+        // Register Intervention Image Manager
+        $this->app->singleton('image', function () {
+            return new ImageManager(new Driver());
         });
 
         // Move helper loading to boot method to avoid cache service dependency
@@ -66,7 +75,7 @@ class WaveServiceProvider extends ServiceProvider
             // Overwrite the Vite asset helper so we can use the demo folder as opposed to the build folder
             $this->app->singleton(BaseVite::class, function ($app) {
                 // Replace the default Vite instance with the custom one
-                return new Vite;
+                return new Vite();
             });
         }
 
@@ -100,7 +109,8 @@ class WaveServiceProvider extends ServiceProvider
 
         Validator::extend('imageable', function ($attribute, $value, $params, $validator) {
             try {
-                ImageManagerStatic::make($value);
+                $manager = new ImageManager(new Driver());
+                $manager->read($value);
 
                 return true;
             } catch (Exception $e) {
@@ -112,6 +122,9 @@ class WaveServiceProvider extends ServiceProvider
             $this->commands([
                 CancelExpiredSubscriptions::class,
                 CreatePluginCommand::class,
+                WaveStats::class,
+                CleanOldActivityLogs::class,
+                ProcessScheduledAccountDeletions::class,
             ]);
             // $this->excludeInactiveThemes();
         }
@@ -126,25 +139,48 @@ class WaveServiceProvider extends ServiceProvider
         $this->registerWaveComponentDirectory();
     }
 
-    protected function loadHelpers()
+    protected function loadHelpers(): void
     {
-        // Check if cache service is available (not during package discovery)
-        if ($this->app->bound('cache') && $this->app->make('cache')->getStore()) {
-            try {
-                $helpers = Cache::rememberForever('wave_helpers', function () {
-                    return glob(__DIR__.'/Helpers/*.php');
+        $helperPattern = __DIR__.'/Helpers/*.php';
+        $helpers = [];
+
+        try {
+            // Only use cache if it's safe and available
+            if ($this->app->bound('cache') && $this->app->make('cache')->getStore()) {
+                $helpers = Cache::rememberForever('wave_helpers', function () use ($helperPattern) {
+                    // Store only filenames, not absolute paths
+                    return array_map('basename', glob($helperPattern));
                 });
-            } catch (Exception $e) {
-                // Fallback to direct file loading if cache fails
-                $helpers = glob(__DIR__.'/Helpers/*.php');
+
+                // Validate cached filenames (not absolute paths)
+                $helpers = array_filter($helpers, function ($filename) {
+                    $fullPath = __DIR__.'/Helpers/'.$filename;
+
+                    return file_exists($fullPath);
+                });
+
+                // If no valid helpers remain (e.g., after deployment), repopulate
+                if (empty($helpers)) {
+                    Cache::forget('wave_helpers');
+                    $helpers = array_map('basename', glob($helperPattern));
+                    Cache::forever('wave_helpers', $helpers);
+                }
+            } else {
+                // Fallback: load directly without cache
+                $helpers = array_map('basename', glob($helperPattern));
             }
-        } else {
-            // Direct file loading during package discovery or when cache is not available
-            $helpers = glob(__DIR__.'/Helpers/*.php');
+
+        } catch (\Throwable $e) {
+            // Fallback to direct loading if cache fails
+            $helpers = array_map('basename', glob($helperPattern));
         }
 
+        // Require each helper safely
         foreach ($helpers as $filename) {
-            require_once $filename;
+            $fullPath = __DIR__.'/Helpers/'.$filename;
+            if (file_exists($fullPath)) {
+                require_once $fullPath;
+            }
         }
     }
 
@@ -182,6 +218,21 @@ class WaveServiceProvider extends ServiceProvider
         // home directives
         Blade::if('home', function () {
             return request()->is('/');
+        });
+
+        // @canUseFeature directives - check if user can use more of a feature
+        Blade::if('canUseFeature', function (string $feature, int $amount = 1) {
+            return ! auth()->guest() && auth()->user()->canUseFeature($feature, $amount);
+        });
+
+        // @featureNearLimit directives - check if user is approaching limit
+        Blade::if('featureNearLimit', function (string $feature, float $threshold = 0.8) {
+            return ! auth()->guest() && auth()->user()->featureNearLimit($feature, $threshold);
+        });
+
+        // @featureLimitReached directives - check if limit has been reached
+        Blade::if('featureLimitReached', function (string $feature) {
+            return ! auth()->guest() && auth()->user()->featureLimitReached($feature);
         });
 
     }
@@ -224,7 +275,7 @@ class WaveServiceProvider extends ServiceProvider
             // Only use cache if available
             if ($this->app->bound('cache') && $this->hasDBConnection()) {
                 try {
-                    $cacheKey = 'wave_theme_color_' . Cookie::get('theme', 'default');
+                    $cacheKey = 'wave_theme_color_'.Cookie::get('theme', 'default');
                     $color = Cache::remember($cacheKey, 3600, function () {
                         $theme = $this->getActiveTheme();
 
@@ -276,7 +327,6 @@ class WaveServiceProvider extends ServiceProvider
             return \Wave\Theme::where('active', 1)->first();
         }
 
-        return null;
     }
 
     protected function hasDBConnection()

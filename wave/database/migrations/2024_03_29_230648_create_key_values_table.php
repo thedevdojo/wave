@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+return new class() extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('keyvalue_id'); // UNSIGNED INTEGER for the key-value relationship ID
             $table->string('keyvalue_type', 191); // VARCHAR equivalent column for the type of key-value relationship
             $table->string('key', 191); // VARCHAR equivalent column for the key
-            $table->text('value'); // VARCHAR equivalent column for the value
+            $table->text('value')->nullable(); // VARCHAR equivalent column for the value
             $table->timestamps(); // Adds created_at and updated_at columns
 
             // Unique constraint to ensure uniqueness across the combination of keyvalue_id, keyvalue_type, and key

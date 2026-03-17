@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\Plans\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\Plans\PlanResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditPlan extends EditRecord

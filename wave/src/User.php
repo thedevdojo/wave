@@ -2,10 +2,9 @@
 
 namespace Wave;
 
-use Exception;
-use Stripe\StripeClient;
 use Carbon\Carbon;
 use Devdojo\Auth\Models\User as AuthUser;
+use Exception;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -19,11 +18,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasRoles;
+use Stripe\StripeClient;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Wave\Traits\HasPlanFeatures;
 
 class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 {
-    use HasRoles, Impersonate, Notifiable;
+    use HasPlanFeatures, HasRoles, Impersonate, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -157,8 +158,8 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     {
         $user_invoices = [];
 
-        if (is_null($this->subscription)) {
-            return null;
+        if ($this->subscriptions()->doesntExist()) {
+            return;
         }
 
         if (config('wave.billing_provider') == 'stripe') {
@@ -320,119 +321,4 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
         return false;
     }
-
-    /*** PUT ALL THESE below into a trait */
-
-    /**
-     * Return default User Role.
-     */
-    // public function role()
-    // {
-    //     return $this->belongsTo(Role::class);
-    // }
-
-    // /**
-    //  * Return alternative User Roles.
-    //  */
-    // public function roles()
-    // {
-    //     return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
-    // }
-
-    // /**
-    //  * Return all User Roles, merging the default and alternative roles.
-    //  */
-    // public function roles_all()
-    // {
-    //     $this->loadRolesRelations();
-
-    //     return collect([$this->role])->merge($this->roles);
-    // }
-
-    // /**
-    //  * Check if User has a Role(s) associated.
-    //  *
-    //  * @param string|array $name The role(s) to check.
-    //  *
-    //  * @return bool
-    //  */
-    // public function hasRole($name)
-    // {
-    //     $roles = $this->roles_all()->pluck('name')->toArray();
-
-    //     foreach ((is_array($name) ? $name : [$name]) as $role) {
-    //         if (in_array($role, $roles)) {
-    //             return true;
-    //         }
-    //     }
-
-    //     return false;
-    // }
-
-    // /**
-    //  * Set default User Role.
-    //  *
-    //  * @param string $name The role name to associate.
-    //  */
-    // public function setRole($name)
-    // {
-    //     $role = Role::where('name', '=', $name)->first();
-
-    //     if ($role) {
-    //         $this->role()->associate($role);
-    //         $this->save();
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function hasPermission($name)
-    // {
-    //     $this->loadPermissionsRelations();
-
-    //     $_permissions = $this->roles_all()
-    //                           ->pluck('permissions')->flatten()
-    //                           ->pluck('key')->unique()->toArray();
-
-    //     return in_array($name, $_permissions);
-    // }
-
-    // public function hasPermissionOrFail($name)
-    // {
-    //     if (!$this->hasPermission($name)) {
-    //         throw new UnauthorizedHttpException(null);
-    //     }
-
-    //     return true;
-    // }
-
-    // public function hasPermissionOrAbort($name, $statusCode = 403)
-    // {
-    //     if (!$this->hasPermission($name)) {
-    //         return abort($statusCode);
-    //     }
-
-    //     return true;
-    // }
-
-    // private function loadRolesRelations()
-    // {
-    //     if (!$this->relationLoaded('role')) {
-    //         $this->load('role');
-    //     }
-
-    //     if (!$this->relationLoaded('roles')) {
-    //         $this->load('roles');
-    //     }
-    // }
-
-    // private function loadPermissionsRelations()
-    // {
-    //     $this->loadRolesRelations();
-
-    //     if ($this->role && !$this->role->relationLoaded('permissions')) {
-    //         $this->role->load('permissions');
-    //         $this->load('roles.permissions');
-    //     }
-    // }
 }

@@ -1,10 +1,10 @@
 <?php
 
-use Wave\Setting;
-use Illuminate\Support\Facades\Blade;
-use Wave\Plan;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
+use Wave\Plan;
+use Wave\Setting;
 
 if (! function_exists('setting')) {
     function setting($key, $default = null)
@@ -100,7 +100,7 @@ if (! function_exists('get_default_billing_cycle')) {
     }
 }
 
-if (!function_exists('wave_version')) {
+if (! function_exists('wave_version')) {
     /**
      * Get the current Wave version
      *
@@ -112,6 +112,7 @@ if (!function_exists('wave_version')) {
 
         if (file_exists($waveJsonPath)) {
             $waveData = json_decode(file_get_contents($waveJsonPath), true);
+
             return $waveData['version'] ?? 'Unknown';
         }
 

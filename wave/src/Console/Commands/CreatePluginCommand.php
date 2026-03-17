@@ -161,7 +161,7 @@ EOT;
 
     private function downloadPlaceholderImage($path)
     {
-        $client = new Client;
+        $client = new Client();
         $imageUrl = 'https://cdn.devdojo.com/assets/img/plugin-placeholder.jpg';
         $imagePath = "{$path}/plugin.jpg";
 

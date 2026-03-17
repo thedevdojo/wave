@@ -2,43 +2,40 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Wave\ActivityLog;
 use Wave\Traits\HasProfileKeyValues;
 use Wave\User as WaveUser;
 
 class User extends WaveUser
 {
-    use HasProfileKeyValues, Notifiable;
+    use HasFactory, HasProfileKeyValues, Notifiable, SoftDeletes;
 
     public $guard_name = 'web';
 
     /**
-     * The attributes that are mass assignable.
+     * Get the attributes that should be cast.
      *
-     * @var array<int, string>
+     * @return array<string, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'username',
-        'avatar',
-        'password',
-        'role_id',
-        'verification_code',
-        'verified',
-        'trial_ends_at',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'notification_preferences' => 'array',
+            'social_links' => 'array',
+            'privacy_settings' => 'array',
+            'deletion_scheduled_at' => 'datetime',
+        ];
+    }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function activityLogs(): HasMany
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
 
     protected static function boot()
     {
@@ -63,8 +60,12 @@ class User extends WaveUser
         static::created(function ($user) {
             // Remove all roles
             $user->syncRoles([]);
-            // Assign the default role
-            $user->assignRole(config('wave.default_user_role', 'registered'));
+
+            // Assign the default role if it exists
+            $defaultRole = config('wave.default_user_role', 'registered');
+            if (\Spatie\Permission\Models\Role::where('name', $defaultRole)->where('guard_name', 'web')->exists()) {
+                $user->assignRole($defaultRole);
+            }
         });
     }
 }

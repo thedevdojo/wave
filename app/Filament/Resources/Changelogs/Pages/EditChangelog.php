@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\Changelogs\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\Changelogs\ChangelogResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditChangelog extends EditRecord

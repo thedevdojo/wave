@@ -16,7 +16,7 @@
     "postcss": "^8.4.38",
     "postcss-nesting": "^12.1.1",
     "tailwindcss": "^4.1.12",
-    "vite": "^6.2"
+    "vite": "^6.4"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.12"

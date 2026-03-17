@@ -2,9 +2,9 @@
 
 namespace Wave\Http\Controllers\Billing;
 
-use Stripe\StripeClient;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use Stripe\StripeClient;
 
 class Stripe extends Controller
 {

@@ -2,7 +2,7 @@
     use function Laravel\Folio\{name};
     name('blog');
 
-    $posts = \Wave\Post::orderBy('created_at', 'DESC')->paginate(6);
+    $posts = \Wave\Post::where('status', 'PUBLISHED')->orderBy('created_at', 'DESC')->paginate(6);
     $categories = \Wave\Category::all();
 ?>
 

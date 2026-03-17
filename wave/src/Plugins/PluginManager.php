@@ -26,7 +26,7 @@ class PluginManager
         $installedPlugins = $this->getInstalledPlugins();
 
         // Only log when there are actually plugins to load
-        if (!empty($installedPlugins)) {
+        if (! empty($installedPlugins)) {
             Log::info('Loading plugins: '.json_encode($installedPlugins));
         }
 
@@ -74,7 +74,6 @@ class PluginManager
             }
         }
 
-        return null;
     }
 
     protected function runPostActivationCommands(Plugin $plugin)

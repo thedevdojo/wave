@@ -65,7 +65,7 @@ trait HasDynamicFields
         foreach ($fields as $field) {
             $key = Str::slug($field['label']);
 
-            if (isset($state[$key])) {
+            if (array_key_exists($key, $state)) {
                 $value = $state[$key];
                 if (is_array($state[$key])) {
                     $value = json_encode($state[$key]);

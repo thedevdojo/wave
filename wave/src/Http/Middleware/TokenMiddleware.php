@@ -2,17 +2,15 @@
 
 namespace Wave\Http\Middleware;
 
-use Illuminate\Http\Request;
 use Closure;
-//use Illuminate\Support\Facades\Auth;
-use Wave\ApiKey;
-use Tymon\JWTAuth\Facades\JWTAuth;
-
 use Illuminate\Contracts\Auth\Factory as Auth;
+// use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Wave\ApiKey;
 
 class TokenMiddleware
 {
-
     protected $auth;
 
     public function __construct(Auth $auth)
@@ -23,8 +21,7 @@ class TokenMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
      * @param  string|null  $guard
      * @return mixed
      */
@@ -40,8 +37,7 @@ class TokenMiddleware
             $this->auth->authenticate();
         }
 
-
-        //Then process the next request if every tests passed.
+        // Then process the next request if every tests passed.
         return $next($request);
     }
 }
