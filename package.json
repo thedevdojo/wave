@@ -11,7 +11,7 @@
     "@tailwindcss/vite": "^4.1.12",
     "alpinejs": "^3.4.2",
     "autoprefixer": "^10.4.19",
-    "axios": "^1.8.2",
+    "axios": "^1.15.2",
     "laravel-vite-plugin": "^1.0",
     "postcss": "^8.4.38",
     "postcss-nesting": "^12.1.1",
