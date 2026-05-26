@@ -3,7 +3,7 @@
 <head>
     @include('theme::partials.head', ['seo' => ($seo ?? null) ])
 </head>
-<body x-data class="flex flex-col min-h-screen overflow-x-hidden @if($bodyClass ?? false){{ $bodyClass }}@endif" x-cloak>
+<body x-data class="flex flex-col min-h-screen overflow-x-hidden @if($bodyClass ?? false){{ $bodyClass }}@endif" x-cloak data-marketing-layout>
 
     <x-marketing.elements.header />
 
@@ -15,6 +15,15 @@
     @include('theme::partials.footer')
     @include('theme::partials.footer-scripts')
     {{ $javascript ?? '' }}
+    <script>
+        function syncThemeForLayout() {
+            const isMarketing =
+                document.body.hasAttribute('data-marketing-layout');
 
+            document.documentElement.classList.toggle('dark', !isMarketing);
+        }
+        document.addEventListener('livewire:navigated', syncThemeForLayout);
+        syncThemeForLayout();
+    </script>
 </body>
 </html>
