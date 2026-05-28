@@ -17,10 +17,9 @@
     {{ $javascript ?? '' }}
     <script>
         function syncThemeForLayout() {
-            const isMarketing =
-                document.body.hasAttribute('data-marketing-layout');
-
-            document.documentElement.classList.toggle('dark', !isMarketing);
+            if (document.body.hasAttribute('data-marketing-layout')) {
+                document.documentElement.classList.remove('dark');
+            }
         }
         document.addEventListener('livewire:navigated', syncThemeForLayout);
         syncThemeForLayout();
