@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     'api' => [
@@ -13,7 +15,7 @@ return [
 
     'primary_color' => '#000000',
 
-    'user_model' => \App\Models\User::class,
+    'user_model' => User::class,
     'show_docs' => env('WAVE_DOCS', true),
     'demo' => env('WAVE_DEMO', false),
     'dev_bar' => env('WAVE_BAR', false),

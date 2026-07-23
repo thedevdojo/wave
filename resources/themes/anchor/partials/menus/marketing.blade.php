@@ -101,9 +101,9 @@
 
         <a href="#_" class="block px-5 py-3 text-base font-medium text-center text-white bg-blue-600 md:hidden">View Dashboard</a>
     </ul>
-    
+
 </nav>
-   
+
 
 
 @guest
@@ -112,5 +112,5 @@
         <x-button href="{{ route('register') }}" tag="a" class="text-sm">Sign Up</x-button>
     </div>
 @else
-    <x-button href="{{ route('login') }}" tag="a" class="text-sm" class="relative z-20 flex-shrink-0">View Dashboard</x-button>
+    <x-button href="{{ route('dashboard') }}" tag="a" class="text-sm" class="relative z-20 flex-shrink-0">View Dashboard</x-button>
 @endguest

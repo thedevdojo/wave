@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Database\QueryException;
 
 it('allows user to update their username', function () {
     // Use an existing seeded user (admin user from seed)
@@ -35,7 +36,7 @@ it('validates username is unique when updating', function () {
 
     expect(function () use ($user1) {
         $user1->save();
-    })->toThrow(\Illuminate\Database\QueryException::class);
+    })->toThrow(QueryException::class);
 });
 
 it('allows username with dashes and underscores', function () {
