@@ -1,22 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" @class(['dark' => request()->cookie('theme') === 'dark'])>
 <head>
     @include('theme::partials.head', ['seo' => ($seo ?? null) ])
-    <!-- Used to add dark mode right away, adding here prevents any flicker -->
-    <script>
-        if (typeof(Storage) !== "undefined") {
-            if(localStorage.getItem('theme') && localStorage.getItem('theme') === 'dark'){
-                document.documentElement.classList.add('dark');
-            }
-        }
-        document.addEventListener("livewire:navigated", () => {
-            if (localStorage.getItem('theme') === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        });
-    </script>
+    @include('theme::partials.theme-sync')
 </head>
 <body x-data class="flex flex-col lg:min-h-screen bg-zinc-50 dark:bg-zinc-900 @if(config('wave.dev_bar')){{ 'pb-10' }}@endif">
 
