@@ -20,5 +20,10 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.12"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true,
+    "@tailwindcss/oxide@4.1.12": true,
+    "esbuild@0.25.12": true
   }
 }
