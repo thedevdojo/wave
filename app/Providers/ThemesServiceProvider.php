@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use DevDojo\Themes\Models\Theme;
 use DevDojo\Themes\ThemesServiceProvider as BaseThemesServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cookie;
@@ -19,10 +20,10 @@ class ThemesServiceProvider extends BaseThemesServiceProvider
 
             if (Schema::hasTable('themes')) {
                 $theme = $this->rescue(function () {
-                    return \DevDojo\Themes\Models\Theme::where('active', '=', 1)->first();
+                    return Theme::where('active', '=', 1)->first();
                 });
                 if (Cookie::get('theme')) {
-                    $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+                    $theme_cookied = Theme::where('folder', '=', Cookie::get('theme'))->first();
                     if (isset($theme_cookied->id)) {
                         $theme = $theme_cookied;
                     }

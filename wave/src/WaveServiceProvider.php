@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -32,6 +31,7 @@ use Wave\Console\Commands\WaveStats;
 use Wave\Facades\Wave as WaveFacade;
 use Wave\Http\Livewire\Billing\Checkout;
 use Wave\Http\Livewire\Billing\Update;
+use Wave\Http\Livewire\Media\Manager;
 use Wave\Http\Middleware\InstallMiddleware;
 use Wave\Http\Middleware\Subscribed;
 use Wave\Http\Middleware\ThemeDemoMiddleware;
@@ -252,7 +252,7 @@ class WaveServiceProvider extends ServiceProvider
     {
         Livewire::component('billing.checkout', Checkout::class);
         Livewire::component('billing.update', Update::class);
-        Livewire::component('wave.media.manager', \Wave\Http\Livewire\Media\Manager::class);
+        Livewire::component('wave.media.manager', Manager::class);
     }
 
     protected function setDefaultThemeColors()
