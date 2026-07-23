@@ -1,16 +1,20 @@
 <?php
 
 use App\Providers\AppServiceProvider;
+use App\Providers\ThemesServiceProvider;
+use Filament\Http\Middleware\DisableBladeIconComponents;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Lab404\Impersonate\ImpersonateServiceProvider;
+use RalphJSmit\Livewire\Urls\Middleware\LivewireUrlsMiddleware;
+use Wave\WaveServiceProvider;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
-        \Lab404\Impersonate\ImpersonateServiceProvider::class,
-        \Wave\WaveServiceProvider::class,
-        \DevDojo\Themes\ThemesServiceProvider::class,
-        \DevDojo\Themes\ThemesServiceProvider::class,
+        ImpersonateServiceProvider::class,
+        WaveServiceProvider::class,
+        ThemesServiceProvider::class,
     ])
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
@@ -31,9 +35,9 @@ return Application::configure(basePath: dirname(__DIR__))
             '/webhook/stripe',
         ]);
 
-        $middleware->append(\Filament\Http\Middleware\DisableBladeIconComponents::class);
+        $middleware->append(DisableBladeIconComponents::class);
 
-        $middleware->web(\RalphJSmit\Livewire\Urls\Middleware\LivewireUrlsMiddleware::class);
+        $middleware->web(LivewireUrlsMiddleware::class);
 
         $middleware->throttleApi();
     })

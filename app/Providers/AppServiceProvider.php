@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,9 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->setSchemaDefaultLength();
+
+        $this->loadViewsFrom(__DIR__.'/../../resources/themes/anchor', 'theme');
+        Livewire::addLocation(__DIR__.'/../../resources/themes/anchor/pages');
 
         // Register activity log event listeners
         Event::listen(Login::class, LogSuccessfulLogin::class);
