@@ -23,7 +23,6 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
-use Laravel\Folio\Folio;
 use Livewire\Livewire;
 use Wave\Console\Commands\CancelExpiredSubscriptions;
 use Wave\Console\Commands\CleanOldActivityLogs;
@@ -135,7 +134,6 @@ class WaveServiceProvider extends ServiceProvider
             // Add other mappings as needed
         ]);
 
-        $this->registerWaveFolioDirectory();
         $this->registerWaveComponentDirectory();
     }
 
@@ -245,17 +243,6 @@ class WaveServiceProvider extends ServiceProvider
         Blade::component('filament::components.dropdown.list.item', 'dropdown.list.item');
     }
 
-    protected function registerWaveFolioDirectory()
-    {
-        if (File::exists(base_path('wave/resources/views/pages'))) {
-            Folio::path(base_path('wave/resources/views/pages'))->middleware([
-                '*' => [
-                    //
-                ],
-            ]);
-        }
-    }
-
     protected function registerWaveComponentDirectory()
     {
         Blade::anonymousComponentPath(base_path('wave/resources/views/components'));
@@ -265,6 +252,7 @@ class WaveServiceProvider extends ServiceProvider
     {
         Livewire::component('billing.checkout', Checkout::class);
         Livewire::component('billing.update', Update::class);
+        Livewire::component('wave.media.manager', \Wave\Http\Livewire\Media\Manager::class);
     }
 
     protected function setDefaultThemeColors()
