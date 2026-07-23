@@ -886,12 +886,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/produktive/auth.git",
-                "reference": "ae85af5ddbe21b8e3fb58ce1bbf9becafd92849e"
+                "reference": "18dd79b112d698b8561cf1ddecbe31927b76f720"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/produktive/auth/zipball/ae85af5ddbe21b8e3fb58ce1bbf9becafd92849e",
-                "reference": "ae85af5ddbe21b8e3fb58ce1bbf9becafd92849e",
+                "url": "https://api.github.com/repos/produktive/auth/zipball/18dd79b112d698b8561cf1ddecbe31927b76f720",
+                "reference": "18dd79b112d698b8561cf1ddecbe31927b76f720",
                 "shasum": ""
             },
             "require": {
@@ -969,7 +969,7 @@
             "support": {
                 "source": "https://github.com/produktive/auth/tree/main"
             },
-            "time": "2026-07-23T02:59:42+00:00"
+            "time": "2026-07-23T03:46:34+00:00"
         },
         {
             "name": "devdojo/config-writer",
