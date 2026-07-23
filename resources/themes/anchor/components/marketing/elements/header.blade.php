@@ -1,8 +1,8 @@
-<header 
-    x-data="{ 
-        mobileMenuOpen: false, 
-        scrolled: false, 
-        showOverlay: false, 
+<header
+    x-data="{
+        mobileMenuOpen: false,
+        scrolled: false,
+        showOverlay: false,
         topOffset: '5',
         evaluateScrollPosition(){
             if(window.pageYOffset > this.topOffset){
@@ -10,7 +10,7 @@
             } else {
                 this.scrolled = false;
             }
-        } 
+        }
     }"
     x-init="
         window.addEventListener('resize', function() {
@@ -23,13 +23,13 @@
         });
         evaluateScrollPosition();
         window.addEventListener('scroll', function() {
-            evaluateScrollPosition(); 
+            evaluateScrollPosition();
         })
-    " 
-    :class="{ 'border-gray-200/60 bg-white/90 border-b backdrop-blur-lg' : scrolled, 'border-transparent border-b bg-transparent translate-y-0' : !scrolled }" 
-    class="box-content sticky top-0 z-50 w-full h-24" 
+    "
+    :class="{ 'border-gray-200/60 bg-white/90 border-b backdrop-blur-lg' : scrolled, 'border-transparent border-b bg-transparent translate-y-0' : !scrolled }"
+    class="box-content sticky top-0 z-50 w-full h-24"
 >
-    <div 
+    <div
         x-show="showOverlay"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0"
@@ -60,7 +60,7 @@
                             <span class="">Platform</span>
                             <svg :class="{ 'group-hover:-rotate-180' : !mobileMenuOpen, '-rotate-180' : mobileMenuOpen && open }" class="w-5 h-5 transition-all duration-300 ease-out" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
                         </a>
-                        <div 
+                        <div
                             :class="{ 'hidden md:block opacity-0 invisible md:absolute' : !open, 'md:invisible md:opacity-0 md:hidden md:absolute' : open }"
                             class="top-0 left-0 w-screen space-y-3 transition-transform duration-300 ease-out bg-white border-t border-b border-gray-100 md:shadow-md md:-translate-y-2 md:mt-24 md:block md:group-hover:block md:group-hover:visible md:group-hover:opacity-100 md:group-hover:translate-y-0" x-cloak>
                             <ul class="flex flex-col justify-between mx-auto max-w-7xl md:px-16 md:flex-row">
@@ -107,7 +107,7 @@
                             <span class="">Resources</span>
                             <svg :class="{ 'group-hover:-rotate-180' : !mobileMenuOpen, '-rotate-180' : mobileMenuOpen && open }" class="w-5 h-5 transition-all duration-300 ease-out" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" class=""></path></svg>
                         </a>
-                        <div 
+                        <div
                             :class="{ 'hidden md:block opacity-0 invisible md:absolute' : !open, 'md:invisible md:opacity-0 md:hidden md:absolute' : open }"
                             class="top-0 left-0 w-screen space-y-3 transition-transform duration-300 ease-out bg-white border-t border-b border-gray-100 md:shadow-md md:-translate-y-2 md:mt-24 md:block md:group-hover:block md:group-hover:visible md:group-hover:opacity-100 md:group-hover:translate-y-0" x-cloak>
                             <ul class="flex flex-col justify-between mx-auto max-w-7xl md:flex-row md:px-12">
@@ -162,20 +162,20 @@
                         </li>
                     @else
                         <li class="flex items-center justify-center w-full pt-3 md:hidden px-7">
-                            <x-button href="{{ route('login') }}" tag="a" class="w-full text-sm">View Dashboard</x-button>
+                            <x-button href="{{ route('dashboard') }}" tag="a" class="w-full text-sm">View Dashboard</x-button>
                         </li>
                     @endguest
 
                 </ul>
             </nav>
-            
+
             @guest
                 <div class="relative z-30 items-center justify-center flex-shrink-0 hidden h-full space-x-3 text-sm md:flex">
                     <x-button href="{{ route('login') }}" tag="a" class="text-sm" color="secondary">Login</x-button>
                     <x-button href="{{ route('register') }}" tag="a" class="text-sm">Sign Up</x-button>
                 </div>
             @else
-                <x-button href="{{ route('login') }}" tag="a" class="text-sm" class="relative z-20 flex-shrink-0 hidden ml-2 md:block">View Dashboard</x-button>
+                <x-button href="{{ route('dashboard') }}" tag="a" class="text-sm" class="relative z-20 flex-shrink-0 hidden ml-2 md:block">View Dashboard</x-button>
             @endguest
 
         </div>

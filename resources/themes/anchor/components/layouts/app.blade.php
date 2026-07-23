@@ -5,7 +5,7 @@
     <!-- Used to add dark mode right away, adding here prevents any flicker -->
     <script>
         if (typeof(Storage) !== "undefined") {
-            if(localStorage.getItem('theme') && localStorage.getItem('theme') == 'dark'){
+            if(localStorage.getItem('theme') && localStorage.getItem('theme') === 'dark'){
                 document.documentElement.classList.add('dark');
             }
         }
@@ -46,7 +46,7 @@
     @endif
     @include('theme::partials.footer-scripts')
     {{ $javascript ?? '' }}
-    
+
 
 </body>
 </html>

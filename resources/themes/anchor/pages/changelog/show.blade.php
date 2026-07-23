@@ -1,16 +1,30 @@
 <?php
-    use function Laravel\Folio\{name};
-    name('changelog');
-    
-    // use a dynamic layout based on whether or not the user is authenticated
-    $layout = ((auth()->guest()) ? 'layouts.marketing' : 'layouts.app');
+
+use Livewire\Component;
+use Wave\Changelog;
+
+new class extends Component
+{
+    public Changelog $changelog;
+
+    public function mount(Changelog $changelog): void
+    {
+        $this->changelog = $changelog;
+    }
+
+    public function render()
+    {
+        return $this->view()->layout(
+            auth()->guest()
+                ? 'theme::components.layouts.marketing'
+                : 'theme::components.layouts.app'
+        );
+    }
+}
+
 ?>
 
-<x-dynamic-component 
-	:component="$layout"
-	bodyClass="bg-zinc-50"
->
-    
+<div>
     <x-app.container>
         <x-card class="lg:p-10">
 
@@ -30,7 +44,7 @@
                     :title="$changelog->title"
                     :description="$changelog->description"
                 />
-                
+
                 <p class="mt-5 text-xs font-medium tracking-wider text-zinc-800">Posted on <time datetime="{{ Carbon\Carbon::parse($changelog->created_at)->toIso8601String() }}" class="ml-1">{{ Carbon\Carbon::parse($changelog->created_at)->toFormattedDateString() }}</time></p>
                 <div class="max-w-full mx-auto mt-5 prose prose-base dark:prose-invert text-zinc-600 dark:text-zinc-300">
                     {!! $changelog->body !!}
@@ -39,5 +53,4 @@
             </article>
         </x-card>
     </x-app.container>
-
-</x-dynamic-component>
+</div>

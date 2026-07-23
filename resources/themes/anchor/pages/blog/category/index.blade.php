@@ -4,22 +4,22 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Wave\Category;
-use Wave\Post;
 
 new
 #[Layout('theme::components.layouts.marketing')]
 class extends Component
 {
-    #[Computed]
-    public function posts()
+    public Category $category;
+
+    public function mount(Category $category): void
     {
-        return Post::where('status', 'PUBLISHED')->orderBy('created_at', 'DESC')->paginate(6);
+        $this->category = $category;
     }
 
     #[Computed]
-    public function categories()
+    public function posts()
     {
-        return Category::all();
+        return $this->category->posts()->paginate(6);
     }
 }
 
@@ -29,14 +29,14 @@ class extends Component
     <x-container>
         <div class="relative pt-6">
             <x-marketing.elements.heading
-                title="From The Blog"
-                description="Check out some of our latest blog posts below."
+                title="{{ $category->name }} Articles"
+                description="Our latest {{ $category->name }} posts below."
                 align="left"
             />
 
             @include('theme::partials.blog.categories')
 
-            <div class="grid gap-5 mx-auto mt-5 md:mt-10 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="grid gap-5 mx-auto mt-7 sm:grid-cols-2 lg:grid-cols-3">
                 @include('theme::partials.blog.posts-loop', ['posts' => $this->posts])
             </div>
         </div>
