@@ -83,7 +83,7 @@
             :class="{ 
                 'bg-indigo-600 text-white' : view == 'list' && isActiveFile(file),
                 'flex px-4' : view == 'list',
-                'odd:bg-zinc-50' : view == 'list' && !isActiveFile(file),
+                'odd:bg-zinc-50 dark:odd:bg-zinc-800/50' : view == 'list' && !isActiveFile(file),
                 'rounded-lg' : view == 'grid' }"
             class="relative z-10 group" 
             draggable="true" 
@@ -98,9 +98,9 @@
         >
             <div 
                 :class="{ 
-                    'border-indigo-500 bg-zinc-50': isActiveFile(file) && view == 'grid', 
-                    'border-gray-200' : !isActiveFile(file) && view == 'grid',
-                    'flex overflow-hidden relative justify-center group-[&.dragover]:bg-zinc-100 group-[&.dragover]:border-indigo-500 items-center w-auto rounded-lg border-2 aspect-video' : view == 'grid',
+                    'border-indigo-500 bg-zinc-50 dark:bg-zinc-800': isActiveFile(file) && view == 'grid', 
+                    'border-gray-200 dark:border-zinc-700' : !isActiveFile(file) && view == 'grid',
+                    'flex overflow-hidden relative justify-center group-[&.dragover]:bg-zinc-100 dark:group-[&.dragover]:bg-zinc-800 group-[&.dragover]:border-indigo-500 items-center w-auto rounded-lg border-2 aspect-video' : view == 'grid',
                     'w-10 h-10 flex-shrink-0 p-2' : view == 'list'
                 }"
                 class="relative group">
@@ -186,7 +186,7 @@
                 <p  x-show="!changeName" x-on:click="if(active && active.name == file.name){ changeNameAndFocus()  }"  
                         :class="{ 
                             'bg-indigo-600 text-white': isActiveFile(file), 
-                            'text-neutral-700' : !isActiveFile(file),
+                            'text-neutral-700 dark:text-zinc-300' : !isActiveFile(file),
                             'mt-2' : view == 'grid' 
                         }" class="group-[&.dragover]:bg-indigo-600 group-[&.dragover]:text-white block relative px-1 py-0.5 text-sm font-medium truncate rounded-md cursor-default text-ellipsis" x-text="file.name"></p>
                 <div x-show="changeName" class="flex relative justify-center items-center w-full">
@@ -201,7 +201,7 @@
                         type="text"
                         :placeholder="file.name"
                         :class="{ 'mt-2' : view == 'grid' }"
-                        class="px-1 py-0.5 text-sm rounded-md border border-blue-500 shadow-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="px-1 py-0.5 text-sm rounded-md border border-blue-500 shadow-sm text-zinc-900 dark:text-zinc-100 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         :style="`width: ${textWidth}px; min-width: ${minWidth}px;`"
                     >
                 </div>
@@ -211,7 +211,7 @@
     </template>
 
     <template x-teleport="body">
-        <div wire:ignore x-show="contextMenuOpen" x-on:click.away="contextMenuOpen=false" x-ref="contextmenu" class="ctx min-w-[8rem] text-neutral-800 rounded-md border border-neutral-200/70 bg-white text-sm fixed p-1 shadow-md w-64 z-[99]" x-cloak>
+        <div wire:ignore x-show="contextMenuOpen" x-on:click.away="contextMenuOpen=false" x-ref="contextmenu" class="ctx min-w-[8rem] text-neutral-800 dark:text-zinc-200 rounded-md border border-neutral-200/70 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm fixed p-1 shadow-md w-64 z-[99]" x-cloak>
             <div x-show="!contextMenuFileClicked" class="relative w-full">
                 <div x-on:click="window.dispatchEvent(new CustomEvent('close-context-menu')); window.dispatchEvent(new CustomEvent('open-modal', { detail: { id: 'create-folder-modal' }}));" class="relative flex cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-blue-600 hover:text-white outline-none pl-8  data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
                     <svg class="absolute left-2 -mt-px w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" /></svg>
@@ -222,7 +222,7 @@
                     <span>Paste Item</span>
                 </div>
                 
-                <div class="-mx-1 my-1 h-px bg-neutral-200"></div>
+                <div class="-mx-1 my-1 h-px bg-neutral-200 dark:bg-zinc-700"></div>
                 <div x-on:click="window.dispatchEvent(new CustomEvent('close-context-menu')); document.getElementById('upload-button').click()" class="relative flex cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-blue-600 hover:text-white outline-none pl-8  data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
                     <svg class="absolute left-2 -mt-px w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M12.0005 11.7495L12.0005 20.2495M12.0005 11.7495L15.2505 15.2495M12.0005 11.7495L8.75049 15.2495" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.25 15.25C2.96461 14.2882 2.75 13.1762 2.75 12C2.75 9.94957 4.20204 8.23828 6.13392 7.83831C7.01365 5.45184 9.30808 3.75 12 3.75C15.3711 3.75 18.1189 6.41898 18.2454 9.75913C19.9257 9.8846 21.25 11.2876 21.25 13C21.25 14.0407 20.5 15 19.75 15.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
                     <span>Upload File</span>
@@ -234,7 +234,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-auto w-4 h-4"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </div>
                     <div data-submenu class="absolute top-0 right-0 invisible mr-1 opacity-0 duration-200 ease-out translate-x-full group-hover:mr-0 group-hover:visible group-hover:opacity-100">
-                        <div class="min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-md animate-in slide-in-from-left-1 w-48">
+                        <div class="min-w-[8rem] overflow-hidden rounded-md border border-neutral-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 p-1 shadow-md animate-in slide-in-from-left-1 w-48">
                             <div x-on:click="contextMenuOpen=false" class="relative pl-8 flex cursor-default select-none items-center rounded px-2 py-1.5 hover:bg-blue-600 hover:text-white text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                                 <svg class="absolute left-2 -mt-px w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M3.75 5h1.5m-1.5 7h1.5m-1.5 7h1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.75 5h11.5M8.75 19h11.5m-11.5-7h11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
                                 <span>as List</span>
@@ -261,7 +261,7 @@
                     <svg class="absolute left-2 -mt-px w-4 h-4 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" /></svg>
                     <span>Paste Item</span>
                 </div>
-                <div class="-mx-1 my-1 h-px bg-neutral-200"></div>
+                <div class="-mx-1 my-1 h-px bg-neutral-200 dark:bg-zinc-700"></div>
                 <div x-on:click="contextMenuOpen=false; window.dispatchEvent(new CustomEvent('rename-active'))" class="relative flex cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-blue-600 hover:text-white outline-none pl-8  data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
                     <svg class="absolute left-2 -mt-px w-4 h-4 stroke-current" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M20.2507 8.25V5.75C20.2507 4.64543 19.3553 3.75 18.2507 3.75H5.74902C4.64445 3.75 3.74902 4.64543 3.74902 5.75V8.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 20.25L12 3.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.75 20.25L15.25 20.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
                     <span>Rename</span>
@@ -277,14 +277,14 @@
                 </div>
 
             
-                <div class="-mx-1 my-1 h-px bg-neutral-200"></div>
+                <div class="-mx-1 my-1 h-px bg-neutral-200 dark:bg-zinc-700"></div>
                 <div x-on:click="contextMenuOpen=false; window.dispatchEvent(new CustomEvent('copy'))" class="relative flex cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-blue-600 hover:text-white outline-none pl-8  data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
                     <svg class="absolute left-2 -mt-px w-4 h-4 stroke-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="none"><path d="M7.75 7.757V6.75a3 3 0 0 1 3-3h6.5a3 3 0 0 1 3 3v6.5a3 3 0 0 1-3 3h-.992" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.75 10.75a3 3 0 0 1 3-3h6.5a3 3 0 0 1 3 3v6.5a3 3 0 0 1-3 3h-6.5a3 3 0 0 1-3-3v-6.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
                     <span>Copy</span>
                 </div>
 
-                <div class="-mx-1 my-1 h-px bg-neutral-200"></div>
-                <div x-on:click="contextMenuOpen=false; window.dispatchEvent(new CustomEvent('trigger-delete-action'));" class="relative flex cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-red-600 hover:text-white text-red-600 outline-none pl-8  data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
+                <div class="-mx-1 my-1 h-px bg-neutral-200 dark:bg-zinc-700"></div>
+                <div x-on:click="contextMenuOpen=false; window.dispatchEvent(new CustomEvent('trigger-delete-action'));" class="relative flex cursor-default select-none group items-center rounded px-2 py-1.5 hover:bg-red-600 hover:text-white text-red-600 dark:text-red-400 outline-none pl-8  data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
                     
                     <svg class="absolute left-2 -mt-px w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
                     <span>Delete</span>

@@ -1,5 +1,4 @@
-<x-filament-panels::page>
-        <div class="flex overflow-hidden relative justify-start items-start w-full h-full bg-white rounded-xl border shadow-sm border-zinc-200/50">
+<div class="flex overflow-hidden relative justify-start items-start w-full h-full bg-white dark:bg-zinc-900 rounded-xl border shadow-sm border-zinc-200/50 dark:border-zinc-700">
             <div class="w-full h-full">
                 <div x-data="{ 
                         active: @entangle('selectedFile'),
@@ -102,14 +101,14 @@
                     @rename-active.window="renameActive()"
                     x-on:keydown.window="handleKeydown"
                     @trigger-delete-action.window="$wire.triggerDeleteAction"
-                    class="flex flex-col justify-start items-center w-full h-full bg-white">
+                    class="flex flex-col justify-start items-center w-full h-full bg-white dark:bg-zinc-900">
                     
-                    <div class="relative p-5 pb-0 w-full bg-white border-b border-zinc-200/70">
+                    <div class="relative p-5 pb-0 w-full bg-white dark:bg-zinc-900 border-b border-zinc-200/70 dark:border-zinc-700">
                         @include('wave::media.views.header')
                         @include('wave::media.views.breadcrumbs')
                     </div>
 
-                    <div class="flex justify-start items-start w-full h-full bg-white">
+                    <div class="flex justify-start items-start w-full h-full bg-white dark:bg-zinc-900">
                         @include('wave::media.views.files')
                         @include('wave::media.views.active-file')
                     </div>
@@ -117,7 +116,5 @@
                 </div>
             </div>
             
-        <x-filament-actions::modals />
-        </div>
-    
-</x-filament-panels::page>
+    <x-filament-actions::modals />
+</div>
