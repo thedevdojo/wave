@@ -43,10 +43,6 @@
         @else
 
             @php
-                use Illuminate\Support\Facades\Artisan;
-                use Illuminate\Support\Facades\File;
-                use Illuminate\Support\Str;
-
                 try {
                     if (\App\Models\User::first()) {
                         header('Location: /');
@@ -58,34 +54,34 @@
 
                 $envPath = base_path('.env');
 
-                if (File::exists($envPath)) {
-                    $envContents = File::get($envPath);
+                if (\Illuminate\Support\Facades\File::exists($envPath)) {
+                    $envContents = \Illuminate\Support\Facades\File::get($envPath);
                     $appUrl = rtrim(url('/'), '/');
 
-                    if (Str::contains($envContents, 'APP_URL=')) {
+                    if (\Illuminate\Support\Str::contains($envContents, 'APP_URL=')) {
                         $envContents = preg_replace('/^APP_URL=.*/m', 'APP_URL='.$appUrl, $envContents);
                     } else {
                         $envContents .= PHP_EOL.'APP_URL='.$appUrl;
                     }
 
-                    File::put($envPath, $envContents);
+                    \Illuminate\Support\Facades\File::put($envPath, $envContents);
                 }
 
                 if (empty(config('app.key'))) {
-                    Artisan::call('key:generate', ['--force' => true]);
+                    \Illuminate\Support\Facades\Artisan::call('key:generate', ['--force' => true]);
                 }
 
                 $databaseDir = dirname(database_path('database.sqlite'));
 
-                if (! File::exists($databaseDir)) {
-                    File::makeDirectory($databaseDir, 0755, true);
+                if (! \Illuminate\Support\Facades\File::exists($databaseDir)) {
+                    \Illuminate\Support\Facades\File::makeDirectory($databaseDir, 0755, true);
                 }
 
-                if (! File::exists(database_path('database.sqlite'))) {
-                    File::put(database_path('database.sqlite'), '');
+                if (! \Illuminate\Support\Facades\File::exists(database_path('database.sqlite'))) {
+                    \Illuminate\Support\Facades\File::put(database_path('database.sqlite'), '');
                 }
 
-                Artisan::call('migrate', ['--force' => true]);
+                \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
             @endphp
 
             <div class="flex flex-col justify-center items-center w-screen h-screen">
