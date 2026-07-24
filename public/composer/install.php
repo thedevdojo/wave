@@ -14,22 +14,38 @@ wave_install_redirect_home_if_needed();
 $os = wave_install_os();
 
 if ($os === 'Unknown') {
-    wave_install_render_error('Unsupported operating system. Run `composer install` manually, then reload this page.');
+    wave_install_render_error('OS not supported. Please run composer install and come back to this page.');
 }
 
 wave_install_copy_env($projectRoot);
 
 if (! chdir($projectRoot)) {
-    wave_install_render_error('Failed to change directory to the project root.');
+    wave_install_render_error('Failed to change directory to project root.');
 }
 
 if (getcwd() !== $projectRoot) {
-    wave_install_render_error('Current working directory is not the project root.');
+    wave_install_render_error('Current working directory is not the project root. Current directory: '.getcwd());
 }
 
-$phpPath = wave_install_resolve_php_binary($projectRoot);
-$composerPath = wave_install_resolve_composer_binary($projectRoot, $phpPath);
-$command = wave_install_build_command($projectRoot, $phpPath, $composerPath, $os);
+$normalizedPhpBinaryPath = str_replace('\\', '/', PHP_BINARY);
+$binDir = preg_replace('/\/bin\/.+$/', '/bin', $normalizedPhpBinaryPath);
+$phpPath = dirname($normalizedPhpBinaryPath).'/php';
+$phpPath = $os === 'Windows' ? wave_install_convert_slashes($phpPath).'.exe' : $phpPath;
+
+if (! file_exists($phpPath)) {
+    wave_install_render_error("PHP binary not found at specified path: {$phpPath}. Please ensure PHP is installed.");
+}
+
+$composerPath = $binDir.'/composer';
+$composerPath = $os === 'Windows' ? wave_install_convert_slashes($composerPath).'.phar' : $composerPath;
+
+if (! file_exists($composerPath)) {
+    wave_install_render_error("Composer binary not found at specified path: {$composerPath}. Please ensure Composer is installed.");
+}
+
+$commandSeparator = $os === 'Windows' ? '&' : '&&';
+$command = 'cd '.escapeshellarg($projectRoot)." {$commandSeparator} ".escapeshellarg($phpPath).' '.escapeshellarg($composerPath).' install 2>&1';
+$command = $os === 'Windows' ? wave_install_convert_slashes($command) : $command;
 
 if ($os === 'Windows') {
     $batFilePath = $projectRoot.'\public\composerinstall.bat';
@@ -50,8 +66,10 @@ EOT;
     $process = popen("start /B cmd /C $batFilePath", 'r');
 
     if (! $process) {
-        wave_install_render_error('Failed to start the Composer install process on Windows.');
+        wave_install_render_error('Failed to start the batch file process.');
     }
+
+    file_put_contents($debugFile, "Batch file execution started.\n", FILE_APPEND);
 
     require_once __DIR__.'/windows.php';
     exit(1);
@@ -59,9 +77,14 @@ EOT;
 
 $process = popen($command, 'r');
 
-if (! is_resource($process)) {
-    wave_install_render_error('Failed to start the Composer install process.');
+if ($os === 'Windows') {
+    require_once __DIR__.'/windows.php';
+} elseif ($os === 'Mac') {
+    require_once __DIR__.'/mac.php';
+} elseif ($os === 'Linux') {
+    require_once __DIR__.'/mac.php';
+} else {
+    wave_install_render_error('OS not supported. Please run composer install and come back to this page.');
 }
 
-require_once __DIR__.'/mac.php';
 exit(1);
