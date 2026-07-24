@@ -32,8 +32,8 @@
             <div class="flex flex-col justify-center items-center w-screen h-screen">
                 @include('wave::partials.logo-mark', ['class' => '-mt-12'])
                 <div class="flex flex-col items-center p-10 mx-auto mt-8 w-full max-w-lg bg-white rounded-xl border shadow-xl border-zinc-100">
-                    <h1 class="text-2xl font-semibold text-black">Successfully Installed</h1>
-                    <p class="mt-5 text-zinc-500">Wave is ready. Continue to your local application.</p>
+                    <h1 class="text-2xl font-semibold text-black">Successfully Installed 🎉</h1>
+                    <p class="mt-5 text-zinc-500">Click the continue button below to view your new SAAS application.</p>
                     <a href="/" class="flex justify-center px-4 py-2 mt-8 w-full text-lg font-medium text-white bg-gray-900 rounded-md border border-transparent transition duration-150 ease-in-out hover:bg-gray-800">
                         Continue
                     </a>
