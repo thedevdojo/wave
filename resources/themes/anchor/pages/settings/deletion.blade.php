@@ -120,20 +120,20 @@ class extends Component
                     <x-card class="p-6">
                         <div class="space-y-4">
                             <div>
-                                <h3 class="text-lg font-semibold text-zinc-900">Delete Your Account</h3>
-                                <p class="mt-2 text-sm text-zinc-600">
+                                <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Delete Your Account</h3>
+                                <p class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
                                     Once you delete your account, there is no going back. Please be certain.
                                 </p>
                             </div>
 
-                            <div class="p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <div class="p-4 bg-red-50 border border-red-200 dark:bg-red-950/30 dark:border-red-800 rounded-lg">
                                 <div class="flex gap-3">
-                                    <svg class="flex-shrink-0 w-5 h-5 text-red-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="flex-shrink-0 w-5 h-5 text-red-600 dark:text-red-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                                     </svg>
                                     <div class="flex-1">
-                                        <h4 class="text-sm font-medium text-red-900">Warning</h4>
-                                        <div class="mt-2 text-sm text-red-800">
+                                        <h4 class="text-sm font-medium text-red-900 dark:text-red-100">Warning</h4>
+                                        <div class="mt-2 text-sm text-red-800 dark:text-red-200">
                                             <ul class="list-disc list-inside space-y-1">
                                                 <li>Your account will be scheduled for deletion in 30 days</li>
                                                 <li>All your personal data will be permanently removed</li>
@@ -148,17 +148,17 @@ class extends Component
 
                             <form wire:submit="scheduleAccountDeletion" class="space-y-4">
                                 <div>
-                                    <label for="password" class="block text-sm font-medium text-zinc-700 mb-1">
+                                    <label for="password" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
                                         Confirm Your Password
                                     </label>
                                     <input
                                         type="password"
                                         id="password"
                                         wire:model="password"
-                                        class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                        class="w-full px-3 py-2 text-sm border border-zinc-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                                         placeholder="Enter your password">
                                     @error('password')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                                     @enderror
                                 </div>
 
@@ -168,14 +168,14 @@ class extends Component
                                             type="checkbox"
                                             id="confirmDeletion"
                                             wire:model="confirmDeletion"
-                                            class="w-4 h-4 text-red-600 border-zinc-300 rounded focus:ring-red-500">
+                                            class="w-4 h-4 text-red-600 border-zinc-300 dark:border-zinc-600 dark:bg-zinc-800 rounded focus:ring-red-500">
                                     </div>
-                                    <label for="confirmDeletion" class="ml-3 text-sm text-zinc-700">
+                                    <label for="confirmDeletion" class="ml-3 text-sm text-zinc-700 dark:text-zinc-400">
                                         I understand that this action will permanently delete my account and all associated data after 30 days.
                                     </label>
                                 </div>
                                 @error('confirmDeletion')
-                                    <p class="text-sm text-red-600">{{ $message }}</p>
+                                    <p class="text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                                 @enderror
 
                                 <div class="pt-4 flex gap-3">
@@ -191,14 +191,14 @@ class extends Component
                         </div>
                     </x-card>
 
-                    <x-card class="p-6 bg-blue-50 border-blue-200">
+                    <x-card class="p-6 bg-blue-50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800">
                         <div class="flex gap-3">
-                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="flex-shrink-0 w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
                             </svg>
                             <div>
-                                <h4 class="text-sm font-medium text-blue-900">Grace Period</h4>
-                                <p class="mt-1 text-sm text-blue-800">
+                                <h4 class="text-sm font-medium text-blue-900 dark:text-blue-100">Grace Period</h4>
+                                <p class="mt-1 text-sm text-blue-800 dark:text-blue-200">
                                     You'll have 30 days to cancel the deletion if you change your mind. During this time, you can still log in and use your account normally. After 30 days, your account and all data will be permanently deleted.
                                 </p>
                             </div>
