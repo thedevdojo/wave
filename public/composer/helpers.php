@@ -86,23 +86,67 @@ function wave_install_which(string $command): ?string
     return $line !== '' ? $line : null;
 }
 
+function wave_install_is_fpm_or_cgi_binary(string $path): bool
+{
+    $basename = strtolower(basename($path));
+
+    return str_contains($basename, 'fpm') || str_contains($basename, 'cgi');
+}
+
+function wave_install_herd_bin_candidates(string $binary): array
+{
+    $home = $_SERVER['HOME'] ?? getenv('HOME') ?: '';
+
+    if ($home === '') {
+        return [];
+    }
+
+    $herdBin = $home.'/Library/Application Support/Herd/bin/'.$binary;
+
+    return is_file($herdBin) ? [$herdBin] : [];
+}
+
+function wave_install_derive_cli_php_from_binary(string $binary): array
+{
+    $directory = dirname($binary);
+    $candidates = [$directory.'/php'];
+
+    if (preg_match('/^(php\d*)-fpm$/', basename($binary), $matches)) {
+        $candidates[] = $directory.'/'.$matches[1];
+    }
+
+    return $candidates;
+}
+
+function wave_install_is_cli_php(string $path): bool
+{
+    if (! is_file($path) || ! is_executable($path) || wave_install_is_fpm_or_cgi_binary($path)) {
+        return false;
+    }
+
+    $output = shell_exec(escapeshellarg($path).' -r "echo PHP_SAPI;" 2>/dev/null');
+
+    return trim((string) $output) === 'cli';
+}
+
 function wave_install_resolve_php_binary(string $projectRoot): string
 {
     $os = wave_install_os();
-    $candidates = array_filter([
-        PHP_BINARY,
-        wave_install_which('php'),
-        dirname(PHP_BINARY).'/php',
-        $projectRoot.'/vendor/bin/php',
-    ]);
+    $candidates = array_merge(
+        [wave_install_which('php')],
+        wave_install_herd_bin_candidates('php'),
+        wave_install_derive_cli_php_from_binary(PHP_BINARY),
+        PHP_BINARY && ! wave_install_is_fpm_or_cgi_binary(PHP_BINARY) ? [PHP_BINARY] : [],
+        [$projectRoot.'/vendor/bin/php'],
+    );
 
-    $phpPath = wave_install_first_executable($candidates);
-
-    if (! $phpPath) {
-        wave_install_render_error('PHP binary not found. Install PHP (Laravel Herd includes PHP) and try again.');
+    foreach (array_unique(array_filter($candidates)) as $candidate) {
+        if (wave_install_is_cli_php($candidate)) {
+            return $os === 'Windows' ? wave_install_convert_slashes($candidate) : $candidate;
+        }
     }
 
-    return $os === 'Windows' ? wave_install_convert_slashes($phpPath) : $phpPath;
+    wave_install_render_error('PHP CLI binary not found. Laravel Herd installs `php` separately from `php-fpm` — ensure Herd is running and try again.');
 }
 
 function wave_install_resolve_composer_binary(string $projectRoot, string $phpPath): string
@@ -111,13 +155,11 @@ function wave_install_resolve_composer_binary(string $projectRoot, string $phpPa
     $phpDir = dirname(str_replace('\\', '/', $phpPath));
     $binDir = preg_replace('/\/bin\/.+$/', '/bin', str_replace('\\', '/', $phpPath)) ?: $phpDir;
 
-    $candidates = array_filter([
-        wave_install_which('composer'),
-        $binDir.'/composer',
-        $phpDir.'/composer',
-        $projectRoot.'/composer.phar',
-        $projectRoot.'/composer',
-    ]);
+    $candidates = array_merge(
+        [wave_install_which('composer')],
+        wave_install_herd_bin_candidates('composer'),
+        [$binDir.'/composer', $phpDir.'/composer', $projectRoot.'/composer.phar', $projectRoot.'/composer'],
+    );
 
     foreach ($candidates as $candidate) {
         if (! $candidate || ! is_file($candidate)) {
