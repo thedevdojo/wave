@@ -1,19 +1,35 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Wave\Changelog;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
+    $this->createdChangelogIds = [];
 });
 
 afterEach(function () {
+    if ($this->createdChangelogIds !== []) {
+        DB::table('changelog_user')->whereIn('changelog_id', $this->createdChangelogIds)->delete();
+        Changelog::whereIn('id', $this->createdChangelogIds)->delete();
+    }
+
     $this->user->forceDelete();
 });
 
+function createTestChangelog(array $attributes): Changelog
+{
+    $changelog = Changelog::create($attributes);
+    $test = test();
+    $test->createdChangelogIds = [...$test->createdChangelogIds, $changelog->id];
+
+    return $changelog;
+}
+
 describe('Changelog Model', function () {
     it('can create a changelog entry', function () {
-        $changelog = Changelog::create([
+        $changelog = createTestChangelog([
             'title' => 'New Feature Release',
             'description' => 'We added something cool',
             'body' => 'Full description of the new feature...',
@@ -32,7 +48,7 @@ describe('Changelog Model', function () {
     });
 
     it('has timestamps', function () {
-        $changelog = Changelog::create([
+        $changelog = createTestChangelog([
             'title' => 'Test',
             'description' => 'Test desc',
             'body' => 'Test body',
@@ -43,7 +59,7 @@ describe('Changelog Model', function () {
     });
 
     it('can have many users who have read it', function () {
-        $changelog = Changelog::create([
+        $changelog = createTestChangelog([
             'title' => 'Test',
             'description' => 'Test desc',
             'body' => 'Test body',
@@ -63,13 +79,13 @@ describe('Changelog Model', function () {
 
 describe('User Changelog Relationship', function () {
     it('user can have many changelogs read', function () {
-        $changelog1 = Changelog::create([
+        $changelog1 = createTestChangelog([
             'title' => 'Feature 1',
             'description' => 'Desc 1',
             'body' => 'Body 1',
         ]);
 
-        $changelog2 = Changelog::create([
+        $changelog2 = createTestChangelog([
             'title' => 'Feature 2',
             'description' => 'Desc 2',
             'body' => 'Body 2',
@@ -91,36 +107,32 @@ describe('Changelog Read Endpoint', function () {
     it('marks all unread changelogs as read', function () {
         $this->actingAs($this->user);
 
-        // Clear existing changelogs for isolated test
-        Changelog::query()->delete();
-
-        $changelog1 = Changelog::create([
+        $changelog1 = createTestChangelog([
             'title' => 'Feature 1',
             'description' => 'Desc 1',
             'body' => 'Body 1',
         ]);
 
-        $changelog2 = Changelog::create([
+        $changelog2 = createTestChangelog([
             'title' => 'Feature 2',
             'description' => 'Desc 2',
             'body' => 'Body 2',
         ]);
 
-        expect($this->user->changelogs)->toHaveCount(0);
+        $changelogIds = [$changelog1->id, $changelog2->id];
+
+        expect($this->user->changelogs()->whereIn('changelog_id', $changelogIds)->count())->toBe(0);
 
         $this->post(route('changelog.read'));
 
         $this->user->refresh();
-        expect($this->user->changelogs)->toHaveCount(2);
+        expect($this->user->changelogs()->whereIn('changelog_id', $changelogIds)->count())->toBe(2);
     });
 
     it('does not duplicate already read changelogs', function () {
         $this->actingAs($this->user);
 
-        // Clear existing changelogs for isolated test
-        Changelog::query()->delete();
-
-        $changelog1 = Changelog::create([
+        $changelog1 = createTestChangelog([
             'title' => 'Feature 1',
             'description' => 'Desc 1',
             'body' => 'Body 1',
@@ -129,23 +141,22 @@ describe('Changelog Read Endpoint', function () {
         // Mark as already read
         $this->user->changelogs()->attach($changelog1->id);
 
-        $changelog2 = Changelog::create([
+        $changelog2 = createTestChangelog([
             'title' => 'Feature 2',
             'description' => 'Desc 2',
             'body' => 'Body 2',
         ]);
 
+        $changelogIds = [$changelog1->id, $changelog2->id];
+
         $this->post(route('changelog.read'));
 
         $this->user->refresh();
-        expect($this->user->changelogs)->toHaveCount(2);
+        expect($this->user->changelogs()->whereIn('changelog_id', $changelogIds)->count())->toBe(2);
     });
 
-    it('handles empty changelogs gracefully', function () {
+    it('handles marking changelogs as read when none are unread for the user', function () {
         $this->actingAs($this->user);
-
-        // Clear any existing changelogs
-        Changelog::query()->delete();
 
         $response = $this->post(route('changelog.read'));
 

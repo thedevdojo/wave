@@ -7,7 +7,7 @@
 
     <x-marketing.elements.header />
 
-    <main class="flex-grow overflow-x-hidden">
+    <main class="grow overflow-x-hidden">
         {{ $slot }}
     </main>
 
@@ -15,14 +15,6 @@
     @include('theme::partials.footer')
     @include('theme::partials.footer-scripts')
     {{ $javascript ?? '' }}
-    <script>
-        function syncThemeForLayout() {
-            if (document.body.hasAttribute('data-marketing-layout')) {
-                document.documentElement.classList.remove('dark');
-            }
-        }
-        document.addEventListener('livewire:navigated', syncThemeForLayout);
-        syncThemeForLayout();
-    </script>
+    @include('theme::partials.theme-sync')
 </body>
 </html>

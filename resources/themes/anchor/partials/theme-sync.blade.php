@@ -1,10 +1,25 @@
 <script>
     (function () {
+        if (window.__waveThemeSyncInitialized) {
+            return;
+        }
+
+        window.__waveThemeSyncInitialized = true;
+
+        function isLightOnlyLayout() {
+            return document.body.hasAttribute('data-marketing-layout');
+        }
+
         function setThemeCookie(theme) {
             document.cookie = 'theme=' + theme + ';path=/;max-age=31536000;SameSite=Lax';
         }
 
         window.syncThemeFromStorage = function () {
+            if (isLightOnlyLayout()) {
+                document.documentElement.classList.remove('dark');
+                return;
+            }
+
             if (typeof Storage === 'undefined') {
                 return;
             }
@@ -19,6 +34,14 @@
 
         if (typeof MutationObserver !== 'undefined') {
             new MutationObserver(function () {
+                if (isLightOnlyLayout()) {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                    }
+
+                    return;
+                }
+
                 if (typeof Storage === 'undefined') {
                     return;
                 }

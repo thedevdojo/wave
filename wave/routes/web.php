@@ -8,18 +8,18 @@ use Wave\Page;
 
 Route::impersonate();
 
-Route::livewire('/dashboard', 'dashboard.index')->name('dashboard');
+Route::livewire('/dashboard', 'dashboard')->name('dashboard');
 Route::livewire('/profile/{username}', 'profile.username')->name('wave.profile');
 
-Route::livewire('/blog', 'blog.index')->name('blog');
-Route::livewire('/blog/{category:slug}', 'blog.category.index')->name('blog.category');
+Route::livewire('/blog', 'blog')->name('blog');
+Route::livewire('/blog/{category:slug}', 'blog.category')->name('blog.category');
 Route::livewire('/blog/{category:slug}/{post:slug}', 'blog.category.post')->name('blog.post');
 
-Route::livewire('/changelog', 'changelog.index')->name('changelogs');
+Route::livewire('/changelog', 'changelog')->name('changelogs');
 Route::livewire('/changelog/{changelog}', 'changelog.show')->name('changelog');
 
 Route::middleware('auth')->group(function () {
-    Route::livewire('/notifications', 'notifications.index')->name('notifications');
+    Route::livewire('/notifications', 'notifications')->name('notifications');
     Route::livewire('/settings/profile', 'settings.profile')->name('settings.profile');
     Route::livewire('/settings/activity', 'settings.activity')->name('settings.activity');
     Route::livewire('/settings/security', 'settings.security')->name('settings.security');
@@ -71,7 +71,7 @@ Route::redirect('billing', 'settings/subscription')->name('billing');
 try {
     if (User::first()) {
         Route::view('/', 'theme::pages.index')->name('home');
-        Route::view('/pricing', 'theme::pages.pricing.index')->name('pricing');
+        Route::view('/pricing', 'theme::pages.pricing')->name('pricing');
 
         foreach (Page::all() as $page) {
             Route::view($page->slug, 'theme::page', ['page' => $page->toArray()])->name($page->slug);
