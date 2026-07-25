@@ -13,5 +13,4 @@
 
 use Wave\Facades\Wave;
 
-// Wave routes
 Wave::routes();

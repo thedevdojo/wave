@@ -15,9 +15,13 @@ class Subscribed
      */
     public function handle(Request $request, Closure $next)
     {
+        if (! Auth::check()) {
+            return redirect()->guest(route('login'));
+        }
+
         $user = auth()->user();
 
-        if (Auth::check() && ($user->subscriber() || $user->isAdmin())) {
+        if ($user->subscriber() || $user->isAdmin()) {
             return $next($request);
         }
 

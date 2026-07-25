@@ -50,13 +50,13 @@
             x-transition:leave="ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            class="block overflow-hidden mx-auto w-full h-full text-left bg-white shadow-xl transition-all transform sm:rounded-lg sm:max-w-3xl lg:max-w-5xl"
+            class="block overflow-hidden mx-auto w-full h-full text-left bg-white dark:bg-zinc-900 shadow-xl transition-all transform sm:rounded-lg sm:max-w-3xl lg:max-w-5xl"
         >
             <div class="absolute top-0 right-0 z-50 pt-4 pr-4">
                 <button
                     @click="hideModal"
                     type="button"
-                    class="p-1 text-gray-700 rounded-full bg-white/50 hover:text-gray-900 focus:outline-none"
+                    class="p-1 text-gray-700 dark:text-zinc-200 rounded-full bg-white/50 dark:bg-zinc-800/80 hover:text-gray-900 dark:hover:text-white focus:outline-none"
                 >
                     <span class="sr-only">Close</span>
                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -66,23 +66,23 @@
             </div>
 
             <div class="flex flex-col h-full sm:items-start">
-                <div class="flex overflow-hidden relative justify-center items-center w-full h-full bg-zinc-200">
+                <div class="flex overflow-hidden relative justify-center items-center w-full h-full bg-zinc-200 dark:bg-zinc-800">
                     <template x-if="isImage">
                         <img :src="file.url" alt="File preview" class="object-cover absolute w-auto max-w-full h-auto max-h-full">
                     </template>
                     <template x-if="!isImage">
-                        <div class="p-4 bg-gray-100 rounded">
-                            <p class="text-gray-700">File preview not available</p>
+                        <div class="p-4 bg-gray-100 dark:bg-zinc-700 rounded">
+                            <p class="text-gray-700 dark:text-zinc-200">File preview not available</p>
                         </div>
                     </template>
                 </div>
-                <div class="flex-shrink-0 px-4 pb-4 mt-4 w-full h-auto text-sm">
-                    <h3 class="mb-3 text-base font-bold leading-6 text-gray-900" id="modal-title" x-text="file ? file.name : ''"></h3>
+                <div class="flex-shrink-0 px-4 pb-4 mt-4 w-full h-auto text-sm text-gray-700 dark:text-zinc-300">
+                    <h3 class="mb-3 text-base font-bold leading-6 text-gray-900 dark:text-zinc-100" id="modal-title" x-text="file ? file.name : ''"></h3>
                     
                     <p><strong>Type:</strong> <span x-text="file ? file.type : ''"></span></p>
                     <p x-show="file && file.type == 'folder'"><strong>File count:</strong> <span x-text="file ? file.items : ''"></span></p>
                     <p x-show="file && file.type != 'folder'"><strong>Filesize:</strong> <span x-text="file ? file.size : ''"></span></p>
-                    <p x-show="file && file.type != 'folder'"><strong>Full URL:</strong> <a :href="file ? file.url : ''" target="_blank" class="text-blue-600 underline hover:text-blue-500">open in new tab</a></p>
+                    <p x-show="file && file.type != 'folder'"><strong>Full URL:</strong> <a :href="file ? file.url : ''" target="_blank" class="text-blue-600 dark:text-blue-400 underline hover:text-blue-500 dark:hover:text-blue-300">open in new tab</a></p>
                     <p x-show="file && file.type != 'folder'"><strong>Last Modified:</strong> <span x-text="file ? file.last_modified : ''"></span></p>
 
                 </div>

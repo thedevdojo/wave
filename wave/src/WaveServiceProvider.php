@@ -17,13 +17,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
-use Laravel\Folio\Folio;
 use Livewire\Livewire;
 use Wave\Console\Commands\CancelExpiredSubscriptions;
 use Wave\Console\Commands\CleanOldActivityLogs;
@@ -33,6 +31,7 @@ use Wave\Console\Commands\WaveStats;
 use Wave\Facades\Wave as WaveFacade;
 use Wave\Http\Livewire\Billing\Checkout;
 use Wave\Http\Livewire\Billing\Update;
+use Wave\Http\Livewire\Media\Manager;
 use Wave\Http\Middleware\InstallMiddleware;
 use Wave\Http\Middleware\Subscribed;
 use Wave\Http\Middleware\ThemeDemoMiddleware;
@@ -135,7 +134,6 @@ class WaveServiceProvider extends ServiceProvider
             // Add other mappings as needed
         ]);
 
-        $this->registerWaveFolioDirectory();
         $this->registerWaveComponentDirectory();
     }
 
@@ -245,17 +243,6 @@ class WaveServiceProvider extends ServiceProvider
         Blade::component('filament::components.dropdown.list.item', 'dropdown.list.item');
     }
 
-    protected function registerWaveFolioDirectory()
-    {
-        if (File::exists(base_path('wave/resources/views/pages'))) {
-            Folio::path(base_path('wave/resources/views/pages'))->middleware([
-                '*' => [
-                    //
-                ],
-            ]);
-        }
-    }
-
     protected function registerWaveComponentDirectory()
     {
         Blade::anonymousComponentPath(base_path('wave/resources/views/components'));
@@ -265,6 +252,7 @@ class WaveServiceProvider extends ServiceProvider
     {
         Livewire::component('billing.checkout', Checkout::class);
         Livewire::component('billing.update', Update::class);
+        Livewire::component('wave.media.manager', Manager::class);
     }
 
     protected function setDefaultThemeColors()

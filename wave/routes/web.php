@@ -8,10 +8,33 @@ use Wave\Page;
 
 Route::impersonate();
 
-// Additional Auth Routes
+Route::livewire('/dashboard', 'dashboard')->name('dashboard');
+Route::livewire('/profile/{username}', 'profile.username')->name('wave.profile');
+
+Route::livewire('/blog', 'blog')->name('blog');
+Route::livewire('/blog/{category:slug}', 'blog.category')->name('blog.category');
+Route::livewire('/blog/{category:slug}/{post:slug}', 'blog.category.post')->name('blog.post');
+
+Route::livewire('/changelog', 'changelog')->name('changelogs');
+Route::livewire('/changelog/{changelog}', 'changelog.show')->name('changelog');
+
+Route::middleware('auth')->group(function () {
+    Route::livewire('/notifications', 'notifications')->name('notifications');
+    Route::livewire('/settings/profile', 'settings.profile')->name('settings.profile');
+    Route::livewire('/settings/activity', 'settings.activity')->name('settings.activity');
+    Route::livewire('/settings/security', 'settings.security')->name('settings.security');
+    Route::livewire('/settings/subscription', 'settings.subscription')->name('settings.subscription');
+    Route::livewire('/settings/api', 'settings.api')->name('settings.api');
+    Route::livewire('/settings/privacy', 'settings.privacy')->name('settings.privacy');
+    Route::livewire('/settings/deletion', 'settings.deletion')->name('settings.deletion');
+    Route::livewire('/settings/export', 'settings.export')->name('settings.export');
+    Route::livewire('/settings/social', 'settings.social')->name('settings.social');
+    Route::livewire('/settings/notifications', 'settings.notifications')->name('settings.notifications');
+    Route::livewire('/settings/invoices', 'settings.invoices')->name('settings.invoices');
+    Route::livewire('/subscription/welcome', 'subscription.welcome')->name('subscription.welcome');
+});
+
 Route::get('logout', '\Wave\Http\Controllers\LogoutController@logout')->name('wave.logout');
-// Route::get('user/verify/{verification_code}', '\Wave\Http\Controllers\Auth\RegisterController@verify')->name('verify');
-// Route::post('register/complete', '\Wave\Http\Controllers\Auth\RegisterController@complete')->name('wave.register-complete');
 
 Route::view('install', 'wave::install')->name('wave.install');
 
@@ -25,7 +48,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('notification/read/{id}', '\Wave\Http\Controllers\NotificationController@delete')->name('wave.notification.read');
     Route::post('changelog/read', '\Wave\Http\Controllers\ChangelogController@read')->name('changelog.read');
 
-    /********** Checkout/Billing Routes ***********/
     Route::post('cancel', '\Wave\Http\Controllers\SubscriptionController@cancel')->name('wave.cancel');
     Route::view('checkout/welcome', 'theme::welcome');
 
@@ -37,12 +59,10 @@ Route::get('wave/theme/image/{theme_name}', '\Wave\Http\Controllers\ThemeImageCo
 Route::get('wave/plugin/image/{plugin_name}', '\Wave\Http\Controllers\PluginImageController@show');
 Route::redirect('admin/login', '/auth/login');
 
-// Reset sqlite database - only in local environment
 if (app()->environment('local')) {
     Route::get('reset', Reset::class)->middleware('auth');
 }
 
-/***** Billing Routes *****/
 Route::post('webhook/paddle', '\Wave\Http\Controllers\Billing\Webhooks\PaddleWebhook@handler')->middleware('paddle-webhook-signature');
 Route::post('webhook/stripe', '\Wave\Http\Controllers\Billing\Webhooks\StripeWebhook@handler');
 Route::get('stripe/portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_customer_portal')->name('stripe.portal');
@@ -50,16 +70,17 @@ Route::redirect('billing', 'settings/subscription')->name('billing');
 
 try {
     if (User::first()) {
-        /***** Dynamic Page Routes *****/
+        Route::view('/', 'theme::pages.index')->name('home');
+        Route::view('/pricing', 'theme::pages.pricing')->name('pricing');
+
         foreach (Page::all() as $page) {
             Route::view($page->slug, 'theme::page', ['page' => $page->toArray()])->name($page->slug);
         }
     }
 
-    // If no users are found, redirect to the installer or dummy page
     if (! User::first()) {
         Route::view('/', 'wave::welcome');
     }
 } catch (QueryException $e) {
-    // Handle the exception or log it if needed
+    //
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 use Wave\Plan;
 use Wave\Subscription;
 
@@ -11,12 +12,12 @@ beforeEach(function () {
     $this->seed();
 
     // Create test roles
-    $this->basicRole = \Spatie\Permission\Models\Role::firstOrCreate(
+    $this->basicRole = Role::firstOrCreate(
         ['name' => 'test_basic'],
         ['guard_name' => 'web']
     );
 
-    $this->premiumRole = \Spatie\Permission\Models\Role::firstOrCreate(
+    $this->premiumRole = Role::firstOrCreate(
         ['name' => 'test_premium'],
         ['guard_name' => 'web']
     );

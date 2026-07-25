@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
+use Wave\ActivityLog;
 
 class LogSuccessfulLogin
 {
@@ -24,13 +25,13 @@ class LogSuccessfulLogin
         }
 
         // Prevent duplicate login logs within the same session
-        $recentLogin = \Wave\ActivityLog::where('user_id', $event->user->id)
+        $recentLogin = ActivityLog::where('user_id', $event->user->id)
             ->where('action', 'login')
             ->where('created_at', '>=', now()->subMinutes(5))
             ->exists();
 
         if (! $recentLogin) {
-            \Wave\ActivityLog::log('login', 'User logged in successfully');
+            ActivityLog::log('login', 'User logged in successfully');
         }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Wave\Plan;
 use Wave\Subscription;
 
@@ -128,7 +129,7 @@ test('subscriber helper returns false after cancellation', function () {
     ]);
 
     // Clear cache to ensure fresh query
-    \Illuminate\Support\Facades\Cache::forget("user_subscriber_{$this->user->id}");
+    Cache::forget("user_subscriber_{$this->user->id}");
 
     // Verify user is subscriber
     expect($this->user->fresh()->subscriber())->toBeTrue();
@@ -137,7 +138,7 @@ test('subscriber helper returns false after cancellation', function () {
     $this->user->subscription->cancel();
 
     // Clear cache again
-    \Illuminate\Support\Facades\Cache::forget("user_subscriber_{$this->user->id}");
+    Cache::forget("user_subscriber_{$this->user->id}");
 
     // Verify user is no longer subscriber
     expect($this->user->fresh()->subscriber())->toBeFalse();

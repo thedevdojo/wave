@@ -1,13 +1,18 @@
 <div 
     x-data="{
         theme: 'light',
+        setThemeCookie(value) {
+            document.cookie = 'theme=' + value + ';path=/;max-age=31536000;SameSite=Lax';
+        },
         toggle() {
             if(this.theme == 'dark'){ 
                 this.theme = 'light';
                 localStorage.setItem('theme', 'light');
+                this.setThemeCookie('light');
             }else{ 
                 this.theme = 'dark';
                 localStorage.setItem('theme', 'dark');
+                this.setThemeCookie('dark');
             }
         }
     }"
@@ -19,12 +24,14 @@
             theme =  'light';
         }
         if(document.documentElement.classList.contains('dark')){ theme='dark'; }
+        setThemeCookie(theme);
         $watch('theme', function(value){
             if(value == 'dark'){
                 document.documentElement.classList.add('dark');
         } else {
                 document.documentElement.classList.remove('dark');
             }
+            setThemeCookie(value);
         })
     "
     x-on:click="toggle()"

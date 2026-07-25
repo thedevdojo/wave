@@ -8,7 +8,7 @@ use Wave\Post;
 use Wave\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Wave\Post>
+ * @extends Factory<Post>
  */
 class PostFactory extends Factory
 {
