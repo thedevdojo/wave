@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -16,6 +18,24 @@ class User extends WaveUser
     use HasFactory, HasProfileKeyValues, Notifiable, SoftDeletes;
 
     public $guard_name = 'web';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'username',
+        'avatar',
+        'password',
+        'role_id',
+        'verification_code',
+        'verified',
+        'trial_ends_at',
+        'organization_id',
+    ];
 
     /**
      * Get the attributes that should be cast.
@@ -35,6 +55,26 @@ class User extends WaveUser
     public function activityLogs(): HasMany
     {
         return $this->hasMany(ActivityLog::class);
+    }
+
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
+    }
+
+    public function ownedOrganization(): HasOne
+    {
+        return $this->hasOne(Organization::class, 'user_id');
+    }
+
+    public function isOrganizationAdmin(): bool
+    {
+        return $this->ownedOrganization()->exists();
+    }
+
+    public function isOrganizationMember(): bool
+    {
+        return $this->organization_id !== null && !$this->isOrganizationAdmin();
     }
 
     protected static function boot()
