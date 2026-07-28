@@ -16,8 +16,9 @@ beforeEach(function () {
     // Clear Spatie permission cache
     app(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
-    // Delete existing roles to prevent collision
+    // Delete existing roles and users to prevent collision
     DB::table('roles')->delete();
+    DB::table('users')->delete();
 
     $roleAdmin = \Spatie\Permission\Models\Role::create([
         'id' => 1,

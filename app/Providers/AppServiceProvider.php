@@ -38,10 +38,11 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(\Illuminate\Routing\UrlGenerator $url): void
     {
         if ($this->app->environment() == 'production') {
             $this->app['request']->server->set('HTTPS', true);
+            $url->forceScheme('https');
         }
 
         $this->setSchemaDefaultLength();
