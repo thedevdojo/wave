@@ -12,6 +12,13 @@
 */
 
 use Wave\Facades\Wave;
+use App\Http\Controllers\NylasController;
 
 // Wave routes
 Wave::routes();
+
+Route::middleware('auth')->group(function () {
+    Route::get('nylas/connect', [NylasController::class, 'connect'])->name('nylas.connect');
+    Route::get('nylas/callback', [NylasController::class, 'callback'])->name('nylas.callback');
+    Route::delete('nylas/disconnect/{id}', [NylasController::class, 'disconnect'])->name('nylas.disconnect');
+});

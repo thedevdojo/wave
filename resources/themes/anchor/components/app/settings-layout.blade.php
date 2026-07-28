@@ -17,6 +17,7 @@
                     <x-settings-sidebar-link :href="route('settings.security')" icon="phosphor-lock-duotone">Security</x-settings-sidebar-link>
                     <x-settings-sidebar-link :href="route('settings.notifications')" icon="phosphor-bell-duotone">Notifications</x-settings-sidebar-link>
                     <x-settings-sidebar-link :href="route('settings.social')" icon="phosphor-share-network-duotone">Social Media</x-settings-sidebar-link>
+                    <x-settings-sidebar-link :href="route('settings.integrations')" icon="phosphor-plugs-duotone">Integrations</x-settings-sidebar-link>
                     <x-settings-sidebar-link :href="route('settings.api')" icon="phosphor-code-duotone">API Keys</x-settings-sidebar-link>
                     <x-settings-sidebar-link :href="route('settings.activity')" icon="phosphor-clock-counter-clockwise-duotone">Activity Log</x-settings-sidebar-link>
                 </div>
