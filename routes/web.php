@@ -13,6 +13,11 @@
 
 use Wave\Facades\Wave;
 use App\Http\Controllers\NylasController;
+use App\Http\Controllers\NylasWebhookController;
+
+// Webhook endpoint for Nylas (without CSRF, and open to the internet)
+Route::match(['get', 'post'], 'webhooks/nylas', [NylasWebhookController::class, 'handle'])
+    ->name('webhooks.nylas');
 
 // Wave routes
 Wave::routes();

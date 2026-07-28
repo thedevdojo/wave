@@ -29,6 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             '/webhook/paddle',
             '/webhook/stripe',
+            '/webhooks/nylas',
         ]);
 
         $middleware->append(\Filament\Http\Middleware\DisableBladeIconComponents::class);

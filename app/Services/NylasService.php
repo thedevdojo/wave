@@ -88,4 +88,39 @@ class NylasService
 
         return null;
     }
+
+    /**
+     * Send an email using a connected grant.
+     *
+     * @param string $grantId
+     * @param array $payload Includes 'subject', 'body', 'to' (array of ['email' => ..., 'name' => ...])
+     * @return array|null Returns array containing the sent message response, or null on failure.
+     */
+    public function sendMessage(string $grantId, array $payload): ?array
+    {
+        $url = "{$this->apiUri}/v3/grants/{$grantId}/messages/send";
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $this->clientSecret,
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ])->post($url, $payload);
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            Log::error('Nylas send message failed', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Nylas send message exception', [
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        return null;
+    }
 }
