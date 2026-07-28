@@ -22,6 +22,8 @@
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="NYLAS_CLIENT_ID" value="mock-client-id"/>
+        <env name="NYLAS_API_KEY" value="mock-api-key"/>
     </php>
     <source>
         <include>
