@@ -77,6 +77,14 @@ class User extends WaveUser
         return $this->organization_id !== null && !$this->isOrganizationAdmin();
     }
 
+    /**
+     * Get the Nylas accounts associated with the user.
+     */
+    public function nylasAccounts(): HasMany
+    {
+        return $this->hasMany(NylasAccount::class);
+    }
+
     protected static function boot()
     {
         parent::boot();
