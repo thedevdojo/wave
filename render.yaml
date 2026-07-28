@@ -1,0 +1,34 @@
+databases:
+  - name: wave_db
+    plan: free
+    databaseName: wave
+    user: wave_user
+
+services:
+  - type: web
+    name: wave-app
+    plan: free
+    runtime: docker
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: wave_db
+          property: connectionString
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: APP_KEY
+        sync: false
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: WEBROOT
+        value: /var/www/html/public
+      - key: RUN_SCRIPTS
+        value: 1
+      - key: REAL_IP_HEADER
+        value: 1
+      - key: SKIP_COMPOSER
+        value: 1
