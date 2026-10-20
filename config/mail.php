@@ -6,6 +6,10 @@ return [
         'mailgun' => [
             'transport' => 'mailgun',
         ],
+
+        'mailtrap-sdk' => [
+            'transport' => 'mailtrap-sdk',
+        ],
     ],
 
     'markdown' => [
