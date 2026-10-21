@@ -48,6 +48,9 @@ Route::post('webhook/stripe', '\Wave\Http\Controllers\Billing\Webhooks\StripeWeb
 Route::get('stripe/portal', '\Wave\Http\Controllers\Billing\Stripe@redirect_to_customer_portal')->name('stripe.portal');
 Route::redirect('billing', 'settings/subscription')->name('billing');
 
+/***** Inbound Email Routes *****/
+Route::post('webhook/mailtrap/inbound', '\Wave\Http\Controllers\InboundEmail\Webhooks\MailtrapWebhook@handler')->middleware('mailtrap-webhook-signature');
+
 try {
     if (User::first()) {
         /***** Dynamic Page Routes *****/

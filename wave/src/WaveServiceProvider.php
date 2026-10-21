@@ -37,6 +37,7 @@ use Wave\Http\Middleware\InstallMiddleware;
 use Wave\Http\Middleware\Subscribed;
 use Wave\Http\Middleware\ThemeDemoMiddleware;
 use Wave\Http\Middleware\TokenMiddleware;
+use Wave\Http\Middleware\VerifyMailtrapWebhookSignature;
 use Wave\Http\Middleware\VerifyPaddleWebhookSignature;
 use Wave\Overrides\Vite;
 use Wave\Plugins\PluginServiceProvider;
@@ -63,6 +64,7 @@ class WaveServiceProvider extends ServiceProvider
         $this->loadLivewireComponents();
 
         $this->app->router->aliasMiddleware('paddle-webhook-signature', VerifyPaddleWebhookSignature::class);
+        $this->app->router->aliasMiddleware('mailtrap-webhook-signature', VerifyMailtrapWebhookSignature::class);
         $this->app->router->aliasMiddleware('subscribed', Subscribed::class);
         $this->app->router->aliasMiddleware('token_api', TokenMiddleware::class);
 

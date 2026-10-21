@@ -242,3 +242,49 @@ The deletion processor runs automatically every day via Laravel's scheduler (con
 ```php
 Schedule::command('accounts:process-deletions')->daily();
 ```
+
+## Mailtrap Inbound Email
+
+Receive emails through a Mailtrap inbound webhook. Wave fires an event for each new message.
+
+### Setup
+
+1. Create an inbound inbox in Mailtrap
+2. Create an API token with access to that inbox
+3. Create a webhook for the inbox with the JSON payload format and the URL `https://your-domain.com/webhook/mailtrap/inbound`
+4. Copy the signing secret of the webhook
+
+```env
+MAILTRAP_INBOUND_API_KEY=your-api-token
+MAILTRAP_INBOUND_WEBHOOK_SECRET=your-signing-secret
+```
+
+### How It Works
+
+- `VerifyMailtrapWebhookSignature` checks the `Mailtrap-Signature` header (HMAC-SHA256 of the raw body)
+- `MailtrapWebhook` fetches each `inbound.message_received` message from the Mailtrap API
+- It then dispatches `Wave\Events\MailtrapInboundEmailReceived` with the message details
+- Handled messages are cached for 24 hours, so a Mailtrap retry does not fire the event again
+- A failure returns 503, and Mailtrap retries the webhook every 5 minutes
+
+### Usage
+
+Add a listener in `app/Listeners`. Laravel discovers it automatically.
+
+```php
+use Wave\Events\MailtrapInboundEmailReceived;
+
+class HandleInboundEmail
+{
+    public function handle(MailtrapInboundEmailReceived $event): void
+    {
+        $subject = $event->message['subject'];
+        $text = $event->message['text_body'];
+
+        // The original .eml file. The download URL is valid for one hour.
+        $raw = $event->rawMessage();
+    }
+}
+```
+
+Listeners must be safe to run twice. Mailtrap waits 30 seconds for the response, so for slow work implement `ShouldQueue` and use a queue connection other than `sync`.
