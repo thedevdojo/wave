@@ -35,4 +35,9 @@ return [
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
     ],
 
+    'mailtrap_inbound' => [
+        'api_key' => env('MAILTRAP_INBOUND_API_KEY'),
+        'webhook_secret' => env('MAILTRAP_INBOUND_WEBHOOK_SECRET'),
+    ],
+
 ];
