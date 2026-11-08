@@ -44,9 +44,6 @@ jobs:
       run: |
         rm -rf tests
         cp -r vendor/devdojo/auth/tests tests
-        # Wave doesn't have devdojo/auth's email_verification_codes migrations yet,
-        # and RefreshDatabase drops the table migrated below. Remove once they're added.
-        rm -f tests/Feature/EmailVerificationCodeTest.php
 
     - name: Create sqlite file
       run: touch database/database.sqlite
