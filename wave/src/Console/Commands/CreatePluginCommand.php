@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Wave\Plugins\PluginManager;
 
 class CreatePluginCommand extends Command
 {
@@ -29,7 +30,7 @@ class CreatePluginCommand extends Command
             return self::FAILURE;
         }
 
-        $pluginPath = config('wave.plugins_path', resource_path('plugins'))."/{$folderName}";
+        $pluginPath = PluginManager::path()."/{$folderName}";
 
         if (File::exists($pluginPath)) {
             $this->error("A plugin with the name '{$folderName}' already exists.");

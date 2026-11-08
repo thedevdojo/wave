@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Wave\Plugins\PluginManager;
 
 class Plugins extends Page
 {
@@ -33,7 +34,7 @@ class Plugins extends Page
     private function getPluginsFromFolder()
     {
         $plugins = [];
-        $plugins_folder = config('wave.plugins_path', resource_path('plugins'));
+        $plugins_folder = PluginManager::path();
 
         if (! file_exists($plugins_folder)) {
             mkdir($plugins_folder);
@@ -80,7 +81,7 @@ class Plugins extends Page
 
     private function getInstalledPlugins()
     {
-        $path = config('wave.plugins_path', resource_path('plugins')).'/installed.json';
+        $path = PluginManager::path().'/installed.json';
 
         return File::exists($path) ? File::json($path) : [];
     }
@@ -88,7 +89,7 @@ class Plugins extends Page
     private function updateInstalledPlugins($plugins)
     {
         $json = json_encode($plugins);
-        file_put_contents(config('wave.plugins_path', resource_path('plugins')).'/installed.json', $json);
+        file_put_contents(PluginManager::path().'/installed.json', $json);
 
         Cache::forget('wave_installed_plugins');
     }
@@ -134,7 +135,7 @@ class Plugins extends Page
             }
 
             // Run migrations if they exist
-            $migrationPath = config('wave.plugins_path', resource_path('plugins'))."/{$pluginFolder}/database/migrations";
+            $migrationPath = PluginManager::path()."/{$pluginFolder}/database/migrations";
             if (File::isDirectory($migrationPath)) {
                 Artisan::call('migrate', [
                     '--path' => $migrationPath,
@@ -165,7 +166,7 @@ class Plugins extends Page
 
         $this->removeFromInstalledPlugins($pluginFolder);
 
-        $pluginPath = config('wave.plugins_path', resource_path('plugins')).'/'.$pluginFolder;
+        $pluginPath = PluginManager::path().'/'.$pluginFolder;
         if (file_exists($pluginPath)) {
             File::deleteDirectory($pluginPath);
         }

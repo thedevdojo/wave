@@ -15,6 +15,14 @@ class PluginManager
 
     protected $plugins = [];
 
+    /**
+     * Folder plugins are loaded from and created in.
+     */
+    public static function path(): string
+    {
+        return config('wave.plugins_path', resource_path('plugins'));
+    }
+
     public function __construct(Application $app)
     {
         $this->app = $app;
@@ -54,7 +62,7 @@ class PluginManager
 
     protected function findPluginFile($pluginName)
     {
-        $basePath = config('wave.plugins_path', resource_path('plugins'));
+        $basePath = self::path();
         $studlyName = Str::studly($pluginName);
 
         // Check for exact case match
@@ -82,7 +90,7 @@ class PluginManager
         if ($this->app->bound('cache')) {
             try {
                 return Cache::remember('wave_installed_plugins', 3600, function () {
-                    $path = config('wave.plugins_path', resource_path('plugins')).'/installed.json';
+                    $path = self::path().'/installed.json';
                     if (! File::exists($path)) {
                         return [];
                     }
@@ -95,7 +103,7 @@ class PluginManager
         }
 
         // Direct file access when cache is not available
-        $path = config('wave.plugins_path', resource_path('plugins')).'/installed.json';
+        $path = self::path().'/installed.json';
         if (! File::exists($path)) {
             return [];
         }

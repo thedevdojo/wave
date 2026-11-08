@@ -6,15 +6,16 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
+use Wave\Plugins\PluginManager;
 
 function writeInstalledPlugins(array $plugins): void
 {
-    File::put(config('wave.plugins_path').'/installed.json', json_encode($plugins));
+    File::put(PluginManager::path().'/installed.json', json_encode($plugins));
 }
 
 function readInstalledPlugins(): string
 {
-    return File::get(config('wave.plugins_path').'/installed.json');
+    return File::get(PluginManager::path().'/installed.json');
 }
 
 beforeEach(function () {
