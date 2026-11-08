@@ -13,7 +13,6 @@ use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Vite as BaseVite;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
@@ -82,7 +81,7 @@ class WaveServiceProvider extends ServiceProvider
         $this->app->register(PluginServiceProvider::class);
     }
 
-    public function boot(Router $router, Dispatcher $event): void
+    public function boot(Dispatcher $event): void
     {
 
         Relation::morphMap([
@@ -135,7 +134,6 @@ class WaveServiceProvider extends ServiceProvider
         ]);
 
         $event->listen(ViewMatched::class, [HideUnpublishedPosts::class, 'flag']);
-        $router->pushMiddlewareToGroup('web', HideUnpublishedPosts::class);
 
         $this->registerWaveFolioDirectory();
         $this->registerWaveComponentDirectory();
@@ -149,6 +147,8 @@ class WaveServiceProvider extends ServiceProvider
     protected function registerWebMiddleware(): void
     {
         $kernel = $this->app->make(HttpKernel::class);
+
+        $kernel->appendMiddlewareToGroup('web', HideUnpublishedPosts::class);
 
         if (! $this->hasDBConnection()) {
             $kernel->appendMiddlewareToGroup('web', InstallMiddleware::class);
