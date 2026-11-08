@@ -51,7 +51,9 @@ Route::redirect('billing', 'settings/subscription')->name('billing');
 try {
     if (User::first()) {
         /***** Dynamic Page Routes *****/
-        foreach (Page::all() as $page) {
+        // These are built at boot, so with route:cache enabled the cache has to be
+        // rebuilt after a page is added or its status changes.
+        foreach (Page::active()->get() as $page) {
             Route::view($page->slug, 'theme::page', ['page' => $page->toArray()])->name($page->slug);
         }
     }

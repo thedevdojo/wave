@@ -3,6 +3,7 @@
 namespace Wave;
 
 use Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,6 +21,11 @@ class Post extends Model
     protected static function newFactory()
     {
         return PostFactory::new();
+    }
+
+    public function scopePublished(Builder $query): void
+    {
+        $query->where('status', 'PUBLISHED');
     }
 
     public function link()

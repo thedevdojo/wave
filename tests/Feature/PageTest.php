@@ -53,7 +53,7 @@ describe('Page Model', function () {
             'status' => 'ACTIVE',
         ]);
 
-        expect($page->link())->toBe(url('p/privacy-policy-'.$this->uniqueId));
+        expect($page->link())->toBe(url('privacy-policy-'.$this->uniqueId));
     });
 
     it('generates correct image url', function () {
@@ -149,5 +149,43 @@ describe('Page Routes (Dynamic)', function () {
         $response = $this->get('/'.$page->slug);
 
         $response->assertStatus(200);
+    });
+
+    it('only registers routes for active pages', function () {
+        Page::create([
+            'author_id' => $this->user->id,
+            'title' => 'Active Page',
+            'body' => 'Active content',
+            'slug' => 'active-page-'.$this->uniqueId,
+            'status' => 'ACTIVE',
+        ]);
+        Page::create([
+            'author_id' => $this->user->id,
+            'title' => 'Inactive Page',
+            'body' => 'Inactive content',
+            'slug' => 'inactive-page-'.$this->uniqueId,
+            'status' => 'INACTIVE',
+        ]);
+
+        // Page routes are registered at boot, so boot again to pick up the new pages
+        $this->refreshApplication();
+
+        $this->get('/active-page-'.$this->uniqueId)->assertOk()->assertSee('Active content');
+        $this->get('/inactive-page-'.$this->uniqueId)->assertNotFound();
+    });
+
+    it('links to the route the page is served on', function () {
+        $page = Page::create([
+            'author_id' => $this->user->id,
+            'title' => 'Linked Page',
+            'body' => 'Linked content',
+            'slug' => 'linked-page-'.$this->uniqueId,
+            'status' => 'ACTIVE',
+        ]);
+
+        $this->refreshApplication();
+
+        expect($page->link())->toBe(url('linked-page-'.$this->uniqueId));
+        $this->get($page->link())->assertOk()->assertSee('Linked content');
     });
 });
