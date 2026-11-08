@@ -44,11 +44,8 @@ jobs:
       run: |
         rm -rf tests
         cp -r vendor/devdojo/auth/tests tests
-        # devdojo/auth's tests/Pest.php declares its `use` imports below the code that needs them,
-        # so DuskTestCase/TestCase don't resolve. Hoist the imports to the top of the file.
-        php -r '$f = "tests/Pest.php"; $s = file_get_contents($f); preg_match_all("/^use [^;(]+;\n/m", $s, $m); $s = preg_replace("/^use [^;(]+;\n/m", "", $s); file_put_contents($f, preg_replace("/^<\?php\n/", "<?php\n\n".implode("", $m[0]), $s, 1));'
-        # This test uses the package's own User model against a vanilla users table,
-        # which doesn't match Wave's schema (username is required).
+        # Wave doesn't have devdojo/auth's email_verification_codes migrations yet,
+        # and RefreshDatabase drops the table migrated below. Remove once they're added.
         rm -f tests/Feature/EmailVerificationCodeTest.php
 
     - name: Create sqlite file
