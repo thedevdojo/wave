@@ -4,6 +4,34 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.3.1] - 2026-11-08
+
+### Upgrade notes
+
+- Paddle webhooks are rejected with a 403 when `PADDLE_WEBHOOK_SECRET` isn't set ([#420])
+- The Paddle checkout passes the user id to Paddle as `customData` and only accepts transactions that carry it. If you customized `Paddle.Checkout.open` in your checkout view, pass `customData: { user_id }` like the default view does ([#422])
+- The API rate limiter and activity logs use `$request->ip()` instead of the `CF-Connecting-IP` header. Behind Cloudflare or another proxy, configure trusted proxies (e.g. `$middleware->trustProxies(at: '*')` in `bootstrap/app.php` when the origin is only reachable through the proxy) so it returns the visitor IP ([#424])
+- The `imageable` validation rule only accepts uploaded files and `data:image/` URIs, not file paths ([#425])
+- If your `.env` still has the `APP_KEY` from `.env.example`, run `php artisan key:generate`. This logs everyone out and invalidates anything encrypted with the old key ([#426])
+- A new migration makes `posts.author_id` and `pages.author_id` nullable and sets them to null when the author is deleted. Rolling it back fails if any post or page already has no author ([#421])
+- `laravel/dusk` and `alebatistella/duskapiconf` were removed from `require-dev`. If you have your own Dusk tests, add `laravel/dusk` back ([#423])
+
+### Changed
+
+- The Stripe customer portal requires login, sends users without a subscription to the subscription page and no longer creates a new portal configuration on every visit ([#419])
+- Scheduled account deletion cancels the user's Stripe or Paddle subscription first and removes their subscriptions, profile fields and notifications. Posts and pages they wrote are kept without an author ([#421])
+- Stricter checks in the Paddle checkout and invoice download ([#422])
+- The browser installer generates a new `APP_KEY` when the example key is still in use, and the seeded admin no longer has a fixed remember token ([#426])
+
+### Fixed
+
+- Stripe checkouts paid with async payment methods (SEPA, ACH) or retried after an error now create the subscription. Subscription webhooks handle unmapped prices, terminal statuses and late events ([#419])
+- Paddle webhooks no longer return a 500 on every valid request, and redelivered cancellations are acknowledged ([#420])
+- The subscription and invoices pages no longer fail right after a Paddle subscription is cancelled, and the subscription page no longer waits on Paddle for 15 seconds ([#420])
+- Scheduled account deletion no longer fails for users who wrote posts or pages ([#421])
+- The data export includes profile fields again ([#421])
+- `HideUnpublishedPosts` is registered through the HTTP kernel like the other web middleware ([#418])
+
 ## [3.3.0] - 2026-11-08
 
 ### Upgrade notes
@@ -54,7 +82,8 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.3.0...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.3.1...HEAD
+[3.3.1]: https://github.com/thedevdojo/wave/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/thedevdojo/wave/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/thedevdojo/wave/compare/3.1.5...3.2.0
 [#297]: https://github.com/thedevdojo/wave/pull/297
@@ -71,3 +100,12 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#414]: https://github.com/thedevdojo/wave/pull/414
 [#415]: https://github.com/thedevdojo/wave/pull/415
 [#416]: https://github.com/thedevdojo/wave/pull/416
+[#418]: https://github.com/thedevdojo/wave/pull/418
+[#419]: https://github.com/thedevdojo/wave/pull/419
+[#420]: https://github.com/thedevdojo/wave/pull/420
+[#421]: https://github.com/thedevdojo/wave/pull/421
+[#422]: https://github.com/thedevdojo/wave/pull/422
+[#423]: https://github.com/thedevdojo/wave/pull/423
+[#424]: https://github.com/thedevdojo/wave/pull/424
+[#425]: https://github.com/thedevdojo/wave/pull/425
+[#426]: https://github.com/thedevdojo/wave/pull/426
