@@ -73,7 +73,7 @@ class AuthController extends Controller implements HasMiddleware
             'last_used_at' => Carbon::now(),
         ]);
 
-        JWTAuth::factory()->setTTL(config('wave.api.key_token_expires', 1));
+        JWTAuth::factory()->setTTL(config('wave.api.key_token_expires', 60));
 
         return $this->respondWithToken(JWTAuth::fromUser($key->user));
     }

@@ -8,7 +8,7 @@ return [
     // to /api/login, /api/register and /api/refresh; key_token_expires to /api/token.
     'api' => [
         'auth_token_expires' => 60,
-        'key_token_expires' => 1,
+        'key_token_expires' => 60,
     ],
 
     'auth' => [
