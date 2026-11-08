@@ -91,6 +91,25 @@
                     </div>
                 </form>
 
+                {{-- The setup screen itself is provided by devdojo/auth --}}
+                @if (config('devdojo.auth.settings.enable_2fa'))
+                    <div class="w-full max-w-lg pt-8 mt-8 border-t border-zinc-200 dark:border-zinc-800">
+                        <h3 class="text-lg font-medium text-zinc-900 dark:text-zinc-100">Two-Factor Authentication</h3>
+                        <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                            @if (auth()->user()->two_factor_confirmed_at)
+                                Two-factor authentication is enabled for your account.
+                            @else
+                                Add an extra layer of security by requiring a code from your authenticator app when you log in.
+                            @endif
+                        </p>
+                        <div class="pt-4">
+                            <x-button tag="a" :href="route('user.two-factor-authentication')">
+                                {{ auth()->user()->two_factor_confirmed_at ? 'Manage two-factor authentication' : 'Set up two-factor authentication' }}
+                            </x-button>
+                        </div>
+                    </div>
+                @endif
+
             </x-app.settings-layout>
         </div>
     @endvolt
