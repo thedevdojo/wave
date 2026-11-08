@@ -68,7 +68,7 @@ class ActivityLog extends Model
             'user_id' => auth()->id(),
             'action' => $action,
             'description' => $description,
-            'ip_address' => request()->header('CF-Connecting-IP') ?? request()->ip(),
+            'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),
             'metadata' => $metadata,
         ];
