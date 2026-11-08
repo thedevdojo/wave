@@ -23,6 +23,12 @@ class Category extends Model
         return CategoryFactory::new();
     }
 
+    protected static function booted(): void
+    {
+        static::saved(fn () => static::clearCache());
+        static::deleted(fn () => static::clearCache());
+    }
+
     public function posts(): HasMany
     {
         return $this->hasMany('Wave\Post');

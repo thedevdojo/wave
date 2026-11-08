@@ -11,6 +11,7 @@ beforeEach(function () {
 afterEach(function () {
     Post::where('slug', 'like', 'visibility-test-%')->delete();
     Category::whereKey($this->category->id)->delete();
+    User::where('email', 'like', 'visibility-test-%')->forceDelete();
 });
 
 function visibilityPost(Category $category, array $attributes = []): Post
@@ -36,12 +37,10 @@ describe('Single post page', function () {
     })->with(['DRAFT', 'PENDING']);
 
     it('returns 404 for draft posts to non-admin users', function () {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['email' => 'visibility-test-'.uniqid().'@example.com']);
         $post = visibilityPost($this->category, ['status' => 'DRAFT']);
 
         $this->actingAs($user)->get($post->link())->assertNotFound();
-
-        $user->forceDelete();
     });
 
     it('lets admins preview draft posts', function () {
@@ -90,6 +89,18 @@ describe('Blog index', function () {
         expect($post->fresh()->category_id)->toBeNull();
 
         $this->get('/blog')->assertOk()->assertDontSee($post->title);
+    });
+
+    it('shows categories added after the list was cached', function () {
+        $this->get('/blog')->assertOk();
+
+        $added = Category::factory()->create();
+
+        $this->get('/blog')->assertOk()->assertSee($added->name);
+
+        $added->delete();
+
+        $this->get('/blog')->assertOk()->assertDontSee($added->name);
     });
 });
 
