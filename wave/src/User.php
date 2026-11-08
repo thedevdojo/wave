@@ -180,9 +180,15 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
                 }
             }
         } else {
+            // Include cancelled subscriptions too, like the Stripe branch.
+            $subscriptionIds = $this->subscriptions()->whereNotNull('vendor_subscription_id')->pluck('vendor_subscription_id');
+            if ($subscriptionIds->isEmpty()) {
+                return $user_invoices;
+            }
+
             $paddle_url = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
             $response = Http::withToken(config('wave.paddle.api_key'))->get($paddle_url.'/transactions', [
-                'subscription_id' => $this->subscription->vendor_subscription_id,
+                'subscription_id' => $subscriptionIds->implode(','),
             ]);
             $responseJson = json_decode($response->body());
             foreach ($responseJson->data as $invoice) {
