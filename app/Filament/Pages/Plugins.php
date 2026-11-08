@@ -6,6 +6,7 @@ use BackedEnum;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -63,6 +64,13 @@ class Plugins extends Page
         return $plugins;
     }
 
+    private function ensurePluginExists($pluginFolder)
+    {
+        if (! array_key_exists($pluginFolder, $this->getPluginsFromFolder())) {
+            abort(404);
+        }
+    }
+
     private function isPluginActive($folder)
     {
         $installedPlugins = $this->getInstalledPlugins();
@@ -81,10 +89,14 @@ class Plugins extends Page
     {
         $json = json_encode($plugins);
         file_put_contents(resource_path('plugins/installed.json'), $json);
+
+        Cache::forget('wave_installed_plugins');
     }
 
     public function activate($pluginFolder)
     {
+        $this->ensurePluginExists($pluginFolder);
+
         $installedPlugins = $this->getInstalledPlugins();
         if (! in_array($pluginFolder, $installedPlugins)) {
             $installedPlugins[] = $pluginFolder;
@@ -134,8 +146,10 @@ class Plugins extends Page
 
     public function deactivate($pluginFolder)
     {
+        $this->ensurePluginExists($pluginFolder);
+
         $installedPlugins = $this->getInstalledPlugins();
-        $installedPlugins = array_diff($installedPlugins, [$pluginFolder]);
+        $installedPlugins = array_values(array_diff($installedPlugins, [$pluginFolder]));
         $this->updateInstalledPlugins($installedPlugins);
 
         Notification::make()
@@ -148,6 +162,8 @@ class Plugins extends Page
 
     public function deletePlugin($pluginFolder)
     {
+        $this->ensurePluginExists($pluginFolder);
+
         $this->deactivate($pluginFolder);
 
         $pluginPath = resource_path('plugins').'/'.$pluginFolder;
