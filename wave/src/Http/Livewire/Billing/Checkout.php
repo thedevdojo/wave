@@ -3,7 +3,9 @@
 namespace Wave\Http\Livewire\Billing;
 
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Stripe\StripeClient;
@@ -17,8 +19,10 @@ class Checkout extends Component
 
     public $billing_cycle_selected = 'month';
 
+    #[Locked]
     public $billing_provider;
 
+    #[Locked]
     public $paddle_url;
 
     public $change = false;
@@ -106,67 +110,86 @@ class Checkout extends Component
     #[On('verifyPaddleTransaction')]
     public function verifyPaddleTransaction($transactionId)
     {
+        $user = auth()->user();
+        $transaction = $this->paidPaddleTransaction((string) $transactionId);
 
-        $transaction = null;
-
-        $response = Http::withToken(config('wave.paddle.api_key'))->get($this->paddle_url.'/transactions/'.$transactionId);
-
-        if ($response->successful()) {
-            $resBody = json_decode($response->body());
-            if (isset($resBody->data->status) && ($resBody->data->status == 'paid' || $resBody->data->status == 'completed' || $resBody->data->status == 'ready')) {
-                $transaction = $resBody->data;
-            }
-        }
-
-        if ($transaction) {
-            // Proceed with processing the transaction
-
-            $user = auth()->user();
-
-            if ($this->billing_cycle_selected == 'month') {
-                $plan = Plan::where('monthly_price_id', $transaction->items[0]->price->id)->first();
-            } else {
-                $plan = Plan::where('yearly_price_id', $transaction->items[0]->price->id)->first();
-            }
-
-            if (! isset($plan->id)) {
-                $this->js('Paddle.Checkout.close()');
-                Notification::make()
-                    ->title('Plan Price ID not found. Something went wrong during the checkout process')
-                    ->success()
-                    ->send();
-
-                return;
-            }
-
-            auth()->user()->syncRoles([]);
-            auth()->user()->assignRole($plan->role->name);
-
-            Subscription::create([
-                'billable_type' => 'user',
-                'billable_id' => auth()->user()->id,
-                'plan_id' => $plan->id,
-                'vendor_slug' => 'paddle',
-                'vendor_transaction_id' => $transactionId,
-                'vendor_customer_id' => $transaction->customer_id,
-                'vendor_subscription_id' => $transaction->subscription_id,
-                'cycle' => $this->billing_cycle_selected,
-                'status' => 'active',
-                'seats' => 1,
-            ]);
-
-            $this->js('savePaddleSubscription("'.$transactionId.'")');
-
-        } else {
+        if (is_null($transaction)) {
             $this->js('Paddle.Checkout.close()');
             Notification::make()
                 ->title('Error processing the transaction. Please try again.')
                 ->danger()
                 ->send();
+
+            return;
         }
 
-        // if we got here something went wrong and we need to let the user know.
+        $priceColumn = ($this->billing_cycle_selected == 'month') ? 'monthly_price_id' : 'yearly_price_id';
+        $plan = Plan::where($priceColumn, data_get($transaction, 'items.0.price.id'))->first();
 
+        if (! isset($plan->id)) {
+            $this->js('Paddle.Checkout.close()');
+            Notification::make()
+                ->title('Plan Price ID not found. Something went wrong during the checkout process')
+                ->danger()
+                ->send();
+
+            return;
+        }
+
+        DB::transaction(function () use ($user, $plan, $transaction, $transactionId) {
+            Subscription::create([
+                'billable_type' => 'user',
+                'billable_id' => $user->id,
+                'plan_id' => $plan->id,
+                'vendor_slug' => 'paddle',
+                'vendor_transaction_id' => $transactionId,
+                'vendor_customer_id' => $transaction['customer_id'] ?? null,
+                'vendor_subscription_id' => $transaction['subscription_id'] ?? null,
+                'cycle' => $this->billing_cycle_selected,
+                'status' => 'active',
+                'seats' => 1,
+            ]);
+
+            $user->syncRoles([]);
+            $user->assignRole($plan->role->name);
+        });
+
+        $user->clearUserCache();
+
+        $this->js('savePaddleSubscription("'.e($transactionId).'")');
+    }
+
+    /**
+     * The transaction if it is paid, was started by this user and hasn't been used yet.
+     */
+    private function paidPaddleTransaction(string $transactionId): ?array
+    {
+        if (! preg_match('/^txn_[a-z0-9]+$/', $transactionId)) {
+            return null;
+        }
+
+        if (Subscription::where('vendor_slug', 'paddle')->where('vendor_transaction_id', $transactionId)->exists()) {
+            return null;
+        }
+
+        $response = Http::withToken(config('wave.paddle.api_key'))->get($this->paddle_url.'/transactions/'.$transactionId);
+        $transaction = $response->successful() ? $response->json('data') : null;
+
+        if (! in_array($transaction['status'] ?? null, ['paid', 'completed'])) {
+            return null;
+        }
+
+        // Set by openCheckout(), so another user's transaction can't be claimed
+        if ((string) data_get($transaction, 'custom_data.user_id') !== (string) auth()->id()) {
+            return null;
+        }
+
+        if (! empty($transaction['subscription_id'])
+            && Subscription::where('vendor_slug', 'paddle')->where('vendor_subscription_id', $transaction['subscription_id'])->exists()) {
+            return null;
+        }
+
+        return $transaction;
     }
 
     public function switchPlan(Plan $plan)

@@ -5,6 +5,7 @@ namespace Wave\Http\Livewire\Billing;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Wave\Actions\Billing\CancelSubscription;
 use Wave\Actions\Billing\Paddle\AddSubscriptionIdFromTransaction;
@@ -15,6 +16,7 @@ class Update extends Component
 
     public $cancel_url;
 
+    #[Locked]
     public $paddle_url;
 
     public $cancellation_scheduled = false;

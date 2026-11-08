@@ -201,7 +201,10 @@
                             quantity: 1
                         }],
                         customer: {
-                            email: '{{ auth()->user()->email }}'
+                            email: @js(auth()->user()->email)
+                        },
+                        customData: {
+                            user_id: @js((string) auth()->id())
                         },
                     });
                 } else {
