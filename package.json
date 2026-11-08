@@ -12,12 +12,8 @@
     "alpinejs": "^3.17.5",
     "axios": "^1.21.0",
     "laravel-vite-plugin": "^3.2",
-    "postcss": "^8.4.38",
     "tailwindcss": "^4.1.12",
     "vite": "^8.3"
-  },
-  "dependencies": {
-    "@tailwindcss/postcss": "^4.3.4"
   },
   "overrides": {
     "@tailwindcss/typography": {
