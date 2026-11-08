@@ -54,8 +54,9 @@ jobs:
     - name: Run the Auth Migrations
       run: php artisan migrate --path=vendor/devdojo/auth/database/migrations --force
 
-    - name: Install PestPHP
-      run: composer require pestphp/pest --dev --with-all-dependencies
+    # The auth suite's DuskTestCase needs Dusk even though the browser tests don't run here
+    - name: Install PestPHP and Dusk
+      run: composer require pestphp/pest laravel/dusk alebatistella/duskapiconf --dev --with-all-dependencies
 
     - name: Run Tests
       run: ./vendor/bin/pest
