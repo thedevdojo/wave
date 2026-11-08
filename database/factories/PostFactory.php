@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Wave\Category;
 use Wave\Post;
-use Wave\User;
 
 /**
  * @extends Factory<Post>
@@ -21,12 +21,9 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $category = Category::inRandomOrder()->first() ?? Category::factory()->create();
-        $user = User::inRandomOrder()->first() ?? User::factory()->create();
-
         return [
-            'author_id' => $user->id,
-            'category_id' => $category->id,
+            'author_id' => User::factory(),
+            'category_id' => Category::factory(),
             'title' => fake()->sentence(),
             'seo_title' => fake()->sentence(),
             'excerpt' => fake()->paragraph(),

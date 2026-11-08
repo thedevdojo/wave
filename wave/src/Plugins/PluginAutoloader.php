@@ -22,12 +22,14 @@ class PluginAutoloader
 
         spl_autoload_register(function ($class) {
             $prefix = 'Wave\\Plugins\\';
-            $base_dir = resource_path('plugins/');
 
             $len = strlen($prefix);
             if (strncmp($prefix, $class, $len) !== 0) {
                 return;
             }
+
+            // Read after the prefix check: this runs for every class, even when no app is booted.
+            $base_dir = PluginManager::path().'/';
 
             $relative_class = substr($class, $len);
             $parts = explode('\\', $relative_class);

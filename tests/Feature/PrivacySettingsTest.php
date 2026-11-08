@@ -3,7 +3,7 @@
 use App\Models\User;
 
 test('user can update privacy settings', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -28,7 +28,7 @@ test('user can update privacy settings', function () {
 });
 
 test('privacy settings default to null when not set', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     // Clear privacy settings
     $user->privacy_settings = null;
@@ -40,8 +40,7 @@ test('privacy settings default to null when not set', function () {
 });
 
 test('can update individual privacy settings', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalSettings = $user->privacy_settings;
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -55,15 +54,10 @@ test('can update individual privacy settings', function () {
     $user->refresh();
 
     expect($user->privacy_settings['profile_visibility'])->toBe('contacts');
-
-    // Restore
-    $user->privacy_settings = $originalSettings;
-    $user->save();
 });
 
 test('privacy settings can be stored as json', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalSettings = $user->privacy_settings;
+    $user = User::factory()->create();
 
     $settings = [
         'profile_visibility' => 'public',
@@ -83,14 +77,10 @@ test('privacy settings can be stored as json', function () {
 
     expect($freshUser->privacy_settings)->toBeArray();
     expect($freshUser->privacy_settings)->toBe($settings);
-
-    // Restore
-    $user->privacy_settings = $originalSettings;
-    $user->save();
 });
 
 test('multiple users can have different privacy settings', function () {
-    $user1 = User::where('email', 'admin@admin.com')->first();
+    $user1 = User::factory()->create();
     $user2 = User::factory()->create();
 
     $user1Settings = [
@@ -121,7 +111,7 @@ test('multiple users can have different privacy settings', function () {
 });
 
 test('privacy settings page is accessible', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -149,7 +139,7 @@ test('private profile returns 404 for non-owners', function () {
     $response->assertStatus(404);
 
     // Different authenticated user trying to view
-    $otherUser = User::where('email', 'admin@admin.com')->first();
+    $otherUser = User::factory()->create();
     $this->actingAs($otherUser);
     $response = $this->get('/profile/'.$user->username);
     $response->assertStatus(404);
@@ -175,7 +165,7 @@ test('public profile is accessible to everyone', function () {
     $response->assertStatus(200);
 
     // Authenticated user can view
-    $otherUser = User::where('email', 'admin@admin.com')->first();
+    $otherUser = User::factory()->create();
     $this->actingAs($otherUser);
     $response = $this->get('/profile/'.$user->username);
     $response->assertStatus(200);

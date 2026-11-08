@@ -4,12 +4,13 @@ namespace Wave\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Wave\Plugins\PluginManager;
 
 class PluginImageController extends Controller
 {
     public function show($plugin_name)
     {
-        $path = resource_path('plugins/'.$plugin_name.'/plugin.jpg');
+        $path = PluginManager::path().'/'.$plugin_name.'/plugin.jpg';
 
         if (! File::exists($path)) {
             abort(404);

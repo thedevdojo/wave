@@ -6,13 +6,6 @@ use Wave\User as WaveUser;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
-    $this->uniqueId = uniqid();
-});
-
-afterEach(function () {
-    // Delete pages created by this user to avoid FK constraint violations
-    Page::where('author_id', $this->user->id)->delete();
-    $this->user->forceDelete();
 });
 
 describe('Page Model', function () {
@@ -21,13 +14,13 @@ describe('Page Model', function () {
             'author_id' => $this->user->id,
             'title' => 'About Us',
             'body' => 'This is the about page content.',
-            'slug' => 'about-us-'.$this->uniqueId,
+            'slug' => 'about-us',
             'status' => 'ACTIVE',
         ]);
 
         expect($page)->toBeInstanceOf(Page::class);
         expect($page->title)->toBe('About Us');
-        expect($page->slug)->toBe('about-us-'.$this->uniqueId);
+        expect($page->slug)->toBe('about-us');
         expect($page->status)->toBe('ACTIVE');
     });
 
@@ -36,7 +29,7 @@ describe('Page Model', function () {
             'author_id' => $this->user->id,
             'title' => 'Test Page',
             'body' => 'Content',
-            'slug' => 'test-page-'.$this->uniqueId,
+            'slug' => 'test-page',
             'status' => 'ACTIVE',
         ]);
 
@@ -49,11 +42,11 @@ describe('Page Model', function () {
             'author_id' => $this->user->id,
             'title' => 'Privacy Policy',
             'body' => 'Privacy content',
-            'slug' => 'privacy-policy-'.$this->uniqueId,
+            'slug' => 'privacy-policy',
             'status' => 'ACTIVE',
         ]);
 
-        expect($page->link())->toBe(url('privacy-policy-'.$this->uniqueId));
+        expect($page->link())->toBe(url('privacy-policy'));
     });
 
     it('generates correct image url', function () {
@@ -61,7 +54,7 @@ describe('Page Model', function () {
             'author_id' => $this->user->id,
             'title' => 'Test',
             'body' => 'Content',
-            'slug' => 'test-image-'.$this->uniqueId,
+            'slug' => 'test-image',
             'image' => 'images/page.jpg',
             'status' => 'ACTIVE',
         ]);
@@ -74,7 +67,7 @@ describe('Page Model', function () {
             'author_id' => $this->user->id,
             'title' => 'Test',
             'body' => 'Content',
-            'slug' => 'test-excerpt-'.$this->uniqueId,
+            'slug' => 'test-excerpt',
             'status' => 'ACTIVE',
         ]);
 
@@ -86,7 +79,7 @@ describe('Page Model', function () {
             'author_id' => $this->user->id,
             'title' => 'Test',
             'body' => 'Content',
-            'slug' => 'test-meta-'.$this->uniqueId,
+            'slug' => 'test-meta',
             'status' => 'ACTIVE',
         ]);
 
@@ -99,7 +92,7 @@ describe('Page Model', function () {
             'author_id' => $this->user->id,
             'title' => 'Test',
             'body' => 'Content',
-            'slug' => 'test-status-'.$this->uniqueId,
+            'slug' => 'test-status',
         ]);
 
         // SQLite doesn't enforce ENUM defaults the same way - status may be null or INACTIVE
@@ -111,7 +104,7 @@ describe('Page Model', function () {
             'author_id' => $this->user->id,
             'title' => 'First',
             'body' => 'Content',
-            'slug' => 'unique-slug-'.$this->uniqueId,
+            'slug' => 'unique-slug',
             'status' => 'ACTIVE',
         ]);
 
@@ -119,7 +112,7 @@ describe('Page Model', function () {
             'author_id' => $this->user->id,
             'title' => 'Second',
             'body' => 'Content',
-            'slug' => 'unique-slug-'.$this->uniqueId,
+            'slug' => 'unique-slug',
             'status' => 'ACTIVE',
         ]))->toThrow(Exception::class);
     });
@@ -134,21 +127,18 @@ describe('Page Controller', function () {
 });
 
 describe('Page Routes (Dynamic)', function () {
-    // Note: Pages are dynamically registered as routes at boot time in wave/routes/web.php
-    // Routes are registered as /{slug} directly from the database
-    // Testing dynamic route registration is complex since routes are built at boot
+    it('serves an active page at its slug', function () {
+        $page = Page::create([
+            'author_id' => $this->user->id,
+            'title' => 'Example Page',
+            'body' => 'Example content',
+            'slug' => 'example-page',
+            'status' => 'ACTIVE',
+        ]);
 
-    it('existing seeded page route works', function () {
-        // Check if example-page exists from seeding
-        $page = Page::where('slug', 'example-page')->first();
+        $this->registerPageRoutes();
 
-        if (! $page) {
-            $this->markTestSkipped('No seeded pages available for route testing');
-        }
-
-        $response = $this->get('/'.$page->slug);
-
-        $response->assertStatus(200);
+        $this->get('/'.$page->slug)->assertOk()->assertSee('Example content');
     });
 
     it('only registers routes for active pages', function () {
@@ -156,22 +146,21 @@ describe('Page Routes (Dynamic)', function () {
             'author_id' => $this->user->id,
             'title' => 'Active Page',
             'body' => 'Active content',
-            'slug' => 'active-page-'.$this->uniqueId,
+            'slug' => 'active-page',
             'status' => 'ACTIVE',
         ]);
         Page::create([
             'author_id' => $this->user->id,
             'title' => 'Inactive Page',
             'body' => 'Inactive content',
-            'slug' => 'inactive-page-'.$this->uniqueId,
+            'slug' => 'inactive-page',
             'status' => 'INACTIVE',
         ]);
 
-        // Page routes are registered at boot, so boot again to pick up the new pages
-        $this->refreshApplication();
+        $this->registerPageRoutes();
 
-        $this->get('/active-page-'.$this->uniqueId)->assertOk()->assertSee('Active content');
-        $this->get('/inactive-page-'.$this->uniqueId)->assertNotFound();
+        $this->get('/active-page')->assertOk()->assertSee('Active content');
+        $this->get('/inactive-page')->assertNotFound();
     });
 
     it('links to the route the page is served on', function () {
@@ -179,13 +168,13 @@ describe('Page Routes (Dynamic)', function () {
             'author_id' => $this->user->id,
             'title' => 'Linked Page',
             'body' => 'Linked content',
-            'slug' => 'linked-page-'.$this->uniqueId,
+            'slug' => 'linked-page',
             'status' => 'ACTIVE',
         ]);
 
-        $this->refreshApplication();
+        $this->registerPageRoutes();
 
-        expect($page->link())->toBe(url('linked-page-'.$this->uniqueId));
+        expect($page->link())->toBe(url('linked-page'));
         $this->get($page->link())->assertOk()->assertSee('Linked content');
     });
 });

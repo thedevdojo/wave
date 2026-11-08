@@ -23,4 +23,9 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
         ];
     }
+
+    public function admin(): static
+    {
+        return $this->afterCreating(fn ($user) => $user->syncRoles('admin'));
+    }
 }

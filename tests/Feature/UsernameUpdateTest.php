@@ -4,9 +4,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 
 it('allows user to update their username', function () {
-    // Use an existing seeded user (admin user from seed)
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalUsername = $user->username;
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -17,17 +15,11 @@ it('allows user to update their username', function () {
 
     $user->refresh();
     expect($user->username)->toBe($newUsername);
-
-    // Restore original username for other tests
-    $user->username = $originalUsername;
-    $user->save();
 });
 
 it('validates username is unique when updating', function () {
-    // Get two seeded users
-    $users = User::limit(2)->get();
-    $user1 = $users[0];
-    $user2 = $users[1];
+    $user1 = User::factory()->create();
+    $user2 = User::factory()->create();
 
     $this->actingAs($user1);
 
@@ -40,8 +32,7 @@ it('validates username is unique when updating', function () {
 });
 
 it('allows username with dashes and underscores', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalUsername = $user->username;
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -51,16 +42,11 @@ it('allows username with dashes and underscores', function () {
 
     $user->refresh();
     expect($user->username)->toBe('new-user_name');
-
-    // Restore
-    $user->username = $originalUsername;
-    $user->save();
 });
 
 it('user can keep their current username when updating profile', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
     $currentUsername = $user->username;
-    $originalName = $user->name;
 
     $this->actingAs($user);
 
@@ -71,19 +57,11 @@ it('user can keep their current username when updating profile', function () {
     $user->refresh();
     expect($user->username)->toBe($currentUsername);
     expect($user->name)->toBe('Updated Name');
-
-    // Restore
-    $user->name = $originalName;
-    $user->save();
 });
 
 it('multiple users can update their usernames independently', function () {
-    $users = User::limit(2)->get();
-    $user1 = $users[0];
-    $user2 = $users[1];
-
-    $original1 = $user1->username;
-    $original2 = $user2->username;
+    $user1 = User::factory()->create();
+    $user2 = User::factory()->create();
 
     // Both users update their usernames
     $user1->username = 'temp-user1-'.time();
@@ -97,12 +75,6 @@ it('multiple users can update their usernames independently', function () {
 
     expect($user1->username)->toStartWith('temp-user1-');
     expect($user2->username)->toStartWith('temp-user2-');
-
-    // Restore
-    $user1->username = $original1;
-    $user1->save();
-    $user2->username = $original2;
-    $user2->save();
 });
 
 it('username field is included in user model fillable attributes', function () {
@@ -112,8 +84,7 @@ it('username field is included in user model fillable attributes', function () {
 });
 
 it('username can be updated through mass assignment', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalUsername = $user->username;
+    $user = User::factory()->create();
 
     $newUsername = 'mass_assigned_'.time();
     $user->fill(['username' => $newUsername]);
@@ -121,8 +92,4 @@ it('username can be updated through mass assignment', function () {
 
     $user->refresh();
     expect($user->username)->toBe($newUsername);
-
-    // Restore
-    $user->username = $originalUsername;
-    $user->save();
 });

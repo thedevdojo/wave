@@ -3,8 +3,7 @@
 use App\Models\User;
 
 it('allows user to add social media links', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalLinks = $user->social_links;
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -23,15 +22,10 @@ it('allows user to add social media links', function () {
     expect($user->social_links)->toBe($links);
     expect($user->social_links['twitter'])->toBe('https://twitter.com/testuser');
     expect($user->social_links['github'])->toBe('https://github.com/testuser');
-
-    // Restore
-    $user->social_links = $originalLinks;
-    $user->save();
 });
 
 it('returns null when no social links are set', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalLinks = $user->social_links;
+    $user = User::factory()->create();
 
     // Clear links
     $user->social_links = null;
@@ -40,15 +34,10 @@ it('returns null when no social links are set', function () {
     $user->refresh();
 
     expect($user->social_links)->toBeNull();
-
-    // Restore
-    $user->social_links = $originalLinks;
-    $user->save();
 });
 
 it('can update individual social links', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalLinks = $user->social_links;
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -70,15 +59,10 @@ it('can update individual social links', function () {
 
     expect($user->social_links['twitter'])->toBe('https://twitter.com/newhandle');
     expect($user->social_links['github'])->toBe('https://github.com/oldusername');
-
-    // Restore
-    $user->social_links = $originalLinks;
-    $user->save();
 });
 
 it('social links can be stored as json', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalLinks = $user->social_links;
+    $user = User::factory()->create();
 
     $links = [
         'twitter' => 'https://twitter.com/test',
@@ -98,15 +82,10 @@ it('social links can be stored as json', function () {
     expect($freshUser->social_links)->toBeArray();
     expect($freshUser->social_links)->toHaveCount(6);
     expect($freshUser->social_links['youtube'])->toBe('https://youtube.com/@test');
-
-    // Restore
-    $user->social_links = $originalLinks;
-    $user->save();
 });
 
 it('can remove social links by setting to null', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalLinks = $user->social_links;
+    $user = User::factory()->create();
 
     // Set some links
     $user->social_links = [
@@ -122,24 +101,11 @@ it('can remove social links by setting to null', function () {
     $user->refresh();
 
     expect($user->social_links)->toBeNull();
-
-    // Restore
-    $user->social_links = $originalLinks;
-    $user->save();
 });
 
 it('multiple users can have different social links', function () {
-    // Get admin user and ensure we have a second user
-    $user1 = User::where('email', 'admin@admin.com')->first();
-
-    // Get or create a second user
-    $user2 = User::where('email', '!=', 'admin@admin.com')->first();
-    if (! $user2) {
-        $user2 = User::factory()->create(['avatar' => 'demo/default.png']);
-    }
-
-    $original1 = $user1->social_links;
-    $original2 = $user2->social_links;
+    $user1 = User::factory()->create();
+    $user2 = User::factory()->create();
 
     // Set different links for each user
     $user1->social_links = [
@@ -161,17 +127,10 @@ it('multiple users can have different social links', function () {
     expect($user2->social_links['linkedin'])->toBe('https://linkedin.com/in/user2');
     expect($user1->social_links)->not->toHaveKey('linkedin');
     expect($user2->social_links)->not->toHaveKey('twitter');
-
-    // Restore
-    $user1->social_links = $original1;
-    $user1->save();
-    $user2->social_links = $original2;
-    $user2->save();
 });
 
 it('can check if user has any social links', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalLinks = $user->social_links;
+    $user = User::factory()->create();
 
     // User with links
     $user->social_links = ['twitter' => 'https://twitter.com/test'];
@@ -188,8 +147,4 @@ it('can check if user has any social links', function () {
 
     $hasLinks = ! empty($user->social_links);
     expect($hasLinks)->toBeFalse();
-
-    // Restore
-    $user->social_links = $originalLinks;
-    $user->save();
 });

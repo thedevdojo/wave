@@ -7,9 +7,6 @@ test('cleanup command deletes old activity logs', function () {
     // Disable activity logging for test setup
     config(['activity.enabled' => false]);
 
-    // Clear existing logs
-    ActivityLog::query()->delete();
-
     $user = User::factory()->create();
     $this->actingAs($user);
 
@@ -49,7 +46,6 @@ test('cleanup command deletes old activity logs', function () {
 
 test('cleanup command respects retention config', function () {
     config(['activity.enabled' => false]);
-    ActivityLog::query()->delete();
     config(['activity.retention_days' => 30]);
 
     $user = User::factory()->create();
@@ -74,7 +70,6 @@ test('cleanup command respects retention config', function () {
 
 test('duplicate login events within 5 minutes are prevented', function () {
     config(['activity.enabled' => false]);
-    ActivityLog::query()->delete();
 
     $user = User::factory()->create();
     config(['activity.enabled' => true]);

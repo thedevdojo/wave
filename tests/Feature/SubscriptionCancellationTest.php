@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
+use Spatie\Permission\Models\Role;
 use Wave\Plan;
 use Wave\Subscription;
 
@@ -9,23 +10,17 @@ beforeEach(function () {
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
 
-    // Use an existing plan from the seeder (premium plan has role_id 4)
-    $this->premiumPlan = Plan::where('role_id', 4)->first();
-
-    if (! $this->premiumPlan) {
-        // Fallback: create a basic plan structure if no plan exists
-        $this->premiumPlan = Plan::create([
-            'name' => 'Premium Plan',
-            'description' => 'Premium subscription plan',
-            'features' => 'Feature 1, Feature 2',
-            'monthly_price' => '10.00',
-            'yearly_price' => '100.00',
-            'monthly_price_id' => 'price_monthly_test',
-            'yearly_price_id' => 'price_yearly_test',
-            'active' => true,
-            'role_id' => 4, // premium role
-        ]);
-    }
+    $this->premiumPlan = Plan::create([
+        'name' => 'Premium Plan',
+        'description' => 'Premium subscription plan',
+        'features' => 'Feature 1, Feature 2',
+        'monthly_price' => '10.00',
+        'yearly_price' => '100.00',
+        'monthly_price_id' => 'price_monthly_test',
+        'yearly_price_id' => 'price_yearly_test',
+        'active' => true,
+        'role_id' => Role::findByName('premium')->id,
+    ]);
 
     // Ensure user has premium role
     $this->user->syncRoles([]);

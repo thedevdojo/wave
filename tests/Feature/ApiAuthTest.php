@@ -26,10 +26,6 @@ beforeEach(function () {
     $this->user = User::factory()->create();
 });
 
-afterEach(function () {
-    $this->user->forceDelete();
-});
-
 describe('POST /api/login', function () {
     it('returns a token whose lifetime matches auth_token_expires', function () {
         config(['wave.api.auth_token_expires' => 15]);
@@ -57,10 +53,6 @@ describe('POST /api/login', function () {
 });
 
 describe('POST /api/register', function () {
-    afterEach(function () {
-        User::withTrashed()->where('email', 'like', '%@api-register.test')->forceDelete();
-    });
-
     it('creates the user and returns a working token', function () {
         $response = $this->postJson('/api/register', registrationData());
 

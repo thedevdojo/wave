@@ -2,13 +2,14 @@
 
 use App\Models\User;
 use Carbon\Carbon;
+use Spatie\Permission\Models\Role;
 use Wave\ActivityLog;
 use Wave\Plan;
 use Wave\Post;
 use Wave\Subscription;
 
 test('user can access export data page', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -20,7 +21,7 @@ test('user can access export data page', function () {
 });
 
 test('user can export their data', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -31,7 +32,7 @@ test('user can export their data', function () {
 });
 
 test('export data contains user profile information', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -51,7 +52,7 @@ test('export data contains user profile information', function () {
 });
 
 test('export logs activity', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -72,15 +73,9 @@ test('export logs activity', function () {
 });
 
 test('exported data masks api keys', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
-    // Create a test API key if none exists
-    if ($user->apiKeys()->count() === 0) {
-        $user->createApiKey('Test Key');
-    }
-
-    $apiKey = $user->apiKeys()->first();
-    $fullKey = $apiKey->key;
+    $fullKey = $user->createApiKey('Test Key')->key;
 
     // Simulate the masking logic
     $maskedKey = substr($fullKey, 0, 10).'...'.substr($fullKey, -5);
@@ -91,7 +86,7 @@ test('exported data masks api keys', function () {
 });
 
 test('export includes privacy settings', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     // Set some privacy settings
     $privacySettings = [
@@ -108,25 +103,29 @@ test('export includes privacy settings', function () {
 });
 
 test('export includes blog posts authored by user', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
+
+    Post::factory()->create(['author_id' => $user->id]);
 
     $posts = Post::where('author_id', $user->id)->get();
 
-    expect($posts->count())->toBeGreaterThanOrEqual(0);
+    expect($posts)->toHaveCount(1);
 });
 
 test('export handles subscription with string ends_at date', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
-    // Clean up any existing subscriptions for this test
-    Subscription::where('billable_id', $user->id)->delete();
-
-    // Get a plan to use
-    $plan = Plan::first();
+    $plan = Plan::create([
+        'name' => 'Basic',
+        'features' => 'Feature 1',
+        'monthly_price' => '5.00',
+        'active' => true,
+        'role_id' => Role::findByName('basic')->id,
+    ]);
 
     // Create a subscription directly in the database with ends_at as a string
     // This simulates a cancelled subscription scenario where ends_at might not be cast properly
@@ -180,7 +179,4 @@ test('export handles subscription with string ends_at date', function () {
     expect($exportData['subscription']['ends_at'])->toBe('2026-12-31 23:59:59');
     expect($exportData['subscription']['status'])->toBe('cancelled');
     expect($exportData['subscription']['plan'])->toBe($plan->name);
-
-    // Clean up
-    Subscription::where('id', $subscriptionId)->delete();
 });

@@ -6,25 +6,26 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
+use Wave\Plugins\PluginManager;
 
 function writeInstalledPlugins(array $plugins): void
 {
-    File::put(resource_path('plugins/installed.json'), json_encode($plugins));
+    File::put(PluginManager::path().'/installed.json', json_encode($plugins));
 }
 
 function readInstalledPlugins(): string
 {
-    return File::get(resource_path('plugins/installed.json'));
+    return File::get(PluginManager::path().'/installed.json');
 }
 
 beforeEach(function () {
-    $this->actingAs(User::where('email', 'admin@admin.com')->first());
+    $this->actingAs(User::factory()->admin()->create());
 
-    $this->installedPlugins = readInstalledPlugins();
-    $this->victim = storage_path('framework/testing/plugin-traversal');
+    $this->pluginsPath = $this->useTemporaryPluginsPath();
+    $this->victim = dirname($this->pluginsPath).'/plugin-traversal';
 
-    File::ensureDirectoryExists(resource_path('plugins/test-fixture'));
-    File::put(resource_path('plugins/test-fixture/TestFixturePlugin.php'), <<<'PHP'
+    File::ensureDirectoryExists($this->pluginsPath.'/test-fixture');
+    File::put($this->pluginsPath.'/test-fixture/TestFixturePlugin.php', <<<'PHP'
 <?php
 
 namespace Wave\Plugins\TestFixture;
@@ -41,13 +42,6 @@ class TestFixturePlugin extends Plugin
     }
 }
 PHP);
-});
-
-afterEach(function () {
-    File::put(resource_path('plugins/installed.json'), $this->installedPlugins);
-    File::deleteDirectory(resource_path('plugins/test-fixture'));
-    File::deleteDirectory(resource_path('plugins/seo-tools'));
-    File::deleteDirectory($this->victim);
 });
 
 test('activating a plugin forgets the cached plugin list', function () {
@@ -75,7 +69,7 @@ test('deleting a plugin removes its folder', function () {
 
     Livewire::test(Plugins::class)->call('deletePlugin', 'test-fixture');
 
-    expect(resource_path('plugins/test-fixture'))->not->toBeDirectory()
+    expect($this->pluginsPath.'/test-fixture')->not->toBeDirectory()
         ->and(readInstalledPlugins())->toBe('[]');
 });
 
@@ -84,7 +78,7 @@ test('plugin actions only accept discovered plugin folders', function (string $a
     File::ensureDirectoryExists($this->victim);
 
     Livewire::test(Plugins::class)
-        ->call($action, '../../storage/framework/testing/plugin-traversal')
+        ->call($action, '../plugin-traversal')
         ->assertNotFound();
 
     expect($this->victim)->toBeDirectory()
