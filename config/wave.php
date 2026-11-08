@@ -23,6 +23,9 @@ return [
     'dev_bar' => env('WAVE_BAR', false),
     'default_user_role' => 'registered',
 
+    // Folder that plugins are loaded from and created in.
+    'plugins_path' => resource_path('plugins'),
+
     'billing_provider' => env('BILLING_PROVIDER', 'stripe'),
 
     'paddle' => [

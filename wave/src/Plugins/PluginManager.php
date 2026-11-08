@@ -54,7 +54,7 @@ class PluginManager
 
     protected function findPluginFile($pluginName)
     {
-        $basePath = resource_path('plugins');
+        $basePath = config('wave.plugins_path');
         $studlyName = Str::studly($pluginName);
 
         // Check for exact case match
@@ -82,7 +82,7 @@ class PluginManager
         if ($this->app->bound('cache')) {
             try {
                 return Cache::remember('wave_installed_plugins', 3600, function () {
-                    $path = resource_path('plugins/installed.json');
+                    $path = config('wave.plugins_path').'/installed.json';
                     if (! File::exists($path)) {
                         return [];
                     }
@@ -95,7 +95,7 @@ class PluginManager
         }
 
         // Direct file access when cache is not available
-        $path = resource_path('plugins/installed.json');
+        $path = config('wave.plugins_path').'/installed.json';
         if (! File::exists($path)) {
             return [];
         }
