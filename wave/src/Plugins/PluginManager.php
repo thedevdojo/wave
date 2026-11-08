@@ -33,11 +33,8 @@ class PluginManager
     {
         $installedPlugins = $this->getInstalledPlugins();
 
-        // Only log when there are actually plugins to load
-        if (! empty($installedPlugins)) {
-            Log::info('Loading plugins: '.json_encode($installedPlugins));
-        }
-
+        // With route:cache on, plugin routes are read from the cache, so rebuild it
+        // after activating or deactivating a plugin.
         foreach ($installedPlugins as $pluginName) {
             $studlyPluginName = Str::studly($pluginName);
             $pluginClass = "Wave\\Plugins\\{$studlyPluginName}\\{$studlyPluginName}Plugin";
@@ -50,7 +47,6 @@ class PluginManager
                     $plugin = new $pluginClass($this->app);
                     $this->plugins[$pluginName] = $plugin;
                     $this->app->register($plugin);
-                    Log::info("Successfully loaded plugin: {$pluginClass}");
                 } else {
                     Log::warning("Plugin class not found after including file: {$pluginClass}");
                 }
