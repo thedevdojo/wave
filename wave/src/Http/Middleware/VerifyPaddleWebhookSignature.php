@@ -4,6 +4,7 @@ namespace Wave\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -45,7 +46,13 @@ class VerifyPaddleWebhookSignature
         $secret = config('wave.paddle.webhook_secret');
 
         // Without a secret anyone could sign a payload, so fail closed.
-        if (empty($signature) || empty($secret)) {
+        if (empty($secret)) {
+            Log::warning('Rejected a Paddle webhook because PADDLE_WEBHOOK_SECRET is not set.');
+
+            return true;
+        }
+
+        if (empty($signature)) {
             return true;
         }
 
