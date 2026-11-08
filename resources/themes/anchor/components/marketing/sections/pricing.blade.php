@@ -46,7 +46,7 @@
         <div class="flex flex-col flex-wrap gap-x-5 lg:flex-row lg:space-x-5">
 
             @foreach(Wave\Plan::getActivePlans() as $plan)
-                @php $features = explode(',', $plan->features); @endphp
+                @php $features = $plan->featureList(); @endphp
                 <div
                     {{--  Say that you have a monthly plan that doesn't have a yearly plan, in that case we will hide the place that doesn't have a price_id --}}
                     x-show="(billing == 'Monthly' && '{{ $plan->monthly_price_id }}' != '') || (billing == 'Yearly' && '{{ $plan->yearly_price_id }}' != '')" 

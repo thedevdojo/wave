@@ -35,21 +35,7 @@ trait HasPlanFeatures
             return $this->getDefaultLimit($feature);
         }
 
-        $limits = $plan->limits ?? [];
-
-        // Feature not defined in plan limits = unlimited
-        if (! array_key_exists($feature, $limits)) {
-            return null;
-        }
-
-        $limit = $limits[$feature];
-
-        // -1 means explicitly unlimited
-        if ($limit === -1) {
-            return null;
-        }
-
-        return (int) $limit;
+        return $plan->getLimit($feature);
     }
 
     /**
@@ -214,12 +200,6 @@ trait HasPlanFeatures
             return null;
         }
 
-        $limit = $defaults[$feature];
-
-        if ($limit === -1) {
-            return null;
-        }
-
-        return (int) $limit;
+        return Plan::normalizeLimit($defaults[$feature]);
     }
 }

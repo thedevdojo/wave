@@ -23,7 +23,7 @@
 
             <div class="h-full space-y-5">
                 @foreach($plans as $plan)
-                    @php $features = explode(',', $plan->features); @endphp
+                    @php $features = $plan->featureList(); @endphp
                     <div 
                         {{--  Say that you have a monthly plan that doesn't have a yearly plan, in that case we will hide the place that doesn't have a price_id --}}
                         x-show="(billing_cycle_selected == 'month' && '{{ $plan->monthly_price_id }}' != '') || (billing_cycle_selected == 'year' && '{{ $plan->yearly_price_id }}' != '')" 
