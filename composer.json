@@ -29,6 +29,7 @@
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
         "livewire/livewire": "^3.6.4",
+        "railsware/mailtrap-php": "^3.16",
         "ralphjsmit/livewire-urls": "^1.5",
         "spatie/laravel-permission": "^6.12",
         "stripe/stripe-php": "^17.3",
@@ -95,7 +96,8 @@
         "sort-packages": true,
         "optimize-autoloader": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
         }
     },
     "minimum-stability": "stable",
