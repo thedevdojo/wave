@@ -40,13 +40,10 @@ class Plugins extends Page
             mkdir($plugins_folder);
         }
 
-        $scandirectory = scandir($plugins_folder);
-
-        foreach ($scandirectory as $folder) {
-            if ($folder === '.' || $folder === '..') {
-                continue;
-            }
-
+        // Only folders can hold a plugin. Probing paths under files like installed.json
+        // fails when open_basedir is set.
+        foreach (File::directories($plugins_folder) as $directory) {
+            $folder = basename($directory);
             $studlyFolderName = Str::studly($folder);
             $pluginFile = $plugins_folder.'/'.$folder.'/'.$studlyFolderName.'Plugin.php';
 
