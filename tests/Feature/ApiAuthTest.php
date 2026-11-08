@@ -106,15 +106,15 @@ describe('POST /api/register', function () {
             ->assertJsonValidationErrors('username');
     });
 
-    it('is refused when registrations are disabled', function () {
-        config(['devdojo.auth.settings.registration_enabled' => false]);
+    it('is refused when registrations are disabled', function (string $setting) {
+        config(["devdojo.auth.settings.{$setting}" => false]);
 
         $this->postJson('/api/register', registrationData())
             ->assertForbidden()
             ->assertJsonMissingPath('access_token');
 
         expect(User::where('email', 'new-user@api-register.test')->exists())->toBeFalse();
-    });
+    })->with(['registration_enabled', 'enable_email_registration']);
 });
 
 describe('POST /api/refresh', function () {
@@ -172,6 +172,15 @@ describe('POST /api/token', function () {
         $payload = jwtPayload($response->json('access_token'));
         expect($payload['exp'] - $payload['iat'])->toBe(5 * 60);
         expect($payload['sub'])->toBe((string) $this->user->id);
+    });
+
+    it('does not change the TTL used for other tokens', function () {
+        config(['wave.api.key_token_expires' => 5]);
+        $ttl = JWTAuth::factory()->getTTL();
+
+        $this->postJson('/api/token', ['key' => $this->user->createApiKey('Token Key')->key])->assertOk();
+
+        expect(JWTAuth::factory()->getTTL())->toBe($ttl);
     });
 
     it('requires a key', function () {

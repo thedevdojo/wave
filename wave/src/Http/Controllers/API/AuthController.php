@@ -4,7 +4,7 @@ namespace Wave\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Carbon\Carbon;
+use Closure;
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,13 +31,10 @@ class AuthController extends Controller implements HasMiddleware
     {
         $credentials = request(['email', 'password']);
 
-        JWTAuth::factory()->setTTL(config('wave.api.auth_token_expires', 60));
-
-        if (! $token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        return $this->respondWithToken($token);
+        return $this->respondWithToken(
+            fn () => JWTAuth::attempt($credentials),
+            config('wave.api.auth_token_expires', 60)
+        );
     }
 
     /**
@@ -70,12 +67,13 @@ class AuthController extends Controller implements HasMiddleware
         }
 
         $key->update([
-            'last_used_at' => Carbon::now(),
+            'last_used_at' => now(),
         ]);
 
-        JWTAuth::factory()->setTTL(config('wave.api.key_token_expires', 60));
-
-        return $this->respondWithToken(JWTAuth::fromUser($key->user));
+        return $this->respondWithToken(
+            fn () => JWTAuth::fromUser($key->user),
+            config('wave.api.key_token_expires', 60)
+        );
     }
 
     /**
@@ -83,26 +81,42 @@ class AuthController extends Controller implements HasMiddleware
      */
     public function refresh(): JsonResponse
     {
-        JWTAuth::factory()->setTTL(config('wave.api.auth_token_expires', 60));
-
         try {
-            $token = JWTAuth::parseToken()->refresh();
+            return $this->respondWithToken(
+                fn () => JWTAuth::parseToken()->refresh(),
+                config('wave.api.auth_token_expires', 60)
+            );
         } catch (JWTException $e) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        return $this->respondWithToken($token);
     }
 
     /**
-     * Get the token array structure.
+     * Issue a token that lives for $ttl minutes and return the token array structure.
+     *
+     * The TTL lives on the shared JWT factory, so it is put back afterwards to keep
+     * it from leaking into anything else that issues a token in the same process.
      */
-    protected function respondWithToken(string $token): JsonResponse
+    protected function respondWithToken(Closure $issue, int $ttl): JsonResponse
     {
+        $factory = JWTAuth::factory();
+        $previousTtl = $factory->getTTL();
+        $factory->setTTL($ttl);
+
+        try {
+            $token = $issue();
+        } finally {
+            $factory->setTTL($previousTtl);
+        }
+
+        if (! $token) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60,
+            'expires_in' => $ttl * 60,
         ]);
     }
 
@@ -116,7 +130,8 @@ class AuthController extends Controller implements HasMiddleware
 
     public function register(Request $request): JsonResponse
     {
-        if (! config('devdojo.auth.settings.registration_enabled', true)) {
+        if (! config('devdojo.auth.settings.registration_enabled', true)
+            || ! config('devdojo.auth.settings.enable_email_registration', true)) {
             return response()->json([
                 'error' => config('devdojo.auth.language.register.registrations_disabled', 'Registrations are currently disabled.'),
             ], 403);
@@ -126,7 +141,7 @@ class AuthController extends Controller implements HasMiddleware
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:250|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:'.config('wave.auth.min_password_length'),
+            'password' => 'required|string|min:'.config('wave.auth.min_password_length', 8),
         ]);
 
         if ($validator->fails()) {
@@ -140,8 +155,9 @@ class AuthController extends Controller implements HasMiddleware
             'password' => bcrypt($request->password),
         ]);
 
-        JWTAuth::factory()->setTTL(config('wave.api.auth_token_expires', 60));
-
-        return $this->respondWithToken(JWTAuth::fromUser($user));
+        return $this->respondWithToken(
+            fn () => JWTAuth::fromUser($user),
+            config('wave.api.auth_token_expires', 60)
+        );
     }
 }
