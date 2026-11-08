@@ -26,6 +26,7 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 ### Fixed
 
 - `Subscription` casts `trial_ends_at` and `ends_at` to datetime ([#297])
+- The Plugins and Themes admin pages no longer fail with `open_basedir` set, and loading plugins no longer writes info logs on every request ([#412])
 
 ## [3.2.0] - 2026-11-08
 
@@ -53,3 +54,4 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#409]: https://github.com/thedevdojo/wave/pull/409
 [#410]: https://github.com/thedevdojo/wave/pull/410
 [#411]: https://github.com/thedevdojo/wave/pull/411
+[#412]: https://github.com/thedevdojo/wave/pull/412
