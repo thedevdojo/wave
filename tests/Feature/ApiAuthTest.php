@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use Devdojo\Auth\Notifications\VerifyEmailWithCode;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -115,6 +117,66 @@ describe('POST /api/register', function () {
 
         expect(User::where('email', 'new-user@api-register.test')->exists())->toBeFalse();
     })->with(['registration_enabled', 'enable_email_registration']);
+});
+
+describe('email verification', function () {
+    beforeEach(function () {
+        config(['devdojo.auth.settings.registration_require_email_verification' => true]);
+    });
+
+    afterEach(function () {
+        User::withTrashed()->where('email', 'like', '%@api-register.test')->forceDelete();
+    });
+
+    it('registers the user and sends the verification email without a token', function () {
+        Notification::fake();
+
+        $this->postJson('/api/register', registrationData())
+            ->assertCreated()
+            ->assertJsonStructure(['message'])
+            ->assertJsonMissingPath('access_token');
+
+        $user = User::where('email', 'new-user@api-register.test')->firstOrFail();
+
+        expect($user->hasVerifiedEmail())->toBeFalse();
+        Notification::assertSentTo($user, VerifyEmailWithCode::class);
+    });
+
+    it('does not send a verification email when verification is off', function () {
+        config(['devdojo.auth.settings.registration_require_email_verification' => false]);
+        Notification::fake();
+
+        $this->postJson('/api/register', registrationData())
+            ->assertOk()
+            ->assertJsonStructure(['access_token']);
+
+        Notification::assertNothingSent();
+    });
+
+    it('refuses to log in an unverified user', function () {
+        $this->postJson('/api/login', [
+            'email' => $this->user->email,
+            'password' => 'secret',
+        ])->assertForbidden()
+            ->assertExactJson(['error' => 'Your email address is not verified.']);
+    });
+
+    it('logs in a verified user', function () {
+        $this->user->markEmailAsVerified();
+
+        $this->postJson('/api/login', [
+            'email' => $this->user->email,
+            'password' => 'secret',
+        ])->assertOk()
+            ->assertJsonStructure(['access_token', 'token_type', 'expires_in']);
+    });
+
+    it('still answers wrong passwords with 401', function () {
+        $this->postJson('/api/login', [
+            'email' => $this->user->email,
+            'password' => 'wrong-password',
+        ])->assertUnauthorized()->assertExactJson(['error' => 'Unauthorized']);
+    });
 });
 
 describe('POST /api/refresh', function () {

@@ -5,6 +5,7 @@ namespace Wave\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Closure;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Validation\Validator as ValidatorContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,9 +31,21 @@ class AuthController extends Controller implements HasMiddleware
     public function login(): JsonResponse
     {
         $credentials = request(['email', 'password']);
+        $guard = auth('api');
+
+        if (! $guard->validate($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $user = $guard->getLastAttempted();
+
+        // Same rule as the web side's verified middleware.
+        if (! $user->hasVerifiedEmail()) {
+            return response()->json(['error' => 'Your email address is not verified.'], 403);
+        }
 
         return $this->respondWithToken(
-            fn () => JWTAuth::attempt($credentials),
+            fn () => JWTAuth::fromUser($user),
             config('wave.api.auth_token_expires', 60)
         );
     }
@@ -154,6 +167,15 @@ class AuthController extends Controller implements HasMiddleware
             'username' => $request->username,
             'password' => bcrypt($request->password),
         ]);
+
+        // Sends the verification email when it's required, like the web registration.
+        event(new Registered($user));
+
+        if (! $user->hasVerifiedEmail()) {
+            return response()->json([
+                'message' => 'Registration successful. Please verify your email address before logging in.',
+            ], 201);
+        }
 
         return $this->respondWithToken(
             fn () => JWTAuth::fromUser($user),
