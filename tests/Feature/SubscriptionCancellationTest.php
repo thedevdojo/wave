@@ -2,7 +2,10 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
+use Wave\Http\Livewire\Billing\Update;
 use Wave\Plan;
 use Wave\Subscription;
 
@@ -188,4 +191,69 @@ test('subscription settings page loads right after cancelling', function () {
     $subscription->cancel();
 
     $this->get('/settings/subscription')->assertOk()->assertSee('No active subscriptions found');
+});
+
+test('cancelling a paddle subscription immediately cancels it with paddle and locally', function () {
+    config(['wave.billing_provider' => 'paddle', 'wave.paddle.env' => 'sandbox']);
+
+    $subscription = Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->premiumPlan->id,
+        'vendor_slug' => 'paddle',
+        'vendor_subscription_id' => 'sub_paddle_123',
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    Http::fake([
+        'sandbox-api.paddle.com/subscriptions/sub_paddle_123/cancel' => Http::response(['data' => ['status' => 'canceled']]),
+        'sandbox-api.paddle.com/subscriptions/sub_paddle_123' => Http::response(['data' => [
+            'current_billing_period' => ['ends_at' => '2026-12-31T00:00:00Z'],
+            'management_urls' => ['cancel' => 'https://example.com/cancel', 'update_payment_method' => 'https://example.com/update'],
+        ]]),
+    ]);
+
+    Livewire::test(Update::class)
+        ->call('cancelImmediately')
+        ->assertRedirect('/settings/subscription');
+
+    Http::assertSent(fn ($request) => $request->method() === 'POST'
+        && $request->url() === 'https://sandbox-api.paddle.com/subscriptions/sub_paddle_123/cancel'
+        && $request['effective_from'] === 'immediately');
+    expect($subscription->fresh()->status)->toBe('cancelled');
+    expect($this->user->fresh()->hasRole('registered'))->toBeTrue();
+});
+
+test('cancelling immediately after the subscription already ended redirects back', function () {
+    config(['wave.billing_provider' => 'paddle', 'wave.paddle.env' => 'sandbox']);
+
+    $subscription = Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->premiumPlan->id,
+        'vendor_slug' => 'paddle',
+        'vendor_subscription_id' => 'sub_paddle_123',
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    Http::fake([
+        'sandbox-api.paddle.com/*' => Http::response(['data' => [
+            'current_billing_period' => ['ends_at' => '2026-12-31T00:00:00Z'],
+            'management_urls' => ['cancel' => 'https://example.com/cancel', 'update_payment_method' => 'https://example.com/update'],
+        ]]),
+    ]);
+
+    $component = Livewire::test(Update::class);
+
+    // Ended by a webhook while the page was open.
+    $subscription->update(['status' => 'cancelled']);
+    $this->user->unsetRelation('subscription');
+
+    $component->call('cancelImmediately')->assertRedirect('/settings/subscription');
+
+    Http::assertNotSent(fn ($request) => str_ends_with($request->url(), '/cancel'));
 });

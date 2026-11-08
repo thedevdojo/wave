@@ -28,12 +28,12 @@
                     'created_at' => $user->created_at->toDateTimeString(),
                     'updated_at' => $user->updated_at->toDateTimeString(),
                 ],
-                'profile_fields' => $user->keyValues ? $user->keyValues->map(function ($kv) {
+                'profile_fields' => $user->profileKeyValues->map(function ($kv) {
                     return [
                         'key' => $kv->key,
                         'value' => $kv->value,
                     ];
-                })->toArray() : [],
+                })->toArray(),
                 'privacy_settings' => $user->privacy_settings ?? [],
                 'notification_preferences' => $user->notification_preferences ?? [],
                 'social_links' => $user->social_links ?? [],

@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Carbon\Carbon;
+use Livewire\Volt\Volt;
 use Spatie\Permission\Models\Role;
 use Wave\ActivityLog;
 use Wave\Plan;
@@ -179,4 +180,17 @@ test('export handles subscription with string ends_at date', function () {
     expect($exportData['subscription']['ends_at'])->toBe('2026-12-31 23:59:59');
     expect($exportData['subscription']['status'])->toBe('cancelled');
     expect($exportData['subscription']['plan'])->toBe($plan->name);
+});
+
+test('export includes the user profile fields', function () {
+    $user = User::factory()->create();
+    $user->setProfileKeyValue('about', 'I build things');
+
+    $this->actingAs($user);
+
+    $component = Volt::test('settings.export')->call('exportData');
+
+    $data = json_decode(base64_decode(data_get($component->effects, 'download.content')), true);
+
+    expect($data['profile_fields'])->toBe([['key' => 'about', 'value' => 'I build things']]);
 });
