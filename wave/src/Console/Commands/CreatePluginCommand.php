@@ -3,9 +3,9 @@
 namespace Wave\Console\Commands;
 
 use Exception;
-use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class CreatePluginCommand extends Command
@@ -14,20 +14,30 @@ class CreatePluginCommand extends Command
 
     protected $description = 'Create a new plugin skeleton';
 
-    public function handle(): void
+    public function handle(): int
     {
         $name = $this->argument('name') ?? $this->ask('What is the name of your plugin?');
-        $description = $this->ask('Provide a short description for your plugin:');
 
-        $folderName = Str::slug($name);
-        $className = Str::studly($name);
+        // The plugin loaders map the folder to the class name and back,
+        // so the class name has to be derived from the folder name.
+        $folderName = Str::slug((string) $name);
+        $className = Str::studly($folderName);
+
+        if (! preg_match('/^[A-Z][A-Za-z0-9]*$/', $className) || Str::kebab($className) !== $folderName) {
+            $this->error("'{$name}' is not a valid plugin name. Use letters, numbers and spaces, and start each word with a letter.");
+
+            return self::FAILURE;
+        }
+
         $pluginPath = resource_path("plugins/{$folderName}");
 
         if (File::exists($pluginPath)) {
             $this->error("A plugin with the name '{$folderName}' already exists.");
 
-            return;
+            return self::FAILURE;
         }
+
+        $description = $this->ask('Provide a short description for your plugin:');
 
         // Create plugin directory structure
         File::makeDirectory($pluginPath, 0755, true);
@@ -45,10 +55,14 @@ class CreatePluginCommand extends Command
         $this->downloadPlaceholderImage($pluginPath);
 
         $this->info("Plugin '{$className}' created successfully!");
+
+        return self::SUCCESS;
     }
 
     private function createPluginFile($className, $folderName, $description, $path)
     {
+        $description = var_export((string) $description, true);
+
         $content = <<<EOT
 <?php
 
@@ -62,14 +76,14 @@ class {$className}Plugin extends Plugin
 {
     protected \$name = '{$className}';
 
-    protected \$description = '{$description}';
+    protected \$description = {$description};
 
-    public function register()
+    public function register(): void
     {
-        
+
     }
 
-    public function boot()
+    public function boot(): void
     {
         \$this->loadViewsFrom(__DIR__ . '/resources/views', '{$folderName}');
         \$this->loadRoutesFrom(__DIR__ . '/routes/web.php');
@@ -161,13 +175,12 @@ EOT;
 
     private function downloadPlaceholderImage($path)
     {
-        $client = new Client;
         $imageUrl = 'https://cdn.devdojo.com/assets/img/plugin-placeholder.jpg';
         $imagePath = "{$path}/plugin.jpg";
 
         try {
-            $response = $client->get($imageUrl);
-            File::put($imagePath, $response->getBody());
+            $response = Http::get($imageUrl)->throw();
+            File::put($imagePath, $response->body());
             $this->info('Placeholder image downloaded successfully.');
         } catch (Exception $e) {
             $this->warn('Failed to download placeholder image: '.$e->getMessage());
