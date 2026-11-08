@@ -45,7 +45,7 @@ class Plugins extends Page
         foreach (File::directories($plugins_folder) as $directory) {
             $folder = basename($directory);
             $studlyFolderName = Str::studly($folder);
-            $pluginFile = $plugins_folder.'/'.$folder.'/'.$studlyFolderName.'Plugin.php';
+            $pluginFile = $directory.'/'.$studlyFolderName.'Plugin.php';
 
             if (file_exists($pluginFile)) {
                 $pluginClass = "Wave\\Plugins\\{$studlyFolderName}\\{$studlyFolderName}Plugin";
