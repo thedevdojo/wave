@@ -51,7 +51,7 @@ Route::redirect('billing', 'settings/subscription')->name('billing');
 try {
     if (User::first()) {
         /***** Dynamic Page Routes *****/
-        foreach (Page::all() as $page) {
+        foreach (Page::where('status', 'ACTIVE')->get() as $page) {
             Route::view($page->slug, 'theme::page', ['page' => $page->toArray()])->name($page->slug);
         }
     }
