@@ -30,8 +30,9 @@ Wave is a Laravel-based SaaS framework that provides essential features for buil
 - `php artisan queue:listen --tries=1` - Listen for jobs with retry limit
 
 ### Wave-Specific Commands
-- `php artisan wave:cancel-expired-subscriptions` - Cancel expired subscriptions
-- `php artisan wave:create-plugin` - Create a new plugin
+- `php artisan subscriptions:cancel-expired` - Cancel expired subscriptions
+- `php artisan plugin:create` - Create a new plugin
+- `php artisan wave:stats` - Show MRR, subscription and user stats
 
 ## Architecture Overview
 
@@ -85,7 +86,6 @@ Wave is a Laravel-based SaaS framework that provides essential features for buil
 ### Important Config Files
 - `config/wave.php` - Main Wave configuration
 - `config/themes.php` - Theme configuration
-- `config/settings.php` - Application settings
 
 ## Testing
 
