@@ -74,7 +74,7 @@
 
 	private function saveNewUserAvatar(){
 		$path = 'avatars/' . auth()->user()->username . '.png';
-		$image = app('image')->read($this->avatar)->resize(800, 800);
+		$image = app('image')->read($this->avatar, \Intervention\Image\Decoders\DataUriImageDecoder::class)->resize(800, 800);
 		Storage::disk('public')->put($path, $image->encode());
 		auth()->user()->avatar = $path;
 		auth()->user()->save();
