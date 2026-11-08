@@ -79,6 +79,15 @@
                     '--force' => true
                     ]);
 
+                // The example key is public, so give each install its own
+                $exampleEnv = base_path('.env.example');
+                $usesExampleKey = file_exists($exampleEnv) && str_contains(file_get_contents($exampleEnv), 'APP_KEY='.config('app.key'));
+                if (file_exists(base_path('.env')) && $usesExampleKey) {
+                    \Illuminate\Support\Facades\Artisan::call('key:generate', [
+                        '--force' => true
+                    ]);
+                }
+
                 if (empty(config('jwt.secret'))) {
                     \Illuminate\Support\Facades\Artisan::call('jwt:secret', [
                         '--force' => true
