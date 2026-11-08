@@ -48,20 +48,16 @@ class Themes extends Page
             mkdir($this->themes_folder);
         }
 
-        $scandirectory = scandir($this->themes_folder);
-
-        if (isset($scandirectory)) {
-
-            foreach ($scandirectory as $folder) {
-                // dd($theme_folder . '/' . $folder . '/' . $folder . '.json');
-                $json_file = $this->themes_folder.'/'.$folder.'/theme.json';
-                if (file_exists($json_file)) {
-                    $themes[$folder] = json_decode(file_get_contents($json_file), true);
-                    $themes[$folder]['folder'] = $folder;
-                    $themes[$folder] = (object) $themes[$folder];
-                }
+        // Only folders can hold a theme. Probing paths under files like .gitignore
+        // fails when open_basedir is set.
+        foreach (File::directories($this->themes_folder) as $directory) {
+            $folder = basename($directory);
+            $json_file = $directory.'/theme.json';
+            if (file_exists($json_file)) {
+                $themes[$folder] = json_decode(file_get_contents($json_file), true);
+                $themes[$folder]['folder'] = $folder;
+                $themes[$folder] = (object) $themes[$folder];
             }
-
         }
 
         return (object) $themes;
