@@ -64,6 +64,7 @@ class Subscription extends Model
 
         $this->user->syncRoles([]);
         $this->user->assignRole(config('wave.default_user_role', 'registered'));
+        $this->user->clearUserCache();
     }
 
     /**

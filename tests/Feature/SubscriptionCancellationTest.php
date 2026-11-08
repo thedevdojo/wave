@@ -129,11 +129,8 @@ test('subscriber helper returns false after cancellation', function () {
     // Verify user is subscriber
     expect($this->user->fresh()->subscriber())->toBeTrue();
 
-    // Cancel subscription
+    // Cancel subscription; cancel() must clear the cached status itself
     $this->user->subscription->cancel();
-
-    // Clear cache again
-    Cache::forget("user_subscriber_{$this->user->id}");
 
     // Verify user is no longer subscriber
     expect($this->user->fresh()->subscriber())->toBeFalse();
@@ -172,4 +169,23 @@ test('multiple subscriptions only cancel the specific one', function () {
 
     // User still has active subscription
     expect($this->user->fresh()->subscriber())->toBeTrue();
+});
+
+test('subscription settings page loads right after cancelling', function () {
+    $subscription = Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->premiumPlan->id,
+        'vendor_slug' => 'stripe',
+        'vendor_subscription_id' => 'sub_stripe_'.uniqid(),
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    $this->get('/settings/subscription')->assertOk()->assertSee('Premium Plan Monthly');
+
+    $subscription->cancel();
+
+    $this->get('/settings/subscription')->assertOk()->assertSee('No active subscriptions found');
 });
