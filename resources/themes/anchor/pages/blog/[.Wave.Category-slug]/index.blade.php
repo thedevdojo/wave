@@ -6,7 +6,7 @@
 <x-layouts.marketing>
 
     @php
-        $posts = $category->posts()->paginate(6);
+        $posts = $category->posts()->published()->orderBy('created_at', 'DESC')->paginate(6);
     @endphp
 
     <x-container>
