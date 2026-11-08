@@ -1,6 +1,9 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Laravel\Folio\Folio;
 use Wave\Category;
 use Wave\Post;
 
@@ -41,6 +44,40 @@ describe('Single post page', function () {
         $post = visibilityPost($this->category, ['status' => 'DRAFT']);
 
         $this->actingAs($admin)->get($post->link())->assertOk()->assertSee($post->title);
+    });
+
+    // Folio binds the post before the session starts, so actingAs() alone would hide a broken check.
+    it('lets admins preview draft posts with a real session', function () {
+        $admin = User::factory()->admin()->create();
+        $post = visibilityPost($this->category, ['status' => 'DRAFT']);
+
+        $sessionId = str_repeat('a', 40);
+        app('session')->driver()->getHandler()->write($sessionId, serialize([
+            Auth::guard('web')->getName() => $admin->id,
+        ]));
+
+        $this->withCookie(config('session.cookie'), $sessionId)
+            ->get($post->link())
+            ->assertOk()
+            ->assertSee($post->title);
+    });
+
+    it('hides drafts on theme pages that do not check the status', function () {
+        $pages = sys_get_temp_dir().'/wave-folio-'.uniqid();
+        File::ensureDirectoryExists($pages);
+        File::put($pages.'/[.Wave.Post-slug].blade.php', '<h1>{{ $post->title }}</h1>');
+        $this->beforeApplicationDestroyed(fn () => File::deleteDirectory($pages));
+
+        Folio::path($pages)->uri('/custom-theme');
+
+        $published = visibilityPost($this->category);
+        $draft = visibilityPost($this->category, ['status' => 'DRAFT']);
+
+        $this->get('/custom-theme/'.$published->slug)->assertOk()->assertSee($published->title);
+        $this->get('/custom-theme/'.$draft->slug)->assertNotFound();
+        $this->actingAs(User::factory()->admin()->create())
+            ->get('/custom-theme/'.$draft->slug)
+            ->assertOk();
     });
 });
 
