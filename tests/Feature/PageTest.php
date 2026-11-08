@@ -53,7 +53,7 @@ describe('Page Model', function () {
             'status' => 'ACTIVE',
         ]);
 
-        expect($page->link())->toBe(url('p/privacy-policy-'.$this->uniqueId));
+        expect($page->link())->toBe(url('privacy-policy-'.$this->uniqueId));
     });
 
     it('generates correct image url', function () {
@@ -172,5 +172,20 @@ describe('Page Routes (Dynamic)', function () {
 
         $this->get('/active-page-'.$this->uniqueId)->assertOk()->assertSee('Active content');
         $this->get('/inactive-page-'.$this->uniqueId)->assertNotFound();
+    });
+
+    it('links to the route the page is served on', function () {
+        $page = Page::create([
+            'author_id' => $this->user->id,
+            'title' => 'Linked Page',
+            'body' => 'Linked content',
+            'slug' => 'linked-page-'.$this->uniqueId,
+            'status' => 'ACTIVE',
+        ]);
+
+        $this->refreshApplication();
+
+        expect($page->link())->toBe(url('linked-page-'.$this->uniqueId));
+        $this->get($page->link())->assertOk()->assertSee('Linked content');
     });
 });

@@ -11,7 +11,7 @@ class Page extends Model
 
     public function link()
     {
-        return url('p/'.$this->slug);
+        return url($this->slug);
     }
 
     public function image()
