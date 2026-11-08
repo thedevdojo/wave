@@ -67,6 +67,7 @@ jobs:
         composer install
 
     - name: Audit Composer dependencies
+      if: matrix.php == '8.3'
       run: |
         cd project_folder
         composer audit --abandoned=report
