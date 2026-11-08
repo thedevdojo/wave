@@ -127,26 +127,21 @@ describe('User API Key Methods', function () {
 });
 
 describe('API Token Endpoint', function () {
-    it('returns 401 when no key provided', function () {
+    it('returns 422 when no key provided', function () {
         $response = $this->postJson('/api/token');
 
-        $response->assertStatus(401);
+        $response->assertStatus(422);
     });
 
-    it('returns 400 for invalid api key', function () {
+    it('returns 401 for invalid api key', function () {
         $response = $this->postJson('/api/token', [
             'key' => 'invalid_key_that_does_not_exist',
         ]);
 
-        $response->assertStatus(400);
+        $response->assertStatus(401);
     });
 
     it('returns access token for valid api key', function () {
-        // Skip if JWT secret is not properly configured (common in test environments)
-        if (strlen(config('jwt.secret', '')) < 32) {
-            $this->markTestSkipped('JWT secret not configured for testing');
-        }
-
         $apiKey = $this->user->createApiKey('Valid Key');
 
         $response = $this->postJson('/api/token', [
@@ -247,11 +242,6 @@ describe('Multiple Users with API Keys', function () {
     });
 
     it('api key belongs to correct user after token request', function () {
-        // Skip if JWT secret is not properly configured (common in test environments)
-        if (strlen(config('jwt.secret', '')) < 32) {
-            $this->markTestSkipped('JWT secret not configured for testing');
-        }
-
         $user2 = User::factory()->create();
 
         $key1 = $this->user->createApiKey('User 1 Key');
