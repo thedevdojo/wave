@@ -125,7 +125,7 @@ test('subscription cancellation sets ends_at date', function () {
     $subscription->refresh();
 
     expect($subscription->ends_at)->not->toBeNull()
-        ->and($subscription->ends_at)->toBe($cancelAt->toDateTimeString());
+        ->and($subscription->ends_at->toDateTimeString())->toBe($cancelAt->toDateTimeString());
 })->group('stripe', 'billing');
 
 test('subscription deletion marks subscription as cancelled', function () {
