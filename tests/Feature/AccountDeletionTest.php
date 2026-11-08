@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Stripe\ApiRequestor;
-use Stripe\HttpClient\ClientInterface;
+use Tests\Support\FakeStripeClient;
 use Wave\Page;
 use Wave\Plan;
 use Wave\Post;
@@ -17,6 +17,10 @@ use Wave\Subscription;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
+
+    config(['wave.stripe.secret_key' => 'sk_test_fake']);
+    $this->stripe = new FakeStripeClient;
+    ApiRequestor::setHttpClient($this->stripe);
 });
 
 afterEach(function () {
@@ -48,37 +52,16 @@ function subscriptionFor(User $user, string $vendor, array $attributes = []): Su
     ], $attributes));
 }
 
-/**
- * Responses are keyed by HTTP method, anything not listed gets a cancelled subscription back.
- */
-function fakeStripe(array $responses = []): object
+const STRIPE_SUBSCRIPTION = '/v1/subscriptions/sub_123';
+
+function stripeSubscriptionStatus(string $status = 'canceled'): array
 {
-    $client = new class($responses) implements ClientInterface
-    {
-        public array $requests = [];
-
-        public function __construct(private array $responses) {}
-
-        public function request($method, $absUrl, $headers, $params, $hasFile, $apiMode = 'v1', $maxNetworkRetries = null)
-        {
-            $this->requests[] = [$method, $absUrl];
-
-            [$status, $body] = $this->responses[$method]
-                ?? [200, ['id' => 'sub_123', 'object' => 'subscription', 'status' => 'canceled']];
-
-            return [json_encode($body), $status, []];
-        }
-    };
-
-    config(['wave.stripe.secret_key' => 'sk_test_123']);
-    ApiRequestor::setHttpClient($client);
-
-    return $client;
+    return ['id' => 'sub_123', 'object' => 'subscription', 'status' => $status];
 }
 
-function stripeError(int $status, string $type = 'invalid_request_error'): array
+function stripeApiError(string $type = 'invalid_request_error'): array
 {
-    return [$status, ['error' => ['type' => $type, 'message' => 'Something went wrong']]];
+    return ['error' => ['type' => $type, 'message' => 'Something went wrong']];
 }
 
 it('can schedule account deletion', function () {
@@ -310,7 +293,7 @@ it('deletes a user who authored posts and pages and keeps the content', function
 });
 
 it('cancels an active stripe subscription before deleting the account', function () {
-    $stripe = fakeStripe();
+    $this->stripe->respond('delete', STRIPE_SUBSCRIPTION, stripeSubscriptionStatus());
     $user = User::factory()->create(['deletion_scheduled_at' => now()->subDay()]);
     $subscription = subscriptionFor($user, 'stripe', ['vendor_subscription_id' => 'sub_123']);
 
@@ -318,7 +301,8 @@ it('cancels an active stripe subscription before deleting the account', function
         ->expectsOutput("Deleted account: {$user->email}")
         ->assertExitCode(0);
 
-    expect($stripe->requests)->toBe([['delete', 'https://api.stripe.com/v1/subscriptions/sub_123']]);
+    expect($this->stripe->requests)->toHaveCount(1);
+    expect($this->stripe->requested('delete', STRIPE_SUBSCRIPTION))->toHaveCount(1);
     expect(User::withTrashed()->find($user->id))->toBeNull();
     expect(Subscription::find($subscription->id))->toBeNull();
 });
@@ -339,22 +323,21 @@ it('cancels an active paddle subscription before deleting the account', function
 });
 
 it('does not cancel subscriptions that are already cancelled', function () {
-    $stripe = fakeStripe();
     $user = User::factory()->create(['deletion_scheduled_at' => now()->subDay()]);
     subscriptionFor($user, 'stripe', ['status' => 'cancelled']);
 
     $this->artisan('accounts:process-deletions')->assertExitCode(0);
 
-    expect($stripe->requests)->toBeEmpty();
+    expect($this->stripe->requests)->toBeEmpty();
     expect(User::withTrashed()->find($user->id))->toBeNull();
 });
 
 it('keeps the account when the subscription cannot be cancelled', function (string $vendor) {
     Log::spy();
-    fakeStripe(['delete' => stripeError(500, 'api_error')]);
+    $this->stripe->respond('delete', STRIPE_SUBSCRIPTION, stripeApiError('api_error'), 500);
     Http::fake(['*' => Http::response([], 500)]);
     $user = User::factory()->create(['deletion_scheduled_at' => now()->subDay()]);
-    $subscription = subscriptionFor($user, $vendor);
+    $subscription = subscriptionFor($user, $vendor, ['vendor_subscription_id' => 'sub_123']);
 
     $this->artisan('accounts:process-deletions')
         ->expectsOutputToContain("Failed to delete account {$user->email}")
@@ -392,10 +375,9 @@ it('removes the profile fields, notifications and subscriptions of a deleted acc
 });
 
 it('deletes the account when the stripe subscription was already cancelled on stripe', function () {
-    $stripe = fakeStripe([
-        'delete' => stripeError(400),
-        'get' => [200, ['id' => 'sub_123', 'object' => 'subscription', 'status' => 'canceled']],
-    ]);
+    $this->stripe
+        ->respond('delete', STRIPE_SUBSCRIPTION, stripeApiError(), 400)
+        ->respond('get', STRIPE_SUBSCRIPTION, stripeSubscriptionStatus('canceled'));
     $user = User::factory()->create(['deletion_scheduled_at' => now()->subDay()]);
     subscriptionFor($user, 'stripe', ['vendor_subscription_id' => 'sub_123']);
 
@@ -403,18 +385,17 @@ it('deletes the account when the stripe subscription was already cancelled on st
         ->expectsOutput("Deleted account: {$user->email}")
         ->assertExitCode(0);
 
-    expect($stripe->requests)->toBe([
-        ['delete', 'https://api.stripe.com/v1/subscriptions/sub_123'],
-        ['get', 'https://api.stripe.com/v1/subscriptions/sub_123'],
+    expect(array_column($this->stripe->requests, 'key'))->toBe([
+        'delete '.STRIPE_SUBSCRIPTION,
+        'get '.STRIPE_SUBSCRIPTION,
     ]);
     expect(User::withTrashed()->find($user->id))->toBeNull();
 });
 
 it('keeps the account when stripe refuses to cancel a subscription that is still active', function () {
-    fakeStripe([
-        'delete' => stripeError(400),
-        'get' => [200, ['id' => 'sub_123', 'object' => 'subscription', 'status' => 'active']],
-    ]);
+    $this->stripe
+        ->respond('delete', STRIPE_SUBSCRIPTION, stripeApiError(), 400)
+        ->respond('get', STRIPE_SUBSCRIPTION, stripeSubscriptionStatus('active'));
     $user = User::factory()->create(['deletion_scheduled_at' => now()->subDay()]);
     $subscription = subscriptionFor($user, 'stripe', ['vendor_subscription_id' => 'sub_123']);
 
@@ -462,10 +443,10 @@ it('keeps the account when paddle refuses to cancel a subscription that is still
 it('deletes the account when the vendor no longer knows the subscription', function (string $vendor) {
     Log::spy();
     config(['wave.paddle.env' => 'sandbox']);
-    fakeStripe(['delete' => stripeError(404)]);
+    $this->stripe->respond('delete', STRIPE_SUBSCRIPTION, stripeApiError(), 404);
     Http::fake(['*' => Http::response(['error' => ['code' => 'not_found']], 404)]);
     $user = User::factory()->create(['deletion_scheduled_at' => now()->subDay()]);
-    subscriptionFor($user, $vendor);
+    subscriptionFor($user, $vendor, ['vendor_subscription_id' => 'sub_123']);
 
     $this->artisan('accounts:process-deletions')
         ->expectsOutput("Deleted account: {$user->email}")
@@ -477,7 +458,6 @@ it('deletes the account when the vendor no longer knows the subscription', funct
 
 it('cancels a subscription with no vendor id locally and logs it', function (string $vendor) {
     Log::spy();
-    $stripe = fakeStripe();
     Http::fake();
     $user = User::factory()->create(['deletion_scheduled_at' => now()->subDay()]);
     subscriptionFor($user, $vendor, ['vendor_subscription_id' => null]);
@@ -486,7 +466,7 @@ it('cancels a subscription with no vendor id locally and logs it', function (str
         ->expectsOutput("Deleted account: {$user->email}")
         ->assertExitCode(0);
 
-    expect($stripe->requests)->toBeEmpty();
+    expect($this->stripe->requests)->toBeEmpty();
     Http::assertNothingSent();
     expect(User::withTrashed()->find($user->id))->toBeNull();
     Log::shouldHaveReceived('warning')->withArgs(fn ($message) => str_contains($message, 'no vendor id'))->once();
