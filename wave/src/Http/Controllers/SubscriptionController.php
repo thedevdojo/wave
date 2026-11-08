@@ -139,7 +139,7 @@ class SubscriptionController extends Controller
                     if (User::where('email', $customerEmail)->exists()) {
                         $user = User::where('email', $customerEmail)->first();
                     } else {
-                        $registration = new RegisterController();
+                        $registration = new RegisterController;
                         $user_data = [
                             'name' => $customerName,
                             'email' => $customerEmail,

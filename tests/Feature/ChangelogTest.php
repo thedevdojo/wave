@@ -26,7 +26,7 @@ describe('Changelog Model', function () {
     });
 
     it('has fillable attributes', function () {
-        $changelog = new Changelog();
+        $changelog = new Changelog;
 
         expect($changelog->getFillable())->toBe(['title', 'description', 'body']);
     });

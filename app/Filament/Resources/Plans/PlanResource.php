@@ -84,7 +84,7 @@ class PlanResource extends Resource
                             ->options([
                                 '$' => '$',
                                 '€' => '€',
-                                '£' => '£',     
+                                '£' => '£',
                                 '¥' => '¥',
                             ]),
                     ])->columns(2),

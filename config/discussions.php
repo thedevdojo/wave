@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\User;
+
 return [
     'headline_logo' => '/vendor/foundationapp/discussions/assets/images/logo-light.png',
 
     'user' => [
-        'namespace' => App\Models\User::class,
+        'namespace' => User::class,
         'database_field_with_user_name' => 'name',
         'relative_url_to_profile' => '',
         'relative_url_to_image_assets' => '',

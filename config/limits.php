@@ -1,5 +1,7 @@
 <?php
 
+use Wave\ApiKey;
+
 return [
 
     /*
@@ -21,7 +23,7 @@ return [
 
     'features' => [
         'api_keys' => [
-            'model' => \Wave\ApiKey::class,
+            'model' => ApiKey::class,
             'column' => 'user_id',
         ],
     ],

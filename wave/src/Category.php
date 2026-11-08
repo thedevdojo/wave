@@ -2,6 +2,7 @@
 
 namespace Wave;
 
+use Database\Factories\CategoryFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ class Category extends Model
      */
     protected static function newFactory()
     {
-        return \Database\Factories\CategoryFactory::new();
+        return CategoryFactory::new();
     }
 
     public function posts(): HasMany

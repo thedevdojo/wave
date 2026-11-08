@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Logout;
+use Wave\ActivityLog;
 
 class LogSuccessfulLogout
 {
@@ -24,13 +25,13 @@ class LogSuccessfulLogout
         }
 
         // Prevent duplicate logout logs
-        $recentLogout = \Wave\ActivityLog::where('user_id', $event->user->id)
+        $recentLogout = ActivityLog::where('user_id', $event->user->id)
             ->where('action', 'logout')
             ->where('created_at', '>=', now()->subMinutes(5))
             ->exists();
 
         if (! $recentLogout) {
-            \Wave\ActivityLog::create([
+            ActivityLog::create([
                 'user_id' => $event->user->id,
                 'action' => 'logout',
                 'description' => 'User logged out',
