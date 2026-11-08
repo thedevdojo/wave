@@ -108,7 +108,7 @@ new class extends Component
                                         ({{ abs($daysRemaining) }} {{ abs($daysRemaining) === 1 ? 'day' : 'days' }} remaining).
                                     </p>
                                     <p class="mt-2 text-sm text-orange-800 dark:text-orange-200">
-                                        After this date, all your data including your profile, posts, and settings will be permanently removed and cannot be recovered.
+                                        After this date, all your data including your profile and settings will be permanently removed and cannot be recovered.
                                     </p>
                                     <button
                                         wire:click="cancelAccountDeletion"

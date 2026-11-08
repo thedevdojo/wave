@@ -6,6 +6,7 @@ use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
+use Wave\Actions\Billing\CancelSubscription;
 use Wave\Actions\Billing\Paddle\AddSubscriptionIdFromTransaction;
 
 class Update extends Component
@@ -94,15 +95,7 @@ class Update extends Component
 
     public function cancelImmediately()
     {
-        $subscription = auth()->user()->subscription;
-
-        $response = Http::withToken(config('wave.paddle.api_key'))->post($this->paddle_url.'/subscriptions/'.$subscription->vendor_subscription_id.'/cancel', [
-            'effective_from' => 'immediately',
-        ]);
-
-        if ($response->successful()) {
-            $subscription->cancel();
-
+        if (app(CancelSubscription::class)(auth()->user()->subscription)) {
             return redirect()->to('/settings/subscription');
         }
     }

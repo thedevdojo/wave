@@ -3,6 +3,10 @@
 namespace Wave\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use RuntimeException;
+use Wave\Actions\Billing\CancelSubscription;
 
 class ProcessScheduledAccountDeletions extends Command
 {
@@ -46,12 +50,23 @@ class ProcessScheduledAccountDeletions extends Command
             try {
                 $email = $user->email;
 
-                // Force delete (permanent deletion)
-                $user->forceDelete();
+                // Never delete someone who is still being billed, try again on the next run.
+                $this->cancelSubscriptions($user);
+
+                DB::transaction(function () use ($user) {
+                    // These are morph or plain keyed, so there is no foreign key to cascade.
+                    $user->subscriptions()->delete();
+                    $user->profileKeyValues()->delete();
+                    $user->notifications()->delete();
+                    $user->emailVerificationCode()->delete();
+
+                    $user->forceDelete();
+                });
 
                 $this->info("Deleted account: {$email}");
                 $count++;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
+                Log::error("Failed to delete account {$user->email}: ".$e->getMessage(), ['user_id' => $user->id]);
                 $this->error("Failed to delete account {$user->email}: ".$e->getMessage());
             }
         }
@@ -59,5 +74,14 @@ class ProcessScheduledAccountDeletions extends Command
         $this->info("Successfully deleted {$count} account(s).");
 
         return self::SUCCESS;
+    }
+
+    private function cancelSubscriptions($user): void
+    {
+        foreach ($user->subscriptions()->where('status', 'active')->get() as $subscription) {
+            if (! app(CancelSubscription::class)($subscription)) {
+                throw new RuntimeException("could not cancel {$subscription->vendor_slug} subscription {$subscription->vendor_subscription_id}");
+            }
+        }
     }
 }
