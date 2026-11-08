@@ -98,6 +98,7 @@ The application uses Pest for testing with PHPUnit as the underlying framework. 
 - Filament provides the admin interface
 - Theme development follows Blade templating conventions
 - Plugin development follows Laravel package conventions
+- Keep code comments short and concise: a line or two on why something is done, not long explanations of what the code does
 
 ## Performance Optimizations
 
