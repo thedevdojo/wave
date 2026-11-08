@@ -1,0 +1,24 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # the admin shows the version from wave.json, so it has to be bumped before tagging
+      - name: Check wave.json matches the release tag
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          VERSION=$(jq -r .version wave/wave.json)
+          if [ "$VERSION" != "${TAG#v}" ]; then
+            echo "::error file=wave/wave.json::wave.json says $VERSION but the release is $TAG. Bump wave/wave.json on main and tag that commit."
+            exit 1
+          fi
+          echo "wave.json matches $TAG"

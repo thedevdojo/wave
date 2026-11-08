@@ -15,7 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ImpersonateServiceProvider::class,
         WaveServiceProvider::class,
         ThemesServiceProvider::class,
-        ThemesServiceProvider::class,
     ])
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
