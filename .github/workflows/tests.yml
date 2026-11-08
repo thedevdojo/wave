@@ -7,18 +7,27 @@ on:
       - 3.x
   pull_request:
     branches: [ main ]
+  # nightly on main, so upstream package releases that break us show up here first
+  schedule:
+    - cron: '30 3 * * *'
+  workflow_dispatch:
 
 jobs:
   installer-manual:
     runs-on: ubuntu-latest
     
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4', '8.5']
+
     steps:
     - uses: actions/checkout@v7
     
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.3'
+        php-version: ${{ matrix.php }}
         extensions: pdo_sqlite
     
     - name: Create project directory
@@ -56,6 +65,11 @@ jobs:
       run: |
         cd project_folder
         composer install
+
+    - name: Audit Composer dependencies
+      run: |
+        cd project_folder
+        composer audit --abandoned=report
 
     - name: Generate application key
       run: |
