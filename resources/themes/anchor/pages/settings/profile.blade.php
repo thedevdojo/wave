@@ -10,6 +10,8 @@
 	use Wave\Traits\HasDynamicFields;
     use Wave\ApiKey;
     use Wave\ActivityLog;
+    use Illuminate\Support\Str;
+    use Illuminate\Support\Facades\Storage;
 
 	middleware(['auth', 'verified']);
     name('settings.profile');
@@ -64,20 +66,37 @@
 				$this->saveNewUserAvatar();
 			}
 
-			$this->saveFormFields($state);
+			$emailChanged = $this->saveFormFields($state);
 
 			Notification::make()
                 ->title('Successfully saved your profile settings')
                 ->success()
                 ->send();
+
+			// The new address must be verified before the account can be used again.
+			if ($emailChanged && config('devdojo.auth.settings.registration_require_email_verification')) {
+				auth()->user()->sendEmailVerificationNotification();
+
+				return $this->redirect(route('verification.notice'));
+			}
 		}
 
 	private function saveNewUserAvatar(){
-		$path = 'avatars/' . auth()->user()->username . '.png';
+		$user = auth()->user();
+		$oldPath = $user->avatar;
+
+		// Not named after the username, which can change or be taken by someone else later.
+		$path = 'avatars/' . $user->id . '-' . Str::random(20) . '.png';
 		$image = app('image')->read($this->avatar, \Intervention\Image\Decoders\DataUriImageDecoder::class)->resize(800, 800);
 		Storage::disk('public')->put($path, $image->encode());
-		auth()->user()->avatar = $path;
-		auth()->user()->save();
+		$user->avatar = $path;
+		$user->save();
+
+		// Only remove uploads, and not one that another user still points at (old username-based names).
+		if ($oldPath && str_starts_with($oldPath, 'avatars/')
+			&& ! $user->newQuery()->where('avatar', $oldPath)->exists()) {
+			Storage::disk('public')->delete($oldPath);
+		}
 		
 		// Log avatar update
 		ActivityLog::log('avatar_updated', 'Profile avatar was updated');
@@ -102,6 +121,10 @@
 		$user->name = $state['name'];
 		$user->username = $state['username'];
 		$user->email = $state['email'];
+		$emailChanged = $user->isDirty('email');
+		if ($emailChanged) {
+			$user->email_verified_at = null;
+		}
 		$user->save();
 		$fieldsToSave = config('profile.fields');
 		$this->saveDynamicFields($fieldsToSave);
@@ -112,6 +135,8 @@
 				'changed_fields' => $changes
 			]);
 		}
+
+		return $emailChanged;
 		}
 
 	}
