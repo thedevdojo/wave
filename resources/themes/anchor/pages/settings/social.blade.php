@@ -8,7 +8,7 @@
     use Filament\Schemas\Schema;
     use Filament\Notifications\Notification;
     
-    middleware('auth');
+    middleware(['auth', 'verified']);
     name('settings.social');
 
 	new class extends Component implements HasForms

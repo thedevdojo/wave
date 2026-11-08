@@ -11,7 +11,7 @@
     use Wave\ApiKey;
     use Wave\ActivityLog;
 
-	middleware('auth');
+	middleware(['auth', 'verified']);
     name('settings.profile');
 
 	new class extends Component implements HasForms

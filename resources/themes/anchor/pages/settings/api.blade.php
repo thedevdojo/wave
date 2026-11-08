@@ -21,7 +21,7 @@
     use Wave\ApiKey;
     use Wave\ActivityLog;
     
-    middleware('auth');
+    middleware(['auth', 'verified']);
     name('settings.api');
 
 	new class extends Component implements HasForms, HasActions, Tables\Contracts\HasTable

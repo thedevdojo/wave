@@ -1,7 +1,7 @@
 <?php
     use function Laravel\Folio\{middleware, name};
     name('subscription.welcome');
-    middleware('auth');
+    middleware(['auth', 'verified']);
 ?>
 
 <x-layouts.app>

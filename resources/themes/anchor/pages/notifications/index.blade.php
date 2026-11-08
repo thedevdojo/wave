@@ -2,7 +2,7 @@
     use function Laravel\Folio\{middleware, name};
 	use Livewire\Volt\Component;
     name('notifications');
-    middleware('auth');
+    middleware(['auth', 'verified']);
 
 	new class extends Component{
 

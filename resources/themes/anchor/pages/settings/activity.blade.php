@@ -5,7 +5,7 @@ use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use Wave\ActivityLog;
 
-middleware('auth');
+middleware(['auth', 'verified']);
 name('settings.activity');
 
 new class extends Component

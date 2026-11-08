@@ -15,7 +15,7 @@ Route::get('logout', '\Wave\Http\Controllers\LogoutController@logout')->name('wa
 
 Route::view('install', 'wave::install')->name('wave.install');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::redirect('settings', 'settings/profile')->name('settings');
 
     if (config('wave.billing_provider') == 'paddle') {

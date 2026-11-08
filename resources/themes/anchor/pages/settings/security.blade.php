@@ -9,7 +9,7 @@
     use Filament\Notifications\Notification;
     use Wave\ActivityLog;
 
-    middleware('auth');
+    middleware(['auth', 'verified']);
     name('settings.security');
 
 	new class extends Component implements HasForms

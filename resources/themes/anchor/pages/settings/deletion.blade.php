@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Wave\ActivityLog;
 
-middleware('auth');
+middleware(['auth', 'verified']);
 name('settings.deletion');
 
 new class extends Component
