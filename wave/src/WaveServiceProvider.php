@@ -24,6 +24,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use Laravel\Folio\Events\ViewMatched;
 use Laravel\Folio\Folio;
 use Livewire\Livewire;
 use Wave\Console\Commands\CancelExpiredSubscriptions;
@@ -34,6 +35,7 @@ use Wave\Console\Commands\WaveStats;
 use Wave\Facades\Wave as WaveFacade;
 use Wave\Http\Livewire\Billing\Checkout;
 use Wave\Http\Livewire\Billing\Update;
+use Wave\Http\Middleware\HideUnpublishedPosts;
 use Wave\Http\Middleware\InstallMiddleware;
 use Wave\Http\Middleware\Subscribed;
 use Wave\Http\Middleware\ThemeDemoMiddleware;
@@ -135,6 +137,9 @@ class WaveServiceProvider extends ServiceProvider
             'form' => Forms::class,
             // Add other mappings as needed
         ]);
+
+        $event->listen(ViewMatched::class, [HideUnpublishedPosts::class, 'flag']);
+        $router->pushMiddlewareToGroup('web', HideUnpublishedPosts::class);
 
         $this->registerWaveFolioDirectory();
         $this->registerWaveComponentDirectory();

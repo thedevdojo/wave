@@ -1,14 +1,6 @@
 <?php
-    use Illuminate\View\View;
-    use Wave\Post;
-
-    use function Laravel\Folio\{name, render};
-
+    use function Laravel\Folio\{name};
     name('blog.post');
-
-    render(function (View $view, Post $post) {
-        abort_unless($post->status === 'PUBLISHED' || auth()->user()?->isAdmin(), 404);
-    });
 ?>
 
 <x-layouts.marketing>
