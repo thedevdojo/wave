@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Wave\Category;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Wave\Category>
+ * @extends Factory<Category>
  */
 class CategoryFactory extends Factory
 {

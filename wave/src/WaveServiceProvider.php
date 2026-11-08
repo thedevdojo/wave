@@ -50,12 +50,12 @@ class WaveServiceProvider extends ServiceProvider
         $loader->alias('Wave', WaveFacade::class);
 
         $this->app->singleton('wave', function () {
-            return new Wave();
+            return new Wave;
         });
 
         // Register Intervention Image Manager
         $this->app->singleton('image', function () {
-            return new ImageManager(new Driver());
+            return new ImageManager(new Driver);
         });
 
         // Move helper loading to boot method to avoid cache service dependency
@@ -75,7 +75,7 @@ class WaveServiceProvider extends ServiceProvider
             // Overwrite the Vite asset helper so we can use the demo folder as opposed to the build folder
             $this->app->singleton(BaseVite::class, function ($app) {
                 // Replace the default Vite instance with the custom one
-                return new Vite();
+                return new Vite;
             });
         }
 
@@ -109,7 +109,7 @@ class WaveServiceProvider extends ServiceProvider
 
         Validator::extend('imageable', function ($attribute, $value, $params, $validator) {
             try {
-                $manager = new ImageManager(new Driver());
+                $manager = new ImageManager(new Driver);
                 $manager->read($value);
 
                 return true;
