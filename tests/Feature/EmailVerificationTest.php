@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Devdojo\Auth\Notifications\VerifyEmailWithCode;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Livewire\Volt\Volt;
@@ -120,6 +121,10 @@ it('rejects a verification link opened by a different user', function () {
     expect($this->user->fresh()->hasVerifiedEmail())->toBeFalse();
 
     $other->forceDelete();
+});
+
+it('keeps checking verification on Livewire component updates', function () {
+    expect(Livewire\Livewire::getPersistentMiddleware())->toContain(EnsureEmailIsVerified::class);
 });
 
 it('rejects a tampered verification link', function () {

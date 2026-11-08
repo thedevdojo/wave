@@ -7,6 +7,7 @@ use DevDojo\Themes\Models\Theme;
 use Exception;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\AliasLoader;
@@ -265,6 +266,9 @@ class WaveServiceProvider extends ServiceProvider
     {
         Livewire::component('billing.checkout', Checkout::class);
         Livewire::component('billing.update', Update::class);
+
+        // Livewire only re-runs auth on component updates by default.
+        Livewire::addPersistentMiddleware([EnsureEmailIsVerified::class]);
     }
 
     protected function setDefaultThemeColors()

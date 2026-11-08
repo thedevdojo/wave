@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
                 'id' => 1,
                 'name' => 'Wave Admin',
                 'email' => 'admin@admin.com',
+                'email_verified_at' => '2017-11-21 16:07:22',
                 'username' => 'admin',
                 'avatar' => 'demo/default.png',
                 'password' => '$2y$10$L8MjmjVVOCbyLHbp7pq/9.1ZEEa5AqE67ZXLd2M4.res05a3Rz/G2',
