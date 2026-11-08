@@ -1,265 +1,255 @@
 <?php
 
-/**
- * Stripe Webhook Business Logic Tests
- *
- * These tests verify the database state changes and business logic
- * that occur during Stripe webhook processing, focusing specifically
- * on the TODO at line 60 of StripeWebhook.php: testing plan switching.
- *
- * Note: These tests focus on unit-testing the business logic rather than
- * attempting to mock Stripe SDK classes, which is complex and fragile.
- * For full end-to-end webhook testing, use Stripe CLI in test mode.
- */
-
 use App\Models\User;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
+use Stripe\ApiRequestor;
+use Tests\Support\FakeStripeClient;
 use Wave\Plan;
 use Wave\Subscription;
 
 beforeEach(function () {
-    // Create test roles
-    $this->premiumRole = Role::firstOrCreate(
-        ['name' => 'test_premium'],
-        ['guard_name' => 'web']
-    );
-
-    $this->enterpriseRole = Role::firstOrCreate(
-        ['name' => 'test_enterprise'],
-        ['guard_name' => 'web']
-    );
-
-    // Create test plans
-    $this->premiumPlan = Plan::create([
-        'name' => 'Premium Plan',
-        'description' => 'Premium features',
-        'features' => 'feature1,feature2',
-        'monthly_price_id' => 'price_monthly_123',
-        'yearly_price_id' => 'price_yearly_123',
-        'monthly_price' => '9.99',
-        'yearly_price' => '99.99',
-        'active' => true,
-        'role_id' => $this->premiumRole->id,
+    config([
+        'wave.stripe.secret_key' => 'sk_test_fake',
+        'wave.stripe.webhook_secret' => 'whsec_test',
     ]);
 
-    $this->enterprisePlan = Plan::create([
-        'name' => 'Enterprise Plan',
-        'description' => 'Enterprise features',
-        'features' => 'feature1,feature2,feature3',
-        'monthly_price_id' => 'price_monthly_456',
-        'yearly_price_id' => 'price_yearly_456',
-        'monthly_price' => '29.99',
-        'yearly_price' => '299.99',
+    $this->stripe = new FakeStripeClient;
+    ApiRequestor::setHttpClient($this->stripe);
+
+    $this->basicPlan = Plan::create([
+        'name' => 'Basic',
+        'features' => '',
+        'monthly_price_id' => 'price_basic_month',
+        'yearly_price_id' => 'price_basic_year',
         'active' => true,
-        'role_id' => $this->enterpriseRole->id,
+        'role_id' => Role::findByName('basic')->id,
+    ]);
+
+    $this->premiumPlan = Plan::create([
+        'name' => 'Premium',
+        'features' => '',
+        'monthly_price_id' => 'price_premium_month',
+        'yearly_price_id' => 'price_premium_year',
+        'active' => true,
+        'role_id' => Role::findByName('premium')->id,
     ]);
 
     $this->user = User::factory()->create();
+    $this->user->syncRoles(['registered']);
 });
 
-test('plan switching updates user role correctly', function () {
-    // This addresses the TODO at line 60 of StripeWebhook.php
-    // Testing: $subscription->user->switchPlans($updatedPlan);
+afterEach(function () {
+    ApiRequestor::setHttpClient(null);
+});
 
-    // Setup: Create subscription with premium plan
-    $subscription = Subscription::create([
-        'billable_type' => User::class,
-        'billable_id' => $this->user->id,
-        'plan_id' => $this->premiumPlan->id,
+function sendStripeEvent(string $type, array $object, ?string $payload = null)
+{
+    $payload ??= json_encode([
+        'id' => 'evt_'.uniqid(),
+        'object' => 'event',
+        'type' => $type,
+        'data' => ['object' => $object],
+    ]);
+
+    $timestamp = time();
+    $signature = hash_hmac('sha256', "{$timestamp}.{$payload}", config('wave.stripe.webhook_secret'));
+
+    return test()->call('POST', '/webhook/stripe', server: [
+        'HTTP_STRIPE_SIGNATURE' => "t={$timestamp},v1={$signature}",
+        'CONTENT_TYPE' => 'application/json',
+    ], content: $payload);
+}
+
+function checkoutSession(array $overrides = []): array
+{
+    return array_merge([
+        'id' => 'cs_test_1',
+        'object' => 'checkout.session',
+        'payment_status' => 'paid',
+        'customer' => 'cus_1',
+        'subscription' => 'sub_1',
+        'metadata' => [
+            'billable_type' => 'user',
+            'billable_id' => (string) test()->user->id,
+            'plan_id' => (string) test()->premiumPlan->id,
+            'billing_cycle' => 'month',
+        ],
+    ], $overrides);
+}
+
+function stripeSubscription(array $overrides = []): array
+{
+    return array_merge([
+        'id' => 'sub_1',
+        'object' => 'subscription',
+        'status' => 'active',
+        'cancel_at' => null,
+        'plan' => ['id' => 'price_premium_month', 'interval' => 'month'],
+    ], $overrides);
+}
+
+function localStripeSubscription(Plan $plan, array $attributes = []): Subscription
+{
+    $user = test()->user;
+    $user->syncRoles([$plan->role->name]);
+
+    return Subscription::create(array_merge([
+        'billable_type' => 'user',
+        'billable_id' => $user->id,
+        'plan_id' => $plan->id,
         'vendor_slug' => 'stripe',
-        'vendor_customer_id' => 'cus_test123',
-        'vendor_subscription_id' => 'sub_test123',
+        'vendor_customer_id' => 'cus_1',
+        'vendor_subscription_id' => 'sub_1',
         'cycle' => 'month',
         'status' => 'active',
         'seats' => 1,
-    ]);
+    ], $attributes));
+}
 
-    // Assign initial role
-    $this->user->assignRole($this->premiumRole->name);
-    $this->user->refresh();
+it('rejects a request with a bad signature', function () {
+    $this->call('POST', '/webhook/stripe', server: ['HTTP_STRIPE_SIGNATURE' => 't=1,v1=bad'], content: '{}')
+        ->assertStatus(400);
+});
 
-    // Verify initial state
-    expect($this->user->hasRole('test_premium'))->toBeTrue();
-    expect($subscription->plan_id)->toBe($this->premiumPlan->id);
+it('rejects a signed payload that is not valid JSON', function () {
+    sendStripeEvent('', [], payload: 'not json')->assertStatus(400);
+});
 
-    // Act: Simulate the plan switch that happens in the webhook
-    $this->user->switchPlans($this->enterprisePlan);
-    $subscription->plan_id = $this->enterprisePlan->id;
-    $subscription->cycle = 'year';
-    $subscription->save();
+it('creates the subscription and assigns the plan role when checkout completes', function () {
+    $this->stripe->respond('get', '/v1/checkout/sessions/cs_test_1', checkoutSession());
 
-    // Assert: Verify role was switched correctly
-    $this->user->refresh();
+    sendStripeEvent('checkout.session.completed', ['id' => 'cs_test_1'])->assertOk();
+
+    $subscription = Subscription::where('vendor_subscription_id', 'sub_1')->sole();
+    expect($subscription->billable_id)->toBe($this->user->id)
+        ->and($subscription->plan_id)->toBe($this->premiumPlan->id)
+        ->and($subscription->vendor_customer_id)->toBe('cus_1')
+        ->and($subscription->status)->toBe('active')
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['premium']);
+});
+
+it('does not create a second subscription when the event is delivered twice', function () {
+    $this->stripe->respond('get', '/v1/checkout/sessions/cs_test_1', checkoutSession());
+
+    sendStripeEvent('checkout.session.completed', ['id' => 'cs_test_1'])->assertOk();
+    sendStripeEvent('checkout.session.completed', ['id' => 'cs_test_1'])->assertOk();
+
+    expect(Subscription::count())->toBe(1);
+});
+
+it('fulfills an async payment once it succeeds', function () {
+    $this->stripe
+        ->respond('get', '/v1/checkout/sessions/cs_test_1', checkoutSession(['payment_status' => 'unpaid']))
+        ->respond('get', '/v1/checkout/sessions/cs_test_1', checkoutSession());
+
+    sendStripeEvent('checkout.session.completed', ['id' => 'cs_test_1'])->assertOk();
+    expect(Subscription::count())->toBe(0);
+
+    sendStripeEvent('checkout.session.async_payment_succeeded', ['id' => 'cs_test_1'])->assertOk();
+
+    expect(Subscription::where('vendor_subscription_id', 'sub_1')->exists())->toBeTrue()
+        ->and($this->user->fresh()->hasRole('premium'))->toBeTrue();
+});
+
+it('fulfills the checkout when Stripe retries after a failed attempt', function () {
+    $this->stripe
+        ->respond('get', '/v1/checkout/sessions/cs_test_1', ['error' => ['message' => 'Server error']], 500)
+        ->respond('get', '/v1/checkout/sessions/cs_test_1', checkoutSession());
+
+    sendStripeEvent('checkout.session.completed', ['id' => 'cs_test_1'])->assertServerError();
+    sendStripeEvent('checkout.session.completed', ['id' => 'cs_test_1'])->assertOk();
+
+    expect(Subscription::where('vendor_subscription_id', 'sub_1')->exists())->toBeTrue()
+        ->and($this->user->fresh()->hasRole('premium'))->toBeTrue();
+});
+
+it('leaves the user untouched when fulfillment fails part way', function () {
+    // A role from another guard can't be assigned to a web user, so this throws.
+    $this->premiumPlan->update(['role_id' => Role::create(['name' => 'api_only', 'guard_name' => 'api'])->id]);
+    $this->stripe->respond('get', '/v1/checkout/sessions/cs_test_1', checkoutSession());
+
+    sendStripeEvent('checkout.session.completed', ['id' => 'cs_test_1'])->assertServerError();
+
+    expect(Subscription::count())->toBe(0)
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['registered']);
+});
+
+it('switches plans when the subscription price changes', function () {
+    $subscription = localStripeSubscription($this->basicPlan);
+
+    sendStripeEvent('customer.subscription.updated', stripeSubscription([
+        'plan' => ['id' => 'price_premium_year', 'interval' => 'year'],
+    ]))->assertOk();
+
     $subscription->refresh();
+    expect($subscription->plan_id)->toBe($this->premiumPlan->id)
+        ->and($subscription->cycle)->toBe('year')
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['premium']);
+});
 
-    expect($this->user->hasRole('test_enterprise'))->toBeTrue()
-        ->and($this->user->hasRole('test_premium'))->toBeFalse()
-        ->and($subscription->plan_id)->toBe($this->enterprisePlan->id)
-        ->and($subscription->cycle)->toBe('year');
-})->group('stripe', 'billing');
+it('records a scheduled cancellation and clears it on resume', function () {
+    $subscription = localStripeSubscription($this->premiumPlan);
+    $cancelAt = now()->addMonth()->startOfSecond();
 
-test('subscription cancellation sets ends_at date', function () {
-    $subscription = Subscription::create([
-        'billable_type' => User::class,
-        'billable_id' => $this->user->id,
-        'plan_id' => $this->premiumPlan->id,
-        'vendor_slug' => 'stripe',
-        'vendor_customer_id' => 'cus_test123',
-        'vendor_subscription_id' => 'sub_test123',
-        'cycle' => 'month',
-        'status' => 'active',
-        'seats' => 1,
-    ]);
+    sendStripeEvent('customer.subscription.updated', stripeSubscription(['cancel_at' => $cancelAt->timestamp]))->assertOk();
+    expect($subscription->fresh()->ends_at->equalTo($cancelAt))->toBeTrue();
 
-    $this->user->assignRole($this->premiumRole->name);
+    sendStripeEvent('customer.subscription.updated', stripeSubscription())->assertOk();
+    expect($subscription->fresh()->ends_at)->toBeNull();
+});
 
-    // Simulate cancellation with future end date
-    $cancelAt = now()->addMonth();
-    $subscription->ends_at = $cancelAt->toDateTimeString();
-    $subscription->save();
+it('still applies the update when the price is not mapped to a plan', function () {
+    Log::spy();
+    $subscription = localStripeSubscription($this->premiumPlan);
+    $cancelAt = now()->addMonth()->startOfSecond();
+
+    sendStripeEvent('customer.subscription.updated', stripeSubscription([
+        'cancel_at' => $cancelAt->timestamp,
+        'plan' => ['id' => 'price_unknown', 'interval' => 'month'],
+    ]))->assertOk();
 
     $subscription->refresh();
+    expect($subscription->plan_id)->toBe($this->premiumPlan->id)
+        ->and($subscription->ends_at->equalTo($cancelAt))->toBeTrue()
+        ->and($this->user->fresh()->hasRole('premium'))->toBeTrue();
+    Log::shouldHaveReceived('warning')->once();
+});
 
-    expect($subscription->ends_at)->not->toBeNull()
-        ->and($subscription->ends_at->toDateTimeString())->toBe($cancelAt->toDateTimeString());
-})->group('stripe', 'billing');
+it('cancels the subscription when Stripe reports a terminal status', function (string $status) {
+    $subscription = localStripeSubscription($this->premiumPlan);
 
-test('subscription deletion marks subscription as cancelled', function () {
-    $subscription = Subscription::create([
-        'billable_type' => User::class,
-        'billable_id' => $this->user->id,
-        'plan_id' => $this->premiumPlan->id,
-        'vendor_slug' => 'stripe',
-        'vendor_customer_id' => 'cus_test123',
-        'vendor_subscription_id' => 'sub_test123',
-        'cycle' => 'month',
-        'status' => 'active',
-        'seats' => 1,
-    ]);
+    sendStripeEvent('customer.subscription.updated', stripeSubscription(['status' => $status]))->assertOk();
 
-    // Act: Call cancel() method
-    $subscription->cancel();
-    $subscription->refresh();
+    expect($subscription->fresh()->status)->toBe('cancelled')
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['registered']);
+})->with(['canceled', 'incomplete_expired']);
 
-    // Assert: Status should be cancelled
-    expect($subscription->status)->toBe('cancelled');
-})->group('stripe', 'billing');
+it('keeps access while Stripe retries a past due payment', function () {
+    $subscription = localStripeSubscription($this->premiumPlan);
 
-test('new subscription assigns correct role to user', function () {
-    // Simulate checkout completion
-    $this->user->syncRoles([]);
-    $this->user->assignRole($this->premiumPlan->role->name);
+    sendStripeEvent('customer.subscription.updated', stripeSubscription(['status' => 'past_due']))->assertOk();
 
-    $subscription = Subscription::create([
-        'billable_type' => User::class,
-        'billable_id' => $this->user->id,
-        'plan_id' => $this->premiumPlan->id,
-        'vendor_slug' => 'stripe',
-        'vendor_customer_id' => 'cus_new123',
-        'vendor_subscription_id' => 'sub_new123',
-        'cycle' => 'month',
-        'status' => 'active',
-        'seats' => 1,
-    ]);
+    expect($subscription->fresh()->status)->toBe('active')
+        ->and($this->user->fresh()->hasRole('premium'))->toBeTrue();
+});
 
-    $this->user->refresh();
+it('cancels the subscription when it is deleted in Stripe', function () {
+    $subscription = localStripeSubscription($this->premiumPlan);
 
-    expect($this->user->hasRole('test_premium'))->toBeTrue()
-        ->and($subscription->vendor_slug)->toBe('stripe')
-        ->and($subscription->status)->toBe('active');
-})->group('stripe', 'billing');
+    sendStripeEvent('customer.subscription.deleted', stripeSubscription(['status' => 'canceled']))->assertOk();
 
-test('cache prevents duplicate checkout session processing', function () {
-    $sessionId = 'cs_test123';
-    $cacheKey = 'stripe_checkout_session_'.$sessionId;
+    expect($subscription->fresh()->status)->toBe('cancelled')
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['registered']);
+});
 
-    // First processing
-    expect(Cache::has($cacheKey))->toBeFalse();
-    Cache::put($cacheKey, true, now()->addHours(24));
-    expect(Cache::has($cacheKey))->toBeTrue();
+it('ignores events for a subscription that is already cancelled', function (string $type) {
+    localStripeSubscription($this->basicPlan, ['status' => 'cancelled']);
+    localStripeSubscription($this->premiumPlan, ['vendor_subscription_id' => 'sub_2']);
 
-    // Second attempt should find existing cache
-    $shouldSkipProcessing = Cache::has($cacheKey);
-    expect($shouldSkipProcessing)->toBeTrue();
-})->group('stripe', 'billing');
+    sendStripeEvent($type, stripeSubscription([
+        'plan' => ['id' => 'price_basic_month', 'interval' => 'month'],
+    ]))->assertOk();
 
-test('subscription cycle can be updated from monthly to yearly', function () {
-    $subscription = Subscription::create([
-        'billable_type' => User::class,
-        'billable_id' => $this->user->id,
-        'plan_id' => $this->premiumPlan->id,
-        'vendor_slug' => 'stripe',
-        'vendor_customer_id' => 'cus_test123',
-        'vendor_subscription_id' => 'sub_test123',
-        'cycle' => 'month',
-        'status' => 'active',
-        'seats' => 1,
-    ]);
-
-    expect($subscription->cycle)->toBe('month');
-
-    // Update to yearly
-    $subscription->cycle = 'year';
-    $subscription->save();
-    $subscription->refresh();
-
-    expect($subscription->cycle)->toBe('year')
-        ->and($subscription->plan_id)->toBe($this->premiumPlan->id);
-})->group('stripe', 'billing');
-
-test('removing cancellation date reactivates subscription', function () {
-    $subscription = Subscription::create([
-        'billable_type' => User::class,
-        'billable_id' => $this->user->id,
-        'plan_id' => $this->premiumPlan->id,
-        'vendor_slug' => 'stripe',
-        'vendor_customer_id' => 'cus_test123',
-        'vendor_subscription_id' => 'sub_test123',
-        'cycle' => 'month',
-        'status' => 'active',
-        'seats' => 1,
-        'ends_at' => now()->addMonth(),
-    ]);
-
-    expect($subscription->ends_at)->not->toBeNull();
-
-    // User resumes subscription (removes cancel_at)
-    $subscription->ends_at = null;
-    $subscription->save();
-    $subscription->refresh();
-
-    expect($subscription->ends_at)->toBeNull();
-})->group('stripe', 'billing');
-
-test('multiple subscriptions can exist for same user', function () {
-    $subscription1 = Subscription::create([
-        'billable_type' => User::class,
-        'billable_id' => $this->user->id,
-        'plan_id' => $this->premiumPlan->id,
-        'vendor_slug' => 'stripe',
-        'vendor_customer_id' => 'cus_test123',
-        'vendor_subscription_id' => 'sub_test123',
-        'cycle' => 'month',
-        'status' => 'cancelled',
-        'seats' => 1,
-    ]);
-
-    $subscription2 = Subscription::create([
-        'billable_type' => User::class,
-        'billable_id' => $this->user->id,
-        'plan_id' => $this->enterprisePlan->id,
-        'vendor_slug' => 'stripe',
-        'vendor_customer_id' => 'cus_test123',
-        'vendor_subscription_id' => 'sub_test456',
-        'cycle' => 'year',
-        'status' => 'active',
-        'seats' => 1,
-    ]);
-
-    $userSubscriptions = Subscription::where('billable_id', $this->user->id)->get();
-
-    expect($userSubscriptions)->toHaveCount(2)
-        ->and($subscription1->status)->toBe('cancelled')
-        ->and($subscription2->status)->toBe('active');
-})->group('stripe', 'billing');
+    expect($this->user->fresh()->getRoleNames()->all())->toBe(['premium']);
+})->with(['customer.subscription.updated', 'customer.subscription.deleted']);
