@@ -3,6 +3,7 @@
 namespace Wave\Actions\Billing\Paddle;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Sleep;
 use Wave\Subscription;
 
 class AddSubscriptionIdFromTransaction
@@ -14,40 +15,35 @@ class AddSubscriptionIdFromTransaction
      *
      * @return mixed
      */
-    public function __invoke($transactionId)
+    public function __invoke($transactionId, int $attempts = 5)
     {
         $endpoint = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
 
-        $retryCount = 5;
         $retryDelay = 3;
-        $transaction = null;
-        $response = Http::withToken(config('wave.paddle.api_key'))->get($endpoint.'/transactions/'.$transactionId);
+        $subscriptionId = null;
 
         // There are times where the transaction is available, but the subscription ID is not available yet. Account for that.
-        for ($i = 0; $i < $retryCount; $i++) {
-            $response = Http::withToken(config('wave.paddle.api_key'))->get($endpoint.'/transactions/'.$transactionId);
-            if ($response->successful()) {
-                $resBody = json_decode($response->body());
-                if (isset($resBody->data->status) && ! is_null($resBody->data->subscription_id)) {
-                    $transaction = $resBody->data;
-                    break;
-                }
+        for ($i = 0; $i < $attempts; $i++) {
+            if ($i > 0) {
+                Sleep::for($retryDelay)->seconds();
             }
 
-            sleep($retryDelay);
+            $response = Http::withToken(config('wave.paddle.api_key'))->get($endpoint.'/transactions/'.$transactionId);
+            if ($response->successful() && $response->json('data.subscription_id')) {
+                $subscriptionId = $response->json('data.subscription_id');
+                break;
+            }
         }
 
-        if ($transaction) {
+        $latestSubscription = Subscription::where('vendor_transaction_id', $transactionId)->where('status', 'active')->latest()->first();
 
-            $subscription = json_decode(Http::withToken(config('wave.paddle.api_key'))->get($endpoint.'/subscriptions/'.$transaction->subscription_id))->data;
-
-            $latestSubscription = Subscription::where('vendor_transaction_id', $transaction->id)->where('status', 'active')->latest()->first();
-            $latestSubscription->vendor_subscription_id = $subscription->id;
-            $latestSubscription->save();
-
-            return $latestSubscription;
-
+        if (is_null($subscriptionId) || is_null($latestSubscription)) {
+            return;
         }
 
+        $latestSubscription->vendor_subscription_id = $subscriptionId;
+        $latestSubscription->save();
+
+        return $latestSubscription;
     }
 }

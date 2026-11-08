@@ -7,7 +7,6 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Wave\Actions\Billing\Paddle\AddSubscriptionIdFromTransaction;
-use Wave\Subscription;
 
 class Update extends Component
 {
@@ -33,8 +32,8 @@ class Update extends Component
             $subscription = $this->subscription;
 
             if (is_null($this->subscription->vendor_subscription_id)) {
-                // If we did not obtain the user subscription id, try to get it again.
-                $subscription = app(AddSubscriptionIdFromTransaction::class)($this->subscription->vendor_transaction_id);
+                // Try once more without retrying; the checkout flow already waited for Paddle.
+                $subscription = app(AddSubscriptionIdFromTransaction::class)($this->subscription->vendor_transaction_id, attempts: 1);
                 if (is_null($subscription)) {
                     $this->error_retrieving_data = true;
 

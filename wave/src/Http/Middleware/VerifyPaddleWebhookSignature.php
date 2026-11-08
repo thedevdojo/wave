@@ -4,7 +4,7 @@ namespace Wave\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -40,12 +40,12 @@ class VerifyPaddleWebhookSignature
     /**
      * Validate signature.
      */
-
-    // the signature is not $signature[0] it's $signature
-    // the true it's false and false it's true when if ($this->isInvalidSignature($request, $signature)) { throw new AccessDeniedHttpException('Invalid webhook signature.'); }
-    protected function isInvalidSignature(Request $request, string $signature): bool
+    protected function isInvalidSignature(Request $request, ?string $signature): bool
     {
-        if (empty($signature)) {
+        $secret = config('wave.paddle.webhook_secret');
+
+        // Without a secret anyone could sign a payload, so fail closed.
+        if (empty($signature) || empty($secret)) {
             return true;
         }
 
@@ -55,7 +55,6 @@ class VerifyPaddleWebhookSignature
             return true;
         }
 
-        $secret = config('wave.paddle.webhook_secret');
         $data = $request->getContent();
 
         foreach ($hashes as $hashAlgorithm => $possibleHashes) {
@@ -87,9 +86,11 @@ class VerifyPaddleWebhookSignature
             if (str_contains($part, '=')) {
                 [$key, $value] = explode('=', $part, 2);
 
+                // Paddle may add new keys; unknown ones are skipped.
                 match ($key) {
                     'ts' => $components['ts'] = (int) $value,
                     'h1' => $components['hashes']['h1'][] = $value,
+                    default => null,
                 };
             }
         }

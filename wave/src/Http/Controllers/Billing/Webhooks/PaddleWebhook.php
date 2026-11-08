@@ -38,7 +38,8 @@ class PaddleWebhook extends Controller
             return;
         }
 
+        // Already cancelled locally or unknown; still acknowledge so Paddle stops retrying.
         $subscription = Subscription::where('vendor_subscription_id', $subscriptionId)->where('status', 'active')->first();
-        $subscription->cancel();
+        $subscription?->cancel();
     }
 }
