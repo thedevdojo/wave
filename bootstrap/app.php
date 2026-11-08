@@ -30,7 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->encryptCookies(except: [
             'theme',
         ]);
-        $middleware->validateCsrfTokens(except: [
+        $middleware->preventRequestForgery(except: [
             '/webhook/paddle',
             '/webhook/stripe',
         ]);
