@@ -9,6 +9,7 @@ use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Vite as BaseVite;
@@ -69,12 +70,7 @@ class WaveServiceProvider extends ServiceProvider
         $this->app->router->aliasMiddleware('subscribed', Subscribed::class);
         $this->app->router->aliasMiddleware('token_api', TokenMiddleware::class);
 
-        if (! $this->hasDBConnection()) {
-            $this->app->router->pushMiddlewareToGroup('web', InstallMiddleware::class);
-        }
-
         if (config('wave.demo')) {
-            $this->app->router->pushMiddlewareToGroup('web', ThemeDemoMiddleware::class);
             // Overwrite the Vite asset helper so we can use the demo folder as opposed to the build folder
             $this->app->singleton(BaseVite::class, function ($app) {
                 // Replace the default Vite instance with the custom one
@@ -143,6 +139,24 @@ class WaveServiceProvider extends ServiceProvider
 
         $this->registerWaveFolioDirectory();
         $this->registerWaveComponentDirectory();
+        $this->registerWebMiddleware();
+    }
+
+    /**
+     * Added through the HTTP kernel because it owns the middleware groups: pushing onto
+     * the router directly gets overwritten whenever the kernel syncs its groups again.
+     */
+    protected function registerWebMiddleware(): void
+    {
+        $kernel = $this->app->make(HttpKernel::class);
+
+        if (! $this->hasDBConnection()) {
+            $kernel->appendMiddlewareToGroup('web', InstallMiddleware::class);
+        }
+
+        if (config('wave.demo')) {
+            $kernel->appendMiddlewareToGroup('web', ThemeDemoMiddleware::class);
+        }
     }
 
     protected function loadHelpers(): void
