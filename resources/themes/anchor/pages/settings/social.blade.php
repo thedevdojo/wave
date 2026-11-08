@@ -25,42 +25,49 @@
 
         public function form(Schema $schema): Schema
         {
+            // Links are rendered as hrefs on the public profile, so only allow web URLs.
             return $schema
                 ->components([
                     TextInput::make('twitter')
                         ->label('Twitter / X')
                         ->placeholder('https://twitter.com/username')
                         ->url()
+                        ->rule('url:http,https')
                         ->helperText('Your Twitter/X profile URL')
                         ->prefixIcon('heroicon-o-link'),
                     TextInput::make('linkedin')
                         ->label('LinkedIn')
                         ->placeholder('https://linkedin.com/in/username')
                         ->url()
+                        ->rule('url:http,https')
                         ->helperText('Your LinkedIn profile URL')
                         ->prefixIcon('heroicon-o-link'),
                     TextInput::make('github')
                         ->label('GitHub')
                         ->placeholder('https://github.com/username')
                         ->url()
+                        ->rule('url:http,https')
                         ->helperText('Your GitHub profile URL')
                         ->prefixIcon('heroicon-o-link'),
                     TextInput::make('website')
                         ->label('Personal Website')
                         ->placeholder('https://yourwebsite.com')
                         ->url()
+                        ->rule('url:http,https')
                         ->helperText('Your personal website or portfolio')
                         ->prefixIcon('heroicon-o-link'),
                     TextInput::make('youtube')
                         ->label('YouTube')
                         ->placeholder('https://youtube.com/@username')
                         ->url()
+                        ->rule('url:http,https')
                         ->helperText('Your YouTube channel URL')
                         ->prefixIcon('heroicon-o-link'),
                     TextInput::make('instagram')
                         ->label('Instagram')
                         ->placeholder('https://instagram.com/username')
                         ->url()
+                        ->rule('url:http,https')
                         ->helperText('Your Instagram profile URL')
                         ->prefixIcon('heroicon-o-link'),
                 ])
