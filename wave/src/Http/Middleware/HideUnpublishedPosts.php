@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Laravel\Folio\Events\ViewMatched;
 use Wave\Post;
 
+/**
+ * Any Folio page that binds an unpublished Post 404s for everyone but admins,
+ * so a page letting authors preview their own drafts needs to account for this.
+ */
 class HideUnpublishedPosts
 {
     /**
