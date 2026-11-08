@@ -22,6 +22,10 @@ abstract class TestCase extends BaseTestCase
         // The app boots before the test database is migrated, so load the
         // active theme again now that it exists.
         $this->app->getProvider(ThemesServiceProvider::class)->boot();
+
+        // With --parallel each process compiles views into its own folder, which
+        // Pest doesn't create up front and Volt writes to without creating it.
+        File::ensureDirectoryExists(config('view.compiled'));
     }
 
     /**

@@ -3,15 +3,12 @@
 use Wave\Plugins\PluginAutoloader;
 
 it('registers the plugin autoloader only once', function () {
-    $before = spl_autoload_functions() ?: [];
-
     PluginAutoloader::register();
     PluginAutoloader::register();
 
-    $after = spl_autoload_functions() ?: [];
-
-    // Count closures originating from PluginAutoloader
-    $pluginClosures = array_filter($after, function ($loader) {
+    // Count closures originating from PluginAutoloader. An earlier test in the
+    // same process may already have registered it, so don't compare totals.
+    $pluginClosures = array_filter(spl_autoload_functions() ?: [], function ($loader) {
         if ($loader instanceof Closure) {
             $ref = new ReflectionFunction($loader);
 
@@ -21,6 +18,5 @@ it('registers the plugin autoloader only once', function () {
         return false;
     });
 
-    expect(count($pluginClosures))->toBe(1)
-        ->and(count($after))->toBe(count($before) + 1);
+    expect(count($pluginClosures))->toBe(1);
 });
