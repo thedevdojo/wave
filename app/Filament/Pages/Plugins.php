@@ -64,7 +64,7 @@ class Plugins extends Page
         return $plugins;
     }
 
-    private function ensurePluginExists($pluginFolder)
+    private function ensurePluginExists(string $pluginFolder): void
     {
         if (! array_key_exists($pluginFolder, $this->getPluginsFromFolder())) {
             abort(404);
@@ -148,9 +148,7 @@ class Plugins extends Page
     {
         $this->ensurePluginExists($pluginFolder);
 
-        $installedPlugins = $this->getInstalledPlugins();
-        $installedPlugins = array_values(array_diff($installedPlugins, [$pluginFolder]));
-        $this->updateInstalledPlugins($installedPlugins);
+        $this->removeFromInstalledPlugins($pluginFolder);
 
         Notification::make()
             ->title('Successfully deactivated '.$pluginFolder.' plugin')
@@ -164,7 +162,7 @@ class Plugins extends Page
     {
         $this->ensurePluginExists($pluginFolder);
 
-        $this->deactivate($pluginFolder);
+        $this->removeFromInstalledPlugins($pluginFolder);
 
         $pluginPath = resource_path('plugins').'/'.$pluginFolder;
         if (file_exists($pluginPath)) {
@@ -177,5 +175,11 @@ class Plugins extends Page
             ->send();
 
         $this->refreshPlugins();
+    }
+
+    private function removeFromInstalledPlugins(string $pluginFolder): void
+    {
+        $installedPlugins = array_values(array_diff($this->getInstalledPlugins(), [$pluginFolder]));
+        $this->updateInstalledPlugins($installedPlugins);
     }
 }

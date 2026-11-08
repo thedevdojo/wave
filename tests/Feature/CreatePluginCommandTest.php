@@ -42,7 +42,9 @@ test('generated plugin class can be loaded', function () {
 });
 
 test('plugin names that do not map to a matching folder and class are rejected', function (string $name) {
+    $before = File::directories(resource_path('plugins'));
+
     $this->artisan('plugin:create', ['name' => $name])->assertFailed();
 
-    expect(resource_path('plugins/plugin-2-go'))->not->toBeDirectory();
+    expect(File::directories(resource_path('plugins')))->toBe($before);
 })->with(['Plugin 2 Go', '!!!']);
