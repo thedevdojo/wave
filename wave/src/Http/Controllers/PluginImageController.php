@@ -9,7 +9,7 @@ class PluginImageController extends Controller
 {
     public function show($plugin_name)
     {
-        $path = config('wave.plugins_path').'/'.$plugin_name.'/plugin.jpg';
+        $path = config('wave.plugins_path', resource_path('plugins')).'/'.$plugin_name.'/plugin.jpg';
 
         if (! File::exists($path)) {
             abort(404);

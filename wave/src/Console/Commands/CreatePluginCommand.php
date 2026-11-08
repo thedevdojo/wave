@@ -29,7 +29,7 @@ class CreatePluginCommand extends Command
             return self::FAILURE;
         }
 
-        $pluginPath = config('wave.plugins_path')."/{$folderName}";
+        $pluginPath = config('wave.plugins_path', resource_path('plugins'))."/{$folderName}";
 
         if (File::exists($pluginPath)) {
             $this->error("A plugin with the name '{$folderName}' already exists.");

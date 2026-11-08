@@ -33,7 +33,7 @@ class Plugins extends Page
     private function getPluginsFromFolder()
     {
         $plugins = [];
-        $plugins_folder = config('wave.plugins_path');
+        $plugins_folder = config('wave.plugins_path', resource_path('plugins'));
 
         if (! file_exists($plugins_folder)) {
             mkdir($plugins_folder);
@@ -80,7 +80,7 @@ class Plugins extends Page
 
     private function getInstalledPlugins()
     {
-        $path = config('wave.plugins_path').'/installed.json';
+        $path = config('wave.plugins_path', resource_path('plugins')).'/installed.json';
 
         return File::exists($path) ? File::json($path) : [];
     }
@@ -88,7 +88,7 @@ class Plugins extends Page
     private function updateInstalledPlugins($plugins)
     {
         $json = json_encode($plugins);
-        file_put_contents(config('wave.plugins_path').'/installed.json', $json);
+        file_put_contents(config('wave.plugins_path', resource_path('plugins')).'/installed.json', $json);
 
         Cache::forget('wave_installed_plugins');
     }
@@ -134,7 +134,7 @@ class Plugins extends Page
             }
 
             // Run migrations if they exist
-            $migrationPath = config('wave.plugins_path')."/{$pluginFolder}/database/migrations";
+            $migrationPath = config('wave.plugins_path', resource_path('plugins'))."/{$pluginFolder}/database/migrations";
             if (File::isDirectory($migrationPath)) {
                 Artisan::call('migrate', [
                     '--path' => $migrationPath,
@@ -165,7 +165,7 @@ class Plugins extends Page
 
         $this->removeFromInstalledPlugins($pluginFolder);
 
-        $pluginPath = config('wave.plugins_path').'/'.$pluginFolder;
+        $pluginPath = config('wave.plugins_path', resource_path('plugins')).'/'.$pluginFolder;
         if (file_exists($pluginPath)) {
             File::deleteDirectory($pluginPath);
         }

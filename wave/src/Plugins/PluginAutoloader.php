@@ -29,7 +29,7 @@ class PluginAutoloader
             }
 
             // Read after the prefix check: this runs for every class, even when no app is booted.
-            $base_dir = config('wave.plugins_path').'/';
+            $base_dir = config('wave.plugins_path', resource_path('plugins')).'/';
 
             $relative_class = substr($class, $len);
             $parts = explode('\\', $relative_class);
