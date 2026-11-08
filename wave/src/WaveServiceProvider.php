@@ -13,6 +13,7 @@ use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Vite as BaseVite;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Intervention\Image\Decoders\DataUriImageDecoder;
+use Intervention\Image\Decoders\SplFileInfoImageDecoder;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 use Laravel\Folio\Events\ViewMatched;
@@ -105,12 +108,24 @@ class WaveServiceProvider extends ServiceProvider
             'warning' => Color::Amber,
         ]);
 
+        // Only uploaded files and data URIs, never a path on the server
         Validator::extend('imageable', function ($attribute, $value, $params, $validator) {
             try {
                 $manager = new ImageManager(new Driver);
-                $manager->read($value);
 
-                return true;
+                if ($value instanceof UploadedFile) {
+                    $manager->read($value, SplFileInfoImageDecoder::class);
+
+                    return true;
+                }
+
+                if (is_string($value) && str_starts_with($value, 'data:image/')) {
+                    $manager->read($value, DataUriImageDecoder::class);
+
+                    return true;
+                }
+
+                return false;
             } catch (Exception $e) {
                 return false;
             }
