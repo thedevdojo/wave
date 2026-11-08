@@ -15,7 +15,7 @@
         "ext-gd": "*",
         "codeat3/blade-phosphor-icons": "^2.0",
         "devdojo/app": "0.11.0",
-        "devdojo/auth": "^1.0",
+        "devdojo/auth": "^2.2.0",
         "devdojo/themes": "0.0.11",
         "filament/filament": "^4.0",
         "filament/tables": "^4.0",
@@ -28,7 +28,7 @@
         "laravel/pail": "^1.2.2",
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
-        "livewire/livewire": "^3.5",
+        "livewire/livewire": "^3.6.4",
         "ralphjsmit/livewire-urls": "^1.5",
         "spatie/laravel-permission": "^6.12",
         "stripe/stripe-php": "^17.3",
@@ -39,11 +39,12 @@
         "fakerphp/faker": "^1.23",
         "filament/upgrade": "^4.0",
         "laravel/dusk": "^8.2",
+        "laravel/pint": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "pestphp/pest": "^3.8",
-        "pestphp/pest-plugin-laravel": "^3.2",
-        "phpunit/phpunit": "^11.5.15",
+        "pestphp/pest": "^4.3",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "phpunit/phpunit": "^12.5.4",
         "spatie/laravel-ignition": "^2.9"
     },
     "autoload": {
@@ -73,6 +74,7 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
+            "@php artisan jwt:secret --force --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi",
             "@php artisan db:seed"

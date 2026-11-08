@@ -28,6 +28,7 @@ class CancelExpiredSubscriptions extends Command
 
         foreach ($subscriptions as $subscription) {
             $subscription->cancel();
+            $subscription->user->clearUserCache();
             $this->info('Subscription ID '.$subscription->id.' has been cancelled.');
         }
 

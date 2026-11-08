@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\Settings\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\Settings\SettingResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Cache;
 

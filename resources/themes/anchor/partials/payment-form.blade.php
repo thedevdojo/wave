@@ -17,11 +17,7 @@
 <script>
 
 	// Create a Stripe client.
-	@if(config('settings.stripe_mode') == 'live')
-		var stripe = Stripe('{{ config('settings.stripe_live_key') }}');
-	@else
-		var stripe = Stripe('{{ config('settings.stripe_test_key') }}');
-	@endif
+	var stripe = Stripe('{{ config('wave.stripe.publishable_key') }}');
 
 	// Create an instance of Elements.
 	var elements = stripe.elements();

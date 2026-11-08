@@ -1,15 +1,12 @@
 <?php
 
-use Wave\Actions\Reset;
 use App\Models\User;
-use Wave\Page;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Route;
+use Wave\Actions\Reset;
+use Wave\Page;
 
 Route::impersonate();
-
-// Documentation routes
-Route::view('docs/{page?}', 'docs::index')->where('page', '(.*)');
 
 // Additional Auth Routes
 Route::get('logout', '\Wave\Http\Controllers\LogoutController@logout')->name('wave.logout');
@@ -40,7 +37,10 @@ Route::get('wave/theme/image/{theme_name}', '\Wave\Http\Controllers\ThemeImageCo
 Route::get('wave/plugin/image/{plugin_name}', '\Wave\Http\Controllers\PluginImageController@show');
 Route::redirect('admin/login', '/auth/login');
 
-Route::get('reset', Reset::class);
+// Reset sqlite database - only in local environment
+if (app()->environment('local')) {
+    Route::get('reset', Reset::class)->middleware('auth');
+}
 
 /***** Billing Routes *****/
 Route::post('webhook/paddle', '\Wave\Http\Controllers\Billing\Webhooks\PaddleWebhook@handler')->middleware('paddle-webhook-signature');
@@ -51,7 +51,9 @@ Route::redirect('billing', 'settings/subscription')->name('billing');
 try {
     if (User::first()) {
         /***** Dynamic Page Routes *****/
-        foreach (Page::all() as $page) {
+        // These are built at boot, so with route:cache enabled the cache has to be
+        // rebuilt after a page is added or its status changes.
+        foreach (Page::active()->get() as $page) {
             Route::view($page->slug, 'theme::page', ['page' => $page->toArray()])->name($page->slug);
         }
     }

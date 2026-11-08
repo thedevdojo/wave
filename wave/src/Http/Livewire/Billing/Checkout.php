@@ -201,7 +201,7 @@ class Checkout extends Component
     public function render()
     {
         return view('wave::livewire.billing.checkout', [
-            'plans' => Plan::where('active', 1)->get(),
+            'plans' => Plan::getActivePlans(),
         ]);
     }
 }

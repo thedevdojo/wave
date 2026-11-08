@@ -16,7 +16,7 @@ class Subscribed
     public function handle(Request $request, Closure $next)
     {
         $user = auth()->user();
-        
+
         if (Auth::check() && ($user->subscriber() || $user->isAdmin())) {
             return $next($request);
         }

@@ -77,6 +77,12 @@
                 \Illuminate\Support\Facades\Artisan::call('migrate', [
                     '--force' => true
                     ]);
+
+                if (empty(config('jwt.secret'))) {
+                    \Illuminate\Support\Facades\Artisan::call('jwt:secret', [
+                        '--force' => true
+                    ]);
+                }
             @endphp
 
             <div class="flex flex-col justify-center items-center w-screen h-screen">

@@ -1,6 +1,6 @@
 <div x-data="{ open: false }" class="flex h-full md:flex-1">
     <div class="hidden flex-1 space-x-8 h-full font-semibold md:flex">
-        <a href="{{ route('wave.dashboard') }}" class="inline-flex items-center px-1 pt-1 text-sm leading-5 transition duration-150 ease-in-out focus:outline-none border-b-2 border-transparent @if(Request::is('dashboard')){{ 'text-zinc-900' }}@else{{ 'text-zinc-800 hover:text-zinc-900' }}@endif">Dashboard</a>
+        <a href="{{ route('wave.dashboard') }}" wire:navigate class="inline-flex items-center px-1 pt-1 text-sm leading-5 transition duration-150 ease-in-out focus:outline-none border-b-2 border-transparent @if(Request::is('dashboard')){{ 'text-zinc-900' }}@else{{ 'text-zinc-800 hover:text-zinc-900' }}@endif">Dashboard</a>
         <div x-data="{ dropdown: false }" @mouseenter="dropdown = true" @mouseleave="dropdown=false" @click.away="dropdown=false" class="inline-flex relative items-center px-1 pt-1 text-sm leading-5 border-b-2 border-transparent transition duration-150 ease-in-out cursor-pointer text-zinc-800 hover:text-zinc-900 hover:border-zinc-300">
             <span>Resources</span>
             <svg class="ml-1 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -17,7 +17,7 @@
                 <div class="rounded-xl border shadow-md border-zinc-100">
                     <div class="overflow-hidden rounded-xl shadow-xs">
                         <div class="grid relative z-20 gap-6 px-5 py-6 bg-white sm:p-8 sm:gap-8">
-                            <a href="{{ url('docs') }}" class="block px-5 py-3 -m-3 space-y-1 rounded-xl transition duration-150 ease-in-out hover:border-blue-500 hover:border-l-2 hover:bg-zinc-100">
+                            <a href="{{ url('docs') }}" wire:navigate class="block px-5 py-3 -m-3 space-y-1 rounded-xl transition duration-150 ease-in-out hover:border-blue-500 hover:border-l-2 hover:bg-zinc-100">
                                 <p class="text-base font-medium leading-6 text-zinc-900">
                                     Documentation
                                 </p>
@@ -33,7 +33,7 @@
                                     Watch videos to learn how to use Wave.
                                 </p>
                             </a>
-                            <a href="{{ route('blog') }}" class="block px-5 py-3 -m-3 space-y-1 rounded-xl transition duration-150 ease-in-out hover:bg-zinc-100">
+                            <a href="{{ route('blog') }}" wire:navigate class="block px-5 py-3 -m-3 space-y-1 rounded-xl transition duration-150 ease-in-out hover:bg-zinc-100">
                                 <p class="text-base font-medium leading-6 text-zinc-900">
                                     From The Blog
                                 </p>
@@ -78,7 +78,7 @@
                 class="absolute top-0 right-0 mt-20 w-56 rounded-xl transform origin-top-right" x-cloak>
 
                 <div class="bg-white rounded-xl border shadow-md border-zinc-100" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                    <a href="{{ route('wave.profile', auth()->user()->username) }}" class="block px-4 py-3 text-zinc-700 hover:text-zinc-800">
+                    <a href="{{ route('wave.profile', auth()->user()->username) }}" wire:navigate class="block px-4 py-3 text-zinc-700 hover:text-zinc-800">
 
                         <span class="block text-sm font-medium leading-tight truncate">
                             {{ auth()->user()->name }}
@@ -88,7 +88,7 @@
                         </span>
                     </a>
                     @impersonating
-                            <a href="{{ route('impersonate.leave') }}" class="block px-4 py-2 text-sm leading-5 text-blue-900 bg-blue-50 border-t text-zinc-700 border-zinc-100 hover:bg-blue-100 focus:outline-none focus:bg-blue-200">Leave impersonation</a>
+                            <a href="{{ route('impersonate.leave') }}" wire:navigate class="block px-4 py-2 text-sm leading-5 text-blue-900 bg-blue-50 border-t text-zinc-700 border-zinc-100 hover:bg-blue-100 focus:outline-none focus:bg-blue-200">Leave impersonation</a>
                     @endImpersonating
                     <div class="border-t border-zinc-100"></div>
                     <div class="py-1">
@@ -97,18 +97,18 @@
                             <span class="inline-block px-2 my-1 -ml-1 text-xs font-medium leading-5 rounded text-zinc-600 bg-zinc-200">{{ auth()->user()->roles->first()->name }}</span>
                         </div>
                         @trial
-                            <a href="{{ route('wave.settings', 'plans') }}" class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">Upgrade My Account</a>
+                            <a href="{{ route('wave.settings', 'plans') }}" wire:navigate class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">Upgrade My Account</a>
                         @endtrial
                         @if( !auth()->guest() && auth()->user()->isAdmin() )
-                            <a href="/admin" class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900"><i class="fa fa-bolt"></i> Admin</a>
+                            <a href="/admin" wire:navigate class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900"><i class="fa fa-bolt"></i> Admin</a>
                         @endif
-                        <a href="{{ route('wave.profile', auth()->user()->username) }}" class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">My Profile</a>
-                        <a href="{{ route('wave.settings') }}" class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">Settings</a>
+                        <a href="{{ route('wave.profile', auth()->user()->username) }}" wire:navigate class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">My Profile</a>My Profile</a>
+                        <a href="{{ route('wave.settings') }}" wire:navigate class="block px-4 py-2 text-sm leading-5 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900">Settings</a>
 
                     </div>
                     <div class="border-t border-zinc-100"></div>
                     <div class="py-1">
-                        <a href="{{ route('logout') }}" class="block px-4 py-2 w-full text-sm leading-5 text-left text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900" role="menuitem">
+                        <a href="{{ route('logout') }}" wire:navigate class="block px-4 py-2 w-full text-sm leading-5 text-left text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:bg-zinc-100 focus:text-zinc-900" role="menuitem">
                             Sign out
                         </a>
                     </div>

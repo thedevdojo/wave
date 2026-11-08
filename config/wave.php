@@ -1,27 +1,23 @@
 <?php
 
+use App\Models\User;
+
 return [
 
-    'profile_fields' => [
-        'about' => [
-            'label' => 'About',
-            'field' => 'textarea',
-            'validation' => 'required',
-        ],
-    ],
-
+    // Lifetime in minutes of JWTs issued by the API. auth_token_expires applies
+    // to /api/login, /api/register and /api/refresh; key_token_expires to /api/token.
     'api' => [
         'auth_token_expires' => 60,
-        'key_token_expires' => 1,
+        'key_token_expires' => 60,
     ],
 
     'auth' => [
-        'min_password_length' => 5,
+        'min_password_length' => 8,
     ],
 
     'primary_color' => '#000000',
 
-    'user_model' => \App\Models\User::class,
+    'user_model' => User::class,
     'show_docs' => env('WAVE_DOCS', true),
     'demo' => env('WAVE_DEMO', false),
     'dev_bar' => env('WAVE_BAR', false),

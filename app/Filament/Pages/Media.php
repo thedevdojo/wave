@@ -3,8 +3,8 @@
 namespace App\Filament\Pages;
 
 use BackedEnum;
-use Filament\Support\Enums\Width;
 use Filament\Pages\Page;
+use Filament\Support\Enums\Width;
 
 class Media extends Page
 {

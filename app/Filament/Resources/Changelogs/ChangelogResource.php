@@ -2,22 +2,19 @@
 
 namespace App\Filament\Resources\Changelogs;
 
-use BackedEnum;
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use App\Filament\Resources\Changelogs\Pages\ListChangelogs;
 use App\Filament\Resources\Changelogs\Pages\CreateChangelog;
 use App\Filament\Resources\Changelogs\Pages\EditChangelog;
-use App\Filament\Resources\ChangelogResource\Pages;
-use Filament\Forms;
+use App\Filament\Resources\Changelogs\Pages\ListChangelogs;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Wave\Changelog;
 

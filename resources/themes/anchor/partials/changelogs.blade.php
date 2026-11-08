@@ -9,7 +9,7 @@
 			</span>
 			<h4 class="w-full overflow-hidden text-sm font-medium leading-5 pr-7 whitespace-nowrap text-zinc-900 dark:text-white text-ellipsis">{{ $changeLogNotification->title }}</h4>
 			<p class="mt-2 text-sm leading-5 tracking-wide text-zinc-500">{{ $changeLogNotification->description }}</p>
-			<div id="changelog_footer" class="mt-1"><a href="{{ route('changelog', ['changelog' => $changeLogNotification->id]) }}" class="text-sm font-medium leading-5 transition duration-150 ease-in-out opacity-90 hover:opacity-100 focus:outline-none focus:underline" style="color:{{ config('wave.primary_color') }}">Learn More</a></div>
+			<div id="changelog_footer" class="mt-1"><a href="{{ route('changelog', ['changelog' => $changeLogNotification->id]) }}" wire:navigate class="text-sm font-medium leading-5 transition duration-150 ease-in-out opacity-90 hover:opacity-100 focus:outline-none focus:underline" style="color:{{ config('wave.primary_color') }}">Learn More</a></div>
 		</div>
 	</div>
 </div>
