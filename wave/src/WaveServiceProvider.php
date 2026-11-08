@@ -59,8 +59,8 @@ class WaveServiceProvider extends ServiceProvider
             return new Wave;
         });
 
-        // Register Intervention Image Manager
-        $this->app->singleton('image', function () {
+        // Bound by class, Laravel 13's own image service owns the 'image' key.
+        $this->app->singleton(ImageManager::class, function () {
             return new ImageManager(new Driver);
         });
 

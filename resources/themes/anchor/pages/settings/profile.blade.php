@@ -87,7 +87,7 @@
 
 		// Not named after the username, which can change or be taken by someone else later.
 		$path = 'avatars/' . $user->id . '-' . Str::random(20) . '.png';
-		$image = app('image')->read($this->avatar, \Intervention\Image\Decoders\DataUriImageDecoder::class)->resize(800, 800);
+		$image = app(\Intervention\Image\ImageManager::class)->read($this->avatar, \Intervention\Image\Decoders\DataUriImageDecoder::class)->resize(800, 800);
 		Storage::disk('public')->put($path, $image->encode());
 		$user->avatar = $path;
 		$user->save();
