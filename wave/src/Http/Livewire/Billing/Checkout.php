@@ -193,6 +193,7 @@ class Checkout extends Component
             $subscription->cycle = $this->billing_cycle_selected;
             $subscription->save();
             $subscription->user->switchPlans($plan);
+            $subscription->user->clearUserCache();
 
             return redirect()->to('/settings/subscription')->with(['update' => true]);
         }

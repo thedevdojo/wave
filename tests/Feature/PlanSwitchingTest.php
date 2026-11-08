@@ -11,7 +11,10 @@
  */
 
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
+use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
+use Wave\Http\Livewire\Billing\Checkout;
 use Wave\Plan;
 use Wave\Subscription;
 
@@ -373,4 +376,29 @@ test('switching plans with different billing cycles maintains role integrity', f
     $freshUser = $this->user->fresh();
     expect($freshUser->hasRole('premium'))->toBeTrue()
         ->and($freshUser->planInterval())->toBe('Yearly');
+});
+
+test('switching plans through paddle refreshes the cached plan checks', function () {
+    config(['wave.billing_provider' => 'paddle']);
+    Http::fake(['*/subscriptions/sub_paddle_switch' => Http::response(['data' => []])]);
+
+    Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->basicPlan->id,
+        'vendor_slug' => 'paddle',
+        'vendor_subscription_id' => 'sub_paddle_switch',
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    expect($this->user->subscribedToPlan('Premium'))->toBeFalse();
+
+    Livewire::test(Checkout::class)
+        ->call('switchPlan', $this->premiumPlan->id)
+        ->assertRedirect('/settings/subscription');
+
+    expect($this->user->fresh()->subscribedToPlan('Premium'))->toBeTrue()
+        ->and($this->user->fresh()->subscribedToPlan('Basic'))->toBeFalse();
 });
