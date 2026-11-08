@@ -13,7 +13,8 @@ class EditPlan extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->before(fn (DeleteAction $action) => PlanResource::preventDeletingSubscribedPlans($action, [$this->getRecord()->getKey()])),
         ];
     }
 }
