@@ -95,7 +95,13 @@ class Update extends Component
 
     public function cancelImmediately()
     {
-        if (app(CancelSubscription::class)(auth()->user()->subscription)) {
+        $subscription = auth()->user()->subscription;
+
+        if (is_null($subscription)) {
+            return redirect()->to('/settings/subscription');
+        }
+
+        if (app(CancelSubscription::class)($subscription)) {
             return redirect()->to('/settings/subscription');
         }
     }

@@ -2,7 +2,10 @@
 
 namespace Wave\Actions\Billing;
 
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Stripe\Exception\InvalidRequestException;
 use Stripe\StripeClient;
 use Wave\Subscription;
 
@@ -15,7 +18,13 @@ class CancelSubscription
     public function __invoke(Subscription $subscription): bool
     {
         if (is_null($subscription->vendor_subscription_id)) {
-            return false;
+            Log::warning('Cancelled a subscription with no vendor id locally only, check it with the vendor.', [
+                'subscription_id' => $subscription->id,
+                'vendor' => $subscription->vendor_slug,
+            ]);
+            $subscription->cancel();
+
+            return true;
         }
 
         $cancelled = match ($subscription->vendor_slug) {
@@ -33,20 +42,58 @@ class CancelSubscription
 
     private function cancelWithStripe(Subscription $subscription): bool
     {
-        // Throws on an API error.
-        (new StripeClient(config('wave.stripe.secret_key')))->subscriptions->cancel($subscription->vendor_subscription_id);
+        $stripe = new StripeClient(config('wave.stripe.secret_key'));
+        $id = $subscription->vendor_subscription_id;
+
+        try {
+            $stripe->subscriptions->cancel($id);
+        } catch (InvalidRequestException $e) {
+            // Already cancelled or gone on Stripe's side, nothing left to bill.
+            if ($e->getHttpStatus() === 404) {
+                return $this->vendorAlreadyGone($subscription);
+            }
+
+            if (! in_array($stripe->subscriptions->retrieve($id)->status, ['canceled', 'incomplete_expired'])) {
+                throw $e;
+            }
+        }
 
         return true;
     }
 
     private function cancelWithPaddle(Subscription $subscription): bool
     {
-        $paddleUrl = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
+        $url = '/subscriptions/'.$subscription->vendor_subscription_id;
 
-        return Http::withToken(config('wave.paddle.api_key'))
-            ->post($paddleUrl.'/subscriptions/'.$subscription->vendor_subscription_id.'/cancel', [
-                'effective_from' => 'immediately',
-            ])
-            ->successful();
+        $response = $this->paddle()->post($url.'/cancel', ['effective_from' => 'immediately']);
+
+        if ($response->successful()) {
+            return true;
+        }
+
+        if ($response->status() === 404) {
+            return $this->vendorAlreadyGone($subscription);
+        }
+
+        // The cancel call fails on a subscription that is already cancelled.
+        return $this->paddle()->get($url)->json('data.status') === 'canceled';
+    }
+
+    private function paddle(): PendingRequest
+    {
+        $baseUrl = (config('wave.paddle.env') == 'sandbox') ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
+
+        return Http::withToken(config('wave.paddle.api_key'))->baseUrl($baseUrl);
+    }
+
+    private function vendorAlreadyGone(Subscription $subscription): bool
+    {
+        Log::warning('Subscription was not found with the vendor, cancelling it locally.', [
+            'subscription_id' => $subscription->id,
+            'vendor' => $subscription->vendor_slug,
+            'vendor_subscription_id' => $subscription->vendor_subscription_id,
+        ]);
+
+        return true;
     }
 }

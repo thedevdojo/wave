@@ -232,7 +232,7 @@ php artisan accounts:process-deletions
 
 This command:
 1. Finds all users with `deletion_scheduled_at` <= current time
-2. Cancels their active Stripe/Paddle subscriptions immediately (if a cancellation fails, the account is kept and retried on the next run)
+2. Cancels their active Stripe/Paddle subscriptions immediately (if a cancellation fails, the account is kept and retried on the next run; a subscription the vendor already cancelled, or one without a vendor id, is cancelled locally and logged)
 3. Permanently deletes those accounts (force delete) along with their subscriptions, profile fields and notifications. Posts and pages they authored are kept with no author
 4. Logs results (success/failure for each account)
 5. Returns count of deleted accounts
