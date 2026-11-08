@@ -6,6 +6,7 @@ use BackedEnum;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -63,6 +64,13 @@ class Plugins extends Page
         return $plugins;
     }
 
+    private function ensurePluginExists(string $pluginFolder): void
+    {
+        if (! array_key_exists($pluginFolder, $this->getPluginsFromFolder())) {
+            abort(404);
+        }
+    }
+
     private function isPluginActive($folder)
     {
         $installedPlugins = $this->getInstalledPlugins();
@@ -81,10 +89,14 @@ class Plugins extends Page
     {
         $json = json_encode($plugins);
         file_put_contents(resource_path('plugins/installed.json'), $json);
+
+        Cache::forget('wave_installed_plugins');
     }
 
     public function activate($pluginFolder)
     {
+        $this->ensurePluginExists($pluginFolder);
+
         $installedPlugins = $this->getInstalledPlugins();
         if (! in_array($pluginFolder, $installedPlugins)) {
             $installedPlugins[] = $pluginFolder;
@@ -134,9 +146,9 @@ class Plugins extends Page
 
     public function deactivate($pluginFolder)
     {
-        $installedPlugins = $this->getInstalledPlugins();
-        $installedPlugins = array_diff($installedPlugins, [$pluginFolder]);
-        $this->updateInstalledPlugins($installedPlugins);
+        $this->ensurePluginExists($pluginFolder);
+
+        $this->removeFromInstalledPlugins($pluginFolder);
 
         Notification::make()
             ->title('Successfully deactivated '.$pluginFolder.' plugin')
@@ -148,7 +160,9 @@ class Plugins extends Page
 
     public function deletePlugin($pluginFolder)
     {
-        $this->deactivate($pluginFolder);
+        $this->ensurePluginExists($pluginFolder);
+
+        $this->removeFromInstalledPlugins($pluginFolder);
 
         $pluginPath = resource_path('plugins').'/'.$pluginFolder;
         if (file_exists($pluginPath)) {
@@ -161,5 +175,11 @@ class Plugins extends Page
             ->send();
 
         $this->refreshPlugins();
+    }
+
+    private function removeFromInstalledPlugins(string $pluginFolder): void
+    {
+        $installedPlugins = array_values(array_diff($this->getInstalledPlugins(), [$pluginFolder]));
+        $this->updateInstalledPlugins($installedPlugins);
     }
 }
