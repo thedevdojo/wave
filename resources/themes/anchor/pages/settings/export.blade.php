@@ -6,7 +6,7 @@
     use Wave\Post;
     use Wave\ApiKey;
     
-    middleware('auth');
+    middleware(['auth', 'verified']);
     name('settings.export');
 
 	new class extends Component

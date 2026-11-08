@@ -8,7 +8,7 @@
     use Filament\Forms\Form;
     use Filament\Notifications\Notification;
     
-    middleware('auth');
+    middleware(['auth', 'verified']);
     name('settings.subscription');
 
 	new class extends Component

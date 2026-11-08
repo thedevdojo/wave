@@ -1,6 +1,6 @@
 <?php
     use function Laravel\Folio\{middleware, name};
-	middleware('auth');
+	middleware(['auth', 'verified']);
     name('dashboard');
 ?>
 
