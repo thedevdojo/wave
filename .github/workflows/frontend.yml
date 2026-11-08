@@ -1,0 +1,44 @@
+name: Frontend
+
+on:
+  push:
+    branches:
+      - main
+      - 3.x
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # the theme CSS imports Filament's styles and scans Blade views from vendor/
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist --no-scripts
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      # low/moderate advisories in build tooling are left to dependabot
+      - name: Audit npm dependencies
+        run: npm audit --audit-level=high
+
+      - name: Build assets
+        run: npm run build
