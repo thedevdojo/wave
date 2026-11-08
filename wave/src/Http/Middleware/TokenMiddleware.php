@@ -4,9 +4,7 @@ namespace Wave\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
-// use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Wave\ApiKey;
 
 class TokenMiddleware
@@ -19,25 +17,30 @@ class TokenMiddleware
     }
 
     /**
-     * Handle an incoming request.
+     * Authenticate the request on the api guard, either with an API key
+     * passed as ?token= or with a JWT.
      *
      * @param  Request  $request
-     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
+        $guard = $this->auth->guard('api');
+
         if ($request->token && strlen($request->token) <= 60) {
-            $apiKey = ApiKey::where('key', $request->token)->first();
-            if (isset($apiKey->id)) {
-                $token = JWTAuth::fromUser($apiKey->user);
+            $user = ApiKey::where('key', $request->token)->first()?->user;
+
+            if (! $user) {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
 
+            $guard->setUser($user);
         } else {
-            $this->auth->authenticate();
+            $guard->authenticate();
         }
 
-        // Then process the next request if every tests passed.
+        $this->auth->shouldUse('api');
+
         return $next($request);
     }
 }
