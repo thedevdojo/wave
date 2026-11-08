@@ -19,9 +19,6 @@ use Wave\Plan;
 use Wave\Subscription;
 
 beforeEach(function () {
-    $this->artisan('migrate:fresh');
-    $this->seed();
-
     // Create test roles
     $this->premiumRole = Role::firstOrCreate(
         ['name' => 'test_premium'],

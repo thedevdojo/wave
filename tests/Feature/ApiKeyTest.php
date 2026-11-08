@@ -2,17 +2,10 @@
 
 use App\Models\User;
 use Carbon\Carbon;
-use Wave\ActivityLog;
 use Wave\ApiKey;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
-});
-
-afterEach(function () {
-    // Clean up API keys created during tests
-    ApiKey::where('user_id', $this->user->id)->delete();
-    $this->user->forceDelete();
 });
 
 describe('ApiKey Model', function () {
@@ -212,9 +205,6 @@ describe('API Key Activity Logging', function () {
     it('logs api key creation', function () {
         $this->actingAs($this->user);
 
-        // Clear existing activity logs
-        ActivityLog::where('user_id', $this->user->id)->delete();
-
         $this->user->createApiKey('Logged Key');
 
         // Activity logging happens in the Livewire component, not the model
@@ -235,10 +225,6 @@ describe('Multiple Users with API Keys', function () {
 
         expect($user2->apiKeys)->toHaveCount(1);
         expect($user2->apiKeys->first()->name)->toBe('User 2 Key');
-
-        // Cleanup
-        ApiKey::where('user_id', $user2->id)->delete();
-        $user2->forceDelete();
     });
 
     it('api key belongs to correct user after token request', function () {
@@ -260,9 +246,5 @@ describe('Multiple Users with API Keys', function () {
 
         expect($key1->last_used_at)->toBeNull();
         expect($key2->last_used_at)->not->toBeNull();
-
-        // Cleanup
-        ApiKey::where('user_id', $user2->id)->delete();
-        $user2->forceDelete();
     });
 });

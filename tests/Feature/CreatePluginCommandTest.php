@@ -7,12 +7,8 @@ use Illuminate\Support\Facades\Process;
 beforeEach(function () {
     Http::preventStrayRequests();
     Http::fake(['cdn.devdojo.com/*' => Http::response('image')]);
-});
 
-afterEach(function () {
-    foreach (['seo-tools', 'plugin-2-go'] as $folder) {
-        File::deleteDirectory(resource_path("plugins/{$folder}"));
-    }
+    $this->pluginsPath = $this->useTemporaryPluginsPath();
 });
 
 test('generated plugin class can be loaded', function () {
@@ -20,8 +16,8 @@ test('generated plugin class can be loaded', function () {
         ->expectsQuestion('Provide a short description for your plugin:', "Tom's \\ plugin")
         ->assertSuccessful();
 
-    $pluginFile = resource_path('plugins/seo-tools/SeoToolsPlugin.php');
-    $componentFile = resource_path('plugins/seo-tools/src/Components/SeoTools.php');
+    $pluginFile = $this->pluginsPath.'/seo-tools/SeoToolsPlugin.php';
+    $componentFile = $this->pluginsPath.'/seo-tools/src/Components/SeoTools.php';
 
     expect($pluginFile)->toBeFile()
         ->and($componentFile)->toBeFile();
@@ -42,9 +38,9 @@ test('generated plugin class can be loaded', function () {
 });
 
 test('plugin names that do not map to a matching folder and class are rejected', function (string $name) {
-    $before = File::directories(resource_path('plugins'));
+    $before = File::directories($this->pluginsPath);
 
     $this->artisan('plugin:create', ['name' => $name])->assertFailed();
 
-    expect(File::directories(resource_path('plugins')))->toBe($before);
+    expect(File::directories($this->pluginsPath))->toBe($before);
 })->with(['Plugin 2 Go', '!!!']);

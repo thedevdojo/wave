@@ -4,10 +4,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 beforeEach(function () {
-    $this->user = User::where('email', 'admin@admin.com')->first();
-    // Ensure user starts with no scheduled deletion
-    $this->user->deletion_scheduled_at = null;
-    $this->user->save();
+    $this->user = User::factory()->create();
 });
 
 it('can schedule account deletion', function () {
@@ -116,9 +113,6 @@ it('uses soft deletes for user model', function () {
     $trashedUser = User::withTrashed()->find($userId);
     expect($trashedUser)->not->toBeNull();
     expect($trashedUser->deleted_at)->not->toBeNull();
-
-    // Restore for other tests
-    $trashedUser->restore();
 });
 
 it('password must be correct to schedule deletion', function () {
@@ -147,7 +141,7 @@ it('deletion scheduled date is properly formatted', function () {
 });
 
 it('multiple users can have different deletion schedules', function () {
-    $user1 = User::where('email', 'admin@admin.com')->first();
+    $user1 = $this->user;
     $user2 = User::factory()->create();
 
     // Schedule deletion for user1
@@ -160,11 +154,6 @@ it('multiple users can have different deletion schedules', function () {
 
     expect($user1->deletion_scheduled_at)->not->toEqual($user2->deletion_scheduled_at);
     expect($user1->deletion_scheduled_at->isAfter($user2->deletion_scheduled_at))->toBeTrue();
-
-    // Cleanup
-    $user1->deletion_scheduled_at = null;
-    $user1->save();
-    $user2->forceDelete();
 });
 
 it('can check if deletion is scheduled', function () {
@@ -180,10 +169,6 @@ it('can check if deletion is scheduled', function () {
     $this->user->save();
     $this->user->refresh();
     expect($this->user->deletion_scheduled_at)->not->toBeNull();
-
-    // Cleanup
-    $this->user->deletion_scheduled_at = null;
-    $this->user->save();
 });
 
 it('processes expired deletions with artisan command', function () {

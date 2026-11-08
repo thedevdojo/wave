@@ -9,10 +9,6 @@ beforeEach(function () {
     $this->user = User::factory()->create();
 });
 
-afterEach(function () {
-    $this->user->forceDelete();
-});
-
 /**
  * Helper to create a notification for a user
  */
@@ -86,8 +82,6 @@ describe('Notification Controller', function () {
 
         // Notification should still exist
         expect($otherUser->notifications()->count())->toBe(1);
-
-        $otherUser->forceDelete();
     });
 
     it('includes listid in response when provided', function () {

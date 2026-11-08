@@ -8,17 +8,10 @@ beforeEach(function () {
     $this->category = Category::factory()->create();
 });
 
-afterEach(function () {
-    Post::where('slug', 'like', 'visibility-test-%')->delete();
-    Category::whereKey($this->category->id)->delete();
-    User::where('email', 'like', 'visibility-test-%')->forceDelete();
-});
-
 function visibilityPost(Category $category, array $attributes = []): Post
 {
     return Post::factory()->create(array_merge([
         'category_id' => $category->id,
-        'slug' => 'visibility-test-'.uniqid(),
         'title' => 'Visibility Test '.uniqid(),
     ], $attributes));
 }
@@ -37,14 +30,14 @@ describe('Single post page', function () {
     })->with(['DRAFT', 'PENDING']);
 
     it('returns 404 for draft posts to non-admin users', function () {
-        $user = User::factory()->create(['email' => 'visibility-test-'.uniqid().'@example.com']);
+        $user = User::factory()->create();
         $post = visibilityPost($this->category, ['status' => 'DRAFT']);
 
         $this->actingAs($user)->get($post->link())->assertNotFound();
     });
 
     it('lets admins preview draft posts', function () {
-        $admin = User::where('email', 'admin@admin.com')->firstOrFail();
+        $admin = User::factory()->admin()->create();
         $post = visibilityPost($this->category, ['status' => 'DRAFT']);
 
         $this->actingAs($admin)->get($post->link())->assertOk()->assertSee($post->title);

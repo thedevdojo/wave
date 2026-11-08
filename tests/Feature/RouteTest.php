@@ -2,9 +2,13 @@
 
 use App\Models\User;
 
-// tests/Feature/RouteResponseTest.php
-
 use function Pest\Laravel\get;
+
+// The route datasets point at the demo content, so load all of it.
+beforeEach(function () {
+    $this->seed();
+    $this->registerPageRoutes();
+});
 
 it('responds with 200 for all routes', function (string $route) {
     $response = get($route);

@@ -5,7 +5,7 @@ use Wave\Category;
 use Wave\Post;
 
 beforeEach(function () {
-    $this->user = User::where('email', 'admin@admin.com')->first();
+    $this->user = User::factory()->admin()->create();
     $this->actingAs($this->user);
 });
 
@@ -34,7 +34,7 @@ test('post rich editor attachments use public disk', function () {
 });
 
 test('post can be created with image in posts directory', function () {
-    $category = Category::first();
+    $category = Category::factory()->create();
 
     $post = Post::create([
         'title' => 'Test Post',

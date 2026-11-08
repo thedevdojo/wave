@@ -16,9 +16,6 @@ use Wave\Plan;
 use Wave\Subscription;
 
 beforeEach(function () {
-    $this->artisan('migrate:fresh');
-    $this->seed();
-
     // Create test user
     $this->user = User::factory()->create();
     $this->actingAs($this->user);

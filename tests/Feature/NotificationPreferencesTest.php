@@ -3,7 +3,7 @@
 use App\Models\User;
 
 it('allows user to update notification preferences', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -27,7 +27,7 @@ it('allows user to update notification preferences', function () {
 });
 
 it('security alerts preference is always enabled', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -49,7 +49,7 @@ it('security alerts preference is always enabled', function () {
 });
 
 it('returns default preferences when none are set', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
+    $user = User::factory()->create();
 
     // Clear preferences
     $user->notification_preferences = null;
@@ -61,8 +61,7 @@ it('returns default preferences when none are set', function () {
 });
 
 it('can update individual preference settings', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalPreferences = $user->notification_preferences;
+    $user = User::factory()->create();
 
     $this->actingAs($user);
 
@@ -84,15 +83,10 @@ it('can update individual preference settings', function () {
 
     expect($user->notification_preferences['marketing_emails'])->toBe(false);
     expect($user->notification_preferences['email_notifications'])->toBe(true);
-
-    // Restore
-    $user->notification_preferences = $originalPreferences;
-    $user->save();
 });
 
 it('notification preferences can be stored as json', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalPreferences = $user->notification_preferences;
+    $user = User::factory()->create();
 
     $preferences = [
         'email_notifications' => true,
@@ -111,24 +105,11 @@ it('notification preferences can be stored as json', function () {
     expect($freshUser->notification_preferences)->toBeArray();
     expect($freshUser->notification_preferences['marketing_emails'])->toBe(false);
     expect($freshUser->notification_preferences['blog_notifications'])->toBe(true);
-
-    // Restore
-    $user->notification_preferences = $originalPreferences;
-    $user->save();
 });
 
 it('multiple users can have different notification preferences', function () {
-    // Get admin user and ensure we have a second user
-    $user1 = User::where('email', 'admin@admin.com')->first();
-
-    // Get or create a second user
-    $user2 = User::where('email', '!=', 'admin@admin.com')->first();
-    if (! $user2) {
-        $user2 = User::factory()->create(['avatar' => 'demo/default.png']);
-    }
-
-    $original1 = $user1->notification_preferences;
-    $original2 = $user2->notification_preferences;
+    $user1 = User::factory()->create();
+    $user2 = User::factory()->create();
 
     // Set different preferences for each user
     $user1->notification_preferences = [
@@ -156,17 +137,10 @@ it('multiple users can have different notification preferences', function () {
     expect($user2->notification_preferences['email_notifications'])->toBe(false);
     expect($user1->notification_preferences['marketing_emails'])->toBe(false);
     expect($user2->notification_preferences['marketing_emails'])->toBe(true);
-
-    // Restore
-    $user1->notification_preferences = $original1;
-    $user1->save();
-    $user2->notification_preferences = $original2;
-    $user2->save();
 });
 
 it('can retrieve notification preferences for checking before sending notifications', function () {
-    $user = User::where('email', 'admin@admin.com')->first();
-    $originalPreferences = $user->notification_preferences;
+    $user = User::factory()->create();
 
     $user->notification_preferences = [
         'email_notifications' => false,
@@ -185,8 +159,4 @@ it('can retrieve notification preferences for checking before sending notificati
 
     expect($shouldSendEmail)->toBe(false);
     expect($shouldSendMarketing)->toBe(false);
-
-    // Restore
-    $user->notification_preferences = $originalPreferences;
-    $user->save();
 });

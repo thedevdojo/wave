@@ -8,9 +8,6 @@ use Wave\Subscription;
 use function Pest\Laravel\artisan;
 
 beforeEach(function () {
-    $this->artisan('migrate:fresh');
-    $this->seed();
-
     // Create test roles
     $this->basicRole = Role::firstOrCreate(
         ['name' => 'test_basic'],
@@ -185,10 +182,9 @@ it('counts users correctly', function () {
     // Create 5 unverified users
     User::factory()->count(5)->create(['verified' => 0]);
 
-    // Should show users (at least our 15 plus any from seeding)
     $this->artisan('wave:stats', ['--json' => true])
         ->assertSuccessful()
-        ->expectsOutputToContain('"users"');
+        ->expectsOutputToContain('"total": 15');
 });
 
 it('calculates ARR correctly', function () {

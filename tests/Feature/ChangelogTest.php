@@ -7,10 +7,6 @@ beforeEach(function () {
     $this->user = User::factory()->create();
 });
 
-afterEach(function () {
-    $this->user->forceDelete();
-});
-
 describe('Changelog Model', function () {
     it('can create a changelog entry', function () {
         $changelog = Changelog::create([
@@ -56,8 +52,6 @@ describe('Changelog Model', function () {
         expect($changelog->users)->toHaveCount(2);
         expect($changelog->users->pluck('id')->toArray())->toContain($this->user->id);
         expect($changelog->users->pluck('id')->toArray())->toContain($user2->id);
-
-        $user2->forceDelete();
     });
 });
 
@@ -91,9 +85,6 @@ describe('Changelog Read Endpoint', function () {
     it('marks all unread changelogs as read', function () {
         $this->actingAs($this->user);
 
-        // Clear existing changelogs for isolated test
-        Changelog::query()->delete();
-
         $changelog1 = Changelog::create([
             'title' => 'Feature 1',
             'description' => 'Desc 1',
@@ -116,9 +107,6 @@ describe('Changelog Read Endpoint', function () {
 
     it('does not duplicate already read changelogs', function () {
         $this->actingAs($this->user);
-
-        // Clear existing changelogs for isolated test
-        Changelog::query()->delete();
 
         $changelog1 = Changelog::create([
             'title' => 'Feature 1',
@@ -143,9 +131,6 @@ describe('Changelog Read Endpoint', function () {
 
     it('handles empty changelogs gracefully', function () {
         $this->actingAs($this->user);
-
-        // Clear any existing changelogs
-        Changelog::query()->delete();
 
         $response = $this->post(route('changelog.read'));
 
