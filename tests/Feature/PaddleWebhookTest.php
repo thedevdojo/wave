@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 use Wave\Plan;
 use Wave\Subscription;
@@ -140,10 +141,12 @@ it('ignores signature components it does not know', function () {
 });
 
 it('rejects everything when no webhook secret is configured', function () {
+    Log::spy();
     config(['wave.paddle.webhook_secret' => '']);
     $payload = cancelledPayload('sub_01hv8x29kz0t586xy6zn1a62ny');
 
     postPaddleWebhook($payload, paddleSignature(json_encode($payload), secret: ''))->assertForbidden();
 
     expect($this->subscription->fresh()->status)->toBe('active');
+    Log::shouldHaveReceived('warning')->withArgs(fn ($message) => str_contains($message, 'PADDLE_WEBHOOK_SECRET'))->once();
 });
