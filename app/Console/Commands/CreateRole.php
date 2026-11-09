@@ -59,17 +59,14 @@ class CreateRole extends Command
             return;
         }
 
-        $permissionChoices = $allPermissions->pluck('name', 'id')->toArray();
-
-        $selectedPermissionIds = $this->choice(
+        // choice() returns the selected names, not ids
+        $selectedPermissions = $this->choice(
             'Select permissions to assign to the role (multiple selection allowed)',
-            $permissionChoices,
+            $allPermissions->pluck('name')->all(),
             null,
             null,
             true
         );
-
-        $selectedPermissions = $allPermissions->whereIn('id', $selectedPermissionIds);
 
         $role->syncPermissions($selectedPermissions);
 
