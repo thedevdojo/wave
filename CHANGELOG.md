@@ -4,6 +4,27 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.4.0] - 2026-11-09
+
+### Upgrade notes
+
+- `Plan::$features` is a comma-separated string again instead of an array. Use the new `$plan->featureList()` to get the features as a list. Values stored as JSON by older versions are read correctly and rewritten on the next save ([#427])
+- Plan limits of `-1`, an empty value or a `null` default in `config/limits.php` all mean unlimited, as documented. Saved limits of `"-1"` used to block the feature ([#427])
+- Changing the email address on the profile page clears `email_verified_at`. With `registration_require_email_verification` on, the user gets a verification email and has to verify the new address ([#428])
+- New avatars are stored as `avatars/{id}-{random}.png` instead of `avatars/{username}.png`, and the previous upload is deleted when nobody else uses it ([#428])
+- Social links must be `http` or `https` URLs. Stored links with other schemes are no longer shown on the public profile ([#428])
+
+### Changed
+
+- Plans with subscriptions can't be deleted from the admin. Turn off "Active" to hide a plan from new customers instead ([#427])
+- Plan edits and deletes show up on the pricing page and checkout right away ([#427])
+
+### Fixed
+
+- Plan features from the seeder or older versions show in the admin and on the pricing page again ([#427])
+- The "Allow Search Engine Indexing" privacy setting now adds `noindex,nofollow` to the public profile ([#428])
+- Avatars no longer collide when a username is reused, and the public profile no longer fails when privacy settings have no visibility key ([#428])
+
 ## [3.3.1] - 2026-11-08
 
 ### Upgrade notes
@@ -82,7 +103,8 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.3.1...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.4.0...HEAD
+[3.4.0]: https://github.com/thedevdojo/wave/compare/3.3.1...3.4.0
 [3.3.1]: https://github.com/thedevdojo/wave/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/thedevdojo/wave/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/thedevdojo/wave/compare/3.1.5...3.2.0
@@ -109,3 +131,5 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#424]: https://github.com/thedevdojo/wave/pull/424
 [#425]: https://github.com/thedevdojo/wave/pull/425
 [#426]: https://github.com/thedevdojo/wave/pull/426
+[#427]: https://github.com/thedevdojo/wave/pull/427
+[#428]: https://github.com/thedevdojo/wave/pull/428
