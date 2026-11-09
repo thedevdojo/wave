@@ -139,3 +139,30 @@ it('only redirects to invoices for the user\'s own subscriptions', function () {
 
     expect(fn () => app(SubscriptionController::class)->invoice($request, 'txn_theirs'))->toThrow(NotFoundHttpException::class);
 });
+
+it('returns a 404 when paddle has no invoice for the transaction', function (array $invoiceResponse) {
+    Subscription::create([
+        'billable_type' => 'user',
+        'billable_id' => $this->user->id,
+        'plan_id' => $this->plan->id,
+        'vendor_slug' => 'paddle',
+        'vendor_subscription_id' => 'sub_mine',
+        'cycle' => 'month',
+        'status' => 'active',
+        'seats' => 1,
+    ]);
+
+    Http::fake([
+        'sandbox-api.paddle.com/transactions/txn_mine/invoice' => Http::response(...$invoiceResponse),
+        'sandbox-api.paddle.com/transactions/txn_mine' => Http::response(['data' => ['subscription_id' => 'sub_mine']]),
+    ]);
+
+    $request = Request::create('/settings/invoices/txn_mine');
+    $request->setUserResolver(fn () => $this->user);
+
+    expect(fn () => app(SubscriptionController::class)->invoice($request, 'txn_mine'))->toThrow(NotFoundHttpException::class);
+})->with([
+    'not billed yet' => [[['error' => ['code' => 'transaction_not_billed']], 400]],
+    'paddle error' => [['', 500]],
+    'no url in the response' => [[['data' => []], 200]],
+]);
