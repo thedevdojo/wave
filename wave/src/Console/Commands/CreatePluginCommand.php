@@ -132,7 +132,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web'])->group(function () {
     Route::view('{$folderName}', '{$folderName}::home')->name('{$folderName}');
-    Route::get('{$folderName}/component', \\Wave\\Plugins\\{$className}\\Components\\{$className}::class)->name('{$folderName}.component');
+    Route::livewire('{$folderName}/component', \\Wave\\Plugins\\{$className}\\Components\\{$className}::class)->name('{$folderName}.component');
 });
 EOT;
 

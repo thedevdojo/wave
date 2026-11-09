@@ -641,7 +641,8 @@ use Filament\Actions\DeleteAction;
     }
 ?>
 <x-filament-panels::page>
-    @volt('media')
+    {{-- Livewire 4 keeps unknown params in the snapshot; the page's $slot/$attributes break its checksum --}}
+    @volt('media', ['slot' => null, 'slots' => null, 'attributes' => null])
         <div class="flex overflow-hidden relative justify-start items-start w-full h-full bg-white rounded-xl border shadow-sm border-zinc-200/50">
             <div class="w-full h-full">
                 <div x-data="{ 

@@ -85,7 +85,7 @@ We actively welcome your pull requests! Here's how to submit one:
 
 ### Prerequisites
 
-- PHP 8.2 or higher
+- PHP 8.3 or higher
 - Composer
 - Node.js 18+ and npm
 - SQLite, MySQL, or PostgreSQL
