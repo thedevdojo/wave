@@ -26,6 +26,11 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 {
     use HasPlanFeatures, HasRoles, Impersonate, Notifiable;
 
+    protected static function booted(): void
+    {
+        static::deleted(fn (self $user) => $user->clearUserCache());
+    }
+
     /**
      * The attributes that are mass assignable.
      *

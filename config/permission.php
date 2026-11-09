@@ -114,6 +114,14 @@ return [
     'register_octane_reset_listener' => false,
 
     /*
+     * Fire RoleAttached / RoleDetached etc. when roles or permissions change.
+     * Wave listens for the role events to clear the user's cached admin and
+     * subscriber status.
+     */
+
+    'events_enabled' => true,
+
+    /*
      * Teams Feature.
      * When set to true the package implements teams using the 'team_foreign_key'.
      * If you want the migrations to register the 'team_foreign_key', you must
