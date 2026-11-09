@@ -40,6 +40,7 @@ use Wave\Http\Livewire\Billing\Checkout;
 use Wave\Http\Livewire\Billing\Update;
 use Wave\Http\Middleware\HideUnpublishedPosts;
 use Wave\Http\Middleware\InstallMiddleware;
+use Wave\Http\Middleware\RedirectHomeToInstaller;
 use Wave\Http\Middleware\Subscribed;
 use Wave\Http\Middleware\ThemeDemoMiddleware;
 use Wave\Http\Middleware\TokenMiddleware;
@@ -164,6 +165,7 @@ class WaveServiceProvider extends ServiceProvider
         $kernel = $this->app->make(HttpKernel::class);
 
         $kernel->appendMiddlewareToGroup('web', HideUnpublishedPosts::class);
+        $kernel->appendMiddlewareToGroup('web', RedirectHomeToInstaller::class);
 
         if (! $this->hasDBConnection()) {
             $kernel->appendMiddlewareToGroup('web', InstallMiddleware::class);

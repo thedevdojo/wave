@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Concerns\SyncsIdSequences;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class ChangelogsTableSeeder extends Seeder
 {
+    use SyncsIdSequences;
+
     /**
      * Auto generated seed file
      */
@@ -47,5 +50,6 @@ class ChangelogsTableSeeder extends Seeder
                 'updated_at' => '2024-08-01 12:00:00',
             ]]);
 
+        $this->syncIdSequence('changelogs');
     }
 }

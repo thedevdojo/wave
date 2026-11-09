@@ -20,7 +20,7 @@ it('allows user to update notification preferences', function () {
 
     $user->refresh();
 
-    expect($user->notification_preferences)->toBe($preferences);
+    expect($user->notification_preferences)->toEqual($preferences);
     expect($user->notification_preferences['email_notifications'])->toBe(false);
     expect($user->notification_preferences['marketing_emails'])->toBe(false);
     expect($user->notification_preferences['product_updates'])->toBe(true);

@@ -20,7 +20,7 @@ it('allows user to add social media links', function () {
 
     $user->refresh();
 
-    expect($user->social_links)->toBe($links);
+    expect($user->social_links)->toEqual($links);
     expect($user->social_links['twitter'])->toBe('https://twitter.com/testuser');
     expect($user->social_links['github'])->toBe('https://github.com/testuser');
 });

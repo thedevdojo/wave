@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Concerns\SyncsIdSequences;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class TranslationsTableSeeder extends Seeder
 {
+    use SyncsIdSequences;
+
     /**
      * Auto generated seed file
      */
@@ -319,5 +322,6 @@ class TranslationsTableSeeder extends Seeder
             ],
         ]);
 
+        $this->syncIdSequence('translations');
     }
 }

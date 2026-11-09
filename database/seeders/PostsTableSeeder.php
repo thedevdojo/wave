@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Concerns\SyncsIdSequences;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class PostsTableSeeder extends Seeder
 {
+    use SyncsIdSequences;
+
     /**
      * Auto generated seed file
      */
@@ -228,5 +231,6 @@ class PostsTableSeeder extends Seeder
             ],
         ]);
 
+        $this->syncIdSequence('posts');
     }
 }

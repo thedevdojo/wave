@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Concerns\SyncsIdSequences;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class RolesTableSeeder extends Seeder
 {
+    use SyncsIdSequences;
+
     /**
      * Auto generated seed file
      */
@@ -58,5 +61,6 @@ class RolesTableSeeder extends Seeder
             ],
         ]);
 
+        $this->syncIdSequence('roles');
     }
 }

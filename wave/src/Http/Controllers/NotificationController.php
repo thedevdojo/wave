@@ -5,12 +5,14 @@ namespace Wave\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class NotificationController extends Controller
 {
     public function delete(Request $request, $id): JsonResponse
     {
-        $notification = auth()->user()->notifications()->where('id', $id)->first();
+        // Notification ids are UUIDs, and Postgres errors on comparing a uuid column to anything else
+        $notification = Str::isUuid($id) ? auth()->user()->notifications()->where('id', $id)->first() : null;
         if ($notification) {
             $notification->delete();
 

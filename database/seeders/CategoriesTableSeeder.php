@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Concerns\SyncsIdSequences;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class CategoriesTableSeeder extends Seeder
 {
+    use SyncsIdSequences;
+
     /**
      * Auto generated seed file
      */
@@ -36,5 +39,6 @@ class CategoriesTableSeeder extends Seeder
             ],
         ]);
 
+        $this->syncIdSequence('categories');
     }
 }
