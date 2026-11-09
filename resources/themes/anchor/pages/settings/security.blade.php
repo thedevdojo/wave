@@ -29,6 +29,8 @@
                 ->components([
                     TextInput::make('current_password')
                         ->label('Current Password')
+                        // users who signed up with a social provider don't have one yet
+                        ->visible(fn () => filled(auth()->user()->password))
                         ->required()
                         ->currentPassword()
                         ->password()

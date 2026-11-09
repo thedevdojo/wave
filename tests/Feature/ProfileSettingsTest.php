@@ -117,3 +117,17 @@ it('does not send a verification email when verification is turned off', functio
     expect($user->fresh()->email_verified_at)->toBeNull();
     Notification::assertNothingSent();
 });
+
+it('keeps profile text that happens to look like JSON as text', function (string $text) {
+    $user = ($this->makeUser)();
+    $user->setProfileKeyValue('about', $text, 'Textarea');
+
+    $this->actingAs($user);
+
+    Volt::test('settings.profile')
+        ->assertSet('data.about', $text)
+        ->call('save')
+        ->assertHasNoErrors();
+
+    expect($user->fresh()->profile('about'))->toBe($text);
+})->with(['true', '1e3', '1.50', '"quoted"']);
