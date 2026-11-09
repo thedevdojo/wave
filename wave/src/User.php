@@ -40,6 +40,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'username',
         'avatar',
         'password',
@@ -69,13 +70,14 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
     protected function casts(): array
     {
         return [
+            'email_verified_at' => 'datetime',
             'trial_ends_at' => 'datetime',
         ];
     }
 
     public function onTrial()
     {
-        if (is_null($this->trial_ends_at)) {
+        if (is_null($this->trial_ends_at) || $this->trial_ends_at->isPast()) {
             return false;
         }
         if ($this->subscriber()) {

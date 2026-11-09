@@ -13,9 +13,11 @@ use Filament\Actions\EditAction;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Validation\Rules\Unique;
 use Spatie\Permission\Models\Role;
 
 class RoleResource extends Resource
@@ -32,6 +34,8 @@ class RoleResource extends Resource
             ->components([
                 TextInput::make('name')
                     ->required()
+                    // Filament saves with save(), which skips Spatie's duplicate check
+                    ->unique(ignoreRecord: true, modifyRuleUsing: fn (Unique $rule, Get $get) => $rule->where('guard_name', $get('guard_name') ?: 'web'))
                     ->maxLength(191),
                 TextInput::make('guard_name')
                     ->required()

@@ -75,3 +75,40 @@ it('shows how many permissions each role has', function () {
         ->assertCanSeeTableRecords(Role::all())
         ->assertTableColumnExists('permissions_count');
 });
+
+it('shows a validation error for a role or permission name that is already taken', function () {
+    Livewire::test(CreateRole::class)
+        ->fillForm(['name' => 'premium', 'description' => 'Duplicate'])
+        ->call('create')
+        ->assertHasFormErrors(['name' => 'unique']);
+
+    Livewire::test(CreatePermission::class)
+        ->fillForm(['name' => 'edit posts'])
+        ->call('create')
+        ->assertHasFormErrors(['name' => 'unique']);
+
+    Livewire::test(EditPermission::class, ['record' => $this->deletePosts->id])
+        ->fillForm(['name' => 'edit posts'])
+        ->call('save')
+        ->assertHasFormErrors(['name' => 'unique']);
+});
+
+it('allows the same role name on a different guard', function () {
+    Livewire::test(CreateRole::class)
+        ->fillForm(['name' => 'premium', 'guard_name' => 'api', 'description' => 'API premium'])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    expect(Role::where('name', 'premium')->pluck('guard_name')->sort()->values()->all())->toBe(['api', 'web']);
+});
+
+it('lets a role keep its own name when edited', function () {
+    $premium = Role::findByName('premium');
+
+    Livewire::test(EditRole::class, ['record' => $premium->id])
+        ->fillForm(['description' => 'Updated'])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    expect($premium->fresh()->description)->toBe('Updated');
+});
