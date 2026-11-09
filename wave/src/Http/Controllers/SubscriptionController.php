@@ -32,9 +32,11 @@ class SubscriptionController extends Controller
         );
 
         $response = Http::withToken($this->api_key)->get($this->paddle_url.'/transactions/'.rawurlencode($transactionId).'/invoice');
-        $invoice = json_decode($response->body());
 
-        // redirect user to the invoice download URL
-        return redirect()->to($invoice->data->url);
+        // Paddle has no invoice until the transaction is billed
+        $url = $response->successful() ? $response->json('data.url') : null;
+        abort_unless($url, 404);
+
+        return redirect()->to($url);
     }
 }
