@@ -4,6 +4,29 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.5.0] - 2026-11-09
+
+Wave now runs on Laravel 13, Livewire 4 and Filament 5. Folio, Volt and the theme pages work as before.
+
+### Upgrade notes
+
+- PHP 8.3 or newer is required ([#429])
+- Livewire's endpoint moved from `/livewire/...` to `/livewire-{hash}/...`. Update any firewall, CDN or proxy rules that match `/livewire/` ([#429])
+- Laravel 13's default cache and Redis key prefixes use dashes (with `APP_NAME=Wave`, `wave-cache-` and `wave-database-` instead of `wave_cache_` and `wave_database_`). If you don't set `CACHE_PREFIX` and `REDIS_PREFIX`, the cache starts cold, and with Redis sessions or queues users are logged out and queued jobs stay under the old prefix. Set both to the old values to avoid this ([#429])
+- `app('image')` now returns Laravel's image manager instead of Intervention's. Resolve `Intervention\Image\ImageManager::class` in your own code instead ([#429])
+- In `config/livewire.php`, `layout` and `lazy_placeholder` are now `component_layout` and `component_placeholder`. The old keys are ignored ([#429])
+- Custom themes and plugins should check the [Livewire 4 upgrade guide](https://livewire.laravel.com/docs/4.x/upgrading): `wire:model` no longer listens to child element events without `.deep`, `wire:model.blur` and `.change` need `.live` to send a request, `<livewire:...>` tags must be self-closing and `wire:transition` modifiers are gone. Volt fragments inside a Filament page should not receive the page's `$slot` and `$attributes`, as in `wave/resources/views/media/index.blade.php` ([#429])
+- Third-party Filament plugins need Filament 5 versions before `composer update` will resolve ([#429])
+
+### Changed
+
+- Upgraded to Laravel 13, Livewire 4 and Filament 5, with `devdojo/auth` 2.4.1. `livewire/volt` is now a direct dependency ([#429])
+- Generated plugins register their page with `Route::livewire()`, and `make:livewire` keeps generating class-based components ([#429])
+
+### Fixed
+
+- The media manager works under Livewire 4 ([#429])
+
 ## [3.4.1] - 2026-11-09
 
 ### Fixed
@@ -109,7 +132,8 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.4.1...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.5.0...HEAD
+[3.5.0]: https://github.com/thedevdojo/wave/compare/3.4.1...3.5.0
 [3.4.1]: https://github.com/thedevdojo/wave/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/thedevdojo/wave/compare/3.3.1...3.4.0
 [3.3.1]: https://github.com/thedevdojo/wave/compare/3.3.0...3.3.1
@@ -141,3 +165,4 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#427]: https://github.com/thedevdojo/wave/pull/427
 [#428]: https://github.com/thedevdojo/wave/pull/428
 [#431]: https://github.com/thedevdojo/wave/pull/431
+[#429]: https://github.com/thedevdojo/wave/pull/429
