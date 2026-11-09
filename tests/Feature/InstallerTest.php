@@ -2,7 +2,6 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Schema;
 
 it('shows the install screen when the database has no users yet', function () {
     $this->app['env'] = 'local';
@@ -26,9 +25,16 @@ it('explains how to install from the command line outside local', function () {
 });
 
 it('shows the same message when the tables do not exist yet', function () {
-    Schema::drop('users');
+    // Point at an empty database instead of dropping tables from the test one.
+    $default = config('database.default');
+    config(['database.connections.wave_empty' => ['driver' => 'sqlite', 'database' => ':memory:', 'prefix' => '']]);
+    config(['database.default' => 'wave_empty']);
 
-    $this->get('/install')->assertOk()->assertSee('php artisan migrate --seed');
+    try {
+        $this->get('/install')->assertOk()->assertSee('php artisan migrate --seed');
+    } finally {
+        config(['database.default' => $default]);
+    }
 });
 
 it('says wave is installed once there are users outside local', function () {
