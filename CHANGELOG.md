@@ -9,12 +9,16 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 ### Removed
 
 - The unused Wave 2 billing routes (`cancel`, `subscribe`, `switch-plans`, `checkout/welcome`) and their controller methods and partials ([#438])
+- Unused anchor partials: `header-app`, the app and marketing menus, `notifications` and `toast` ([#442])
+- A broken `morphMap` entry that mapped `user` to `null` ([#444])
 
 ### Fixed
 
 - Changing a user's roles, in the admin or with `assignRole`/`removeRole`, clears their cached admin and subscriber status right away ([#439])
 - `/install` explains how to install from the command line when the app isn't running locally, instead of showing an empty page, and redirects home once Wave is installed ([#440])
 - The Paddle invoice link returns a 404 instead of a 500 when Paddle has no invoice for the transaction ([#441])
+- The marketing header's View Dashboard button links to the dashboard instead of the login page ([#442])
+- `wave:stats` reports the right verified users, trials, churn, new subscriptions and growth rates. In `--json` output, `subscriptions.trial` is now `users.on_trial`, and `growth_rate` is `null` when the previous period has nothing to compare with ([#443])
 
 ## [3.6.0] - 2026-11-09
 
@@ -202,3 +206,6 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#439]: https://github.com/thedevdojo/wave/pull/439
 [#440]: https://github.com/thedevdojo/wave/pull/440
 [#441]: https://github.com/thedevdojo/wave/pull/441
+[#442]: https://github.com/thedevdojo/wave/pull/442
+[#443]: https://github.com/thedevdojo/wave/pull/443
+[#444]: https://github.com/thedevdojo/wave/pull/444
