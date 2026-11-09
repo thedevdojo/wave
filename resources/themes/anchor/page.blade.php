@@ -24,7 +24,7 @@
 
         @if($page['image'])
             <div class="relative">
-                <img class="w-full h-auto rounded-lg" src="{{ url($page['image']) }}" alt="{{ url($page['image']) }}" srcset="{{ url($page['image']) }}">
+                <img class="w-full h-auto rounded-lg" src="{{ Storage::disk(config('filament.default_filesystem_disk'))->url($page['image']) }}" alt="{{ $page['title'] }}">
             </div>
         @endif
 

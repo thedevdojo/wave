@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Wave\Page;
 use Wave\User as WaveUser;
 
@@ -59,7 +60,7 @@ describe('Page Model', function () {
             'status' => 'ACTIVE',
         ]);
 
-        expect($page->image())->toBe(url('images/page.jpg'));
+        expect($page->image())->toBe(Storage::disk('public')->url('images/page.jpg'));
     });
 
     it('has nullable excerpt', function () {
@@ -177,4 +178,19 @@ describe('Page Routes (Dynamic)', function () {
         expect($page->link())->toBe(url('linked-page'));
         $this->get($page->link())->assertOk()->assertSee('Linked content');
     });
+});
+
+it('renders an uploaded page image from the storage disk', function () {
+    $page = Page::create([
+        'author_id' => $this->user->id,
+        'title' => 'With Image',
+        'body' => 'Content',
+        'slug' => 'with-image',
+        'image' => 'pages/01ABC.png',
+        'status' => 'ACTIVE',
+    ]);
+
+    // page routes are registered at boot, so render the view the route uses
+    $this->view('theme::page', ['page' => $page->toArray()])
+        ->assertSee('src="'.Storage::disk('public')->url('pages/01ABC.png').'"', false);
 });

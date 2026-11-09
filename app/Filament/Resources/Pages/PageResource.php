@@ -51,7 +51,9 @@ class PageResource extends Resource
                 Textarea::make('excerpt')
                     ->columnSpanFull(),
                 FileUpload::make('image')
-                    ->image(),
+                    ->image()
+                    ->disk(config('filament.default_filesystem_disk'))
+                    ->directory('pages'),
                 Select::make('author_id')
                     ->label('Author')
                     ->options(
