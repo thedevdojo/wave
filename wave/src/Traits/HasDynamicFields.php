@@ -44,10 +44,9 @@ trait HasDynamicFields
             $keyValue = auth()->user()->profileKeyValues->where('key', $key)->first();
 
             $value = $keyValue->value ?? '';
-            if (! empty($value)) {
-                if (json_decode($value, true) !== null) {
-                    $value = json_decode($value, true);
-                }
+            // only arrays are stored as JSON; anything else is the text the user typed
+            if (! empty($value) && is_array($decoded = json_decode($value, true))) {
+                $value = $decoded;
             }
 
             $newField->default($value);

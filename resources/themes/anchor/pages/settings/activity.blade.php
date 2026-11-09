@@ -41,6 +41,16 @@ new class extends Component
         ];
     }
 
+    public function updatedFilterAction()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function clearFilters()
     {
         $this->filterAction = '';

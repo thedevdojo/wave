@@ -46,6 +46,7 @@
                     TextInput::make('key')
                         ->label('Create a new API Key')
                         ->required()
+                        ->maxLength(255)
                 ])
                 ->statePath('data');
         }
@@ -55,7 +56,16 @@
             $state = $this->form->getState();
             $this->validate();
 
-            $apiKey = auth()->user()->createApiKey(Str::slug($state['key']));
+            if (! auth()->user()->canUseFeature('api_keys')) {
+                Notification::make()
+                    ->title('You have reached the API key limit for your plan')
+                    ->danger()
+                    ->send();
+
+                return;
+            }
+
+            $apiKey = auth()->user()->createApiKey(trim($state['key']));
 
             // Log API key creation
             ActivityLog::log('api_key_created', 'API key created: ' . $state['key'], [
