@@ -190,3 +190,41 @@ test('email is hidden on profile when show_email is disabled', function () {
     $response->assertStatus(200);
     $response->assertDontSee($user->email);
 });
+
+test('profile tells search engines not to index it when indexing is turned off', function () {
+    $user = User::factory()->create([
+        'privacy_settings' => ['profile_visibility' => 'public', 'show_email' => false, 'allow_search_engines' => false],
+    ]);
+
+    $response = $this->get('/profile/'.$user->username);
+
+    $response->assertOk();
+    $response->assertSee('<meta name="robots" content="noindex,nofollow">', false);
+    $response->assertDontSee('content="index,follow"', false);
+    $response->assertHeader('X-Robots-Tag', 'noindex, nofollow');
+
+    // Logged-in viewers get the app layout, which must carry the tag too.
+    $this->actingAs(User::factory()->create())
+        ->get('/profile/'.$user->username)
+        ->assertSee('<meta name="robots" content="noindex,nofollow">', false);
+});
+
+test('profile can be indexed when indexing is allowed or not set', function (?array $settings) {
+    $user = User::factory()->create(['privacy_settings' => $settings]);
+
+    $response = $this->get('/profile/'.$user->username);
+
+    $response->assertOk();
+    $response->assertSee('<meta name="robots" content="index,follow">', false);
+    $response->assertHeaderMissing('X-Robots-Tag');
+})->with([
+    'allowed' => [['profile_visibility' => 'public', 'allow_search_engines' => true]],
+    'missing key' => [['profile_visibility' => 'public']],
+    'no settings' => [null],
+]);
+
+test('profile settings without a visibility key are treated as public', function () {
+    $user = User::factory()->create(['privacy_settings' => ['show_email' => true]]);
+
+    $this->get('/profile/'.$user->username)->assertOk()->assertSee($user->email);
+});

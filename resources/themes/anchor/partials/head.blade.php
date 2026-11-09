@@ -36,8 +36,8 @@
     @endif
 @endif
 
-<meta name="robots" content="index,follow">
-<meta name="googlebot" content="index,follow">
+<meta name="robots" content="{{ $seo->robots ?? 'index,follow' }}">
+<meta name="googlebot" content="{{ $seo->robots ?? 'index,follow' }}">
 
 @if(isset($seo->description))
     <meta name="description" content="{{ $seo->description }}">

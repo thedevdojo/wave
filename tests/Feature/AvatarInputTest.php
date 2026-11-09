@@ -37,7 +37,8 @@ it('saves a cropped avatar from the profile page', function () {
         ->call('save')
         ->assertHasNoErrors('avatar');
 
-    Storage::disk('public')->assertExists("avatars/{$user->username}.png");
+    expect($user->fresh()->avatar)->toStartWith("avatars/{$user->id}-");
+    Storage::disk('public')->assertExists($user->fresh()->avatar);
 });
 
 it('does not read a server path as the avatar', function () {
@@ -51,5 +52,6 @@ it('does not read a server path as the avatar', function () {
         ->call('save')
         ->assertHasErrors('avatar');
 
-    Storage::disk('public')->assertMissing("avatars/{$user->username}.png");
+    expect($user->fresh()->avatar)->toBe($user->avatar);
+    expect(Storage::disk('public')->allFiles('avatars'))->toBeEmpty();
 });
