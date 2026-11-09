@@ -42,21 +42,22 @@ class WaveStats extends Command
         // User Statistics
         $totalUsers = User::count();
         $newUsers = User::where('created_at', '>=', $periodStart)->count();
-        $verifiedUsers = User::where('verified', 1)->count();
+        $verifiedUsers = User::whereNotNull('email_verified_at')->count();
+
+        // Trials are set on the user, and end once they subscribe
+        $usersOnTrial = User::where('trial_ends_at', '>', $now)
+            ->whereDoesntHave('subscriptions', fn ($query) => $query->where('status', 'active'))
+            ->count();
 
         // Subscription Statistics
         $activeSubscriptions = Subscription::where('status', 'active')->count();
-        $trialSubscriptions = Subscription::where('status', 'active')
-            ->whereNotNull('trial_ends_at')
-            ->where('trial_ends_at', '>', $now)
-            ->count();
-        $cancelledSubscriptions = Subscription::whereNotNull('ends_at')
+
+        // Cancelled, but still running until the end of the billing period
+        $cancelledSubscriptions = Subscription::where('status', 'active')
             ->where('ends_at', '>', $now)
             ->count();
 
-        $newSubscriptions = Subscription::where('status', 'active')
-            ->where('created_at', '>=', $periodStart)
-            ->count();
+        $newSubscriptions = Subscription::where('created_at', '>=', $periodStart)->count();
 
         // Revenue Calculations (MRR & ARR)
         $mrr = $this->calculateMRR();
@@ -67,26 +68,26 @@ class WaveStats extends Command
 
         // Growth Metrics
         $previousPeriodStart = $periodStart->copy()->subDays($period);
-        $previousNewUsers = User::whereBetween('created_at', [$previousPeriodStart, $periodStart])->count();
-        $previousNewSubs = Subscription::where('status', 'active')
-            ->whereBetween('created_at', [$previousPeriodStart, $periodStart])
+        $previousNewUsers = User::where('created_at', '>=', $previousPeriodStart)
+            ->where('created_at', '<', $periodStart)
+            ->count();
+        $previousNewSubs = Subscription::where('created_at', '>=', $previousPeriodStart)
+            ->where('created_at', '<', $periodStart)
             ->count();
 
-        $userGrowthRate = $previousNewUsers > 0
-            ? round((($newUsers - $previousNewUsers) / $previousNewUsers) * 100, 2)
-            : 0;
+        $userGrowthRate = $this->growthRate($newUsers, $previousNewUsers);
+        $subGrowthRate = $this->growthRate($newSubscriptions, $previousNewSubs);
 
-        $subGrowthRate = $previousNewSubs > 0
-            ? round((($newSubscriptions - $previousNewSubs) / $previousNewSubs) * 100, 2)
-            : 0;
-
-        // Churn Rate (subscriptions that ended in the period / active subscriptions at start)
-        $churnedSubs = Subscription::where('status', '!=', 'active')
-            ->whereBetween('updated_at', [$periodStart, $now])
+        // Churn: of the subscriptions active when the period started, the share cancelled since.
+        // There's no cancelled_at column, so updated_at stands in for the cancellation date.
+        $startedBefore = Subscription::where('created_at', '<', $periodStart);
+        $churnedSubs = (clone $startedBefore)->where('status', 'cancelled')
+            ->where('updated_at', '>=', $periodStart)
             ->count();
+        $activeAtStart = (clone $startedBefore)->where('status', 'active')->count() + $churnedSubs;
 
-        $churnRate = $activeSubscriptions > 0
-            ? round(($churnedSubs / $activeSubscriptions) * 100, 2)
+        $churnRate = $activeAtStart > 0
+            ? round(($churnedSubs / $activeAtStart) * 100, 2)
             : 0;
 
         return [
@@ -94,11 +95,11 @@ class WaveStats extends Command
                 'total' => $totalUsers,
                 'new' => $newUsers,
                 'verified' => $verifiedUsers,
+                'on_trial' => $usersOnTrial,
                 'growth_rate' => $userGrowthRate,
             ],
             'subscriptions' => [
                 'active' => $activeSubscriptions,
-                'trial' => $trialSubscriptions,
                 'cancelled' => $cancelledSubscriptions,
                 'new' => $newSubscriptions,
                 'growth_rate' => $subGrowthRate,
@@ -112,6 +113,16 @@ class WaveStats extends Command
             'plans' => $planBreakdown,
             'period_days' => $period,
         ];
+    }
+
+    // Null when there's nothing to compare with, rather than a misleading 0%
+    protected function growthRate(int $current, int $previous): ?float
+    {
+        if ($previous === 0) {
+            return null;
+        }
+
+        return round((($current - $previous) / $previous) * 100, 2);
     }
 
     protected function calculateMRR(): float
@@ -160,6 +171,7 @@ class WaveStats extends Command
         $this->components->twoColumnDetail('Total Users', number_format($stats['users']['total']));
         $this->components->twoColumnDetail('New Users (Last '.$stats['period_days'].' days)', number_format($stats['users']['new']));
         $this->components->twoColumnDetail('Verified Users', number_format($stats['users']['verified']));
+        $this->components->twoColumnDetail('Users on Trial', number_format($stats['users']['on_trial']));
         $this->components->twoColumnDetail('User Growth Rate', $this->formatGrowth($stats['users']['growth_rate']));
 
         $this->newLine();
@@ -167,7 +179,6 @@ class WaveStats extends Command
         // Subscriptions Section
         $this->components->twoColumnDetail('<fg=cyan>💳 Subscriptions</>');
         $this->components->twoColumnDetail('Active Subscriptions', number_format($stats['subscriptions']['active']));
-        $this->components->twoColumnDetail('Trial Subscriptions', number_format($stats['subscriptions']['trial']));
         $this->components->twoColumnDetail('Cancelled (Active)', number_format($stats['subscriptions']['cancelled']));
         $this->components->twoColumnDetail('New Subscriptions (Last '.$stats['period_days'].' days)', number_format($stats['subscriptions']['new']));
         $this->components->twoColumnDetail('Subscription Growth Rate', $this->formatGrowth($stats['subscriptions']['growth_rate']));
@@ -192,8 +203,12 @@ class WaveStats extends Command
         $this->newLine();
     }
 
-    protected function formatGrowth(float $rate): string
+    protected function formatGrowth(?float $rate): string
     {
+        if ($rate === null) {
+            return '<fg=gray>n/a</>';
+        }
+
         if ($rate > 0) {
             return '<fg=green>↑ '.$rate.'%</>';
         } elseif ($rate < 0) {
