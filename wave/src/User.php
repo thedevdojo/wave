@@ -26,6 +26,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 {
     use HasPlanFeatures, HasRoles, Impersonate, Notifiable;
 
+    // App\Models\User overriding booted() has to call parent::booted() to keep this.
     protected static function booted(): void
     {
         static::deleted(fn (self $user) => $user->clearUserCache());
