@@ -4,6 +4,23 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.6.0] - 2026-11-09
+
+### Added
+
+- Assign permissions to roles in the admin, from the role form or the permission form. The roles table shows how many permissions each role has ([#436])
+- `php artisan app:create-permission` creates a permission and assigns it to roles ([#436])
+- The test suite also runs on MySQL and Postgres in CI ([#435])
+
+### Fixed
+
+- On Postgres, creating a role, plan, post, page, category or changelog after seeding no longer fails with a duplicate key error ([#435])
+- On Postgres, marking a notification as read with an id that isn't a UUID no longer returns a 500 ([#435])
+- A migrated database without users sends the home page to the installer instead of showing a blank page ([#435])
+- `GET /logout` also invalidates the session and regenerates the CSRF token, like `POST /auth/logout` ([#435])
+- The auth pages no longer request the missing `/storage/auth/background.jpg` ([#435])
+- `app:create-role` now assigns the permissions you select ([#436])
+
 ## [3.5.0] - 2026-11-09
 
 Wave now runs on Laravel 13, Livewire 4 and Filament 5. Folio, Volt and the theme pages work as before.
@@ -132,7 +149,8 @@ Wave now runs on Laravel 13, Livewire 4 and Filament 5. Folio, Volt and the them
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.5.0...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.6.0...HEAD
+[3.6.0]: https://github.com/thedevdojo/wave/compare/3.5.0...3.6.0
 [3.5.0]: https://github.com/thedevdojo/wave/compare/3.4.1...3.5.0
 [3.4.1]: https://github.com/thedevdojo/wave/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/thedevdojo/wave/compare/3.3.1...3.4.0
@@ -166,3 +184,5 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#428]: https://github.com/thedevdojo/wave/pull/428
 [#431]: https://github.com/thedevdojo/wave/pull/431
 [#429]: https://github.com/thedevdojo/wave/pull/429
+[#435]: https://github.com/thedevdojo/wave/pull/435
+[#436]: https://github.com/thedevdojo/wave/pull/436
