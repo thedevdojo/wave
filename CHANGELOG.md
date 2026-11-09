@@ -4,6 +4,12 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.4.1] - 2026-11-09
+
+### Fixed
+
+- Paddle webhooks rejected because `PADDLE_WEBHOOK_SECRET` is not set now log a warning ([#431])
+
 ## [3.4.0] - 2026-11-09
 
 ### Upgrade notes
@@ -103,7 +109,8 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.4.0...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.4.1...HEAD
+[3.4.1]: https://github.com/thedevdojo/wave/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/thedevdojo/wave/compare/3.3.1...3.4.0
 [3.3.1]: https://github.com/thedevdojo/wave/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/thedevdojo/wave/compare/3.2.0...3.3.0
@@ -133,3 +140,4 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#426]: https://github.com/thedevdojo/wave/pull/426
 [#427]: https://github.com/thedevdojo/wave/pull/427
 [#428]: https://github.com/thedevdojo/wave/pull/428
+[#431]: https://github.com/thedevdojo/wave/pull/431
