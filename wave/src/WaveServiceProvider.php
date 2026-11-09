@@ -2,7 +2,6 @@
 
 namespace Wave;
 
-use App\Models\Forms;
 use DevDojo\Themes\Models\Theme;
 use Exception;
 use Filament\Support\Colors\Color;
@@ -142,12 +141,6 @@ class WaveServiceProvider extends ServiceProvider
             ]);
             // $this->excludeInactiveThemes();
         }
-
-        Relation::morphMap([
-            'user' => config('auth.providers.model'),
-            'form' => Forms::class,
-            // Add other mappings as needed
-        ]);
 
         $event->listen(ViewMatched::class, [HideUnpublishedPosts::class, 'flag']);
 
