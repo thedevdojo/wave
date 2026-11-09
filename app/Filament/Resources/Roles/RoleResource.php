@@ -10,6 +10,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -34,10 +35,18 @@ class RoleResource extends Resource
                     ->maxLength(191),
                 TextInput::make('guard_name')
                     ->required()
+                    ->default('web')
                     ->maxLength(191),
                 TextInput::make('description')
                     ->required()
                     ->maxLength(191)
+                    ->columnSpanFull(),
+                CheckboxList::make('permissions')
+                    ->relationship('permissions', 'name')
+                    ->helperText('Users with this role get these permissions. Add new ones under Permissions.')
+                    ->searchable()
+                    ->bulkToggleable()
+                    ->columns(3)
                     ->columnSpanFull(),
             ]);
     }
@@ -50,6 +59,9 @@ class RoleResource extends Resource
                     ->searchable(),
                 TextColumn::make('guard_name')
                     ->searchable(),
+                TextColumn::make('permissions_count')
+                    ->counts('permissions')
+                    ->label('Permissions'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

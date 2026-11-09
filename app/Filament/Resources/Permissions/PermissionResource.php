@@ -9,6 +9,7 @@ use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -33,7 +34,14 @@ class PermissionResource extends Resource
                     ->maxLength(191),
                 TextInput::make('guard_name')
                     ->required()
+                    ->default('web')
                     ->maxLength(191),
+                CheckboxList::make('roles')
+                    ->relationship('roles', 'name')
+                    ->helperText('Every user with one of these roles gets this permission.')
+                    ->bulkToggleable()
+                    ->columns(3)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -45,6 +53,9 @@ class PermissionResource extends Resource
                     ->searchable(),
                 TextColumn::make('guard_name')
                     ->searchable(),
+                TextColumn::make('roles.name')
+                    ->label('Roles')
+                    ->badge(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
