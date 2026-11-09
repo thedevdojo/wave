@@ -4,6 +4,18 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.6.1] - 2026-11-09
+
+### Removed
+
+- The unused Wave 2 billing routes (`cancel`, `subscribe`, `switch-plans`, `checkout/welcome`) and their controller methods and partials ([#438])
+
+### Fixed
+
+- Changing a user's roles, in the admin or with `assignRole`/`removeRole`, clears their cached admin and subscriber status right away ([#439])
+- `/install` explains how to install from the command line when the app isn't running locally, instead of showing an empty page, and redirects home once Wave is installed ([#440])
+- The Paddle invoice link returns a 404 instead of a 500 when Paddle has no invoice for the transaction ([#441])
+
 ## [3.6.0] - 2026-11-09
 
 ### Added
@@ -186,3 +198,7 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#429]: https://github.com/thedevdojo/wave/pull/429
 [#435]: https://github.com/thedevdojo/wave/pull/435
 [#436]: https://github.com/thedevdojo/wave/pull/436
+[#438]: https://github.com/thedevdojo/wave/pull/438
+[#439]: https://github.com/thedevdojo/wave/pull/439
+[#440]: https://github.com/thedevdojo/wave/pull/440
+[#441]: https://github.com/thedevdojo/wave/pull/441
