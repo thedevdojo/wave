@@ -25,12 +25,12 @@ class User extends WaveUser
      */
     protected function casts(): array
     {
-        return [
+        return array_merge(parent::casts(), [
             'notification_preferences' => 'array',
             'social_links' => 'array',
             'privacy_settings' => 'array',
             'deletion_scheduled_at' => 'datetime',
-        ];
+        ]);
     }
 
     public function activityLogs(): HasMany

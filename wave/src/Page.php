@@ -5,6 +5,7 @@ namespace Wave;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class Page extends Model
 {
@@ -22,7 +23,7 @@ class Page extends Model
 
     public function image()
     {
-        return url($this->image);
+        return Storage::disk(config('filament.default_filesystem_disk'))->url($this->image);
     }
 
     public function author(): BelongsTo

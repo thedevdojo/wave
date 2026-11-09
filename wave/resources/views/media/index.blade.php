@@ -196,7 +196,7 @@ use Filament\Actions\DeleteAction;
             $folderPath = $this->stripDoubleSlashesFromString($this->folder . '/' . $folderName);
 
             // Check if the folder already exists
-            if (Storage::disk()->exists($folderPath)) {
+            if ($this->storage($this->disk)->exists($folderPath)) {
                 $this->addError('folderName', 'This folder already exists');
                 return;
             }
@@ -243,8 +243,8 @@ use Filament\Actions\DeleteAction;
                 $destinationPath = $this->stripDoubleSlashesFromString($this->folder . '/' . $this->destinationFolder . '/' . $this->selectedFile['name']);
             }
 
-            if (Storage::exists($sourcePath)) {
-                Storage::move($sourcePath, $destinationPath);
+            if ($this->storage($this->disk)->exists($sourcePath)) {
+                $this->storage($this->disk)->move($sourcePath, $destinationPath);
             }
 
             // Clear selection and close modal
@@ -605,7 +605,8 @@ use Filament\Actions\DeleteAction;
             $search = strtolower($search); // Convert search term to lowercase for case-insensitive matching
 
             // Get all files in the storage directory and subdirectories
-            $allFiles = Storage::allFiles();
+            $storage = $this->storage($this->disk);
+            $allFiles = $storage->allFiles();
 
             foreach ($allFiles as $file) {
                 $fileName = strtolower(basename($file)); // Get the filename and convert to lowercase
@@ -616,11 +617,11 @@ use Filament\Actions\DeleteAction;
                     $results[] = [
                         
                         'filename' => basename($file),
-                        'type' => Storage::mimeType($file) == 'dir' ? 'folder' : Storage::mimeType($file),
-                        'url' => $this->storage($this->disk)->url($file),
+                        'type' => $storage->mimeType($file) == 'dir' ? 'folder' : $storage->mimeType($file),
+                        'url' => $storage->url($file),
                         'relative_path' => $file,
-                        'size' => $this->formatSize(Storage::size($file)),
-                        'last_modified' => \Carbon\Carbon::parse(Storage::lastModified($file))->diffForHumans(),
+                        'size' => $this->formatSize($storage->size($file)),
+                        'last_modified' => \Carbon\Carbon::parse($storage->lastModified($file))->diffForHumans(),
                         'match_score' => similar_text($search, $fileName) / strlen($search) * 100,
                     ];
                 }

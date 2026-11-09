@@ -41,10 +41,12 @@ class UserResource extends Resource
                     ->maxLength(191),
                 TextInput::make('username')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(191),
                 TextInput::make('email')
                     ->email()
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(191),
                 FileUpload::make('avatar')
                     ->required()
@@ -90,7 +92,7 @@ class UserResource extends Resource
                 DeleteAction::make(),
                 Action::make('Impersonate')
                     ->url(fn ($record) => route('impersonate', $record))
-                    ->visible(fn ($record) => auth()->user()->id !== $record->id),
+                    ->visible(fn ($record) => auth()->id() !== $record->id && auth()->user()->canImpersonate() && $record->canBeImpersonated()),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
