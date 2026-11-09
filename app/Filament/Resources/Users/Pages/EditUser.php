@@ -16,4 +16,10 @@ class EditUser extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    // The roles select syncs the pivot directly, so Spatie's role events don't fire.
+    protected function afterSave(): void
+    {
+        $this->record->clearUserCache();
+    }
 }
