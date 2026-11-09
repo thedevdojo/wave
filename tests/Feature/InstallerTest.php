@@ -37,11 +37,13 @@ it('shows the same message when the tables do not exist yet', function () {
     }
 });
 
-it('says wave is installed once there are users outside local', function () {
+it('sends an installed app home instead of showing the installer', function (string $env, string $uri) {
+    $this->app['env'] = $env;
     User::factory()->create();
 
-    $this->get('/install')
-        ->assertOk()
-        ->assertSee('Wave is already installed')
-        ->assertDontSee('php artisan migrate --seed');
-});
+    $this->get($uri)->assertRedirect('/');
+})->with([
+    'outside local' => ['production', '/install'],
+    'local' => ['local', '/install'],
+    'local, finishing again' => ['local', '/install?complete=true'],
+]);

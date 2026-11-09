@@ -13,7 +13,7 @@ Route::get('logout', '\Wave\Http\Controllers\LogoutController@logout')->name('wa
 // Route::get('user/verify/{verification_code}', '\Wave\Http\Controllers\Auth\RegisterController@verify')->name('verify');
 // Route::post('register/complete', '\Wave\Http\Controllers\Auth\RegisterController@complete')->name('wave.register-complete');
 
-Route::view('install', 'wave::install')->name('wave.install');
+Route::get('install', \Wave\Http\Controllers\InstallController::class)->name('wave.install');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::redirect('settings', 'settings/profile')->name('settings');
