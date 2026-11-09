@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Concerns\SyncsIdSequences;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class PlansTableSeeder extends Seeder
 {
+    use SyncsIdSequences;
+
     /**
      * Auto generated seed file
      */
@@ -60,5 +63,6 @@ class PlansTableSeeder extends Seeder
             ],
         ]);
 
+        $this->syncIdSequence('plans');
     }
 }

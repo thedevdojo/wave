@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Concerns\SyncsIdSequences;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class ThemesTableSeeder extends Seeder
 {
+    use SyncsIdSequences;
+
     /**
      * Auto generated seed file
      */
@@ -25,5 +28,6 @@ class ThemesTableSeeder extends Seeder
             ],
         ]);
 
+        $this->syncIdSequence('themes');
     }
 }

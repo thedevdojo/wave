@@ -57,11 +57,6 @@ try {
             Route::view($page->slug, 'theme::page', ['page' => $page->toArray()])->name($page->slug);
         }
     }
-
-    // If no users are found, redirect to the installer or dummy page
-    if (! User::first()) {
-        Route::view('/', 'wave::welcome');
-    }
 } catch (QueryException $e) {
     // Handle the exception or log it if needed
 }

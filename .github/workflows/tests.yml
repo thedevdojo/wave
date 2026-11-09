@@ -100,3 +100,59 @@ jobs:
     - name: Stop Laravel server
       if: always()
       run: kill $(cat project_folder/laravel_server.pid)
+
+  databases:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - db: mysql
+            port: 3306
+            username: root
+          - db: pgsql
+            port: 5432
+            username: postgres
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: wave
+        ports: ['3306:3306']
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: wave
+        ports: ['5432:5432']
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: pdo_mysql, pdo_pgsql
+
+    - name: Install Composer Dependencies
+      run: |
+        cp .env.example .env
+        composer install --no-interaction --no-progress
+        php artisan key:generate
+
+    # phpunit.xml pins tests to in-memory SQLite, so point a copy at the service instead
+    - name: Point the tests at ${{ matrix.db }}
+      run: |
+        sed -e 's#<env name="DB_CONNECTION" value="sqlite" force="true"/>#<env name="DB_CONNECTION" value="${{ matrix.db }}" force="true"/><env name="DB_HOST" value="127.0.0.1" force="true"/><env name="DB_PORT" value="${{ matrix.port }}" force="true"/><env name="DB_USERNAME" value="${{ matrix.username }}" force="true"/><env name="DB_PASSWORD" value="password" force="true"/>#' \
+            -e 's#<env name="DB_DATABASE" value=":memory:" force="true"/>#<env name="DB_DATABASE" value="wave" force="true"/>#' \
+            phpunit.xml > phpunit.${{ matrix.db }}.xml
+        grep -q '"${{ matrix.db }}"' phpunit.${{ matrix.db }}.xml
+
+    - name: Run the tests on ${{ matrix.db }}
+      run: ./vendor/bin/pest -c phpunit.${{ matrix.db }}.xml
