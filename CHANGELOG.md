@@ -6,11 +6,17 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [3.6.1] - 2026-11-09
 
+### Changed
+
+- The API keys page enforces the `api_keys` limit from `config/limits.php`. With the shipped defaults, users without a plan can create one key. Subscribers on plans without an `api_keys` limit and admins aren't limited. Set `defaults.api_keys` to `null` to keep it unlimited ([#448])
+- `.env.example` no longer ships a shared `APP_KEY`, and mail is logged by default instead of sent to Mailtrap. The zero-config installer generates a key ([#446])
+
 ### Removed
 
 - The unused Wave 2 billing routes (`cancel`, `subscribe`, `switch-plans`, `checkout/welcome`) and their controller methods and partials ([#438])
 - Unused anchor partials: `header-app`, the app and marketing menus, `notifications` and `toast` ([#442])
 - A broken `morphMap` entry that mapped `user` to `null` ([#444])
+- Unused Wave 1/2 files from `public/` (old theme bundles, LaRecipe docs assets, the old billing build), unused config files and the unused `laravel/ui`, `alpinejs` and `axios` dependencies ([#446])
 
 ### Fixed
 
@@ -19,6 +25,17 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 - The Paddle invoice link returns a 404 instead of a 500 when Paddle has no invoice for the transaction ([#441])
 - The marketing header's View Dashboard button links to the dashboard instead of the login page ([#442])
 - `wave:stats` reports the right verified users, trials, churn, new subscriptions and growth rates. In `--json` output, `subscriptions.trial` is now `users.on_trial`, and `growth_rate` is `null` when the previous period has nothing to compare with ([#443])
+- The admin user form saves `email_verified_at`, and users who sign up with a social provider stay verified ([#447])
+- Duplicate emails, usernames, and role or permission names show a validation error in the admin instead of a 500 ([#447])
+- The admin only shows Impersonate for users that can be impersonated, and the dashboard no longer counts deleted users ([#447])
+- `trial_ends_at` is cast to a date again and `onTrial()` is false once the trial has ended ([#447])
+- Uploaded page images load from the storage disk instead of a broken URL ([#447])
+- The media manager moves, searches and checks folders on its own disk instead of the default one ([#447])
+- The activity log goes back to the first page when the filters change ([#448])
+- `/dashboard` no longer returns a 500 for a user without a role ([#448])
+- Users who signed up with a social provider can set a password without a current one ([#448])
+- API key names are stored as typed instead of slugged ([#448])
+- Profile text that looks like JSON, such as `true` or `1.50`, is kept as typed ([#448])
 
 ## [3.6.0] - 2026-11-09
 
@@ -209,3 +226,6 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#442]: https://github.com/thedevdojo/wave/pull/442
 [#443]: https://github.com/thedevdojo/wave/pull/443
 [#444]: https://github.com/thedevdojo/wave/pull/444
+[#446]: https://github.com/thedevdojo/wave/pull/446
+[#447]: https://github.com/thedevdojo/wave/pull/447
+[#448]: https://github.com/thedevdojo/wave/pull/448
