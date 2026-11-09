@@ -27,7 +27,6 @@
         "laravel/framework": "^13.0",
         "laravel/pail": "^1.2.2",
         "laravel/tinker": "^3.0",
-        "laravel/ui": "^4.6",
         "livewire/livewire": "^4.0",
         "livewire/volt": "^1.11",
         "ralphjsmit/livewire-urls": "^1.5",

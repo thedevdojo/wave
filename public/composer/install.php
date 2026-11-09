@@ -21,6 +21,14 @@ function copyEnv($projectRoot)
     if (! file_exists($envFile)) {
         copy($envExample, $envFile);
     }
+
+    // .env.example ships without a key, and artisan isn't available until
+    // composer install has finished, so generate one here.
+    $env = file_get_contents($envFile);
+    if (preg_match('/^APP_KEY=\s*$/m', $env)) {
+        $key = 'base64:'.base64_encode(random_bytes(32));
+        file_put_contents($envFile, preg_replace('/^APP_KEY=\s*$/m', 'APP_KEY='.$key, $env, 1));
+    }
 }
 
 function redirectIfNotHomepage()
