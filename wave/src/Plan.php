@@ -3,6 +3,7 @@
 namespace Wave;
 
 use Exception;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,8 +16,54 @@ class Plan extends Model
 
     protected $casts = [
         'limits' => 'array',
-        'features' => 'array',
     ];
+
+    protected static function booted(): void
+    {
+        // Also forget the old name so a renamed or deleted plan isn't served from cache.
+        static::saved(fn (Plan $plan) => static::clearCache([$plan->getOriginal('name'), $plan->name]));
+        static::deleted(fn (Plan $plan) => static::clearCache([$plan->name]));
+    }
+
+    /**
+     * Features are a comma-separated string, which is what the themes and the admin form use.
+     */
+    protected function features(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => static::featuresToString($value),
+            set: fn ($value) => static::featuresToString($value),
+        );
+    }
+
+    /**
+     * The plan's features as a list, without blank entries.
+     */
+    public function featureList(): array
+    {
+        return array_values(array_filter(
+            array_map('trim', explode(',', $this->features)),
+            fn (string $feature) => $feature !== ''
+        ));
+    }
+
+    protected static function featuresToString(mixed $value): string
+    {
+        // Rows saved while features had an array cast hold JSON (an array or a quoted string).
+        if (is_string($value) && (str_starts_with($value, '[') || str_starts_with($value, '"'))) {
+            $decoded = json_decode($value, true);
+
+            if (is_array($decoded) || is_string($decoded)) {
+                $value = $decoded;
+            }
+        }
+
+        if (is_array($value)) {
+            $value = implode(',', array_map(fn ($feature) => trim((string) $feature), $value));
+        }
+
+        return (string) $value;
+    }
 
     public function role(): BelongsTo
     {
@@ -69,13 +116,13 @@ class Plan extends Model
     /**
      * Clear plan cache
      */
-    public static function clearCache()
+    public static function clearCache(array $extraNames = [])
     {
         // Only clear cache if it's available
         if (app()->bound('cache')) {
             try {
                 Cache::forget('wave_active_plans');
-                $plans = self::pluck('name');
+                $plans = self::pluck('name')->merge($extraNames)->filter()->unique();
                 foreach ($plans as $planName) {
                     Cache::forget("wave_plan_{$planName}");
                 }
@@ -97,14 +144,25 @@ class Plan extends Model
             return null;
         }
 
-        $limit = $limits[$feature];
+        return static::normalizeLimit($limits[$feature]);
+    }
 
-        // -1 means explicitly unlimited
-        if ($limit === -1) {
+    /**
+     * Empty and -1 mean unlimited, 0 means disabled. Values saved from the admin form are strings.
+     */
+    public static function normalizeLimit(mixed $limit): ?int
+    {
+        if (is_string($limit)) {
+            $limit = trim($limit);
+        }
+
+        if ($limit === null || $limit === '') {
             return null;
         }
 
-        return (int) $limit;
+        $limit = (int) $limit;
+
+        return $limit === -1 ? null : $limit;
     }
 
     /**

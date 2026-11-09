@@ -6,6 +6,8 @@ use App\Filament\Resources\Plans\Pages\CreatePlan;
 use App\Filament\Resources\Plans\Pages\EditPlan;
 use App\Filament\Resources\Plans\Pages\ListPlans;
 use BackedEnum;
+use Closure;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -16,6 +18,7 @@ use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -110,6 +113,17 @@ class PlanResource extends Resource
                             ->keyPlaceholder('e.g., api_keys')
                             ->valuePlaceholder('e.g., 10')
                             ->reorderable()
+                            ->rules([
+                                fn (): Closure => function (string $attribute, mixed $value, Closure $fail) {
+                                    foreach ((array) $value as $feature => $limit) {
+                                        $limit = trim((string) $limit);
+
+                                        if ($limit !== '' && (filter_var($limit, FILTER_VALIDATE_INT) === false || (int) $limit < -1)) {
+                                            $fail("The limit for \"{$feature}\" must be a whole number, -1 or empty.");
+                                        }
+                                    }
+                                },
+                            ])
                             ->columnSpanFull(),
                     ]),
                 Section::make('Associated Role')
@@ -155,13 +169,37 @@ class PlanResource extends Resource
             ])
             ->recordActions([
                 EditAction::make(),
-                DeleteAction::make(),
+                DeleteAction::make()
+                    ->before(fn (DeleteAction $action, Plan $record) => static::preventDeletingSubscribedPlans($action, [$record->getKey()])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->before(fn (DeleteBulkAction $action, $records) => static::preventDeletingSubscribedPlans($action, $records->modelKeys())),
                 ]),
             ]);
+    }
+
+    /**
+     * Deleting a plan cascades to its subscriptions (billing history and paying
+     * customers), so refuse while any exist and point the admin at deactivating.
+     */
+    public static function preventDeletingSubscribedPlans(Action $action, array $planIds): void
+    {
+        $names = Plan::whereKey($planIds)->has('subscriptions')->pluck('name');
+
+        if ($names->isEmpty()) {
+            return;
+        }
+
+        Notification::make()
+            ->danger()
+            ->title($names->count() === 1 ? 'This plan has subscriptions' : 'Some plans have subscriptions')
+            ->body($names->join(', ').' can\'t be deleted because subscriptions use '.($names->count() === 1 ? 'it' : 'them').'. Turn off "Active" instead to hide a plan from new customers.')
+            ->persistent()
+            ->send();
+
+        $action->cancel();
     }
 
     public static function getRelations(): array
