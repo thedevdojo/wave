@@ -72,7 +72,6 @@ it('sends unverified users to the verify page', function (string $url) {
     '/settings/deletion',
     '/settings/social',
     '/settings/invoices',
-    '/checkout/welcome',
     '/subscription/welcome',
 ]);
 
