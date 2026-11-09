@@ -1,5 +1,3 @@
-@if(app()->isLocal())
-
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -10,6 +8,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.4/tailwind.min.css">
     </head>
     <body class="bg-zinc-50">
+
+    @if(app()->isLocal())
 
         @if(Request::get('complete'))
 
@@ -108,8 +108,33 @@
 
         @endif
 
+    @else
+
+        {{-- The web installer runs migrations and seeders, so it only does that locally --}}
+        @php
+            try {
+                $installed = \App\Models\User::query()->exists();
+            } catch (\Illuminate\Database\QueryException $e) {
+                $installed = false;
+            }
+        @endphp
+
+        <div class="flex flex-col justify-center items-center px-5 w-screen h-screen">
+            <div class="p-10 mx-auto w-full max-w-lg bg-white rounded-2xl border shadow-sm border-gray-100">
+                @if($installed)
+                    <h1 class="text-2xl font-semibold text-black">Wave is already installed</h1>
+                    <a href="/" class="inline-block mt-5 text-gray-600 underline">Go to the home page</a>
+                @else
+                    <h1 class="text-2xl font-semibold text-black">Wave isn't installed yet</h1>
+                    <p class="mt-5 text-gray-500">The web installer only runs when <code>APP_ENV=local</code>. On this server, run these from the project folder:</p>
+                    <pre class="overflow-x-auto p-4 mt-4 text-sm text-gray-100 bg-gray-900 rounded-lg"><code>php artisan migrate --seed --force
+php artisan storage:link</code></pre>
+                    <p class="mt-4 text-gray-500">Then reload this page.</p>
+                @endif
+            </div>
+        </div>
+
+    @endif
+
     </body>
     </html>
-
-
-@endif
