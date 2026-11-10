@@ -40,6 +40,10 @@ class Post extends Model
 
     public function image()
     {
+        if (blank($this->image)) {
+            return;
+        }
+
         return Storage::disk(config('filament.default_filesystem_disk'))->url($this->image);
     }
 

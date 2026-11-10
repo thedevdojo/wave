@@ -3,8 +3,15 @@
     name('blog.post');
 ?>
 
-<x-layouts.marketing>
-    
+<x-layouts.marketing
+    :seo="[
+        'title' => $post->seo_title ?: $post->title,
+        'description' => $post->meta_description ?: $post->excerpt,
+        'image' => $post->image(),
+        'type' => 'article',
+    ]"
+>
+
     <article id="post-{{ $post->id }}" class="max-w-4xl px-5 pb-20 mx-auto prose prose-md dark:prose-invert lg:prose-lg lg:px-0">
 
         <x-elements.back-button
@@ -28,9 +35,11 @@
 
         </div>
 
-        <div class="relative">
-            <img class="w-full h-auto rounded-lg" src="{{ $post->image() }}" alt="{{ $post->title }}" srcset="{{ $post->image() }}">
-        </div>
+        @if($post->image)
+            <div class="relative">
+                <img class="w-full h-auto rounded-lg" src="{{ $post->image() }}" alt="{{ $post->title }}">
+            </div>
+        @endif
 
         <div class="max-w-4xl mx-auto">
             {!! $post->body !!}

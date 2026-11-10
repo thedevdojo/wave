@@ -3,7 +3,12 @@
     name('blog.category');
 ?>
 
-<x-layouts.marketing>
+<x-layouts.marketing
+    :seo="[
+        'title' => $category->name.' Articles',
+        'description' => 'Our latest '.$category->name.' posts.',
+    ]"
+>
 
     @php
         $posts = $category->posts()->published()->latest()->paginate(6);

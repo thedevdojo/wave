@@ -42,7 +42,12 @@ class PostResource extends Resource
             ->components([
                 TextInput::make('title')
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
+                    // only on create, so editing a title doesn't change a published post's URL
+                    ->afterStateUpdated(function (string $operation, Set $set, ?string $state) {
+                        if ($operation === 'create') {
+                            $set('slug', Str::slug($state));
+                        }
+                    })
                     ->required()
                     ->maxLength(191),
                 TextInput::make('slug')

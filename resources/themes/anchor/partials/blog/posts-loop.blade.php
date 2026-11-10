@@ -6,10 +6,12 @@
         <meta property="dateModified" content="{{ Carbon\Carbon::parse($post->updated_at)->toIso8601String() }}">
         <meta class="uk-margin-remove-adjacent" property="datePublished" content="{{ Carbon\Carbon::parse($post->created_at)->toIso8601String() }}">
 
-        <img src="{{ $post->image() }}" class="w-full h-auto rounded-lg">
+        @if($post->image)
+            <img src="{{ $post->image() }}" alt="{{ $post->title }}" class="w-full h-auto rounded-lg">
+        @endif
         <div class="px-1 py-1">
             <div class="flex gap-x-4 items-center my-3 text-xs">
-                <time datetime="2020-03-16" class="text-zinc-500">{{ $post->updated_at->format('M d, Y') }}</time>
+                <time datetime="{{ $post->created_at->toDateString() }}" class="text-zinc-500">{{ $post->created_at->format('M d, Y') }}</time>
                 <a href="/blog/{{ $post->category->slug }}" wire:navigate class="relative z-10 px-3 py-1.5 font-medium text-zinc-600 bg-zinc-50 rounded-full hover:bg-zinc-100">{{ $post->category->name }}</a>
               </div>
             <h2 class="text-lg font-semibold leading-6 text-zinc-900 group-hover:text-zinc-600">
