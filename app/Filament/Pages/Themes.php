@@ -34,7 +34,7 @@ class Themes extends Page
         $all_themes = Theme::all();
         $this->themes = [];
         foreach ($all_themes as $theme) {
-            if (file_exists(resource_path('themes/'.$theme->folder))) {
+            if (file_exists(config('themes.folder', resource_path('themes')).'/'.$theme->folder)) {
                 array_push($this->themes, $theme);
             }
         }
@@ -75,17 +75,11 @@ class Themes extends Page
                 if (! isset($theme_exists->id)) {
                     $version = isset($theme->version) ? $theme->version : '';
                     Theme::create(['name' => $theme->name, 'folder' => $theme->folder, 'version' => $version]);
-                    if (config('themes.publish_assets', true)) {
-                        $this->publishAssets($theme->folder);
-                    }
                 } else {
                     // If it does exist, let's make sure it's been updated
                     $theme_exists->name = $theme->name;
                     $theme_exists->version = isset($theme->version) ? $theme->version : '';
                     $theme_exists->save();
-                    if (config('themes.publish_assets', true)) {
-                        $this->publishAssets($theme->folder);
-                    }
                 }
             }
         }
@@ -143,11 +137,20 @@ class Themes extends Page
                 ->title('Theme not found, please make sure this theme exists in the database.')
                 ->danger()
                 ->send();
+
+            return;
         }
 
-        $theme_name = $theme->name;
+        if ($theme->active) {
+            Notification::make()
+                ->title('The active theme can\'t be deleted. Activate another theme first.')
+                ->danger()
+                ->send();
 
-        $theme_location = config('themes.folder').'/'.$theme->folder;
+            return;
+        }
+
+        $theme_location = config('themes.folder', resource_path('themes')).'/'.$theme->folder;
 
         // if the folder exists delete it
         if (file_exists($theme_location)) {

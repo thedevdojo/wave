@@ -16,9 +16,11 @@
                                 <p class="text-xs text-zinc-500">@if(isset($theme->version)){{ 'version ' . $theme->version }}@endif</p>
                             </div>
                             <div class="relative flex items-center space-x-1">
-                                <button wire:click="deleteTheme('{{ $theme->folder }}')" wire:confirm="Are you sure you want to delete {{ $theme->name }}?" class="flex items-center justify-center w-8 h-8 border rounded-md border-zinc-200 dark:border-zinc-700 dark:hover:bg-zinc-800 hover:bg-zinc-200">
-                                    <x-phosphor-trash-bold class="w-4 h-4 text-red-500" />
-                                </button>
+                                @unless($theme->active)
+                                    <button wire:click="deleteTheme('{{ $theme->folder }}')" wire:confirm="Are you sure you want to delete {{ $theme->name }}?" class="flex items-center justify-center w-8 h-8 border rounded-md border-zinc-200 dark:border-zinc-700 dark:hover:bg-zinc-800 hover:bg-zinc-200">
+                                        <x-phosphor-trash-bold class="w-4 h-4 text-red-500" />
+                                    </button>
+                                @endunless
                             </div>
                         </div>
                         <div class="w-full p-4 pt-0">
