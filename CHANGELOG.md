@@ -4,6 +4,17 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.6.3] - 2026-11-10
+
+### Changed
+
+- Outside `local`, Wave only accepts requests for the host in `APP_URL` and its subdomains, and other hosts get a 400. In production, set `APP_URL` to the domain the app is served on. Apps served on several domains can list them with `$middleware->trustHosts(at: [...])` in `bootstrap/app.php` ([#454])
+- `SECURITY.md` points to GitHub's private vulnerability reporting ([#454])
+
+### Removed
+
+- `role_id` from the `User` model's `$fillable`. The `users` table has no such column ([#454])
+
 ## [3.6.2] - 2026-11-10
 
 ### Removed
@@ -205,7 +216,8 @@ Wave now runs on Laravel 13, Livewire 4 and Filament 5. Folio, Volt and the them
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.6.2...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.6.3...HEAD
+[3.6.3]: https://github.com/thedevdojo/wave/compare/3.6.2...3.6.3
 [3.6.2]: https://github.com/thedevdojo/wave/compare/3.6.1...3.6.2
 [3.6.1]: https://github.com/thedevdojo/wave/compare/3.6.0...3.6.1
 [3.6.0]: https://github.com/thedevdojo/wave/compare/3.5.0...3.6.0
@@ -258,3 +270,4 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#450]: https://github.com/thedevdojo/wave/pull/450
 [#451]: https://github.com/thedevdojo/wave/pull/451
 [#452]: https://github.com/thedevdojo/wave/pull/452
+[#454]: https://github.com/thedevdojo/wave/pull/454
