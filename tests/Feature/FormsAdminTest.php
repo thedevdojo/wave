@@ -29,7 +29,7 @@ it('stores the fields of a new form as an array', function () {
 
     $form = Forms::where('slug', 'contact-us')->firstOrFail();
 
-    expect($form->fields)->toBe([['label' => 'Email', 'type' => 'TextInput', 'rules' => 'required|email']]);
+    expect($form->fields)->toEqual([['label' => 'Email', 'type' => 'TextInput', 'rules' => 'required|email']]);
 });
 
 it('still opens forms whose fields were stored as a JSON string', function () {
