@@ -9,6 +9,7 @@
     :seo="[
         'title' => 'Blog',
         'description' => 'Our Blog',
+        'type' => 'website',
     ]"
 >
     <x-container>

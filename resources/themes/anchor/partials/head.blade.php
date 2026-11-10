@@ -18,19 +18,23 @@
 <x-favicon></x-favicon>
 
 {{-- Social Share Open Graph Meta Tags --}}
-@if(isset($seo->title) && isset($seo->description) && isset($seo->image))
+@if(isset($seo->title) && isset($seo->description))
     <meta property="og:title" content="{{ $seo->title }}">
     <meta property="og:url" content="{{ Request::url() }}">
-    <meta property="og:image" content="{{ $seo->image }}">
+    @if(isset($seo->image))
+        <meta property="og:image" content="{{ $seo->image }}">
+    @endif
     <meta property="og:type" content="@if(isset($seo->type)){{ $seo->type }}@else{{ 'article' }}@endif">
     <meta property="og:description" content="{{ $seo->description }}">
     <meta property="og:site_name" content="{{ setting('site.title') }}">
 
     <meta itemprop="name" content="{{ $seo->title }}">
     <meta itemprop="description" content="{{ $seo->description }}">
-    <meta itemprop="image" content="{{ $seo->image }}">
+    @if(isset($seo->image))
+        <meta itemprop="image" content="{{ $seo->image }}">
+    @endif
 
-    @if(isset($seo->image_w) && isset($seo->image_h))
+    @if(isset($seo->image) && isset($seo->image_w) && isset($seo->image_h))
         <meta property="og:image:width" content="{{ $seo->image_w }}">
         <meta property="og:image:height" content="{{ $seo->image_h }}">
     @endif
