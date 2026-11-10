@@ -40,6 +40,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(LivewireUrlsMiddleware::class);
 
         $middleware->throttleApi();
+
+        // Only answer to APP_URL's host (and its subdomains), so links in emails can't point elsewhere. Skipped in local and tests
+        $middleware->trustHosts();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
