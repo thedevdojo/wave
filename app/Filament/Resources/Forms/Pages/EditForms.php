@@ -19,23 +19,11 @@ class EditForms extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        // $fields = [];
-
+        // forms created before the fix stored fields as a JSON string inside the JSON column
         if (is_string($data['fields'])) {
             $data['fields'] = json_decode($data['fields'], true);
         }
 
-        // dd($data['fields']);
-
-        // foreach($data['fields'] as $field){
-        //     $fields[] = json_decode($field, true);
-        // }
-
-        // $data['fields'] = $fields;
-
-        // dd($data['fields']);
-
         return $data;
-        // Runs before the form fields are populated with their default values.
     }
 }
