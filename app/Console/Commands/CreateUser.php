@@ -51,6 +51,7 @@ class CreateUser extends Command
             'username' => $username,
             'password' => Hash::make($password),
             'verified' => 1,
+            'email_verified_at' => now(),
         ]);
 
         // Get roles and let user select
