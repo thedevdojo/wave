@@ -39,6 +39,10 @@
                     
                 @endforeach
             </div>
+
+            <div class="flex justify-center mt-10">
+                {{ $logs->links('theme::partials.pagination') }}
+            </div>
         </x-card>
 
     </x-app.container>
