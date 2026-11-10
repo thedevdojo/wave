@@ -4,6 +4,29 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.6.2] - 2026-11-10
+
+### Removed
+
+- The `themes.publish_assets` option, which only made the Themes page crash. Themes are built with Vite, so there's nothing to publish ([#450])
+
+### Fixed
+
+- Editing a post's title no longer changes its slug, so published post URLs keep working ([#449])
+- Post pages use the post's SEO title, meta description and image, and category pages get their own title ([#449])
+- Posts without an image no longer show a broken image ([#449])
+- Blog cards show when a post was published instead of when it was last edited ([#449])
+- The blog's category bar follows the category order set in the admin ([#449])
+- `/changelog` shows pagination links, so entries older than the newest 10 can be reached ([#449])
+- Pages without an image still get `og:title`, `og:description` and the other share tags ([#452])
+- The Forms admin no longer errors when you type a form name, and new forms store their fields correctly ([#450])
+- The Themes page can't delete the active theme, and finds themes in a custom `themes.folder` ([#450])
+- With Paddle, switching plans switches to the plan you picked. Before, every plan's confirm modal opened at once and the last plan in the list won ([#451])
+- With Paddle, a rejected plan change or cancellation shows an error instead of doing nothing ([#451])
+- Invoices show the plan's currency instead of always `$`, and Paddle invoices show the total after tax and discounts ([#451])
+- The checkout cards no longer show a stray "month" after the plan name, and the Stripe Subscribe button shows its loading state ([#451])
+- Users created with `app:create-user` are verified, so they aren't sent to the email verification page ([#451])
+
 ## [3.6.1] - 2026-11-09
 
 ### Changed
@@ -182,7 +205,9 @@ Wave now runs on Laravel 13, Livewire 4 and Filament 5. Folio, Volt and the them
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.6.0...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.6.2...HEAD
+[3.6.2]: https://github.com/thedevdojo/wave/compare/3.6.1...3.6.2
+[3.6.1]: https://github.com/thedevdojo/wave/compare/3.6.0...3.6.1
 [3.6.0]: https://github.com/thedevdojo/wave/compare/3.5.0...3.6.0
 [3.5.0]: https://github.com/thedevdojo/wave/compare/3.4.1...3.5.0
 [3.4.1]: https://github.com/thedevdojo/wave/compare/3.4.0...3.4.1
@@ -229,3 +254,7 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#446]: https://github.com/thedevdojo/wave/pull/446
 [#447]: https://github.com/thedevdojo/wave/pull/447
 [#448]: https://github.com/thedevdojo/wave/pull/448
+[#449]: https://github.com/thedevdojo/wave/pull/449
+[#450]: https://github.com/thedevdojo/wave/pull/450
+[#451]: https://github.com/thedevdojo/wave/pull/451
+[#452]: https://github.com/thedevdojo/wave/pull/452
