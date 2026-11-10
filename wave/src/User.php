@@ -174,7 +174,7 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
         if (config('wave.billing_provider') == 'stripe') {
             $stripe = new StripeClient(config('wave.stripe.secret_key'));
-            $subscriptions = $this->subscriptions()->get();
+            $subscriptions = $this->subscriptions()->with('plan')->get();
             foreach ($subscriptions as $subscription) {
                 $invoices = $stripe->invoices->all(['customer' => $subscription->vendor_customer_id, 'limit' => 100]);
 
@@ -183,13 +183,15 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
                         'id' => $invoice->id,
                         'created' => Carbon::parse($invoice->created)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
                         'total' => number_format(($invoice->total / 100), 2, '.', ' '),
+                        'currency' => $subscription->plan?->currency ?? '$',
                         'download' => $invoice->invoice_pdf,
                     ]);
                 }
             }
         } else {
             // Include cancelled subscriptions too, like the Stripe branch.
-            $subscriptionIds = $this->subscriptions()->whereNotNull('vendor_subscription_id')->pluck('vendor_subscription_id');
+            $subscriptions = $this->subscriptions()->whereNotNull('vendor_subscription_id')->with('plan')->get()->keyBy('vendor_subscription_id');
+            $subscriptionIds = $subscriptions->keys();
             if ($subscriptionIds->isEmpty()) {
                 return $user_invoices;
             }
@@ -203,7 +205,8 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
                 array_push($user_invoices, (object) [
                     'id' => $invoice->id,
                     'created' => Carbon::parse($invoice->created_at)->isoFormat('MMMM Do YYYY, h:mm:ss a'),
-                    'total' => number_format(($invoice->details->totals->subtotal / 100), 2, '.', ' '),
+                    'total' => number_format(($invoice->details->totals->total / 100), 2, '.', ' '),
+                    'currency' => $subscriptions->get($invoice->subscription_id ?? null)?->plan?->currency ?? '$',
                     'download' => '/settings/invoices/'.$invoice->id,
                 ]);
             }

@@ -92,7 +92,14 @@ class Update extends Component
                 ->title('Cancellation scheduled.')
                 ->success()
                 ->send();
+
+            return;
         }
+
+        Notification::make()
+            ->title('Your subscription could not be cancelled. Please try again or contact support.')
+            ->danger()
+            ->send();
     }
 
     public function cancelImmediately()

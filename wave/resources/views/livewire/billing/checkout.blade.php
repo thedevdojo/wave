@@ -31,9 +31,8 @@
                         <div class="flex flex-col mb-10 h-full bg-white dark:bg-neutral-800 rounded-xl ease-out duration-300 border-2 border-gray-200 dark:border-neutral-700 shadow-sm sm:mb-0 group-hover:border-{{ config('devdojo.billing.style.color') }}-500">
                             <div class="p-6 lg:p-8">
                                 <div class="relative text-gray-500 dark:text-neutral-400">
-                                    <span lass="text-lg md:text-xl font-semibold rounded-full">
+                                    <span class="text-lg md:text-xl font-semibold rounded-full">
                                         {{ $plan->name }} Plan
-                                        {{ $billing_cycle_selected }}
                                     </span>
                                 </div>
 
@@ -62,13 +61,13 @@
                                 <div class="flex items-center justify-end w-full">
                                     <div class="relative w-full md:w-auto">
                                         @if(config('wave.billing_provider') == 'stripe')
-                                            <x-billing.button wire:click="redirectToStripeCheckout('{{ $plan->id }}')" wire:target="redirectToPaymentProvider" rounded="md" color="{{ config('devdojo.billing.style.color') }}">
+                                            <x-billing.button wire:click="redirectToStripeCheckout('{{ $plan->id }}')" wire:target="redirectToStripeCheckout" rounded="md" color="{{ config('devdojo.billing.style.color') }}">
                                                 Subscribe to this Plan
                                             </x-billing.button>
                                         @else
                                             @if($change)
 
-                                                <x-filament::modal width="lg" id="change-plan-modal">
+                                                <x-filament::modal width="lg" id="change-plan-modal-{{ $plan->id }}">
                                                     <x-slot name="trigger">
                                                             @if($plan->id == $userPlan->id)
                                                                 <x-billing.button rounded="md" color="{{ config('devdojo.billing.style.color') }}" x-show="billing_cycle_selected == '{{ $userSubscription->cycle }}'">You are currently on this plan</x-billing.button>
@@ -92,7 +91,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="relative flex items-center w-full space-x-3">
-                                                                <x-button x-on:click="$dispatch('close-modal', { id: 'change-plan-modal' })" color="secondary" class="w-1/2">Cancel</x-button> 
+                                                                <x-button x-on:click="$dispatch('close-modal', { id: 'change-plan-modal-{{ $plan->id }}' })" color="secondary" class="w-1/2">Cancel</x-button> 
                                                                 <x-button wire:click="switchPlan('{{ $plan->id }}')" color="info" class="w-1/2">Yes, Switch Plans</x-button>
                                                             </div>
                                                         </div>

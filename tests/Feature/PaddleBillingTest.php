@@ -98,7 +98,7 @@ it('lists paddle invoices for cancelled subscriptions too', function () {
     Http::fake(['sandbox-api.paddle.com/transactions*' => Http::response(['data' => [[
         'id' => 'txn_old',
         'created_at' => '2026-01-15T10:00:00Z',
-        'details' => ['totals' => ['subtotal' => '1000']],
+        'details' => ['totals' => ['subtotal' => '1000', 'total' => '1000']],
     ]]])]);
 
     $this->actingAs($this->user)

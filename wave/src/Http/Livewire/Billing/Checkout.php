@@ -220,6 +220,11 @@ class Checkout extends Component
 
             return redirect()->to('/settings/subscription')->with(['update' => true]);
         }
+
+        Notification::make()
+            ->title('Your plan could not be changed. Please try again or contact support.')
+            ->danger()
+            ->send();
     }
 
     public function render()
