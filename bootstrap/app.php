@@ -33,6 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->preventRequestForgery(except: [
             '/webhook/paddle',
             '/webhook/stripe',
+            '/webhook/mailtrap/inbound',
         ]);
 
         $middleware->append(DisableBladeIconComponents::class);
