@@ -35,7 +35,7 @@
                     \Filament\Forms\Components\TextInput::make('name')
                         ->label('Name')
                         ->required()
-						->rules('required|string')
+						->rules('required|string|max:255')
 						->default(auth()->user()->name),
 					\Filament\Forms\Components\TextInput::make('username')
                         ->label('Username')
