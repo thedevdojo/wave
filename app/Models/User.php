@@ -49,7 +49,8 @@ class User extends WaveUser
                 // Use the name to generate a slugified username
                 $username = Str::slug($user->name, '');
                 $i = 1;
-                while (self::where('username', $username)->exists()) {
+                // Soft-deleted users still hold their username under the unique index
+                while (self::withTrashed()->where('username', $username)->exists()) {
                     $username = Str::slug($user->name, '').$i;
                     $i++;
                 }
