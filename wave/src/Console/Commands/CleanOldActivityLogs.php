@@ -34,10 +34,17 @@ class CleanOldActivityLogs extends Command
 
         $days = $this->option('days') ?? config('activity.retention_days', 90);
 
-        if (is_null($days)) {
+        // A blank env value arrives as '', which must not become a cutoff of "now"
+        if (is_null($days) || $days === '') {
             $this->info('No retention period set. Logs will be kept indefinitely.');
 
             return self::SUCCESS;
+        }
+
+        if (filter_var($days, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) === false) {
+            $this->error('The retention period must be a positive number of days.');
+
+            return self::FAILURE;
         }
 
         $cutoffDate = now()->subDays((int) $days);

@@ -68,6 +68,46 @@ test('cleanup command respects retention config', function () {
     expect(ActivityLog::count())->toBe(0);
 });
 
+test('cleanup command refuses a retention period that is not a positive number of days', function ($days) {
+    config(['activity.enabled' => false]);
+    $user = User::factory()->create();
+    config(['activity.enabled' => true]);
+
+    ActivityLog::create([
+        'user_id' => $user->id,
+        'action' => 'test',
+        'description' => 'Recent log',
+        'ip_address' => '127.0.0.1',
+        'user_agent' => 'Test',
+        'created_at' => now()->subMinute(),
+    ]);
+
+    $this->artisan('activity:clean', ['--days' => $days, '--no-interaction' => true])
+        ->assertFailed();
+
+    expect(ActivityLog::count())->toBe(1);
+})->with(['0', '-5', 'abc']);
+
+test('cleanup command keeps logs when the retention config is blank', function () {
+    config(['activity.enabled' => false]);
+    $user = User::factory()->create();
+    config(['activity.enabled' => true, 'activity.retention_days' => '']);
+
+    ActivityLog::create([
+        'user_id' => $user->id,
+        'action' => 'test',
+        'description' => 'Recent log',
+        'ip_address' => '127.0.0.1',
+        'user_agent' => 'Test',
+        'created_at' => now()->subMinute(),
+    ]);
+
+    $this->artisan('activity:clean', ['--no-interaction' => true])
+        ->assertSuccessful();
+
+    expect(ActivityLog::count())->toBe(1);
+});
+
 test('duplicate login events within 5 minutes are prevented', function () {
     config(['activity.enabled' => false]);
 
