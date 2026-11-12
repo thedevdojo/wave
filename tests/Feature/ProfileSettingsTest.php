@@ -47,8 +47,13 @@ it('gives each user their own avatar file, even after a username is reused', fun
 });
 
 it('rejects a name longer than the column allows', function () {
-    ($this->saveProfile)(($this->makeUser)(), ['name' => str_repeat('a', 256)])
+    ($this->saveProfile)(($this->makeUser)(), ['name' => str_repeat('a', 192)])
         ->assertHasErrors('data.name');
+});
+
+it('rejects a username longer than the column allows', function () {
+    ($this->saveProfile)(($this->makeUser)(), ['username' => str_repeat('a', 192)])
+        ->assertHasErrors('data.username');
 });
 
 it('removes the previous avatar file when a new one is uploaded', function () {
