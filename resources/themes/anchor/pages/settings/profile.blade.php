@@ -35,12 +35,12 @@
                     \Filament\Forms\Components\TextInput::make('name')
                         ->label('Name')
                         ->required()
-						->rules('required|string')
+						->rules('required|string|max:191')
 						->default(auth()->user()->name),
 					\Filament\Forms\Components\TextInput::make('username')
                         ->label('Username')
                         ->required()
-						->rules('sometimes|required|string|alpha_dash|max:255|unique:users,username,' . auth()->user()->id)
+						->rules('sometimes|required|string|alpha_dash|max:191|unique:users,username,' . auth()->user()->id)
 						->helperText('Your unique username used in your profile URL')
 						->default(auth()->user()->username),
 					\Filament\Forms\Components\TextInput::make('email')
