@@ -52,3 +52,17 @@ test('changing roles in code clears the cached admin status', function () {
     $user->assignRole('admin');
     expect($user->isAdmin())->toBeTrue();
 });
+
+test('syncing roles clears cached admin status when granting and revoking access', function () {
+    $user = User::factory()->admin()->create();
+    expect($user->isAdmin())->toBeTrue();
+
+    $user->syncRoles(['registered']);
+    expect($user->isAdmin())->toBeFalse();
+
+    $user->syncRoles(['admin']);
+    expect($user->isAdmin())->toBeTrue();
+
+    $user->syncRoles([]);
+    expect($user->isAdmin())->toBeFalse();
+});
