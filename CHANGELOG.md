@@ -7,6 +7,7 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 ### Changed
 
 - Upgraded Spatie Laravel Permission to 8.x. Custom listeners must use the new `RoleAttachedEvent` / `RoleDetachedEvent` names (and the equivalent `Permission*Event` names). Wave's role listeners use these events so granting, removing, or syncing roles still clears cached admin and subscriber status immediately. Existing Wave role tables do not need a new migration for this upgrade.
+- Upgraded Intervention Image to 4.x. Custom themes and plugins using `ImageManager::read()` must switch to `decode()` or a source-specific method such as `decodeDataUri()` / `decodeSplFileInfo()`. Avatar validation still rejects server paths and remote URLs, and saved avatars are encoded as PNG to match their `.png` filenames.
 
 ## [3.6.3] - 2026-11-10
 
