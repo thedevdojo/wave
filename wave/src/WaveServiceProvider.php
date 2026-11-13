@@ -22,8 +22,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Intervention\Image\Decoders\DataUriImageDecoder;
-use Intervention\Image\Decoders\SplFileInfoImageDecoder;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 use Laravel\Folio\Events\ViewMatched;
@@ -116,19 +114,19 @@ class WaveServiceProvider extends ServiceProvider
                 $manager = new ImageManager(new Driver);
 
                 if ($value instanceof UploadedFile) {
-                    $manager->read($value, SplFileInfoImageDecoder::class);
+                    $manager->decodeSplFileInfo($value);
 
                     return true;
                 }
 
                 if (is_string($value) && str_starts_with($value, 'data:image/')) {
-                    $manager->read($value, DataUriImageDecoder::class);
+                    $manager->decodeDataUri($value);
 
                     return true;
                 }
 
                 return false;
-            } catch (Exception $e) {
+            } catch (\Throwable $e) {
                 return false;
             }
         });
