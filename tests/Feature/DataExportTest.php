@@ -2,9 +2,11 @@
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Volt\Volt;
 use Spatie\Permission\Models\Role;
 use Wave\ActivityLog;
+use Wave\Category;
 use Wave\Plan;
 use Wave\Post;
 use Wave\Subscription;
@@ -193,4 +195,31 @@ test('export includes the user profile fields', function () {
     $data = json_decode(base64_decode(data_get($component->effects, 'download.content')), true);
 
     expect($data['profile_fields'])->toBe([['key' => 'about', 'value' => 'I build things']]);
+});
+
+test('export loads the categories of the user posts with the posts', function () {
+    $user = User::factory()->create();
+    foreach (Category::factory()->count(3)->create() as $category) {
+        Post::factory()->create(['author_id' => $user->id, 'category_id' => $category->id]);
+    }
+
+    $this->actingAs($user);
+
+    $lazyLoaded = [];
+    Model::preventLazyLoading();
+    Model::handleLazyLoadingViolationUsing(function ($model, $relation) use (&$lazyLoaded) {
+        $lazyLoaded[] = get_class($model).'::'.$relation;
+    });
+
+    try {
+        $component = Volt::test('settings.export')->call('exportData');
+    } finally {
+        Model::preventLazyLoading(false);
+        Model::handleLazyLoadingViolationUsing(null);
+    }
+
+    $data = json_decode(base64_decode(data_get($component->effects, 'download.content')), true);
+
+    expect($data['blog_posts'])->toHaveCount(3);
+    expect($lazyLoaded)->not->toContain(Post::class.'::category');
 });
