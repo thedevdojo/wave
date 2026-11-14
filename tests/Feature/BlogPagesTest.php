@@ -3,6 +3,7 @@
 use App\Filament\Resources\Posts\Pages\CreatePost;
 use App\Filament\Resources\Posts\Pages\EditPost;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
 use Wave\Category;
 use Wave\Changelog;
@@ -99,6 +100,26 @@ describe('Blog index', function () {
         $this->get(route('blog.category', ['category' => $category]))
             ->assertOk()
             ->assertSee('<title>Tutorials Articles</title>', false);
+    });
+
+    it('loads post categories in one query on the listing pages', function () {
+        Post::factory()->count(3)->create(['category_id' => $this->category->id]);
+        Post::factory()->create(['category_id' => Category::factory()->create()->id]);
+
+        $categoryQueries = function (string $url) {
+            $count = 0;
+            DB::listen(function ($query) use (&$count) {
+                if (preg_match('/from [`"]?categories[`"]? where [`"]?categories[`"]?\.[`"]?id[`"]? (=|in)/i', $query->sql)) {
+                    $count++;
+                }
+            });
+            $this->get($url)->assertOk();
+
+            return $count;
+        };
+
+        expect($categoryQueries(route('blog')))->toBe(1);
+        expect($categoryQueries(route('blog.category', ['category' => $this->category])))->toBe(1);
     });
 });
 
