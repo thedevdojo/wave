@@ -5,6 +5,7 @@ namespace Wave;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class Subscription extends Model
 {
@@ -59,11 +60,25 @@ class Subscription extends Model
 
     public function cancel()
     {
-        $this->status = 'cancelled';
-        $this->save();
+        DB::transaction(function () {
+            // Serialize cancellations for this account before deciding which access remains.
+            $user = $this->user()->lockForUpdate()->firstOrFail();
+            $this->setRelation('user', $user);
+            $this->status = 'cancelled';
+            $this->save();
 
-        $this->user->syncRoles([]);
-        $this->user->assignRole(config('wave.default_user_role', 'registered'));
+            $remaining = $user->latestSubscription();
+            $defaultRole = config('wave.default_user_role', 'registered');
+            $billingRoleIds = Plan::pluck('role_id');
+
+            // Billing owns plan roles and the default role; retain separately assigned roles.
+            $roles = $user->roles()->get()->reject(
+                fn ($role) => $billingRoleIds->contains($role->id) || $role->name === $defaultRole
+            )->all();
+            $roles[] = $remaining ? $remaining->plan->role : $defaultRole;
+            $user->syncRoles($roles);
+        });
+
         $this->user->clearUserCache();
     }
 
