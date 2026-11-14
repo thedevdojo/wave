@@ -1,5 +1,6 @@
 <?php
     use function Laravel\Folio\{middleware, name};
+	use Illuminate\Support\Str;
 	use Livewire\Volt\Component;
     name('notifications');
     middleware(['auth', 'verified']);
@@ -14,7 +15,8 @@
 		}
 
 		public function delete($id){
-			$notification = auth()->user()->notifications()->where('id', $id)->first();
+			// Notification ids are UUIDs, and Postgres errors on comparing a uuid column to anything else
+			$notification = Str::isUuid($id) ? auth()->user()->notifications()->where('id', $id)->first() : null;
 			if ($notification){
 				$notification->delete();
 			}
