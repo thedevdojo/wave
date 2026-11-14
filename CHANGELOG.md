@@ -4,10 +4,19 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.7.0] - 2026-11-14
+
 ### Changed
 
-- Upgraded Spatie Laravel Permission to 8.x. Custom listeners must use the new `RoleAttachedEvent` / `RoleDetachedEvent` names (and the equivalent `Permission*Event` names). Wave's role listeners use these events so granting, removing, or syncing roles still clears cached admin and subscriber status immediately. Existing Wave role tables do not need a new migration for this upgrade.
-- Upgraded Intervention Image to 4.x. Custom themes and plugins using `ImageManager::read()` must switch to `decode()` or a source-specific method such as `decodeDataUri()` / `decodeSplFileInfo()`. Avatar validation still rejects server paths and remote URLs, and saved avatars are encoded as PNG to match their `.png` filenames.
+- Upgraded Spatie Laravel Permission to 8.x. Custom listeners must use the new `RoleAttachedEvent` / `RoleDetachedEvent` names (and the equivalent `Permission*Event` names). Wave's role listeners use these events so granting, removing, or syncing roles still clears cached admin and subscriber status immediately. Existing Wave role tables do not need a new migration for this upgrade ([#462])
+- Upgraded Intervention Image to 4.x. Custom themes and plugins using `ImageManager::read()` must switch to `decode()` or a source-specific method such as `decodeDataUri()` / `decodeSplFileInfo()`. Avatar validation still rejects server paths and remote URLs, and saved avatars are encoded as PNG to match their `.png` filenames. If you use the Cove, Fusion or Drift theme, update it to its latest version, which supports both 3.x and 4.x ([#465])
+
+### Fixed
+
+- Signing up without a username no longer fails with a 500 when the generated username belongs to a soft-deleted user ([#456])
+- `activity:clean` no longer deletes every activity log when the retention period is blank, zero or invalid. A blank `ACTIVITY_LOG_RETENTION_DAYS` keeps logs, and an invalid `--days` value exits with an error ([#457])
+- The profile name and username are limited to 191 characters, so a longer value gets a validation error instead of a 500 ([#458])
+- The notifications empty state and the shared back button use dark mode colors ([#463])
 
 ## [3.6.3] - 2026-11-10
 
@@ -221,7 +230,8 @@ Wave now runs on Laravel 13, Livewire 4 and Filament 5. Folio, Volt and the them
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.6.3...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.7.0...HEAD
+[3.7.0]: https://github.com/thedevdojo/wave/compare/3.6.3...3.7.0
 [3.6.3]: https://github.com/thedevdojo/wave/compare/3.6.2...3.6.3
 [3.6.2]: https://github.com/thedevdojo/wave/compare/3.6.1...3.6.2
 [3.6.1]: https://github.com/thedevdojo/wave/compare/3.6.0...3.6.1
@@ -276,3 +286,9 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#451]: https://github.com/thedevdojo/wave/pull/451
 [#452]: https://github.com/thedevdojo/wave/pull/452
 [#454]: https://github.com/thedevdojo/wave/pull/454
+[#456]: https://github.com/thedevdojo/wave/pull/456
+[#457]: https://github.com/thedevdojo/wave/pull/457
+[#458]: https://github.com/thedevdojo/wave/pull/458
+[#462]: https://github.com/thedevdojo/wave/pull/462
+[#463]: https://github.com/thedevdojo/wave/pull/463
+[#465]: https://github.com/thedevdojo/wave/pull/465
