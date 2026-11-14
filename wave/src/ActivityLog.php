@@ -3,6 +3,7 @@
 namespace Wave;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,14 +59,20 @@ class ActivityLog extends Model
         if (! config('activity.enabled', true)) {
             return null;
         }
+        $user = auth()->user();
 
-        // Skip if no authenticated user
-        if (! auth()->check()) {
+        return $user ? static::forUser($user, $action, $description, $metadata) : null;
+    }
+
+    /** Log for an explicit actor, including auth events on non-default guards. */
+    public static function forUser(Authenticatable $user, string $action, ?string $description = null, ?array $metadata = null): ?static
+    {
+        if (! config('activity.enabled', true)) {
             return null;
         }
 
         $data = [
-            'user_id' => auth()->id(),
+            'user_id' => $user->getAuthIdentifier(),
             'action' => $action,
             'description' => $description,
             'ip_address' => request()->ip(),
