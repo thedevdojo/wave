@@ -14,6 +14,7 @@
             fullScreenLoader: false,
             fullScreenLoaderMessage: 'Loading'
         }"
+        @paddle-checkout-ready.window="openCheckout($event.detail.priceId)"
         @loader-show.window="fullScreenLoader = true"
         @loader-hide.window="fullScreenLoader = false"
         @loader-message.window="fullScreenLoaderMessage = event.detail.message" 
@@ -106,10 +107,7 @@
 
                                                 
                                             @else
-                                                <x-billing.button x-on:click="
-                                                        if(billing_cycle_selected == 'month'){ openCheckout('{{ $plan->monthly_price_id }}'); }
-                                                        if(billing_cycle_selected == 'year'){ openCheckout('{{ $plan->yearly_price_id }}'); }
-                                                    " 
+                                                <x-billing.button wire:click="openPaddleCheckout('{{ $plan->id }}')" wire:target="openPaddleCheckout"
                                                     rounded="md" color="{{ config('devdojo.billing.style.color') }}"
                                                 >
                                                     Subscribe to this Plan

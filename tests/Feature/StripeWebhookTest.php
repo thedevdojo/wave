@@ -253,3 +253,11 @@ it('ignores events for a subscription that is already cancelled', function (stri
 
     expect($this->user->fresh()->getRoleNames()->all())->toBe(['premium']);
 })->with(['customer.subscription.updated', 'customer.subscription.deleted']);
+
+it('fulfills an already paid checkout even when the plan was subsequently retired', function () {
+    $this->premiumPlan->update(['active' => false]);
+    $this->stripe->respond('get', '/v1/checkout/sessions/cs_test_1', checkoutSession());
+    sendStripeEvent('checkout.session.completed', ['id' => 'cs_test_1'])->assertOk();
+    expect(Subscription::sole()->plan_id)->toBe($this->premiumPlan->id)
+        ->and($this->user->fresh()->hasRole('premium'))->toBeTrue();
+});

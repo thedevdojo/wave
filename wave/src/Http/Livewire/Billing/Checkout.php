@@ -46,9 +46,13 @@ class Checkout extends Component
 
     public function redirectToStripeCheckout(Plan $plan)
     {
+        abort_unless(config('wave.billing_provider') === 'stripe', 403);
+        $selection = $this->purchaseSelection($plan);
+        if ($selection === null) {
+            return;
+        }
+        [$plan, $price_id, $cycle] = $selection;
         $stripe = new StripeClient(config('wave.stripe.secret_key'));
-
-        $price_id = $this->billing_cycle_selected == 'month' ? $plan->monthly_price_id : $plan->yearly_price_id ?? null;
 
         $checkout_session = $stripe->checkout->sessions->create([
             'line_items' => [[
@@ -59,7 +63,7 @@ class Checkout extends Component
                 'billable_type' => 'user',
                 'billable_id' => auth()->user()->id,
                 'plan_id' => $plan->id,
-                'billing_cycle' => $this->billing_cycle_selected,
+                'billing_cycle' => $cycle,
             ],
             'mode' => 'subscription',
             'success_url' => url('subscription/welcome'),
@@ -67,6 +71,43 @@ class Checkout extends Component
         ]);
 
         return redirect()->to($checkout_session->url);
+    }
+
+    public function openPaddleCheckout(Plan $plan): void
+    {
+        abort_unless(config('wave.billing_provider') === 'paddle', 403);
+        $selection = $this->purchaseSelection($plan);
+        if ($selection !== null) {
+            $this->dispatch('paddle-checkout-ready', priceId: $selection[1]);
+        }
+    }
+
+    /** Read purchase eligibility from the database, not the rendered card or client state. */
+    private function purchaseSelection(Plan $plan): ?array
+    {
+        $cycle = $this->billing_cycle_selected;
+        $current = Plan::whereKey($plan->id)->where('active', true)->first();
+        if (! $current || ! in_array($cycle, ['month', 'year'], true)) {
+            $this->unavailableSelection();
+
+            return null;
+        }
+        $price = $cycle === 'month' ? $current->monthly_price_id : $current->yearly_price_id;
+        if (! is_string($price) || trim($price) === '') {
+            $this->unavailableSelection();
+
+            return null;
+        }
+
+        return [$current, $price, $cycle];
+    }
+
+    private function unavailableSelection(): void
+    {
+        Notification::make()->danger()
+            ->title('This plan or billing cycle is no longer available.')
+            ->body('Refresh the page and choose an available plan.')
+            ->send();
     }
 
     public function updateCycleBasedOnPlans()
@@ -110,6 +151,12 @@ class Checkout extends Component
     #[On('verifyPaddleTransaction')]
     public function verifyPaddleTransaction($transactionId)
     {
+        abort_unless(config('wave.billing_provider') === 'paddle', 403);
+        if (! in_array($this->billing_cycle_selected, ['month', 'year'], true)) {
+            $this->unavailableSelection();
+
+            return;
+        }
         $user = auth()->user();
         $transaction = $this->paidPaddleTransaction((string) $transactionId);
 
@@ -124,12 +171,16 @@ class Checkout extends Component
         }
 
         $priceColumn = ($this->billing_cycle_selected == 'month') ? 'monthly_price_id' : 'yearly_price_id';
-        $plan = Plan::where($priceColumn, data_get($transaction, 'items.0.price.id'))->first();
+        $price = data_get($transaction, 'items.0.price.id');
+        $plan = is_string($price) && filled($price)
+            ? Plan::where('active', true)->where($priceColumn, $price)->first()
+            : null;
 
         if (! isset($plan->id)) {
             $this->js('Paddle.Checkout.close()');
             Notification::make()
-                ->title('Plan Price ID not found. Something went wrong during the checkout process')
+                ->title('This checkout cannot be activated.')
+                ->body('The purchased plan is unavailable. Please contact support if payment was taken.')
                 ->danger()
                 ->send();
 
@@ -194,9 +245,18 @@ class Checkout extends Component
 
     public function switchPlan(Plan $plan)
     {
-        $subscription = auth()->user()->subscription;
+        abort_unless(config('wave.billing_provider') === 'paddle', 403);
+        $selection = $this->purchaseSelection($plan);
+        if ($selection === null) {
+            return;
+        }
+        [$plan, $price_id, $cycle] = $selection;
+        $subscription = auth()->user()->latestSubscription();
+        if (! $subscription || $subscription->vendor_slug !== 'paddle' || blank($subscription->vendor_subscription_id)) {
+            Notification::make()->danger()->title('Your subscription could not be found. Please contact support.')->send();
 
-        $price_id = ($this->billing_cycle_selected == 'month') ? $plan->monthly_price_id : $plan->yearly_price_id ?? null;
+            return;
+        }
 
         $response = Http::withToken(config('wave.paddle.api_key'))->patch(
             $this->paddle_url.'/subscriptions/'.$subscription->vendor_subscription_id,
@@ -213,7 +273,7 @@ class Checkout extends Component
 
         if ($response->successful()) {
             $subscription->plan_id = $plan->id;
-            $subscription->cycle = $this->billing_cycle_selected;
+            $subscription->cycle = $cycle;
             $subscription->save();
             $subscription->user->switchPlans($plan);
             $subscription->user->clearUserCache();
