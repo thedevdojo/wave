@@ -108,30 +108,12 @@ test('cleanup command keeps logs when the retention config is blank', function (
     expect(ActivityLog::count())->toBe(1);
 });
 
-test('duplicate login events within 5 minutes are prevented', function () {
-    config(['activity.enabled' => false]);
-
+test('a recent login row does not suppress a new authentication event', function () {
     $user = User::factory()->create();
-    config(['activity.enabled' => true]);
-
-    // Manually create first login log
     ActivityLog::create([
-        'user_id' => $user->id,
-        'action' => 'login',
-        'description' => 'User logged in',
-        'ip_address' => '127.0.0.1',
-        'user_agent' => 'Test',
+        'user_id' => $user->id, 'action' => 'login', 'description' => 'Previous login',
         'created_at' => now()->subMinutes(3),
     ]);
-
-    expect(ActivityLog::count())->toBe(1);
-
-    // Try to log in again (should be prevented)
-    $this->actingAs($user)->post('/login', [
-        'email' => $user->email,
-        'password' => 'password',
-    ]);
-
-    // Should still be 1 (duplicate prevented)
-    expect(ActivityLog::where('action', 'login')->count())->toBe(1);
+    auth()->login($user);
+    expect(ActivityLog::where('user_id', $user->id)->where('action', 'login')->count())->toBe(2);
 });

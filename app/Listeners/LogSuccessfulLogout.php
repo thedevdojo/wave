@@ -4,40 +4,18 @@ namespace App\Listeners;
 
 use Illuminate\Auth\Events\Logout;
 use Wave\ActivityLog;
+use Wave\Support\AuthenticationEventLog;
 
 class LogSuccessfulLogout
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Handle the event.
-     */
     public function handle(Logout $event): void
     {
         if (! config('activity.enabled', true) || ! $event->user) {
             return;
         }
 
-        // Prevent duplicate logout logs
-        $recentLogout = ActivityLog::where('user_id', $event->user->id)
-            ->where('action', 'logout')
-            ->where('created_at', '>=', now()->subMinutes(5))
-            ->exists();
-
-        if (! $recentLogout) {
-            ActivityLog::create([
-                'user_id' => $event->user->id,
-                'action' => 'logout',
-                'description' => 'User logged out',
-                'ip_address' => request()->ip(),
-                'user_agent' => request()->userAgent(),
-            ]);
-        }
+        AuthenticationEventLog::once($event, function () use ($event) {
+            ActivityLog::forUser($event->user, 'logout', 'User logged out', ['guard' => $event->guard]);
+        });
     }
 }
