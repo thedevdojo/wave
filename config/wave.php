@@ -13,6 +13,9 @@ return [
 
     'auth' => [
         'min_password_length' => 8,
+        'login_max_attempts' => 5, // Failed passwords per normalized email and IP.
+        'login_ip_max_attempts' => 50, // Failed passwords across accounts from one IP.
+        'login_decay_seconds' => 60,
     ],
 
     'primary_color' => '#000000',

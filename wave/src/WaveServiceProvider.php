@@ -6,6 +6,9 @@ use DevDojo\Themes\Models\Theme;
 use Exception;
 use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
+use Illuminate\Auth\Events\Attempting;
+use Illuminate\Auth\Events\Failed;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
@@ -44,6 +47,7 @@ use Wave\Http\Middleware\Subscribed;
 use Wave\Http\Middleware\ThemeDemoMiddleware;
 use Wave\Http\Middleware\TokenMiddleware;
 use Wave\Http\Middleware\VerifyPaddleWebhookSignature;
+use Wave\Listeners\ThrottlePasswordLogins;
 use Wave\Overrides\Vite;
 use Wave\Plugins\PluginServiceProvider;
 
@@ -141,6 +145,10 @@ class WaveServiceProvider extends ServiceProvider
             ]);
             // $this->excludeInactiveThemes();
         }
+
+        $event->listen(Attempting::class, [ThrottlePasswordLogins::class, 'attempting']);
+        $event->listen(Failed::class, [ThrottlePasswordLogins::class, 'failed']);
+        $event->listen(Login::class, [ThrottlePasswordLogins::class, 'login']);
 
         $event->listen(ViewMatched::class, [HideUnpublishedPosts::class, 'flag']);
 
