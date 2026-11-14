@@ -2,7 +2,7 @@
     use function Laravel\Folio\{name};
     name('blog');
 
-    $posts = \Wave\Post::published()->has('category')->latest()->paginate(6);
+    $posts = \Wave\Post::published()->has('category')->with('category')->latest()->paginate(6);
 ?>
 
 <x-layouts.marketing

@@ -54,7 +54,7 @@
                         'created_at' => $key->created_at->toDateTimeString(),
                     ];
                 })->toArray(),
-                'blog_posts' => Post::where('author_id', $user->id)->get()->map(function ($post) {
+                'blog_posts' => Post::where('author_id', $user->id)->with('category')->get()->map(function ($post) {
                     return [
                         'title' => $post->title,
                         'slug' => $post->slug,
