@@ -151,8 +151,8 @@ class AuthController extends Controller implements HasMiddleware
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:250|unique:users',
+            'name' => 'required|string|max:191',
+            'username' => 'required|string|max:191|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:'.config('wave.auth.min_password_length', 8),
         ]);
