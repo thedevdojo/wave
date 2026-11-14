@@ -69,6 +69,38 @@ describe('POST /api/register', function () {
             ->assertJson(['id' => $user->id]);
     });
 
+    it('accepts names and usernames at the database character limit', function (string $field, string $character) {
+        config(['devdojo.auth.settings.registration_require_email_verification' => false]);
+        $value = str_repeat($character, 191);
+
+        $this->postJson('/api/register', registrationData([$field => $value]))
+            ->assertOk()->assertJsonStructure(['access_token']);
+
+        expect(User::where('email', 'new-user@api-register.test')->firstOrFail()->{$field})->toBe($value);
+    })->with([
+        'ASCII name' => ['name', 'a'],
+        'multibyte name' => ['name', 'é'],
+        'ASCII username' => ['username', 'a'],
+        'multibyte username' => ['username', 'é'],
+    ]);
+
+    it('rejects names and usernames exceeding the database character limit', function (string $field, string $character) {
+        Notification::fake();
+
+        $this->postJson('/api/register', registrationData([$field => str_repeat($character, 192)]))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors($field)
+            ->assertJsonMissingPath('access_token');
+
+        expect(User::where('email', 'new-user@api-register.test')->exists())->toBeFalse();
+        Notification::assertNothingSent();
+    })->with([
+        'ASCII name' => ['name', 'a'],
+        'multibyte name' => ['name', 'é'],
+        'ASCII username' => ['username', 'a'],
+        'multibyte username' => ['username', 'é'],
+    ]);
+
     it('rejects an invalid email', function () {
         $this->postJson('/api/register', registrationData(['email' => 'not-an-email']))
             ->assertUnprocessable()
