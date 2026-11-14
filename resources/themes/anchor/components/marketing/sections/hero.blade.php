@@ -18,7 +18,7 @@
     </div>
     <div class="flex-shrink-0 lg:h-[150px] flex border-t border-zinc-200 items-center w-full bg-white">
         <div class="grid w-full grid-cols-1 mx-auto max-w-7xl h-auto divide-y lg:divide-y-0 divide-zinc-200 lg:py-0 lg:divide-x lg:px-20 lg:divide-zinc-200 lg:grid-cols-3">
-            <div class="px-8 py-5 md:px-12 lg:p-0">
+            <div class="px-8 py-5 md:px-12 lg:px-0 lg:py-0">
                 <h3 class="flex items-center font-medium text-zinc-900">
                     Key Feature
                 </h3>
