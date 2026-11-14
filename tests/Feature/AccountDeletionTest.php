@@ -257,6 +257,17 @@ it('processes expired deletions with artisan command', function () {
     expect(User::find($userWithoutDeletion->id))->not->toBeNull();
 });
 
+it('also deletes a scheduled account that an admin soft-deleted', function () {
+    $user = User::factory()->create(['deletion_scheduled_at' => now()->subDay()]);
+    $user->delete();
+
+    $this->artisan('accounts:process-deletions')
+        ->expectsOutput("Deleted account: {$user->email}")
+        ->assertExitCode(0);
+
+    expect(User::withTrashed()->find($user->id))->toBeNull();
+});
+
 it('rounds days remaining to avoid decimals', function () {
     $this->actingAs($this->user);
 
