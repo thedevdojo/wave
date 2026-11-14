@@ -4,6 +4,10 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+### Changed
+
+- Upgraded Spatie Laravel Permission to 8.x. Custom listeners must use the new `RoleAttachedEvent` / `RoleDetachedEvent` names (and the equivalent `Permission*Event` names). Wave's role listeners use these events so granting, removing, or syncing roles still clears cached admin and subscriber status immediately. Existing Wave role tables do not need a new migration for this upgrade.
+
 ## [3.6.3] - 2026-11-10
 
 ### Changed

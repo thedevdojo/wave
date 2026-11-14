@@ -114,7 +114,7 @@ return [
     'register_octane_reset_listener' => false,
 
     /*
-     * Fire RoleAttached / RoleDetached etc. when roles or permissions change.
+     * Fire RoleAttachedEvent / RoleDetachedEvent etc. when roles or permissions change.
      * Wave listens for the role events to clear the user's cached admin and
      * subscriber status.
      */

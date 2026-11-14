@@ -30,7 +30,7 @@
         "livewire/livewire": "^4.0",
         "livewire/volt": "^1.11",
         "ralphjsmit/livewire-urls": "^1.5",
-        "spatie/laravel-permission": "^6.12",
+        "spatie/laravel-permission": "^8.5",
         "stripe/stripe-php": "^17.3",
         "tymon/jwt-auth": "^2.2"
     },

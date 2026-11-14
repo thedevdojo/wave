@@ -29,8 +29,8 @@ use Intervention\Image\ImageManager;
 use Laravel\Folio\Events\ViewMatched;
 use Laravel\Folio\Folio;
 use Livewire\Livewire;
-use Spatie\Permission\Events\RoleAttached;
-use Spatie\Permission\Events\RoleDetached;
+use Spatie\Permission\Events\RoleAttachedEvent;
+use Spatie\Permission\Events\RoleDetachedEvent;
 use Wave\Console\Commands\CancelExpiredSubscriptions;
 use Wave\Console\Commands\CleanOldActivityLogs;
 use Wave\Console\Commands\CreatePluginCommand;
@@ -147,7 +147,7 @@ class WaveServiceProvider extends ServiceProvider
         $event->listen(ViewMatched::class, [HideUnpublishedPosts::class, 'flag']);
 
         // Cached isAdmin()/subscriber() would otherwise stay stale until they expire.
-        $event->listen([RoleAttached::class, RoleDetached::class], function (RoleAttached|RoleDetached $roleEvent) {
+        $event->listen([RoleAttachedEvent::class, RoleDetachedEvent::class], function (RoleAttachedEvent|RoleDetachedEvent $roleEvent) {
             if (method_exists($roleEvent->model, 'clearUserCache')) {
                 $roleEvent->model->clearUserCache();
             }
