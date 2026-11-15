@@ -77,7 +77,7 @@
 
 .prose {
   blockquote{
-    @apply py-3 border-l-4 bg-zinc-100 border-zinc-300;
+    @apply py-3 border-l-4 bg-zinc-100 border-zinc-300 dark:bg-zinc-800 dark:border-zinc-600;
   }
 }
 
