@@ -17,7 +17,7 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 - Deleting a user from the admin panel (table, edit page or bulk action) cancels their active Stripe or Paddle subscriptions first, so billing no longer keeps running. If a cancellation fails, the user is kept and the admin sees an error ([#470])
 - `accounts:process-deletions` also removes accounts that were soft deleted from the admin panel after the user scheduled their deletion ([#477])
 - Cancelling an older subscription no longer removes the roles of a newer active subscription, or roles that aren't tied to a plan, such as admin ([#472])
-- Checkout and plan switching only accept active plans with a monthly or yearly price ([#471])
+- Checkout and plan switching only accept active plans with a monthly or yearly price ([#478])
 - Each login and logout is logged once in the activity log, and quick login/logout cycles are no longer dropped ([#475])
 - API registration limits the name, username and email to 191 characters, so a longer value gets a validation error instead of a database error ([#467])
 - Generated usernames stay within 191 characters, including the number added when a username is taken ([#474])
@@ -318,9 +318,9 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#465]: https://github.com/thedevdojo/wave/pull/465
 [#467]: https://github.com/thedevdojo/wave/pull/467
 [#470]: https://github.com/thedevdojo/wave/pull/470
-[#471]: https://github.com/thedevdojo/wave/pull/471
 [#472]: https://github.com/thedevdojo/wave/pull/472
 [#474]: https://github.com/thedevdojo/wave/pull/474
 [#475]: https://github.com/thedevdojo/wave/pull/475
 [#476]: https://github.com/thedevdojo/wave/pull/476
 [#477]: https://github.com/thedevdojo/wave/pull/477
+[#478]: https://github.com/thedevdojo/wave/pull/478
