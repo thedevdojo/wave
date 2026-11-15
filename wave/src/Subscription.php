@@ -61,8 +61,7 @@ class Subscription extends Model
     public function cancel()
     {
         DB::transaction(function () {
-            // Serialize cancellations for this account before deciding which access remains.
-            $user = $this->user()->lockForUpdate()->firstOrFail();
+            $user = $this->user()->firstOrFail();
             $this->setRelation('user', $user);
             $this->status = 'cancelled';
             $this->save();
