@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use Illuminate\Auth\Events\Logout;
 use Wave\ActivityLog;
-use Wave\Support\AuthenticationEventLog;
 
 class LogSuccessfulLogout
 {
@@ -14,8 +13,6 @@ class LogSuccessfulLogout
             return;
         }
 
-        AuthenticationEventLog::once($event, function () use ($event) {
-            ActivityLog::forUser($event->user, 'logout', 'User logged out', ['guard' => $event->guard]);
-        });
+        ActivityLog::forUser($event->user, 'logout', 'User logged out', ['guard' => $event->guard]);
     }
 }

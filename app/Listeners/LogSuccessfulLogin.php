@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
 use Wave\ActivityLog;
-use Wave\Support\AuthenticationEventLog;
 
 class LogSuccessfulLogin
 {
@@ -14,8 +13,6 @@ class LogSuccessfulLogin
             return;
         }
 
-        AuthenticationEventLog::once($event, function () use ($event) {
-            ActivityLog::forUser($event->user, 'login', 'User logged in successfully', ['guard' => $event->guard]);
-        });
+        ActivityLog::forUser($event->user, 'login', 'User logged in successfully', ['guard' => $event->guard]);
     }
 }

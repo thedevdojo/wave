@@ -3,12 +3,10 @@
 use App\Models\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Bus;
 use Wave\ActivityLog;
 use Wave\Jobs\CreateActivityLog;
-use Wave\Support\AuthenticationEventLog;
 
 beforeEach(function () {
     config(['activity.enabled' => true, 'activity.queue' => false]);
@@ -30,26 +28,6 @@ it('retains different events even for the same user IP and timestamp', function 
     event(clone $event);
     expect(ActivityLog::where('user_id', $this->user->id)->where('action', $action)->count())->toBe(2);
 })->with(['login', 'logout']);
-
-it('deduplicates repeated handling of the exact same event within one request', function (string $action) {
-    $event = $action === 'login' ? new Login('web', $this->user, false) : new Logout('web', $this->user);
-    event($event);
-    event($event);
-    expect(ActivityLog::where('user_id', $this->user->id)->where('action', $action)->count())->toBe(1);
-})->with(['login', 'logout']);
-
-it('does not retain event deduplication state across requests', function () {
-    $original = request();
-    $event = new Login('web', $this->user, false);
-    event($event);
-    try {
-        app()->instance('request', Request::create('/auth/login', 'GET'));
-        event($event);
-    } finally {
-        app()->instance('request', $original);
-    }
-    expect(ActivityLog::where('user_id', $this->user->id)->where('action', 'login')->count())->toBe(2);
-});
 
 it('records the event actor instead of a different default-guard user', function (string $action) {
     $other = User::factory()->create();
@@ -76,7 +54,6 @@ it('queues each distinct login and logout event with its actor and request conte
     request()->server->set('REMOTE_ADDR', '203.0.113.20');
     $event = new Login('web', $this->user, false);
     event($event);
-    event($event);
     event(new Logout('web', $this->user));
     event(new Login('web', $this->user, false));
     Bus::assertDispatchedTimes(CreateActivityLog::class, 3);
@@ -95,14 +72,6 @@ it('does not record authentication events when activity logging is disabled', fu
     event(new Login('web', $this->user, false));
     event(new Logout('web', $this->user));
     expect(ActivityLog::count())->toBe(0);
-});
-
-it('leaves failed writes retryable', function () {
-    $event = new Login('web', $this->user, false);
-    expect(fn () => AuthenticationEventLog::once($event, fn () => throw new RuntimeException('Write failed')))
-        ->toThrow(RuntimeException::class);
-    AuthenticationEventLog::once($event, fn () => ActivityLog::create(['user_id' => $this->user->id, 'action' => 'login']));
-    expect(ActivityLog::where('action', 'login')->count())->toBe(1);
 });
 
 it('ignores logout events without an actor', function () {
