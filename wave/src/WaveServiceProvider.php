@@ -37,6 +37,7 @@ use Wave\Console\Commands\WaveStats;
 use Wave\Facades\Wave as WaveFacade;
 use Wave\Http\Livewire\Billing\Checkout;
 use Wave\Http\Livewire\Billing\Update;
+use Wave\Http\Livewire\NotificationBadge;
 use Wave\Http\Middleware\HideUnpublishedPosts;
 use Wave\Http\Middleware\InstallMiddleware;
 use Wave\Http\Middleware\RedirectHomeToInstaller;
@@ -300,6 +301,7 @@ class WaveServiceProvider extends ServiceProvider
 
     private function loadLivewireComponents()
     {
+        Livewire::component('wave.notification-badge', NotificationBadge::class);
         Livewire::component('billing.checkout', Checkout::class);
         Livewire::component('billing.update', Update::class);
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Wave\Notifications\SiteNotification;
 
 class NotificationController extends Controller
 {
@@ -14,7 +15,11 @@ class NotificationController extends Controller
         // Notification ids are UUIDs, and Postgres errors on comparing a uuid column to anything else
         $notification = Str::isUuid($id) ? auth()->user()->notifications()->where('id', $id)->first() : null;
         if ($notification) {
-            $notification->delete();
+            if ($notification->type === SiteNotification::class) {
+                $notification->markAsRead();
+            } else {
+                $notification->delete();
+            }
 
             return response()->json(['type' => 'success', 'message' => 'Marked Notification as Read', 'listid' => $request->listid]);
         } else {

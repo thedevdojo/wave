@@ -18,14 +18,19 @@
 			// Notification ids are UUIDs, and Postgres errors on comparing a uuid column to anything else
 			$notification = Str::isUuid($id) ? auth()->user()->notifications()->where('id', $id)->first() : null;
 			if ($notification){
-				$notification->delete();
+				if ($notification->type === \Wave\Notifications\SiteNotification::class) {
+                    $notification->markAsRead();
+                } else {
+                    $notification->delete();
+                }
+                $this->dispatch('notifications-updated');
 			}
 			$this->updateNotifications();
 		}
 
 		public function updateNotifications(){
-			$this->setUnreadNotifications = $this->unreadNotifications = auth()->user()->unreadNotifications->all();  
-			$this->notifications_count = auth()->user()->unreadNotifications->count();}
+			$this->unreadNotifications = auth()->user()->unreadNotifications()->latest()->get()->all();
+            $this->notifications_count = count($this->unreadNotifications);}
 		}
 ?>
 
@@ -46,7 +51,11 @@
 
 				<div class="w-full">
 					@forelse ($unreadNotifications as $index => $notification)
-						@php $notification_data = (object)$notification->data; @endphp
+						@if ($notification->type === \Wave\Notifications\SiteNotification::class)
+                            <x-app.site-notification :notification="$notification" />
+                            @continue
+                        @endif
+                        @php $notification_data = (object)$notification->data; @endphp
 						<div id="notification-li-{{ $index + 1 }}" class="flex flex-col pb-5 @if(!$loop->last){{ 'border-b' }}@endif border-zinc-200">
 
 							<a href="{{ @$notification_data->link }}" wire:navigate class="flex items-start p-5 pb-2">
