@@ -4,6 +4,26 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.7.1] - 2026-11-15
+
+### Changed
+
+- Requires `devdojo/auth` 2.4.4. Auth 2.4.3 makes two-factor codes single-use and limits wrong codes, limits wrong login passwords per email and IP address, and requires a signed in user on the verify page. Auth 2.4.4 limits the registration name and email to 191 characters
+- The blog index and category pages eager load post categories instead of running a query per post ([#460])
+- The installer check runs one query instead of two ([#476])
+
+### Fixed
+
+- Deleting a user from the admin panel (table, edit page or bulk action) cancels their active Stripe or Paddle subscriptions first, so billing no longer keeps running. If a cancellation fails, the user is kept and the admin sees an error ([#470])
+- `accounts:process-deletions` also removes accounts that were soft deleted from the admin panel after the user scheduled their deletion ([#477])
+- Cancelling an older subscription no longer removes the roles of a newer active subscription, or roles that aren't tied to a plan, such as admin ([#472])
+- Checkout and plan switching only accept active plans with a monthly or yearly price ([#471])
+- Each login and logout is logged once in the activity log, and quick login/logout cycles are no longer dropped ([#475])
+- API registration limits the name, username and email to 191 characters, so a longer value gets a validation error instead of a database error ([#467])
+- Generated usernames stay within 191 characters, including the number added when a username is taken ([#474])
+- Deleting a notification with an invalid id no longer returns a 500 on Postgres ([#459])
+- Spacing and dividers of the Anchor homepage features on mobile ([#464])
+
 ## [3.7.0] - 2026-11-14
 
 ### Changed
@@ -230,7 +250,8 @@ Wave now runs on Laravel 13, Livewire 4 and Filament 5. Folio, Volt and the them
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.7.0...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.7.1...HEAD
+[3.7.1]: https://github.com/thedevdojo/wave/compare/3.7.0...3.7.1
 [3.7.0]: https://github.com/thedevdojo/wave/compare/3.6.3...3.7.0
 [3.6.3]: https://github.com/thedevdojo/wave/compare/3.6.2...3.6.3
 [3.6.2]: https://github.com/thedevdojo/wave/compare/3.6.1...3.6.2
@@ -267,8 +288,8 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#426]: https://github.com/thedevdojo/wave/pull/426
 [#427]: https://github.com/thedevdojo/wave/pull/427
 [#428]: https://github.com/thedevdojo/wave/pull/428
-[#431]: https://github.com/thedevdojo/wave/pull/431
 [#429]: https://github.com/thedevdojo/wave/pull/429
+[#431]: https://github.com/thedevdojo/wave/pull/431
 [#435]: https://github.com/thedevdojo/wave/pull/435
 [#436]: https://github.com/thedevdojo/wave/pull/436
 [#438]: https://github.com/thedevdojo/wave/pull/438
@@ -289,6 +310,17 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#456]: https://github.com/thedevdojo/wave/pull/456
 [#457]: https://github.com/thedevdojo/wave/pull/457
 [#458]: https://github.com/thedevdojo/wave/pull/458
+[#459]: https://github.com/thedevdojo/wave/pull/459
+[#460]: https://github.com/thedevdojo/wave/pull/460
 [#462]: https://github.com/thedevdojo/wave/pull/462
 [#463]: https://github.com/thedevdojo/wave/pull/463
+[#464]: https://github.com/thedevdojo/wave/pull/464
 [#465]: https://github.com/thedevdojo/wave/pull/465
+[#467]: https://github.com/thedevdojo/wave/pull/467
+[#470]: https://github.com/thedevdojo/wave/pull/470
+[#471]: https://github.com/thedevdojo/wave/pull/471
+[#472]: https://github.com/thedevdojo/wave/pull/472
+[#474]: https://github.com/thedevdojo/wave/pull/474
+[#475]: https://github.com/thedevdojo/wave/pull/475
+[#476]: https://github.com/thedevdojo/wave/pull/476
+[#477]: https://github.com/thedevdojo/wave/pull/477
