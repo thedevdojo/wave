@@ -82,7 +82,8 @@ class ActivityLog extends Model
 
         // If queueing is enabled, dispatch to queue
         if (config('activity.queue', false)) {
-            CreateActivityLog::dispatch($data)
+            // Stamp it now, the worker may run the job much later
+            CreateActivityLog::dispatch($data + ['created_at' => now()])
                 ->onConnection(config('activity.queue_connection', 'database'));
 
             return null;

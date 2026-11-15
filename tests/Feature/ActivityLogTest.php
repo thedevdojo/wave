@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Bus;
 use Wave\ActivityLog;
+use Wave\Jobs\CreateActivityLog;
 
 test('activity log can be created', function () {
     $user = User::factory()->create();
@@ -99,4 +101,20 @@ test('activity log page only shows current user logs', function () {
 
     $response->assertSee('User 2 action')
         ->assertDontSee('User 1 action');
+});
+
+test('queued activity logs keep the time the action happened', function () {
+    config(['activity.enabled' => true, 'activity.queue' => true]);
+    Bus::fake([CreateActivityLog::class]);
+    $this->freezeTime();
+
+    $this->actingAs(User::factory()->create());
+    $loggedAt = now()->toDateTimeString();
+    ActivityLog::log('test_action', 'Queued log');
+
+    // The worker only picks the job up later
+    $this->travel(2)->hours();
+    Bus::dispatched(CreateActivityLog::class)->first()->handle();
+
+    expect(ActivityLog::where('action', 'test_action')->first()->created_at->toDateTimeString())->toBe($loggedAt);
 });
