@@ -20,14 +20,14 @@ class InstallMiddleware
         if ($request->path() != 'install') {
 
             try {
-                $user = User::first();
+                $hasUsers = User::query()->exists();
             } catch (QueryException $e) {
 
                 return redirect()->route('wave.install');
 
             }
 
-            if (User::first() === null) {
+            if (! $hasUsers) {
                 return redirect()->route('wave.install');
             }
         }
