@@ -34,7 +34,9 @@ class ProcessScheduledAccountDeletions extends Command
         $userModel = config('wave.user_model');
 
         // Find all users with deletion_scheduled_at in the past
-        $usersToDelete = $userModel::whereNotNull('deletion_scheduled_at')
+        // Include soft-deleted users, an admin deleting the account doesn't cancel the user's request
+        $usersToDelete = $userModel::withTrashed()
+            ->whereNotNull('deletion_scheduled_at')
             ->where('deletion_scheduled_at', '<=', now())
             ->get();
 
