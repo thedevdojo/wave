@@ -20,5 +20,5 @@
     </div>
     <h3 class="mt-3 text-lg font-semibold text-zinc-900 dark:text-zinc-100">{{ $data['title'] ?? '' }}</h3>
     <div class="prose prose-sm mt-3 max-w-none dark:prose-invert">{!! \Illuminate\Support\Str::sanitizeHtml($data['body'] ?? '') !!}</div>
-    <button type="button" wire:click="delete('{{ $notification->id }}')" wire:loading.attr="disabled" class="mt-4 text-sm font-medium text-primary-600 hover:underline dark:text-primary-400">Mark as read</button>
+    <x-button type="button" color="gray" size="sm" icon="phosphor-check-duotone" wire:click="delete('{{ $notification->id }}')" wire:loading.attr="disabled" class="mt-4">Mark as read</x-button>
 </article>
