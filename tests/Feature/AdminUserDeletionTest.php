@@ -92,14 +92,15 @@ it('can delete a user with no active billing without provider calls', function (
     Http::assertNothingSent();
 });
 
-it('retains an account when an active subscription has no provider id', function () {
+it('cancels subscriptions without a provider id locally before deletion', function (string $surface) {
     $subscription = ($this->subscribe)('sub_missing');
     $subscription->update(['vendor_subscription_id' => null]);
-    adminDeleteUser($this, 'table')->assertNotified('User was not deleted');
-    expect(User::find($this->user->id))->not->toBeNull()
-        ->and($subscription->fresh()->status)->toBe('active')
+    adminDeleteUser($this, $surface)->assertNotified();
+    expect(User::find($this->user->id))->toBeNull()
+        ->and($subscription->fresh()->status)->toBe('cancelled')
         ->and($this->stripe->requests)->toBeEmpty();
-});
+    Http::assertNothingSent();
+})->with(['table', 'edit', 'bulk']);
 
 it('retains failed bulk records while deleting successful ones', function () {
     $failed = ($this->subscribe)('sub_fail');
