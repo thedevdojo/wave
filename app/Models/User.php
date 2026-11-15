@@ -53,7 +53,7 @@ class User extends WaveUser
                 }
                 $username = Str::substr($base, 0, 191);
                 $i = 1;
-                // Soft-deleted users still hold their username under the unique index.
+                // Soft-deleted users still hold their username under the unique index
                 while (self::withTrashed()->where('username', $username)->exists()) {
                     $suffix = (string) $i++;
                     $username = Str::substr($base, 0, 191 - strlen($suffix)).$suffix;
