@@ -109,7 +109,7 @@
                                                 <x-billing.button x-on:click="
                                                         if(billing_cycle_selected == 'month'){ openCheckout('{{ $plan->monthly_price_id }}'); }
                                                         if(billing_cycle_selected == 'year'){ openCheckout('{{ $plan->yearly_price_id }}'); }
-                                                    " 
+                                                    "
                                                     rounded="md" color="{{ config('devdojo.billing.style.color') }}"
                                                 >
                                                     Subscribe to this Plan
