@@ -32,7 +32,7 @@
                                 {!! $changelog->body !!}
                             </div>
                             @if(!$loop->last)
-                                <hr class="block my-10 border-dashed">
+                                <hr class="block my-10 border-dashed border-zinc-200 dark:border-zinc-700">
                             @endif
                         </div>
                     </div>
