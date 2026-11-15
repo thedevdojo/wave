@@ -166,3 +166,27 @@ it('returns a 404 when paddle has no invoice for the transaction', function (arr
     'paddle error' => [['', 500]],
     'no url in the response' => [[['data' => []], 200]],
 ]);
+
+it('activates an already paid Paddle transaction even if the plan was retired', function () {
+    $this->plan->update(['active' => false]);
+    Http::fake(['sandbox-api.paddle.com/transactions/txn_checkout' => Http::response(paddleCheckoutTransaction())]);
+    verifyPaddleCheckout();
+    expect(Subscription::sole()->plan_id)->toBe($this->plan->id)
+        ->and(Subscription::sole()->status)->toBe('active')
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['premium']);
+});
+
+it('does not match a missing receipt price to a plan with no configured price', function () {
+    $this->plan->update(['monthly_price_id' => null]);
+    Http::fake(['sandbox-api.paddle.com/transactions/txn_checkout' => Http::response(paddleCheckoutTransaction(['items' => [['price' => ['id' => null]]]]))]);
+    verifyPaddleCheckout()->assertNotified('This checkout cannot be activated.');
+    expect(Subscription::count())->toBe(0);
+});
+
+it('rejects malformed cycles before querying Paddle transaction details', function () {
+    Http::fake();
+    Livewire::actingAs($this->user)->test(Checkout::class)->set('billing_cycle_selected', 'weekly')
+        ->call('verifyPaddleTransaction', 'txn_checkout')->assertNotified('This plan or billing cycle is no longer available.');
+    Http::assertNothingSent();
+    expect(Subscription::count())->toBe(0);
+});
