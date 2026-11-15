@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
+use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
 use Wave\Http\Livewire\Billing\Update;
 use Wave\Plan;
@@ -59,7 +60,11 @@ test('subscription cancel method changes user role to registered', function () {
         ->and($freshUser->hasRole('premium'))->toBeFalse();
 });
 
-test('subscription cancellation clears all roles and assigns default role', function () {
+test('subscription cancellation removes billing roles and assigns default role', function () {
+    Plan::create([
+        'name' => 'Basic billing plan', 'features' => '', 'active' => false,
+        'role_id' => Role::findByName('basic')->id,
+    ]);
     // Give user multiple roles
     $this->user->assignRole('basic');
     $this->user->assignRole('premium');
@@ -256,4 +261,64 @@ test('cancelling immediately after the subscription already ended redirects back
     $component->call('cancelImmediately')->assertRedirect('/settings/subscription');
 
     Http::assertNotSent(fn ($request) => str_ends_with($request->url(), '/cancel'));
+});
+
+test('cancellation derives access from the newest remaining active subscription', function (bool $cancelNewest) {
+    $basicPlan = Plan::create([
+        'name' => 'Remaining Basic', 'features' => '', 'active' => false,
+        'role_id' => Role::findByName('basic')->id,
+    ]);
+    $old = Subscription::create([
+        'billable_type' => 'user', 'billable_id' => $this->user->id,
+        'plan_id' => $basicPlan->id, 'vendor_slug' => 'stripe',
+        'vendor_subscription_id' => 'sub_old', 'cycle' => 'month', 'status' => 'active',
+    ]);
+    $new = Subscription::create([
+        'billable_type' => 'user', 'billable_id' => $this->user->id,
+        'plan_id' => $this->premiumPlan->id, 'vendor_slug' => 'paddle',
+        'vendor_subscription_id' => 'sub_new', 'cycle' => 'month', 'status' => 'active',
+    ]);
+    $this->user->assignRole('admin');
+    expect($this->user->subscriber())->toBeTrue();
+    // Both rows share a timestamp: creation order must still select the newer row.
+    expect($this->user->latestSubscription()->id)->toBe($new->id)
+        ->and($this->user->subscription()->first()->id)->toBe($new->id);
+
+    $cancelled = $cancelNewest ? $new : $old;
+    $remaining = $cancelNewest ? $old : $new;
+    $expectedRole = $cancelNewest ? 'basic' : 'premium';
+    $cancelled->cancel();
+    $cancelled->cancel(); // A repeated local cancellation must preserve the same access.
+
+    $user = $this->user->fresh();
+    expect($cancelled->fresh()->status)->toBe('cancelled')
+        ->and($remaining->fresh()->status)->toBe('active')
+        ->and($user->subscriber())->toBeTrue()
+        ->and($user->latestSubscription()->id)->toBe($remaining->id)
+        ->and($user->getRoleNames()->sort()->values()->all())->toBe(['admin', $expectedRole]);
+})->with([false, true]);
+
+test('ending the final subscription preserves non-billing roles', function () {
+    $this->user->assignRole('admin');
+    $subscription = Subscription::create([
+        'billable_type' => 'user', 'billable_id' => $this->user->id,
+        'plan_id' => $this->premiumPlan->id, 'vendor_slug' => 'stripe',
+        'vendor_subscription_id' => 'sub_final', 'cycle' => 'month', 'status' => 'active',
+    ]);
+    $subscription->cancel();
+    expect($this->user->fresh()->getRoleNames()->sort()->values()->all())->toBe(['admin', 'registered'])
+        ->and($this->user->fresh()->subscriber())->toBeFalse();
+});
+
+test('cancellation rolls back when access reconciliation fails', function () {
+    $subscription = Subscription::create([
+        'billable_type' => 'user', 'billable_id' => $this->user->id,
+        'plan_id' => $this->premiumPlan->id, 'vendor_slug' => 'stripe',
+        'vendor_subscription_id' => 'sub_rollback', 'cycle' => 'month', 'status' => 'active',
+    ]);
+    config(['wave.default_user_role' => 'missing-default-role']);
+
+    expect(fn () => $subscription->cancel())->toThrow(RoleDoesNotExist::class);
+    expect($subscription->fresh()->status)->toBe('active')
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['premium']);
 });

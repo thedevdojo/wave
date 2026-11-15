@@ -150,3 +150,24 @@ it('rejects everything when no webhook secret is configured', function () {
     expect($this->subscription->fresh()->status)->toBe('active');
     Log::shouldHaveReceived('warning')->withArgs(fn ($message) => str_contains($message, 'PADDLE_WEBHOOK_SECRET'))->once();
 });
+
+it('preserves a newer subscription when an older Paddle cancellation arrives late', function () {
+    $plan = Plan::create([
+        'name' => 'New Basic', 'features' => '', 'active' => true,
+        'role_id' => Role::findByName('basic')->id,
+    ]);
+    $new = Subscription::create([
+        'billable_type' => 'user', 'billable_id' => $this->user->id,
+        'plan_id' => $plan->id, 'vendor_slug' => 'stripe',
+        'vendor_subscription_id' => 'sub_new', 'cycle' => 'month', 'status' => 'active',
+    ]);
+    $this->user->syncRoles('basic');
+    $payload = cancelledPayload($this->subscription->vendor_subscription_id);
+    postPaddleWebhook($payload)->assertOk();
+    postPaddleWebhook($payload)->assertOk();
+
+    expect($this->subscription->fresh()->status)->toBe('cancelled')
+        ->and($new->fresh()->status)->toBe('active')
+        ->and($this->user->fresh()->subscriber())->toBeTrue()
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['basic']);
+});

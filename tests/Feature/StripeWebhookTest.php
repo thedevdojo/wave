@@ -253,3 +253,16 @@ it('ignores events for a subscription that is already cancelled', function (stri
 
     expect($this->user->fresh()->getRoleNames()->all())->toBe(['premium']);
 })->with(['customer.subscription.updated', 'customer.subscription.deleted']);
+
+it('preserves a newer subscription when an older Stripe cancellation arrives late', function (string $event) {
+    $old = localStripeSubscription($this->basicPlan);
+    $new = localStripeSubscription($this->premiumPlan, ['vendor_subscription_id' => 'sub_new']);
+
+    sendStripeEvent($event, stripeSubscription(['status' => 'canceled']))->assertOk();
+    sendStripeEvent($event, stripeSubscription(['status' => 'canceled']))->assertOk();
+
+    expect($old->fresh()->status)->toBe('cancelled')
+        ->and($new->fresh()->status)->toBe('active')
+        ->and($this->user->fresh()->subscriber())->toBeTrue()
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['premium']);
+})->with(['customer.subscription.updated', 'customer.subscription.deleted']);

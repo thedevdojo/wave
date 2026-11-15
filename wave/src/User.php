@@ -149,12 +149,12 @@ class User extends AuthUser implements FilamentUser, HasAvatar, JWTSubject
 
     public function latestSubscription()
     {
-        return $this->subscriptions()->where('status', 'active')->orderByDesc('created_at')->first();
+        return $this->subscriptions()->where('status', 'active')->orderByDesc('created_at')->orderByDesc('id')->first();
     }
 
     public function subscription(): HasOne
     {
-        return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderByDesc('created_at');
+        return $this->hasOne(Subscription::class, 'billable_id')->where('status', 'active')->orderByDesc('created_at')->orderByDesc('id');
     }
 
     public function switchPlans(Plan $plan)
