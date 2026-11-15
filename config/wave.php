@@ -17,6 +17,12 @@ return [
 
     'primary_color' => '#000000',
 
+    // Shared public identity for administrator-authored in-app notifications.
+    'notifications' => [
+        'team_name' => env('NOTIFICATION_TEAM_NAME', env('APP_NAME', 'Wave').' Team'),
+        'team_avatar' => env('NOTIFICATION_TEAM_AVATAR', '/storage/demo/default.png'),
+    ],
+
     'user_model' => User::class,
     'show_docs' => env('WAVE_DOCS', true),
     'demo' => env('WAVE_DEMO', false),

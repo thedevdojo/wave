@@ -23,6 +23,8 @@ class SiteNotification extends Notification
             'category' => $this->broadcast->category,
             'body' => Str::sanitizeHtml($this->broadcast->body),
             'format' => 'html',
+            'user' => ['name' => config('wave.notifications.team_name', config('app.name').' Team')],
+            'icon' => url(config('wave.notifications.team_avatar', '/storage/demo/default.png')),
         ];
     }
 }

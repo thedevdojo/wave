@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Bus;
 use Livewire\Livewire;
 use Livewire\Volt\Volt;
+use Wave\ActivityLog;
 use Wave\Http\Livewire\NotificationBadge;
 use Wave\Jobs\DeliverNotificationBroadcast;
 use Wave\NotificationBroadcast;
@@ -96,4 +97,28 @@ it('does not dispatch a second job for a repeated submission id', function () {
     $component->fillForm(['title' => 'Already queued', 'category' => 'security', 'body' => '<p>Notice</p>'])->call('send')->assertHasNoFormErrors();
     expect(NotificationBroadcast::count())->toBe(1);
     Bus::assertNotDispatched(DeliverNotificationBroadcast::class);
+});
+
+it('uses one public team identity while recording the actual administrators in activity logs', function () {
+    config(['wave.notifications.team_name' => 'Example Team', 'wave.notifications.team_avatar' => '/storage/demo/default.png', 'activity.enabled' => true, 'activity.queue' => false]);
+    Bus::fake();
+    $secondAdmin = User::factory()->create(['name' => 'Second Administrator']);
+    $secondAdmin->assignRole('admin');
+    foreach ([$this->admin, $secondAdmin] as $index => $admin) {
+        $this->actingAs($admin);
+        Livewire::test(Notifications::class)->fillForm(['title' => 'Notice '.$index, 'category' => 'security', 'body' => '<p>Team announcement</p>'])
+            ->callAction('send')->assertHasNoFormErrors();
+        $log = ActivityLog::where('action', 'notification_broadcast_queued')->latest('id')->firstOrFail();
+        expect($log->user_id)->toBe($admin->id);
+        $broadcast = NotificationBroadcast::findOrFail($log->metadata['broadcast_id']);
+        (new DeliverNotificationBroadcast($broadcast->id))->handle();
+    }
+    $payloads = $this->admin->notifications()->get()->pluck('data');
+    expect($payloads)->toHaveCount(2);
+    foreach ($payloads as $payload) {
+        expect($payload['user']['name'])->toBe('Example Team')
+            ->and($payload['icon'])->toBe(url('/storage/demo/default.png'));
+    }
+    $this->actingAs($this->admin)->get('/notifications')->assertOk()->assertSee('Example Team')
+        ->assertSee('h-10 w-10 shrink-0 rounded-full', false)->assertDontSee('Second Administrator');
 });
