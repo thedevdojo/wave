@@ -9,8 +9,6 @@ use App\Models\User;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -23,6 +21,8 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Hash;
+use Wave\Filament\Actions\DeleteUserAction;
+use Wave\Filament\Actions\DeleteUsersBulkAction;
 
 class UserResource extends Resource
 {
@@ -89,14 +89,14 @@ class UserResource extends Resource
             ])
             ->recordActions([
                 EditAction::make(),
-                DeleteAction::make(),
+                DeleteUserAction::make(),
                 Action::make('Impersonate')
                     ->url(fn ($record) => route('impersonate', $record))
                     ->visible(fn ($record) => auth()->id() !== $record->id && auth()->user()->canImpersonate() && $record->canBeImpersonated()),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteUsersBulkAction::make(),
                 ]),
             ]);
     }
