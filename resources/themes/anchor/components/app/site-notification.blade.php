@@ -20,7 +20,7 @@
     </div>
     <h3 class="mt-3 text-lg font-semibold text-zinc-900 dark:text-zinc-100">{{ $data['title'] ?? '' }}</h3>
     <div class="prose prose-sm mt-3 max-w-none dark:prose-invert">{!! \Illuminate\Support\Str::sanitizeHtml($data['body'] ?? '') !!}</div>
-    <button type="button" wire:click="delete('{{ $notification->id }}')" wire:loading.attr="disabled" class="mark-as-read mt-4 inline-flex w-fit cursor-pointer items-center gap-1 rounded-full bg-zinc-100 px-3 py-1.5 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-500 dark:bg-zinc-700 dark:text-zinc-100 dark:hover:bg-zinc-600 disabled:opacity-50">
+    <button type="button" wire:click="delete('{{ $notification->id }}')" wire:loading.attr="disabled" class="mark-as-read mt-4 flex cursor-pointer items-center justify-start py-1 text-xs text-zinc-500 hover:text-zinc-700 hover:underline disabled:opacity-50">
         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
         Mark as Read
     </button>
