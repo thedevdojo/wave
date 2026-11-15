@@ -101,6 +101,24 @@ describe('POST /api/register', function () {
         'multibyte username' => ['username', 'é'],
     ]);
 
+    it('enforces the database email length before creating an account', function (int $length) {
+        Notification::fake();
+        config(['devdojo.auth.settings.registration_require_email_verification' => false]);
+        $email = str_repeat('a', 64).'@'.str_repeat('b', 63).'.'.str_repeat('c', $length - 133).'.com';
+
+        $response = $this->postJson('/api/register', registrationData(['email' => $email]));
+
+        if ($length === 191) {
+            $response->assertOk()->assertJsonStructure(['access_token']);
+            expect(User::where('email', $email)->sole()->email)->toBe($email);
+        } else {
+            $response->assertUnprocessable()->assertJsonValidationErrors('email')
+                ->assertJsonMissingPath('access_token');
+            expect(User::where('email', $email)->exists())->toBeFalse();
+            Notification::assertNothingSent();
+        }
+    })->with([191, 192]);
+
     it('rejects an invalid email', function () {
         $this->postJson('/api/register', registrationData(['email' => 'not-an-email']))
             ->assertUnprocessable()
