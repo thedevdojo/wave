@@ -69,6 +69,56 @@ describe('POST /api/register', function () {
             ->assertJson(['id' => $user->id]);
     });
 
+    it('accepts names and usernames at the database character limit', function (string $field, string $character) {
+        config(['devdojo.auth.settings.registration_require_email_verification' => false]);
+        $value = str_repeat($character, 191);
+
+        $this->postJson('/api/register', registrationData([$field => $value]))
+            ->assertOk()->assertJsonStructure(['access_token']);
+
+        expect(User::where('email', 'new-user@api-register.test')->firstOrFail()->{$field})->toBe($value);
+    })->with([
+        'ASCII name' => ['name', 'a'],
+        'multibyte name' => ['name', 'é'],
+        'ASCII username' => ['username', 'a'],
+        'multibyte username' => ['username', 'é'],
+    ]);
+
+    it('rejects names and usernames exceeding the database character limit', function (string $field, string $character) {
+        Notification::fake();
+
+        $this->postJson('/api/register', registrationData([$field => str_repeat($character, 192)]))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors($field)
+            ->assertJsonMissingPath('access_token');
+
+        expect(User::where('email', 'new-user@api-register.test')->exists())->toBeFalse();
+        Notification::assertNothingSent();
+    })->with([
+        'ASCII name' => ['name', 'a'],
+        'multibyte name' => ['name', 'é'],
+        'ASCII username' => ['username', 'a'],
+        'multibyte username' => ['username', 'é'],
+    ]);
+
+    it('enforces the database email length before creating an account', function (int $length) {
+        Notification::fake();
+        config(['devdojo.auth.settings.registration_require_email_verification' => false]);
+        $email = str_repeat('a', 64).'@'.str_repeat('b', 63).'.'.str_repeat('c', $length - 133).'.com';
+
+        $response = $this->postJson('/api/register', registrationData(['email' => $email]));
+
+        if ($length === 191) {
+            $response->assertOk()->assertJsonStructure(['access_token']);
+            expect(User::where('email', $email)->sole()->email)->toBe($email);
+        } else {
+            $response->assertUnprocessable()->assertJsonValidationErrors('email')
+                ->assertJsonMissingPath('access_token');
+            expect(User::where('email', $email)->exists())->toBeFalse();
+            Notification::assertNothingSent();
+        }
+    })->with([191, 192]);
+
     it('rejects an invalid email', function () {
         $this->postJson('/api/register', registrationData(['email' => 'not-an-email']))
             ->assertUnprocessable()
