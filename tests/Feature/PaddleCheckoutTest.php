@@ -167,12 +167,13 @@ it('returns a 404 when paddle has no invoice for the transaction', function (arr
     'no url in the response' => [[['data' => []], 200]],
 ]);
 
-it('does not activate a retired plan from a paid Paddle transaction', function () {
+it('activates an already paid Paddle transaction even if the plan was retired', function () {
     $this->plan->update(['active' => false]);
     Http::fake(['sandbox-api.paddle.com/transactions/txn_checkout' => Http::response(paddleCheckoutTransaction())]);
-    verifyPaddleCheckout()->assertNotified('This checkout cannot be activated.');
-    expect(Subscription::count())->toBe(0)
-        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['registered']);
+    verifyPaddleCheckout();
+    expect(Subscription::sole()->plan_id)->toBe($this->plan->id)
+        ->and(Subscription::sole()->status)->toBe('active')
+        ->and($this->user->fresh()->getRoleNames()->all())->toBe(['premium']);
 });
 
 it('does not match a missing receipt price to a plan with no configured price', function () {

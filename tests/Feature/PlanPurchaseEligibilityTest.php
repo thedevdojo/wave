@@ -45,23 +45,21 @@ it('rejects inactive plans through direct checkout and switch actions', function
     $this->plan->update(['active' => false]);
 
     $component->call($action, $this->plan->id)->assertNoRedirect()
-        ->assertNotDispatched('paddle-checkout-ready')
         ->assertNotified('This plan or billing cycle is no longer available.');
 
     expect($this->stripe->requests)->toBeEmpty()
         ->and($this->subscription->fresh()->plan_id)->toBe($this->plan->id)
         ->and($this->subscription->fresh()->status)->toBe('active');
     Http::assertNothingSent();
-})->with(['redirectToStripeCheckout', 'openPaddleCheckout', 'switchPlan']);
+})->with(['redirectToStripeCheckout', 'switchPlan']);
 
 it('rejects unsupported client supplied billing cycles before contacting providers', function (string $action, mixed $cycle) {
     eligibilityCheckout($action)->set('billing_cycle_selected', $cycle)
         ->call($action, $this->plan->id)->assertNoRedirect()
-        ->assertNotDispatched('paddle-checkout-ready')
         ->assertNotified('This plan or billing cycle is no longer available.');
     expect($this->stripe->requests)->toBeEmpty();
     Http::assertNothingSent();
-})->with(['redirectToStripeCheckout', 'openPaddleCheckout', 'switchPlan'])->with([
+})->with(['redirectToStripeCheckout', 'switchPlan'])->with([
     'invalid string' => ['weekly'], 'missing' => [null], 'array' => [['year']],
 ]);
 
@@ -69,11 +67,10 @@ it('rejects unavailable prices for the selected cycle', function (string $action
     $this->plan->update(['yearly_price_id' => $price]);
     eligibilityCheckout($action)->set('billing_cycle_selected', 'year')
         ->call($action, $this->plan->id)->assertNoRedirect()
-        ->assertNotDispatched('paddle-checkout-ready')
         ->assertNotified('This plan or billing cycle is no longer available.');
     expect($this->stripe->requests)->toBeEmpty();
     Http::assertNothingSent();
-})->with(['redirectToStripeCheckout', 'openPaddleCheckout', 'switchPlan'])->with([null, '', '   ']);
+})->with(['redirectToStripeCheckout', 'switchPlan'])->with([null, '', '   ']);
 
 it('uses the current database price and cycle for a valid Stripe checkout', function (string $cycle, string $price) {
     $component = eligibilityCheckout('redirectToStripeCheckout');
@@ -88,13 +85,6 @@ it('uses the current database price and cycle for a valid Stripe checkout', func
         ->and($requests[0]['params']['line_items'][0]['price'])->toBe($price)
         ->and($requests[0]['params']['metadata']['billing_cycle'])->toBe($cycle);
 })->with(['monthly' => ['month', 'price_new_month'], 'yearly' => ['year', 'price_new_year']]);
-
-it('opens Paddle checkout only after server validation', function () {
-    eligibilityCheckout('openPaddleCheckout')->set('billing_cycle_selected', 'year')
-        ->call('openPaddleCheckout', $this->plan->id)
-        ->assertDispatched('paddle-checkout-ready', priceId: 'price_year');
-    Http::assertNothingSent();
-});
 
 it('keeps subscribers on their retired plan while permitting a switch to an active plan', function () {
     $this->plan->update(['active' => false]);
@@ -128,12 +118,5 @@ it('rejects the other provider checkout actions', function (string $action, stri
     expect($this->stripe->requests)->toBeEmpty();
     Http::assertNothingSent();
 })->with([
-    ['redirectToStripeCheckout', 'paddle'], ['openPaddleCheckout', 'stripe'], ['switchPlan', 'stripe'],
+    ['redirectToStripeCheckout', 'paddle'], ['switchPlan', 'stripe'],
 ]);
-
-it('routes the Paddle subscribe button through server-side eligibility validation', function () {
-    eligibilityCheckout('openPaddleCheckout')
-        ->assertSee('wire:click="openPaddleCheckout', false)
-        ->assertSee('openCheckout($event.detail.priceId)', false)
-        ->assertDontSee("openCheckout('price_month')", false);
-});

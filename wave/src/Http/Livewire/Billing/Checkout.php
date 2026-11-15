@@ -73,15 +73,6 @@ class Checkout extends Component
         return redirect()->to($checkout_session->url);
     }
 
-    public function openPaddleCheckout(Plan $plan): void
-    {
-        abort_unless(config('wave.billing_provider') === 'paddle', 403);
-        $selection = $this->purchaseSelection($plan);
-        if ($selection !== null) {
-            $this->dispatch('paddle-checkout-ready', priceId: $selection[1]);
-        }
-    }
-
     /** Read purchase eligibility from the database, not the rendered card or client state. */
     private function purchaseSelection(Plan $plan): ?array
     {
@@ -173,7 +164,7 @@ class Checkout extends Component
         $priceColumn = ($this->billing_cycle_selected == 'month') ? 'monthly_price_id' : 'yearly_price_id';
         $price = data_get($transaction, 'items.0.price.id');
         $plan = is_string($price) && filled($price)
-            ? Plan::where('active', true)->where($priceColumn, $price)->first()
+            ? Plan::where($priceColumn, $price)->first()
             : null;
 
         if (! isset($plan->id)) {
