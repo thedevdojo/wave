@@ -36,3 +36,11 @@ it("deletes the user's own notification from the page", function () {
 
     expect(DB::table('notifications')->where('id', $this->notificationId)->exists())->toBeFalse();
 });
+
+it('shows the year on notification dates', function () {
+    DB::table('notifications')->where('id', $this->notificationId)->update(['created_at' => '2025-03-04 14:05:00']);
+
+    $this->get(route('notifications'))
+        ->assertOk()
+        ->assertSee('Mar 4, 2025 2:05 PM');
+});
