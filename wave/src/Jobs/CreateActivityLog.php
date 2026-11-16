@@ -25,6 +25,12 @@ class CreateActivityLog implements ShouldQueue
      */
     public function handle(): void
     {
+        // The user may have been force deleted before the worker got to this job
+        $userModel = config('wave.user_model');
+        if (! $userModel::withoutGlobalScopes()->whereKey($this->data['user_id'])->exists()) {
+            return;
+        }
+
         ActivityLog::create($this->data);
     }
 }

@@ -118,3 +118,17 @@ test('queued activity logs keep the time the action happened', function () {
 
     expect(ActivityLog::where('action', 'test_action')->first()->created_at->toDateTimeString())->toBe($loggedAt);
 });
+
+test('a queued activity log is dropped when the user was deleted before the job ran', function () {
+    config(['activity.enabled' => true, 'activity.queue' => true]);
+    Bus::fake([CreateActivityLog::class]);
+
+    $user = User::factory()->create();
+    $this->actingAs($user);
+    ActivityLog::log('test_action', 'Queued log');
+
+    $user->forceDelete();
+    Bus::dispatched(CreateActivityLog::class)->first()->handle();
+
+    expect(ActivityLog::where('action', 'test_action')->exists())->toBeFalse();
+});
