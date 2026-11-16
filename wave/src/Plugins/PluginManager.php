@@ -78,11 +78,6 @@ class PluginManager
 
     }
 
-    public function isActive(string $name): bool
-    {
-        return in_array($name, $this->getInstalledPlugins(), true);
-    }
-
     protected function getInstalledPlugins(): array
     {
         // This small local file is the source of truth. A shared cache can retain a

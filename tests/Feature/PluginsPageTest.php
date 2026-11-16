@@ -3,7 +3,6 @@
 use App\Filament\Pages\Plugins;
 use App\Models\User;
 use Filament\Facades\Filament;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Process;
@@ -46,24 +45,20 @@ class TestFixturePlugin extends Plugin
 PHP);
 });
 
-test('activating a plugin forgets the cached plugin list', function () {
+test('activating a plugin updates installed.json', function () {
     writeInstalledPlugins([]);
-    Cache::put('wave_installed_plugins', [], 3600);
 
     Livewire::test(Plugins::class)->call('activate', 'test-fixture');
 
-    expect(readInstalledPlugins())->toBe('["test-fixture"]')
-        ->and(Cache::has('wave_installed_plugins'))->toBeFalse();
+    expect(readInstalledPlugins())->toBe('["test-fixture"]');
 });
 
-test('deactivating a plugin keeps installed.json a list and forgets the cache', function () {
+test('deactivating a plugin keeps installed.json a list', function () {
     writeInstalledPlugins(['test-fixture', 'another-plugin']);
-    Cache::put('wave_installed_plugins', ['test-fixture', 'another-plugin'], 3600);
 
     Livewire::test(Plugins::class)->call('deactivate', 'test-fixture');
 
-    expect(readInstalledPlugins())->toBe('["another-plugin"]')
-        ->and(Cache::has('wave_installed_plugins'))->toBeFalse();
+    expect(readInstalledPlugins())->toBe('["another-plugin"]');
 });
 
 test('deleting a plugin removes its folder', function () {

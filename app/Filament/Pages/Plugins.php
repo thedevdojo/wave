@@ -6,7 +6,6 @@ use BackedEnum;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Wave\Plugins\PluginManager;
@@ -88,7 +87,6 @@ class Plugins extends Page
         $json = json_encode($plugins);
         file_put_contents(PluginManager::path().'/installed.json', $json);
 
-        Cache::forget('wave_installed_plugins');
         Artisan::call('route:clear');
         Artisan::call('filament:clear-cached-components');
     }
