@@ -4,6 +4,16 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.7.2] - 2026-11-16
+
+### Fixed
+
+- Activating, deactivating or deleting a plugin takes effect right away. The installed plugin list is no longer cached, and cached routes and admin panel components are cleared on each change ([#483])
+- Queued activity logs keep the time the action happened instead of the time the job ran ([#482])
+- Queued activity logs for a user who was deleted before the job ran are skipped instead of failing ([#485])
+- Notification dates include the year ([#486])
+- Changelog titles, bold text, dividers and quotes are readable in dark mode in the Anchor theme ([#479])
+
 ## [3.7.1] - 2026-11-15
 
 ### Changed
@@ -250,7 +260,8 @@ Wave now runs on Laravel 13, Livewire 4 and Filament 5. Folio, Volt and the them
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.7.1...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.7.2...HEAD
+[3.7.2]: https://github.com/thedevdojo/wave/compare/3.7.1...3.7.2
 [3.7.1]: https://github.com/thedevdojo/wave/compare/3.7.0...3.7.1
 [3.7.0]: https://github.com/thedevdojo/wave/compare/3.6.3...3.7.0
 [3.6.3]: https://github.com/thedevdojo/wave/compare/3.6.2...3.6.3
@@ -324,3 +335,8 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#476]: https://github.com/thedevdojo/wave/pull/476
 [#477]: https://github.com/thedevdojo/wave/pull/477
 [#478]: https://github.com/thedevdojo/wave/pull/478
+[#479]: https://github.com/thedevdojo/wave/pull/479
+[#482]: https://github.com/thedevdojo/wave/pull/482
+[#483]: https://github.com/thedevdojo/wave/pull/483
+[#485]: https://github.com/thedevdojo/wave/pull/485
+[#486]: https://github.com/thedevdojo/wave/pull/486
