@@ -24,7 +24,7 @@
 		}
 
 		public function updateNotifications(){
-			$this->setUnreadNotifications = $this->unreadNotifications = auth()->user()->unreadNotifications->all();  
+			$this->unreadNotifications = auth()->user()->unreadNotifications->all();  
 			$this->notifications_count = auth()->user()->unreadNotifications->count();}
 		}
 ?>
@@ -56,7 +56,7 @@
 								<div class="flex flex-col flex-1 items-start ml-3 space-y-1 w-0">
 									<div class="flex relative items-center space-x-2">
 										<p class="text-sm font-bold leading-5 text-zinc-600">{{ @$notification_data->user['name'] }}</p>
-										<time class="text-xs font-medium leading-5 text-zinc-500">{{ \Carbon\Carbon::parse(@$notification->created_at)->format('F, jS h:i A') }}</span></time>
+										<time class="text-xs font-medium leading-5 text-zinc-500">{{ \Carbon\Carbon::parse(@$notification->created_at)->format('M j, Y g:i A') }}</time>
 									</div>
 									<p class="text-sm leading-5 text-zinc-600">{{ @$notification_data->body }} in <span class="notification-highlight">{{ @$notification_data->title }}</span>
 									
