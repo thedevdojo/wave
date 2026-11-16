@@ -41,7 +41,6 @@ PHP);
 // The fixture class can only be declared once per process, so this stays one test.
 test('installed plugins register their routes and only problems are logged', function () {
     File::put($this->pluginsPath.'/installed.json', json_encode(['route-fixture', 'missing-plugin']));
-    Cache::forget('wave_installed_plugins');
     Log::spy();
 
     // Same call PluginServiceProvider makes at boot, against the temporary folder.
@@ -51,4 +50,18 @@ test('installed plugins register their routes and only problems are logged', fun
     Log::shouldHaveReceived('warning')->once()->with('Plugin file not found for: missing-plugin');
 
     $this->get('route-fixture')->assertOk()->assertSee('Hello from the plugin');
+});
+
+test('plugin activation follows the configured file even when a previous release cached another list', function () {
+    $manager = new PluginManager($this->app);
+    $installedPlugins = fn () => (fn () => $this->getInstalledPlugins())->call($manager);
+    Cache::put('wave_installed_plugins', ['route-fixture'], 3600);
+    File::put($this->pluginsPath.'/installed.json', '[]');
+    expect($installedPlugins())->toBe([]);
+
+    File::put($this->pluginsPath.'/installed.json', '["route-fixture"]');
+    expect($installedPlugins())->toBe(['route-fixture']);
+
+    File::delete($this->pluginsPath.'/installed.json');
+    expect($installedPlugins())->toBe([]);
 });

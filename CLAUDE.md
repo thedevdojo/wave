@@ -108,7 +108,6 @@ The application uses Pest for testing with PHPUnit as the underlying framework. 
 - Categories cached for 1 hour
 - Helper files cached permanently until cleared
 - Theme colors cached for 1 hour
-- Plugin lists cached for 1 hour
 
 ### Cache Clearing
 - User caches cleared via `$user->clearUserCache()` method

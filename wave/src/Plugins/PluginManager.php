@@ -2,9 +2,7 @@
 
 namespace Wave\Plugins;
 
-use Exception;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -80,30 +78,12 @@ class PluginManager
 
     }
 
-    protected function getInstalledPlugins()
+    protected function getInstalledPlugins(): array
     {
-        // Check if cache is available (not during package discovery)
-        if ($this->app->bound('cache')) {
-            try {
-                return Cache::remember('wave_installed_plugins', 3600, function () {
-                    $path = self::path().'/installed.json';
-                    if (! File::exists($path)) {
-                        return [];
-                    }
-
-                    return File::json($path);
-                });
-            } catch (Exception $e) {
-                // Fallback to direct file access if cache fails
-            }
-        }
-
-        // Direct file access when cache is not available
+        // This small local file is the source of truth. A shared cache can retain a
+        // different release's installed list during a zero-downtime deployment.
         $path = self::path().'/installed.json';
-        if (! File::exists($path)) {
-            return [];
-        }
 
-        return File::json($path);
+        return File::exists($path) ? File::json($path) : [];
     }
 }
