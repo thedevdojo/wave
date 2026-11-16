@@ -52,3 +52,16 @@ test('installed plugins register their routes and only problems are logged', fun
 
     $this->get('route-fixture')->assertOk()->assertSee('Hello from the plugin');
 });
+
+test('plugin activation follows the configured file even when a previous release cached another list', function () {
+    $manager = new PluginManager($this->app);
+    Cache::put('wave_installed_plugins', ['route-fixture'], 3600);
+    File::put($this->pluginsPath.'/installed.json', '[]');
+    expect($manager->isActive('route-fixture'))->toBeFalse();
+
+    File::put($this->pluginsPath.'/installed.json', '["route-fixture"]');
+    expect($manager->isActive('route-fixture'))->toBeTrue();
+
+    File::delete($this->pluginsPath.'/installed.json');
+    expect($manager->isActive('route-fixture'))->toBeFalse();
+});

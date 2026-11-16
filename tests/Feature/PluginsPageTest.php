@@ -2,6 +2,7 @@
 
 use App\Filament\Pages\Plugins;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
@@ -118,3 +119,19 @@ test('ignores files in the plugins folder, such as installed.json, under open_ba
 
     expect($result->errorOutput().$result->output())->toBe('["test-fixture"]');
 });
+
+test('changing plugin state clears stale routes and admin component discovery', function (string $action) {
+    $bootstrap = dirname($this->pluginsPath).'/bootstrap';
+    $this->app->useBootstrapPath($bootstrap);
+    $routes = $this->app->getCachedRoutesPath();
+    $components = Filament::getPanel('admin')->getComponentCachePath();
+    File::ensureDirectoryExists(dirname($routes));
+    File::ensureDirectoryExists(dirname($components));
+    File::put($routes, '<?php return [];');
+    File::put($components, '<?php return [];');
+    writeInstalledPlugins($action === 'activate' ? [] : ['test-fixture']);
+
+    Livewire::test(Plugins::class)->call($action, 'test-fixture')->assertOk();
+
+    expect(File::exists($routes))->toBeFalse()->and(File::exists($components))->toBeFalse();
+})->with(['activate', 'deactivate', 'deletePlugin']);

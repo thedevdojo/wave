@@ -89,6 +89,8 @@ class Plugins extends Page
         file_put_contents(PluginManager::path().'/installed.json', $json);
 
         Cache::forget('wave_installed_plugins');
+        Artisan::call('route:clear');
+        Artisan::call('filament:clear-cached-components');
     }
 
     public function activate($pluginFolder)
