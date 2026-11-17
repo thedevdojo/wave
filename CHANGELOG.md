@@ -4,6 +4,13 @@ Notable changes to Wave. The format is based on [Keep a Changelog](https://keepa
 
 ## [Unreleased]
 
+## [3.7.3] - 2026-11-17
+
+### Fixed
+
+- The Anchor marketing heading prints its title and description as plain text, so profile names and blog category names show exactly as entered. A category name like "Tips & Tricks" is no longer encoded twice ([#488])
+- `POST /api/register` uses the same username rules as the profile settings form (letters, numbers, dashes and underscores) ([#488])
+
 ## [3.7.2] - 2026-11-16
 
 ### Fixed
@@ -260,7 +267,8 @@ Wave now runs on Laravel 13, Livewire 4 and Filament 5. Folio, Volt and the them
 
 The full list of changes is in the [3.2.0 release notes](https://github.com/thedevdojo/wave/releases/tag/3.2.0).
 
-[Unreleased]: https://github.com/thedevdojo/wave/compare/3.7.2...HEAD
+[Unreleased]: https://github.com/thedevdojo/wave/compare/3.7.3...HEAD
+[3.7.3]: https://github.com/thedevdojo/wave/compare/3.7.2...3.7.3
 [3.7.2]: https://github.com/thedevdojo/wave/compare/3.7.1...3.7.2
 [3.7.1]: https://github.com/thedevdojo/wave/compare/3.7.0...3.7.1
 [3.7.0]: https://github.com/thedevdojo/wave/compare/3.6.3...3.7.0
@@ -340,3 +348,4 @@ The full list of changes is in the [3.2.0 release notes](https://github.com/thed
 [#483]: https://github.com/thedevdojo/wave/pull/483
 [#485]: https://github.com/thedevdojo/wave/pull/485
 [#486]: https://github.com/thedevdojo/wave/pull/486
+[#488]: https://github.com/thedevdojo/wave/pull/488
