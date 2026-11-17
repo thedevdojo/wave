@@ -1,7 +1,7 @@
 <section>
     <x-marketing.elements.heading
         level="h2"
-        title="Master the Seas of <br> Product Development"
+        :title="new \Illuminate\Support\HtmlString('Master the Seas of <br> Product Development')"
         description="Harness the power of Wave's extensive features to fast-track your SaaS projects. Get ready to fall in love with the future of SaaS development, today." 
     />
     <div class="text-center">
