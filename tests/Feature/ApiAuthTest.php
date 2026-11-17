@@ -150,6 +150,14 @@ describe('POST /api/register', function () {
             ->assertJsonValidationErrors('username');
     });
 
+    it('applies the profile username rules', function (string $username) {
+        $this->postJson('/api/register', registrationData(['username' => $username]))
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('username');
+
+        expect(User::where('email', 'new-user@api-register.test')->exists())->toBeFalse();
+    })->with(['with space', 'with/slash', '<b>tag</b>']);
+
     it('is refused when registrations are disabled', function (string $setting) {
         config(["devdojo.auth.settings.{$setting}" => false]);
 
